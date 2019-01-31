@@ -11,8 +11,10 @@ class UserLoginRequest {
 
 class UserLoginSuccess {
   final String token;
+  final int id;
+  final String email;
 
-  UserLoginSuccess({this.token});
+  UserLoginSuccess({this.token, this.id, this.email});
 }
 
 class UserLoaded {

@@ -3,9 +3,9 @@ import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
 import '../models/nav_state.dart';
-import '../screens/dummy_screen_2.dart';
 import '../screens/lifts_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/subscription_screen.dart';
 
 
 Reducer<NavState> navReducer = combineReducers([
@@ -18,7 +18,7 @@ NavState _changeBottomNav(NavState state, ChangeBottomNavAction action) {
   if (action.index == 0) {
     rootScreen = LiftsScreen();
   } else if (action.index == 1) {
-    rootScreen = DummyScreen2();
+    rootScreen = SubscriptionScreen();
   } else if (action.index == 2) {
     rootScreen = ProfileScreen();
   }

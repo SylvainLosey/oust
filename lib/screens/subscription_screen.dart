@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class DummyScreen2 extends StatelessWidget {
+class SubscriptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

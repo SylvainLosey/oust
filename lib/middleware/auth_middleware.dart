@@ -23,12 +23,12 @@ class AuthMiddleware {
   void _appStarted(Store<AppState> store, AppStarted action, NextDispatcher next) async {
     next(action);
 
-    if (await _hasToken()) {
+    if (await _hasAuthData()) {
+      final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
-        user: User(token: await _getToken())
+        user: User(token: authData['token'], id: authData['id'], email: authData['email'])
       ));
     }
-
   }
 
 
@@ -38,9 +38,11 @@ class AuthMiddleware {
     try {
       final Map<String, dynamic> authData = await repository.login(action.email, action.password);
       print(authData);
-      _persistToken(authData['token']);
+      _persistAuthData(authData['token'], authData['id'], authData['email']);
       store.dispatch(UserLoginSuccess(
-        token: authData['token']
+        token: authData['token'],
+        id: authData['id'],
+        email: authData['email']
       ));
     } catch (e) {
       store.dispatch(UserLoginFailure(error: e.toString()));
@@ -51,12 +53,12 @@ class AuthMiddleware {
     next(action);
 
     store.dispatch(UserLoaded(
-      user: User(token: action.token)
+      user: User(token: action.token, id: action.id, email: action.email)
     ));
   }
 
   void _logout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
-    await _deleteToken();
+    await _deleteTAuthData();
 
     next(action);
   }
@@ -64,24 +66,34 @@ class AuthMiddleware {
 
   /// HELPER FUNCTIONS
   
-  Future<String> _getToken() async {
+  Future<Map<String, dynamic>> _getAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    final Map<String, dynamic> authData = <String, dynamic>{
+      'token': prefs.getString('token'),
+      'id': prefs.getInt('id'),
+      'email': prefs.getString('email'),
+    };
+
+    return authData;
   }
 
-  Future<void> _deleteToken() async {
+  Future<void> _deleteTAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-    print('Token removed');
+    await prefs.remove('id');
+    await prefs.remove('email');
+    print('AuthData removed');
   }
 
-  Future<void> _persistToken(String token) async {
+  Future<void> _persistAuthData(String token, int id, String email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
-    print('Token: $token');
+    await prefs.setString('email', email);
+    await prefs.setInt('id', id);
+    print('AuthData persisted');
   }
 
-  Future<bool> _hasToken() async {
+  Future<bool> _hasAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token') ?? '';
 

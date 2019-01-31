@@ -14,6 +14,6 @@ class Repository {
       'password': password,
     };
 
-    return await client.post('/login', credentials);
+    return await client.post('/login/', credentials);
   }
 }

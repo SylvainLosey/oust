@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 
 class WebClient {
-  static String baseUrl = 'https://admin.oust.ch/api';
+  static String baseUrl = 'http://10.0.2.2:8000/api';
 
   const WebClient();
 
@@ -22,9 +22,6 @@ class WebClient {
     final http.Response response = await http.Client().post(
       '$baseUrl$path',
       body: data,
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
     );
 
     if (response.statusCode == 200) {
