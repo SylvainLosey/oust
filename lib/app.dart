@@ -22,20 +22,4 @@ class App extends StatelessWidget {
       )
     );
   }
-
-  // Route routes(RouteSettings settings) {
-  //   if (settings.name == '/') {
-  //     return MaterialPageRoute(
-  //       builder: (context) {
-  //         store.dispatch(AppStarted);
-
-  //         if (store.state.authState.isAuthenticated) {
-  //           return MainScreen();
-  //         } else {
-  //           return LoginScreen();
-  //         }
-  //       }
-  //     );
-    
-  
 }

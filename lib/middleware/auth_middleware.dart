@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../actions/auth_actions.dart';
+import '../actions/customer_actions.dart';
 import '../models/app_state.dart';
 import '../models/user.dart';
 import '../services/repository.dart';
@@ -14,9 +15,10 @@ class AuthMiddleware {
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, AppStarted>(_appStarted),
-      TypedMiddleware<AppState, UserLoginRequest>(_login),
-      TypedMiddleware<AppState, UserLoginSuccess>(_loginSuccess),
-      TypedMiddleware<AppState, UserLogout>(_logout),
+      TypedMiddleware<AppState, UserLoginRequest>(_userLoginRequest),
+      TypedMiddleware<AppState, UserLoginSuccess>(_userLoginSuccess),
+      TypedMiddleware<AppState, UserLogout>(_userLogout),
+      TypedMiddleware<AppState, UserLoaded>(_userLoaded),
     ];
   }
 
@@ -32,13 +34,14 @@ class AuthMiddleware {
   }
 
 
-  void _login(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
+  void _userLoginRequest(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final Map<String, dynamic> authData = await repository.login(action.email, action.password);
-      print(authData);
+
       _persistAuthData(authData['token'], authData['id'], authData['email']);
+
       store.dispatch(UserLoginSuccess(
         token: authData['token'],
         id: authData['id'],
@@ -49,16 +52,21 @@ class AuthMiddleware {
     }
   }
 
-  void _loginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
+  void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UserLoaded(
-      user: User(token: action.token, id: action.id, email: action.email)
-    ));
+    store.dispatch(UserLoaded(user: User(token: action.token, id: action.id, email: action.email)));
   }
 
-  void _logout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
-    await _deleteTAuthData();
+  void _userLoaded(Store<AppState> store, UserLoaded action, NextDispatcher next) async {
+    next(action);
+
+    store.dispatch(LoadCustomerAction(user: action.user));
+  }
+
+
+  void _userLogout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
+    await _deleteAuthData();
 
     next(action);
   }
@@ -77,12 +85,11 @@ class AuthMiddleware {
     return authData;
   }
 
-  Future<void> _deleteTAuthData() async {
+  Future<void> _deleteAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     await prefs.remove('id');
     await prefs.remove('email');
-    print('AuthData removed');
   }
 
   Future<void> _persistAuthData(String token, int id, String email) async {
@@ -90,7 +97,6 @@ class AuthMiddleware {
     await prefs.setString('token', token);
     await prefs.setString('email', email);
     await prefs.setInt('id', id);
-    print('AuthData persisted');
   }
 
   Future<bool> _hasAuthData() async {

@@ -16,4 +16,8 @@ class Repository {
 
     return await client.post('/login/', credentials);
   }
+
+  Future<Map<String, dynamic>> fetchCustomer(int id) async {
+    return await client.get('/customers/$id/');
+  }
 }

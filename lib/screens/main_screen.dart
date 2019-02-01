@@ -15,7 +15,7 @@ class MainScreen extends StatelessWidget {
 
   AppBar _createAppBar() {
     return AppBar(
-      title: Text('Redux App'),
+      title: Text('Oust!'),
     );
   }
 }

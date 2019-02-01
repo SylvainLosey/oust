@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
-import '../actions/actions.dart';
+import '../actions/nav_actions.dart';
 import '../models/nav_state.dart';
 import '../screens/lifts_screen.dart';
 import '../screens/profile_screen.dart';

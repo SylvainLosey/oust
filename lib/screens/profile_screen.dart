@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import '../containers/customer_details.dart';
 import '../containers/logout_button.dart';
 import '../models/app_state.dart';
 import '../screens/login_screen.dart';
@@ -15,7 +16,13 @@ class ProfileScreen extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         if (viewModel.isAuthenticated) {
-          return Center(child: LogoutButton());
+          return Center(
+            child: Column(
+              children: <Widget>[
+                CustomerDetails(),
+                LogoutButton(),
+              ],)
+            );
         } else {
           return LoginScreen();
         }

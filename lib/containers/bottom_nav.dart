@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../actions/actions.dart';
+import '../actions/nav_actions.dart';
 import '../models/app_state.dart';
 
 class BottomNav extends StatelessWidget {
