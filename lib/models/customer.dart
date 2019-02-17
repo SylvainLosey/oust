@@ -6,7 +6,7 @@ class Customer {
   final String firstName;
   final String lastName;
   final String address;
-  final int postcode;
+  final String postcode;
   final String city;
   final String preferedCommunication;
   final String preferedPaymentMethod;

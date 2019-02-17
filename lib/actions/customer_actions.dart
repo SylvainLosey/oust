@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import '../models/customer_model.dart';
+import '../models/customer.dart';
 import '../models/user.dart';
 
 class LoadCustomerAction {

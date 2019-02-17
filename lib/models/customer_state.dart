@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'customer_model.dart';
+import 'customer.dart';
 
 @immutable
 class CustomerState {

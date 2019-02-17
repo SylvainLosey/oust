@@ -20,4 +20,8 @@ class Repository {
   Future<Map<String, dynamic>> fetchCustomer(int id) async {
     return await client.get('/customers/$id/');
   }
+
+  Future<List<dynamic>> fetchSubscription(int id) async {
+    return await client.get('/consumersubscriptions/?customer=$id/');
+  }
 }

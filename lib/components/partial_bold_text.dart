@@ -14,7 +14,7 @@ class PartialBoldText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: TextSpan(children: [
+      text: TextSpan(children: <TextSpan>[
         TextSpan(
           text: boldText,
           style: Theme.of(context).textTheme.body2,

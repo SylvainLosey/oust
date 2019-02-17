@@ -15,7 +15,7 @@ class WebClient {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
 
-    final Map<String, String> headers = {'Authorization': 'Token $token'};
+    final Map<String, String> headers = <String, String>{'Authorization': 'Token $token'};
     final http.Response response = await http.Client().get('$baseUrl$path', headers: headers);
 
     if (response.statusCode == 200) {
