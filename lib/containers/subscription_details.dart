@@ -4,7 +4,7 @@ import 'package:redux/redux.dart';
 
 import '../components/error_text.dart';
 import '../components/loading.dart';
-import '../components/partial_bold_text.dart';
+// import '../components/partial_bold_text.dart';
 import '../models/app_state.dart';
 import '../models/subscription.dart';
 import '../models/subscription_state.dart';
@@ -25,7 +25,7 @@ class SubscriptionDetails extends StatelessWidget {
 
         return SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(16),
+            // padding: const EdgeInsets.all(16),
             child: _createColumn(context, viewModel),
           ),
         );
@@ -33,39 +33,57 @@ class SubscriptionDetails extends StatelessWidget {
     );
   }
 
-  Column _createColumn(BuildContext context, _ViewModel viewModel) {
+  Widget _createColumn(BuildContext context, _ViewModel viewModel) {
     final Subscription subscription = viewModel.subscriptionState.subscription;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: <Widget>[
-        PartialBoldText(
-          boldText: 'Nom: ',
-          normalText: subscription.representation,
-          defaultText: 'Not set',
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 150,
+          color: Colors.black87,
         ),
-        PartialBoldText(
-          boldText: 'Adresse: ',
-          normalText: subscription.address,
-          defaultText: 'Not set',
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 70,
+              ),
+              Text(
+                subscription.representation,
+                style:TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+                )
+              ),
+              Text(
+                'Abonnement ${subscription.package.name} - ${subscription.package.length}',
+                style:TextStyle(
+                  fontSize: 16,
+                  color: Colors.white
+                  // fontWeight: FontWeight.bold,
+                )
+              ),
+              Container(
+                height: 60,
+              ),
+              Text(
+                'Futur passages',
+                style:TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  // color: Colors.black
+                )
+              ),
+            ],
+          ),
         ),
-        PartialBoldText(
-          boldText: 'Localité: ',
-          normalText: '${subscription.postcode} ${subscription.city}',
-          defaultText: 'Not set',
-        ),
-        PartialBoldText(
-          boldText: 'Abonnement: ',
-          normalText: subscription.package.name,
-          defaultText: 'Not set',
-        ),
-        PartialBoldText(
-          boldText: 'Passage restants: ',
-          normalText: subscription.remainingPickups.toString(),
-          defaultText: 'Not set',
-        ),
-      ],
-    );
+
+        ],
+      );
   }
 }
 

@@ -4,6 +4,7 @@ import '../actions/customer_actions.dart';
 import '../actions/subscription_actions.dart';
 import '../models/app_state.dart';
 import '../models/customer.dart';
+import '../models/pickup.dart';
 import '../models/subscription.dart';
 
 import '../services/repository.dart';
@@ -18,6 +19,7 @@ class AppMiddleware {
       TypedMiddleware<AppState, dynamic>(_logAction),
       TypedMiddleware<AppState, LoadCustomerAction>(_loadCustomer),
       TypedMiddleware<AppState, LoadSubscriptionAction>(_loadSubscription),
+      TypedMiddleware<AppState, LoadPickupsAction>(_loadPickups),
     ];
   }
 
@@ -47,9 +49,22 @@ class AppMiddleware {
 
     try {
       final List<dynamic> subscriptionData = await repository.fetchSubscription(action.customer.id);
-      store.dispatch(LoadSubscriptionSuccess(subscription: Subscription.fromJson(subscriptionData)));
+      final Subscription subscription = Subscription.fromJson(subscriptionData);
+      store.dispatch(LoadSubscriptionSuccess(subscription: subscription));
+      store.dispatch(LoadPickupsAction(subscription: subscription));
     } catch (e) {
       store.dispatch(LoadSubscriptionFailure(error: e.toString()));
+    }
+  }
+
+  void _loadPickups(Store<AppState> store, LoadPickupsAction action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> pickupsData = await repository.fetchPickups(action.subscription.id);
+      store.dispatch(LoadPickupsSuccess(pickups: List<Pickup>.from(pickupsData.map<dynamic>((dynamic x) => Pickup.fromJson(x)))));
+    } catch (e) {
+      store.dispatch(LoadPickupsFailure(error: e.toString()));
     }
   }
 }

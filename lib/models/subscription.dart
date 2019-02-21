@@ -18,7 +18,8 @@ class Subscription {
     final String created;
     final String modified;
     final int customer;
-    final Package package;
+
+    final Package package;    
 
 
     Subscription({
@@ -64,7 +65,7 @@ class Subscription {
         created: json[0]['subscription']['created'],
         modified: json[0]['subscription']['modified'],
         customer: json[0]['subscription']['customer'],
-        package: Package.fromJson(json[0]['package'])
+        package: Package.fromJson(json[0]['package']),
     );
 
     Map<String, dynamic> toJson() => <String, dynamic>{

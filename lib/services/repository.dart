@@ -24,4 +24,8 @@ class Repository {
   Future<List<dynamic>> fetchSubscription(int id) async {
     return await client.get('/consumersubscriptions/?customer=$id/');
   }
+
+  Future<List<dynamic>> fetchPickups(int id) async {
+    return await client.get('/pickups/?subscription=$id/');
+  }
 }

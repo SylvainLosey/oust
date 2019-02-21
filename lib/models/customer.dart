@@ -1,34 +1,62 @@
-class Customer {
-  final int id;
-  final String customerStatus;
-  final String company;
-  final String gender;
-  final String firstName;
-  final String lastName;
-  final String address;
-  final String postcode;
-  final String city;
-  final String preferedCommunication;
-  final String preferedPaymentMethod;
-  final DateTime created;
-  final DateTime modified;
+import 'package:json_annotation/json_annotation.dart';
 
-  Customer.fromJson(Map<String, dynamic> parsedJson)
-      : id = parsedJson['id'],
-        customerStatus = parsedJson['customer_status'],
-        company = parsedJson['company'],
-        gender = parsedJson['gender'],
-        firstName = parsedJson['first_name'],
-        lastName = parsedJson['last_name'],
-        address = parsedJson['address'],
-        postcode = parsedJson['postcode'],
-        city = parsedJson['city'],
-        preferedCommunication = parsedJson['prefered_communication'],
-        preferedPaymentMethod = parsedJson['prefered_payment_method'],
-        created = DateTime.parse(parsedJson['created']),
-        modified = DateTime.parse(parsedJson['modified']);
+part 'customer.g.dart';
 
-  @override
-  String toString() =>
-      '$lastName $firstName';
+@JsonSerializable()
+class Customer{
+    int id;
+
+    @JsonKey(name: 'customer_status')
+    String customerStatus;
+
+    dynamic company;
+    String gender;
+
+    @JsonKey(name: 'first_name')
+    String firstName;
+
+    @JsonKey(name: 'last_name')
+    String lastName;
+
+    String address;
+    
+    String postcode;
+
+    String city;
+
+    @JsonKey(name: 'prefered_communication')
+    String preferedCommunication;
+
+    @JsonKey(name: 'prefered_payment_method')
+    String preferedPaymentMethod;
+
+    @JsonKey(name: 'bexio_id')
+    String bexioId;
+
+    String created;
+
+    String modified;
+
+    int user;
+
+    Customer({
+        this.id,
+        this.postcode,
+        this.customerStatus,
+        this.company,
+        this.gender,
+        this.firstName,
+        this.lastName,
+        this.address,
+        this.city,
+        this.preferedCommunication,
+        this.preferedPaymentMethod,
+        this.bexioId,
+        this.created,
+        this.modified,
+        this.user,
+    });
+
+    factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
+    Map<String, dynamic> toJson() => _$CustomerToJson(this);
 }
