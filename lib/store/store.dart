@@ -7,24 +7,24 @@ import '../middleware/auth_middleware.dart';
 import '../models/app_state.dart';
 import '../reducers/app_reducer.dart';
 
-Store<AppState> createStore(RemoteDevToolsMiddleware remoteDevtools) {
-  return DevToolsStore<AppState>(
-    appReducer,
-    initialState: AppState.initial(),
-    middleware: []
-        ..addAll(AuthMiddleware().createAuthMiddleware())
-        ..addAll(AppMiddleware().createAppMiddleware())
-        ..add(remoteDevtools),
-  );
-}
-
-
-// Store<AppState> createStore() {
+// Store<AppState> createStore(RemoteDevToolsMiddleware remoteDevtools) {
 //   return DevToolsStore<AppState>(
 //     appReducer,
 //     initialState: AppState.initial(),
 //     middleware: []
 //         ..addAll(AuthMiddleware().createAuthMiddleware())
 //         ..addAll(AppMiddleware().createAppMiddleware())
+//         ..add(remoteDevtools),
 //   );
 // }
+
+
+Store<AppState> createStore() {
+  return Store<AppState>(
+    appReducer,
+    initialState: AppState.initial(),
+    middleware: []
+        ..addAll(AuthMiddleware().createAuthMiddleware())
+        ..addAll(AppMiddleware().createAppMiddleware())
+  );
+}

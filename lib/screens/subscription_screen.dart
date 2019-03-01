@@ -15,12 +15,7 @@ class SubscriptionScreen extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         if (viewModel.isAuthenticated) {
-          return Center(
-            child: Column(
-              children: <Widget>[
-                SubscriptionDetails(),
-              ],)
-            );
+          return SubscriptionDetails();
         } else {
           return LoginScreen();
         }

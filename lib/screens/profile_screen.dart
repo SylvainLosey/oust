@@ -19,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
           return Center(
             child: Column(
               children: <Widget>[
+                Container(height: 200),
                 CustomerDetails(),
                 LogoutButton(),
               ],)

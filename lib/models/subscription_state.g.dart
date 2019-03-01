@@ -13,7 +13,7 @@ SubscriptionState _$SubscriptionStateFromJson(Map<String, dynamic> json) {
           ? null
           : Subscription.fromJson(json['subscription'] as List),
       pickups: (json['pickups'] as List)
-          ?.map((e) =>
+          ?.map((dynamic e) =>
               e == null ? null : Pickup.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       error: json['error'] as String);

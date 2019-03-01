@@ -11,6 +11,7 @@
 //     final dyn =  List<dynamic>.from(data.map((x) => x.toJson()));
 //     return json.encode(dyn);
 // }
+import '../services/utils.dart';
 
 class Pickup {
     int id;
@@ -19,7 +20,7 @@ class Pickup {
     List<double> position;
     int averageDuration;
     int averageQuantity;
-    String pickupDate;
+    DateTime pickupDate;
     dynamic duration;
     bool completed;
     bool customerUnavailable;
@@ -48,7 +49,7 @@ class Pickup {
         position: List<double>.from(json['position'].map((dynamic x) => x.toDouble())),
         averageDuration: json['average_duration'],
         averageQuantity: json['average_quantity'],
-        pickupDate: json['pickup_date'],
+        pickupDate: DateTime.parse(json['pickup_date']),
         duration: json['duration'],
         completed: json['completed'],
         customerUnavailable: json['customer_unavailable'],
@@ -63,7 +64,7 @@ class Pickup {
         'position':  List<dynamic>.from(position.map<double>((dynamic x) => x)),
         'average_duration': averageDuration,
         'average_quantity': averageQuantity,
-        'pickup_date': pickupDate,
+        'pickup_date': dateToString(pickupDate),
         'duration': duration,
         'completed': completed,
         'customer_unavailable': customerUnavailable,

@@ -24,6 +24,8 @@ dependencies:
   shared_preferences: ^0.5.0
   redux_remote_devtools: ^0.0.7
   json_annotation: ^2.0.0
+  timeline_list: ^0.0.3
+
 
    # Redux
   redux: ^3.0.0

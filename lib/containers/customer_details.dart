@@ -23,11 +23,11 @@ class CustomerDetails extends StatelessWidget {
           return ErrorText(error: viewModel.customerState.error);
         }
 
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: _createColumn(context, viewModel),
-          ),
+        return Container(
+            padding: EdgeInsets.all(16),
+            child: Center(
+              child: _createColumn(context, viewModel),
+            ), 
         );
       },
     );
@@ -40,8 +40,8 @@ class CustomerDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         PartialBoldText(
-          boldText: 'Nom: ',
-          normalText: customer.toString(),
+          boldText: 'Client: ',
+          normalText: '${customer.firstName} ${customer.lastName}',
           defaultText: 'Not set',
         ),
         PartialBoldText(

@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 
 import '../actions/auth_actions.dart';
 import '../models/app_state.dart';
+import '../services/colors.dart';
 
 
 class LoginForm extends StatefulWidget {
@@ -25,6 +26,7 @@ class LoginFormState extends State<LoginForm> {
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
+            Container(height: 100),
             _showEmailInput(),
             _showPasswordInput(),
             _showErrorMessage(),
@@ -90,7 +92,7 @@ class LoginFormState extends State<LoginForm> {
             elevation: 5.0,
             minWidth: 200.0,
             height: 42.0,
-            color: Colors.blue,
+            color: lightAccentColor,
             child: Text('Login',
               style: TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: () {

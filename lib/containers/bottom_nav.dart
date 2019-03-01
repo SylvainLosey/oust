@@ -25,16 +25,16 @@ class BottomNav extends StatelessWidget {
   List<BottomNavigationBarItem> _getItems() {
     return <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.list),
+        icon: Icon(Icons.send),
         title: Text('Passage unique'),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.person),
+        icon: Icon(Icons.list),
         title: Text('Abonnement'),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.vibration),
-        title: Text('Profile'),
+        icon: Icon(Icons.person),
+        title: Text('Profil'),
       ),
     ];
   }
