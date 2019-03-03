@@ -10,7 +10,6 @@ import '../models/app_state.dart';
 import '../models/pickup.dart';
 import '../models/subscription.dart';
 import '../models/subscription_state.dart';
-import '../services/colors.dart';
 import '../services/utils.dart';
 
 class SubscriptionDetails extends StatelessWidget {

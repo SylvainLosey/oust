@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../presentation/layout.dart';
+
 class BaseCard extends StatelessWidget {
   final Widget child;
 
@@ -8,11 +10,11 @@ class BaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 12.0),
+      // margin: EdgeInsets.symmetric(vertical: 12.0),
       // elevation: 2.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
-        padding: EdgeInsets.all(18.0),
+        padding: EdgeInsets.all(LayoutContainer.of(context).matGridUnit(scale: 2)),
         child: child,
       ),
     );

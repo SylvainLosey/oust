@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../components/base_card.dart';
 import '../presentation/layout.dart';
-import '../services/utils.dart';
 
-class PickupCard extends StatelessWidget {
-  final DateTime date;
-  final String hour;
+class PaymentCard extends StatelessWidget {
+  final String paymentType;
 
-  PickupCard({this.date, this.hour});
+  PaymentCard({this.paymentType});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +17,8 @@ class PickupCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              dateToStringFrench(date),
+              paymentType,
               style: Theme.of(context).textTheme.body2
-            ),
-            Text(
-              hour,
             ),
           ],
         ),

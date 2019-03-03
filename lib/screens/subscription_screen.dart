@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../containers/subscription_details.dart';
+import '../containers/subscription/subscription_home.dart';
 import '../models/app_state.dart';
 import '../screens/login_screen.dart';
 
@@ -15,7 +15,7 @@ class SubscriptionScreen extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         if (viewModel.isAuthenticated) {
-          return SubscriptionDetails();
+          return SubscriptionHome();
         } else {
           return LoginScreen();
         }

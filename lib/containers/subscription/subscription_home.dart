@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../components/error_text.dart';
-import '../components/loading.dart';
-import '../components/pickup_card.dart';
-import '../models/app_state.dart';
-import '../models/subscription_state.dart';
+import '../../components/error_text.dart';
+import '../../components/loading.dart';
+import '../../components/location_card.dart';
+import '../../components/payment_card.dart';
+import '../../components/pickup_card.dart';
+import '../../components/title.dart';
+import '../../models/app_state.dart';
+import '../../models/subscription_state.dart';
 
-class SubscriptionDetails extends StatelessWidget {
+class SubscriptionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
@@ -24,24 +27,25 @@ class SubscriptionDetails extends StatelessWidget {
           return ErrorText(error: viewModel.subscriptionState.error);
         }
         
-        
         return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(12.0),
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(height: 100,),
-              Text(
-                'Prochain passage',
-                style:TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
+              Container(height: 50,),
+              TextTitle('Prochain passage'),
               PickupCard(
                 date: viewModel.subscriptionState.pickups[0].pickupDate,
                 hour: '08:00 - 10:00'
+              ),
+              TextTitle('Moyen de paiement'),
+              PaymentCard(paymentType: 'Facture'),
+              TextTitle('Emplacement'),
+              LocationCard(
+                address: viewModel.subscriptionState.subscription.address,
+                postcode: viewModel.subscriptionState.subscription.postcode,
+                city: viewModel.subscriptionState.subscription.city,
               )
             ],
           ),
