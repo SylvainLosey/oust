@@ -14,7 +14,10 @@ class LogoutButton extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         return RaisedButton(
-          child: Text('Logout'),
+          child: Text(
+            'Logout',
+            style: TextStyle(color:Colors.white),
+          ),
           onPressed: viewModel.onPressed
         );
       },

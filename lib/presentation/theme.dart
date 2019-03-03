@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-final ThemeData whiteTheme = ThemeData(
-  brightness: Brightness.light,
-  fontFamily: 'ProductSans',
-  primaryColor: lightPrimaryColor,
-  accentColor: lightAccentColor,
-  dividerColor: lightDividerColor,
-  canvasColor: lightBackgroundColor,
-  scaffoldBackgroundColor: lightBackgroundColor,
+final ThemeData appTheme = ThemeData(
+//  fontFamily: 'ProductSans',
+  primaryColor: primaryColor,
+  accentColor: accentColor,
+  scaffoldBackgroundColor: backgroundColor,
+
+  buttonTheme: ButtonThemeData(
+    minWidth: 300,
+    height: 40,
+  )
+
 );

@@ -10,10 +10,15 @@ class TextTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: LayoutContainer.of(context).matGridUnit()),
+      padding: EdgeInsets.only(
+        top: LayoutContainer.of(context).matGridUnit(scale:4),
+        bottom: LayoutContainer.of(context).matGridUnit(scale:1)
+      ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.title
+        style: Theme.of(context).textTheme.subhead.copyWith(
+          fontWeight: FontWeight.w500
+        )
       )
     );
   }

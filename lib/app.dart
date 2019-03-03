@@ -8,6 +8,8 @@ import 'presentation/layout.dart';
 import 'presentation/theme.dart';
 import 'screens/screens.dart';
 
+import 'presentation/colors.dart';
+
 class App extends StatelessWidget {
   final Store<AppState> store;
 
@@ -20,7 +22,21 @@ class App extends StatelessWidget {
       child: LayoutContainer(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: whiteTheme,
+          theme: ThemeData(
+          //  fontFamily: 'ProductSans',
+            primaryColor: primaryColor,
+            accentColor: accentColor,
+            scaffoldBackgroundColor: backgroundColor,
+
+            buttonTheme: ButtonThemeData(
+              //minWidth: 300,
+              //height: 40,
+              buttonColor: primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
+            )
+          ),
           title: 'Oust!',
           routes: <String, WidgetBuilder>{
             '/': (BuildContext context) => MainScreen()

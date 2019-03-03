@@ -10,19 +10,16 @@ class PaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: LayoutContainer.of(context).matGridUnit(scale: 3)),
-      child: BaseCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              paymentType,
-              style: Theme.of(context).textTheme.body2
-            ),
-          ],
-        ),
-      )
+    return BaseCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            paymentType,
+            style: Theme.of(context).textTheme.body2
+          ),
+        ],
+      ),
     );
   }
 }

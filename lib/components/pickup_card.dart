@@ -12,21 +12,33 @@ class PickupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: LayoutContainer.of(context).matGridUnit(scale: 3)),
-      child: BaseCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              dateToStringFrench(date),
-              style: Theme.of(context).textTheme.body2
+    return BaseCard(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  dateToStringFrench(date),
+                  style: Theme.of(context).textTheme.body2
+                ),
+                Text(
+                  hour,
+                  style: Theme.of(context).textTheme.body1
+                ),
+              ],
             ),
-            Text(
-              hour,
-            ),
-          ],
-        ),
+          ),
+
+          RaisedButton(
+            onPressed: () {},
+            child: Text(
+              'Modifier',
+              style: TextStyle(color: Colors.white),
+            )
+          )
+        ],
       )
     );
   }
