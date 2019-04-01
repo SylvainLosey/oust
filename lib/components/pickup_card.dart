@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/base_card.dart';
 import '../presentation/layout.dart';
-import '../services/utils.dart';
+import '../utils/datetime_utils.dart';
 
 class PickupCard extends StatelessWidget {
   final DateTime date;

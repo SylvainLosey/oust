@@ -12,6 +12,7 @@ import '../../models/app_state.dart';
 import '../../models/pickup.dart';
 import '../../models/subscription.dart';
 import '../../presentation/layout.dart';
+import '../../utils/pickup_utils.dart';
 import 'pickup_list.dart';
 
 class SubscriptionHome extends StatelessWidget {
@@ -61,7 +62,7 @@ class SubscriptionHome extends StatelessWidget {
 
                 TextTitle('Prochain passage'),
                 PickupCard(
-                  date: viewModel.pickups[0].pickupDate,
+                  date: PickupUtils.getNextPickup(viewModel.pickups).pickupDate,
                   hour: '08:00 - 10:00'
                 ),
                 Align(

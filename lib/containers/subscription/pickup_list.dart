@@ -9,37 +9,35 @@ import '../../components/loading.dart';
 import '../../components/pickup_card.dart';
 import '../../models/app_state.dart';
 import '../../models/pickup.dart';
+import '../../utils/pickup_utils.dart';
 
 class PickupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-        distinct: true,
-        converter: (Store<AppState> store) => _ViewModel.fromStore(store),
-        builder: (BuildContext context, _ViewModel viewModel) {
-          if (viewModel.isLoading) {
-            return Loading();
-          }
+      distinct: true,
+      converter: (Store<AppState> store) => _ViewModel.fromStore(store),
+      builder: (BuildContext context, _ViewModel viewModel) {
+        if (viewModel.isLoading) {
+          return Loading();
+        }
 
-          if (viewModel.error != null) {
-            return ErrorText(error: viewModel.error);
-          }
+        if (viewModel.error != null) {
+          return ErrorText(error: viewModel.error);
+        }
 
-          final List<TimelineModel> items = <TimelineModel>[];
-          for (Pickup pickup in viewModel.pickups) {
-            if (pickup.pickupDate.isAfter(DateTime.now())) {
-              items.add(_buildTimelineModel(pickup));
-            }
-          }
-          return Scaffold(
-            body:  Timeline(
-              children: items, 
-              position: TimelinePosition.Left, 
-              iconSize: 16,
-            )
-          );
-        },
-      
+        final List<TimelineModel> items = <TimelineModel>[];
+        final List<Pickup> pickupFromToday = PickupUtils.getPickupsFromToday(viewModel.pickups);
+        pickupFromToday.forEach((Pickup pickup) => items.add(_buildTimelineModel(pickup)));
+
+        return Scaffold(
+          body:  Timeline(
+            children: items, 
+            position: TimelinePosition.Left, 
+            iconSize: 16,
+          )
+        );
+      },
     );
   }
 
