@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../components/base_card.dart';
-import '../presentation/layout.dart';
+import '../presentation/base_card.dart';
+import '../utils/layout.dart';
 
 class LocationCard extends StatelessWidget {
   final String address;

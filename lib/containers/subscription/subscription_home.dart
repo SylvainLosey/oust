@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../components/error_text.dart';
-import '../../components/loading.dart';
-import '../../components/location_card.dart';
-import '../../components/payment_card.dart';
-import '../../components/pickup_card.dart';
-import '../../components/title.dart';
+import '../../presentation/error_text.dart';
+import '../../presentation/loading.dart';
+import '../../presentation/location_card.dart';
+import '../../presentation/payment_card.dart';
+import '../../presentation/pickup_card.dart';
+import '../../presentation/title.dart';
 import '../../models/app_state.dart';
 import '../../models/pickup.dart';
 import '../../models/subscription.dart';
-import '../../presentation/layout.dart';
+import '../../utils/layout.dart';
 import '../../utils/pickup_utils.dart';
 import 'pickup_list.dart';
 

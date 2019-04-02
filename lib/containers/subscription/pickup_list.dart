@@ -4,9 +4,9 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'package:redux/redux.dart';
 
-import '../../components/error_text.dart';
-import '../../components/loading.dart';
-import '../../components/pickup_card.dart';
+import '../../presentation/error_text.dart';
+import '../../presentation/loading.dart';
+import '../../presentation/pickup_card.dart';
 import '../../models/app_state.dart';
 import '../../models/pickup.dart';
 import '../../utils/pickup_utils.dart';

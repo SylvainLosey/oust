@@ -4,11 +4,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 
 import 'models/app_state.dart';
-import 'presentation/layout.dart';
-import 'presentation/theme.dart';
+import 'utils/layout.dart';
+import 'utils/theme.dart';
 import 'screens/screens.dart';
 
-import 'presentation/colors.dart';
+import 'utils/colors.dart';
 
 class App extends StatelessWidget {
   final Store<AppState> store;

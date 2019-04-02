@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../components/error_text.dart';
-import '../components/loading.dart';
-import '../components/partial_bold_text.dart';
+import '../presentation/error_text.dart';
+import '../presentation/loading.dart';
+import '../presentation/partial_bold_text.dart';
 import '../models/app_state.dart';
 import '../models/customer.dart';
 import '../models/customer_state.dart';

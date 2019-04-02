@@ -5,14 +5,14 @@ import '../models/auth_state.dart';
 
 
 Reducer<AuthState> authReducer = combineReducers([
-  TypedReducer<AuthState, UserLoginRequest>(_userLoginRequestReducer),
+  TypedReducer<AuthState, UserLoginRequest>(_userLoginRequest),
   TypedReducer<AuthState, UserLoginSuccess>(_userLoginRequestSuccess),
   TypedReducer<AuthState, UserLoaded>(_userLoaded),
   TypedReducer<AuthState, UserLoginFailure>(_userLoginRequestFailure),
-  TypedReducer<AuthState, UserLogout>(_userLogoutReducer),
+  TypedReducer<AuthState, UserLogout>(_userLogout),
 ]);
 
-AuthState _userLoginRequestReducer(AuthState state, UserLoginRequest action) {
+AuthState _userLoginRequest(AuthState state, UserLoginRequest action) {
   return state.copyWith(
     isLoading: true,
   );
@@ -39,7 +39,7 @@ AuthState _userLoginRequestFailure(AuthState state, UserLoginFailure action) {
   );
 }
 
-AuthState _userLogoutReducer(AuthState state, UserLogout action) {
+AuthState _userLogout(AuthState state, UserLogout action) {
   return state.copyWith(
     isLoading: false,
     isAuthenticated: false,
