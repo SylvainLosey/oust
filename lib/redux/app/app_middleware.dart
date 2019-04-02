@@ -18,9 +18,9 @@ class AppMiddleware {
   List<Middleware<AppState>> createAppMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, dynamic>(_logAction),
-      TypedMiddleware<AppState, LoadCustomerAction>(_loadCustomer),
-      TypedMiddleware<AppState, LoadSubscriptionAction>(_loadSubscription),
-      TypedMiddleware<AppState, LoadPickupsAction>(_loadPickups),
+      TypedMiddleware<AppState, LoadCustomerRequest>(_loadCustomer),
+      TypedMiddleware<AppState, LoadSubscriptionRequest>(_loadSubscription),
+      TypedMiddleware<AppState, LoadPickupsRequest>(_loadPickups),
     ];
   }
 
@@ -29,7 +29,7 @@ class AppMiddleware {
     next(action);
   }
 
-  void _loadCustomer(Store<AppState> store, LoadCustomerAction action, NextDispatcher next) async{
+  void _loadCustomer(Store<AppState> store, LoadCustomerRequest action, NextDispatcher next) async{
     next(action);
 
     try {
@@ -38,27 +38,27 @@ class AppMiddleware {
       final Customer customer = Customer.fromJson(customerData);
 
       store.dispatch(LoadCustomerSuccess(customer: customer));
-      store.dispatch(LoadSubscriptionAction(customer: customer));
+      store.dispatch(LoadSubscriptionRequest(customer: customer));
 
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));
     }
   }
 
-  void _loadSubscription(Store<AppState> store, LoadSubscriptionAction action, NextDispatcher next) async{
+  void _loadSubscription(Store<AppState> store, LoadSubscriptionRequest action, NextDispatcher next) async{
     next(action);
 
     try {
       final List<dynamic> subscriptionData = await repository.fetchSubscription(action.customer.id);
       final Subscription subscription = Subscription.fromJson(subscriptionData);
       store.dispatch(LoadSubscriptionSuccess(subscription: subscription));
-      store.dispatch(LoadPickupsAction(subscription: subscription));
+      store.dispatch(LoadPickupsRequest(subscription: subscription));
     } catch (e) {
       store.dispatch(LoadSubscriptionFailure(error: e.toString()));
     }
   }
 
-  void _loadPickups(Store<AppState> store, LoadPickupsAction action, NextDispatcher next) async{
+  void _loadPickups(Store<AppState> store, LoadPickupsRequest action, NextDispatcher next) async{
     next(action);
 
     try {

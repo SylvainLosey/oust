@@ -6,12 +6,12 @@ import 'customer_state.dart';
 
 
 Reducer<CustomerState> customerReducer = combineReducers([
-  TypedReducer<CustomerState, LoadCustomerAction>(_loadUserAction),
+  TypedReducer<CustomerState, LoadCustomerRequest>(_loadCustomerRequest),
   TypedReducer<CustomerState, LoadCustomerSuccess>(_loadCustomerSuccess),
   TypedReducer<CustomerState, LoadCustomerFailure>(_loadCustomerFailure),
 ]);
 
-CustomerState _loadUserAction(CustomerState state, LoadCustomerAction action) {
+CustomerState _loadCustomerRequest(CustomerState state, LoadCustomerRequest action) {
   return state.copyWith(
     isLoading: true,
   );

@@ -10,7 +10,7 @@ part 'pickup_state.g.dart';
 @immutable
 class PickupState {
   final bool isLoading;
-  final List<Pickup> pickups;
+  final Map<dynamic, Pickup> pickups;
   final String error;
 
   PickupState({
@@ -20,7 +20,7 @@ class PickupState {
   });
 
   factory PickupState.fromJson(Map<String, dynamic> json) => _$PickupStateFromJson(json);
-  Map<String, dynamic> toJson() => _$PickupStateToJson(this);
+  Map<dynamic, dynamic> toJson() => _$PickupStateToJson(this);
 
   factory PickupState.initial() {
     return PickupState(
@@ -32,7 +32,7 @@ class PickupState {
 
   PickupState copyWith({
     bool isLoading,
-    List<Pickup> pickups,
+    Map<dynamic, Pickup> pickups,
     String error
   }) {
     return PickupState(

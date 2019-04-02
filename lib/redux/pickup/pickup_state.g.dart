@@ -9,10 +9,10 @@ part of 'pickup_state.dart';
 PickupState _$PickupStateFromJson(Map<String, dynamic> json) {
   return PickupState(
       isLoading: json['isLoading'] as bool,
-      pickups: (json['pickups'] as List)
-          ?.map((e) =>
-              e == null ? null : Pickup.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      pickups: (json['pickups'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(
+            k, e == null ? null : Pickup.fromJson(e as Map<String, dynamic>)),
+      ),
       error: json['error'] as String);
 }
 

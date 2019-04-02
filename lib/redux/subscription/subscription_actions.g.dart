@@ -6,16 +6,16 @@ part of 'subscription_actions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoadSubscriptionAction _$LoadSubscriptionActionFromJson(
+LoadSubscriptionRequest _$LoadSubscriptionRequestFromJson(
     Map<String, dynamic> json) {
-  return LoadSubscriptionAction(
+  return LoadSubscriptionRequest(
       customer: json['customer'] == null
           ? null
           : Customer.fromJson(json['customer'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$LoadSubscriptionActionToJson(
-        LoadSubscriptionAction instance) =>
+Map<String, dynamic> _$LoadSubscriptionRequestToJson(
+        LoadSubscriptionRequest instance) =>
     <String, dynamic>{'customer': instance.customer};
 
 LoadSubscriptionSuccess _$LoadSubscriptionSuccessFromJson(

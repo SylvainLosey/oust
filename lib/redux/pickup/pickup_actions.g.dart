@@ -6,14 +6,14 @@ part of 'pickup_actions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoadPickupsAction _$LoadPickupsActionFromJson(Map<String, dynamic> json) {
-  return LoadPickupsAction(
+LoadPickupsRequest _$LoadPickupsRequestFromJson(Map<String, dynamic> json) {
+  return LoadPickupsRequest(
       subscription: json['subscription'] == null
           ? null
           : Subscription.fromJson(json['subscription'] as List));
 }
 
-Map<String, dynamic> _$LoadPickupsActionToJson(LoadPickupsAction instance) =>
+Map<String, dynamic> _$LoadPickupsRequestToJson(LoadPickupsRequest instance) =>
     <String, dynamic>{'subscription': instance.subscription};
 
 LoadPickupsSuccess _$LoadPickupsSuccessFromJson(Map<String, dynamic> json) {

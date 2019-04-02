@@ -7,11 +7,11 @@ import '../../data/models/subscription.dart';
 part 'pickup_actions.g.dart';
 
 @JsonSerializable()
-class LoadPickupsAction {
+class LoadPickupsRequest {
   final Subscription subscription;
 
-  LoadPickupsAction({@required this.subscription});
-  Map<String, dynamic> toJson() => _$LoadPickupsActionToJson(this);
+  LoadPickupsRequest({@required this.subscription});
+  Map<String, dynamic> toJson() => _$LoadPickupsRequestToJson(this);
 }
 
 @JsonSerializable()

@@ -52,16 +52,18 @@ class AuthMiddleware {
     }
   }
 
+
   void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UserLoaded(user: User(token: action.token, id: action.id, email: action.email)));
   }
 
+
   void _userLoaded(Store<AppState> store, UserLoaded action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(LoadCustomerAction(user: action.user));
+    store.dispatch(LoadCustomerRequest(user: action.user));
   }
 
 

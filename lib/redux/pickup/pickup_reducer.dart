@@ -1,16 +1,17 @@
 import 'package:redux/redux.dart';
 
+import '../../data/models/pickup.dart';
 import 'pickup_actions.dart';
 import 'pickup_state.dart';
 
 Reducer<PickupState> pickupReducer = combineReducers([
-  TypedReducer<PickupState, LoadPickupsAction>(_loadPickupsAction),
+  TypedReducer<PickupState, LoadPickupsRequest>(_loadPickupsRequest),
   TypedReducer<PickupState, LoadPickupsSuccess>(_loadPickupsSuccess),
   TypedReducer<PickupState, LoadPickupsFailure>(_loadPickupsFailure),
 ]);
 
 
-PickupState _loadPickupsAction(PickupState state, LoadPickupsAction action) {
+PickupState _loadPickupsRequest(PickupState state, LoadPickupsRequest action) {
   return state.copyWith(
     isLoading: true,
   );
@@ -19,7 +20,11 @@ PickupState _loadPickupsAction(PickupState state, LoadPickupsAction action) {
 PickupState _loadPickupsSuccess(PickupState state, LoadPickupsSuccess action) {
   return state.copyWith(
     isLoading: false,
-    pickups: action.pickups,
+    pickups: Map<dynamic, Pickup>.fromIterable(
+      action.pickups,
+      key: (dynamic pickup) => pickup.id.toString(),
+      value: (dynamic pickup) => pickup,
+    ),
   );
 }
 

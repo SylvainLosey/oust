@@ -5,12 +5,12 @@ import 'subscription_state.dart';
 
 
 Reducer<SubscriptionState> subscriptionReducer = combineReducers([
-  TypedReducer<SubscriptionState, LoadSubscriptionAction>(_loadSubscriptionAction),
+  TypedReducer<SubscriptionState, LoadSubscriptionRequest>(_loadSubscriptionRequest),
   TypedReducer<SubscriptionState, LoadSubscriptionSuccess>(_loadSubscriptionSuccess),
   TypedReducer<SubscriptionState, LoadSubscriptionFailure>(_loadSubscriptionFailure),
 ]);
 
-SubscriptionState _loadSubscriptionAction(SubscriptionState state, LoadSubscriptionAction action) {
+SubscriptionState _loadSubscriptionRequest(SubscriptionState state, LoadSubscriptionRequest action) {
   return state.copyWith(
     isLoading: true,
   );

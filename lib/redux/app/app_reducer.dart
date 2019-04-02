@@ -4,8 +4,13 @@ import '../customer/customer_reducer.dart';
 import '../nav/nav_reducer.dart';
 import '../subscription/subscription_reducer.dart';
 import '../pickup/pickup_reducer.dart';
+import '../auth/auth_actions.dart';
 
 AppState appReducer(AppState state, dynamic action) {
+  if (action is UserLogout) {
+    return AppState.initial();
+  }
+
   return AppState(
     authState: authReducer(state.authState, action),
     customerState: customerReducer(state.customerState, action),

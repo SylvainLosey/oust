@@ -8,11 +8,11 @@ import '../../data/models/subscription.dart';
 part 'subscription_actions.g.dart';
 
 @JsonSerializable()
-class LoadSubscriptionAction {
+class LoadSubscriptionRequest {
   final Customer customer;
 
-  LoadSubscriptionAction({@required this.customer});
-  Map<String, dynamic> toJson() => _$LoadSubscriptionActionToJson(this);
+  LoadSubscriptionRequest({@required this.customer});
+  Map<String, dynamic> toJson() => _$LoadSubscriptionRequestToJson(this);
 }
 
 @JsonSerializable()
