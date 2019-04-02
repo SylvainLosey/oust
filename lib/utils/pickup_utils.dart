@@ -1,4 +1,4 @@
-import '../models/pickup.dart';
+import '../data/models/pickup.dart';
 
 class PickupUtils {
 

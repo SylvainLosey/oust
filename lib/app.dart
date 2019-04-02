@@ -3,11 +3,10 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 
-import 'models/app_state.dart';
+import 'redux/app/app_state.dart';
+import 'ui/app/main_screen.dart';
 import 'utils/layout.dart';
 import 'utils/theme.dart';
-import 'screens/screens.dart';
-
 import 'utils/colors.dart';
 
 class App extends StatelessWidget {
