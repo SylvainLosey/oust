@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../../data/models/customer.dart';
-import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
 
 part 'subscription_actions.g.dart';

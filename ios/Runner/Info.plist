@@ -10,6 +10,10 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Example usage description</string>
 
+	<!-- Google Maps -->
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

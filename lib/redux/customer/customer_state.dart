@@ -20,7 +20,7 @@ class CustomerState {
 
   factory CustomerState.initial() {
     return CustomerState(
-      isLoading: true,
+      isLoading: null,
       customer: null,
       error: null,
     );

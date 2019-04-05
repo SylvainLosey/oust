@@ -11,8 +11,8 @@ class TextTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: LayoutContainer.of(context).matGridUnit(scale:4),
-        bottom: LayoutContainer.of(context).matGridUnit(scale:1)
+        top: Layout.of(context).gridUnit(4),
+        bottom: Layout.of(context).gridUnit(1)
       ),
       child: Text(
         text,

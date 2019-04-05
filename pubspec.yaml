@@ -24,6 +24,8 @@ dependencies:
   shared_preferences: ^0.5.0
   json_annotation: ^2.0.0
   timeline_list: ^0.0.3
+  google_maps_flutter: ^0.5.2
+
 
 
    # Redux

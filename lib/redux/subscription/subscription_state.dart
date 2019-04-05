@@ -24,7 +24,7 @@ class SubscriptionState {
 
   factory SubscriptionState.initial() {
     return SubscriptionState(
-      isLoading: true,
+      isLoading: null,
       subscription: null,
       error: null,
     );

@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'subscription_home.dart';
+import 'subscription_empty.dart';
 import '../../redux/app/app_state.dart';
 import '../auth/login_screen.dart';
 
@@ -17,7 +18,7 @@ class SubscriptionScreen extends StatelessWidget {
         if (viewModel.isAuthenticated) {
           return SubscriptionHome();
         } else {
-          return LoginScreen();
+          return SubscriptionEmpty();
         }
       },
     );

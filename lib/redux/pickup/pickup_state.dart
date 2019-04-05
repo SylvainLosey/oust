@@ -24,7 +24,7 @@ class PickupState {
 
   factory PickupState.initial() {
     return PickupState(
-      isLoading: true,
+      isLoading: null,
       pickups: null,
       error: null,
     );

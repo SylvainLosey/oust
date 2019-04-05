@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LayoutContainer extends StatefulWidget {
+class Layout extends StatefulWidget {
   final Widget child;
 
-  LayoutContainer({this.child});
+  Layout({this.child});
 
   @override
   State<StatefulWidget> createState() => LayoutState();
@@ -13,18 +13,18 @@ class LayoutContainer extends StatefulWidget {
   }
 }
 
-class LayoutState extends State<LayoutContainer> {
+class LayoutState extends State<Layout> {
   // Add all your theme properties and logic here:
   double get spacingUnit => 10.0;
-  static const double _matGridUnit = 8.0;
+  static const double _gridUnit = 8.0;
 
 
-  double matGridUnit({double scale = 1}) {
+  double gridUnit(double scale) {
     // Material design grid uses multiples of 8
     // Multiples of 4 are acceptable if needed
-    // Only accept numbers that are full or half units of _matGridUnit
+    // Only accept numbers that are full or half units of _gridUnit
     assert(scale % .5 == 0);
-    return _matGridUnit * scale;
+    return _gridUnit * scale;
   }
 
   @override

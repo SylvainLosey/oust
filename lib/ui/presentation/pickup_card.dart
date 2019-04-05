@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../presentation/base_card.dart';
 import '../../utils/layout.dart';
+import '../../utils/colors.dart';
 import '../../utils/datetime_utils.dart';
 
 class PickupCard extends StatelessWidget {
@@ -13,11 +14,13 @@ class PickupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseCard(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child:  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1)),
+        child:  Column(
+          children: <Widget>[
+            Container(height: Layout.of(context).gridUnit(1)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
                   dateToStringFrench(date),
@@ -29,17 +32,42 @@ class PickupCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-
-          RaisedButton(
-            onPressed: () {},
-            child: Text(
-              'Modifier',
-              style: TextStyle(color: Colors.white),
-            )
-          )
-        ],
+            Container(height: Layout.of(context).gridUnit(2)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                OutlineButton(
+                  onPressed: () {},
+                  highlightedBorderColor: primaryColor,
+                  child: Text(
+                    'Repousser',
+                    style: TextStyle(color: primaryColor),
+                  )
+                ),
+                OutlineButton(
+                  onPressed: () {},
+                  highlightedBorderColor: primaryColor,
+                  child: Text(
+                    'Annuler',
+                    style: TextStyle(color: primaryColor),
+                  )
+                ),
+                OutlineButton(
+                  onPressed: () {},
+                  highlightedBorderColor: primaryColor,
+                  child: Text(
+                    'Remarque',
+                    style: TextStyle(color: primaryColor),
+                  )
+                ),
+              ],
+            ),
+            // Container(height: Layout.of(context).gridUnit(1)),
+          ],
+        )
       )
+      
+      
     );
   }
 }

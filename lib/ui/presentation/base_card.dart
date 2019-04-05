@@ -14,7 +14,7 @@ class BaseCard extends StatelessWidget {
       // elevation: 2.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
-        padding: EdgeInsets.all(LayoutContainer.of(context).matGridUnit(scale: 2)),
+        padding: EdgeInsets.all(Layout.of(context).gridUnit(2)),
         child: child,
       ),
     );

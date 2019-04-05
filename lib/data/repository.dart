@@ -9,7 +9,7 @@ class Repository {
   const Repository({this.client = const WebClient()});
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final Map<String, String> credentials = {
+    final Map<String, String> credentials = <String, String>{
       'username': email,
       'password': password,
     };
