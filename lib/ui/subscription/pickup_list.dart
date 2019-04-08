@@ -18,7 +18,7 @@ class PickupList extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        if (viewModel.isLoading) {
+        if (viewModel.fetchCount > 0) {
           return Loading();
         }
 
@@ -58,12 +58,12 @@ class PickupList extends StatelessWidget {
 
 @immutable
 class _ViewModel {
-  final bool isLoading;
+  final int fetchCount;
   final String error;
   // final List<Pickup> pickups;
 
   _ViewModel({
-    @required this.isLoading,
+    @required this.fetchCount,
     @required this.error,
     // @required this.pickups,
 
@@ -71,7 +71,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isLoading: store.state.subscriptionState.isLoading,
+      fetchCount: store.state.subscriptionState.fetchCount,
       error: store.state.subscriptionState.error,
       // pickups: store.state.subscriptionState.pickups,
     );

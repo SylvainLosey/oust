@@ -7,7 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WebClient {
   // static String baseUrl = 'http://10.0.2.2:8000/api';
-  static String baseUrl = 'https://admin.oust.ch/api';
+  // static String baseUrl = 'https://admin.oust.ch/api';
+
+  // ANDROID
+  // static String baseUrl = 'http://10.0.2.2:5000/api';
+
+  // iOS
+  static String baseUrl = 'http://localhost:5000/api';
 
   const WebClient();
 

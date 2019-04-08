@@ -9,11 +9,14 @@ import '../presentation/loading.dart';
 import '../presentation/location_card.dart';
 import '../presentation/payment_card.dart';
 import '../presentation/pickup_card.dart';
+import '../presentation/buttons.dart';
 import '../presentation/title.dart';
 import '../../redux/app/app_state.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
+import '../../data/models/customer.dart';
 import '../../utils/layout.dart';
+import '../../utils/colors.dart';
 import '../../utils/pickup_utils.dart';
 import 'pickup_list.dart';
 
@@ -26,7 +29,7 @@ class SubscriptionHome extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
 
-        if (viewModel.isLoading) {
+        if (viewModel.fetchCount > 0) {
           return Loading();
         }
 
@@ -37,7 +40,7 @@ class SubscriptionHome extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _buildStack(context),
+            _buildStack(context, viewModel),
             Container(height: Layout.of(context).gridUnit(14)),
             Container(
               alignment: Alignment.centerLeft,
@@ -68,9 +71,7 @@ class SubscriptionHome extends StatelessWidget {
 }
 
 
-
-
-Widget _buildStack(BuildContext context) {
+Widget _buildStack(BuildContext context, _ViewModel viewModel) {
   return Stack(
     alignment: AlignmentDirectional.topCenter,
     overflow: Overflow.visible,
@@ -109,7 +110,7 @@ Widget _buildStack(BuildContext context) {
       Positioned(
         bottom:  Layout.of(context).gridUnit(7),
         child: Text(
-          'Nicholas Cooper',
+          viewModel.subscription.representation,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)
         )
       ),
@@ -122,19 +123,9 @@ Widget _buildStack(BuildContext context) {
       ),
       Positioned(
         bottom: -Layout.of(context).gridUnit(2),
-        child: Container(
-          height: 35,
-          width: 180,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: LinearGradient(
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              colors: <Color>[Color(0xFF23836D), Color(0xFF00B78E)]
-            ),
-            boxShadow: [BoxShadow(spreadRadius: 3, blurRadius: 10, color: Colors.grey.withOpacity(0.4))]
-          ),
-          child: Center(child: Text('Abonnement standard', style: TextStyle(color: Colors.white)))
+        child: GradientButton(
+          onPressed: () {print('Hello');},
+          child: Text('Abonnement Standard', style: TextStyle(color: Colors.white))
         )
       )
     ],
@@ -147,25 +138,24 @@ Widget _buildStack(BuildContext context) {
 
 @immutable
 class _ViewModel {
-  final bool isLoading;
+  final int fetchCount;
   final String error;
   final Subscription subscription;
-  // final List<Pickup> pickups;
+  final Customer customer;
 
   _ViewModel({
-    @required this.isLoading,
-    @required this.error,
-    @required this.subscription,
-    // @required this.pickups,
-
+    this.fetchCount,
+    this.error,
+    this.subscription,
+    this.customer,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isLoading: store.state.subscriptionState.isLoading,
+      fetchCount: store.state.subscriptionState.fetchCount,
       error: store.state.subscriptionState.error,
       subscription: store.state.subscriptionState.subscription,
-      // pickups: store.state.subscriptionState.pickups,
+      customer: store.state.customerState.customer,
     );
   }
 }

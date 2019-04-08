@@ -16,17 +16,11 @@ Map<String, dynamic> _$UserLoginRequestToJson(UserLoginRequest instance) =>
 
 UserLoginSuccess _$UserLoginSuccessFromJson(Map<String, dynamic> json) {
   return UserLoginSuccess(
-      token: json['token'] as String,
-      id: json['id'] as int,
-      email: json['email'] as String);
+      token: json['token'] as String, id: json['id'] as int);
 }
 
 Map<String, dynamic> _$UserLoginSuccessToJson(UserLoginSuccess instance) =>
-    <String, dynamic>{
-      'token': instance.token,
-      'id': instance.id,
-      'email': instance.email
-    };
+    <String, dynamic>{'token': instance.token, 'id': instance.id};
 
 UserLoaded _$UserLoadedFromJson(Map<String, dynamic> json) {
   return UserLoaded(

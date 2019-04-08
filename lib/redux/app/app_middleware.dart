@@ -7,6 +7,8 @@ import 'app_state.dart';
 import '../../data/models/customer.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
+import '../../data/models/consumer_subscription.dart';
+import '../../data/models/package.dart';
 import '../../data/repository.dart';
 
 
@@ -20,6 +22,8 @@ class AppMiddleware {
       TypedMiddleware<AppState, dynamic>(_logAction),
       TypedMiddleware<AppState, LoadCustomerRequest>(_loadCustomer),
       TypedMiddleware<AppState, LoadSubscriptionRequest>(_loadSubscription),
+      TypedMiddleware<AppState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscription),
+      TypedMiddleware<AppState, LoadPackagesRequest>(_loadPackages),
       TypedMiddleware<AppState, LoadPickupsRequest>(_loadPickups),
     ];
   }
@@ -33,12 +37,12 @@ class AppMiddleware {
     next(action);
 
     try {
-      final Map<String, dynamic> customerData = await repository.fetchCustomer(action.user.id);
-
-      final Customer customer = Customer.fromJson(customerData);
+      final List<dynamic> customerData = await repository.fetchCustomer(action.user.id);
+      final Customer customer = Customer.fromJson(customerData[0]);
 
       store.dispatch(LoadCustomerSuccess(customer: customer));
       store.dispatch(LoadSubscriptionRequest(customer: customer));
+      store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
 
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));
@@ -50,11 +54,35 @@ class AppMiddleware {
 
     try {
       final List<dynamic> subscriptionData = await repository.fetchSubscription(action.customer.id);
-      final Subscription subscription = Subscription.fromJson(subscriptionData);
+      final Subscription subscription = Subscription.fromJson(subscriptionData[0]);
       store.dispatch(LoadSubscriptionSuccess(subscription: subscription));
       store.dispatch(LoadPickupsRequest(subscription: subscription));
     } catch (e) {
       store.dispatch(LoadSubscriptionFailure(error: e.toString()));
+    }
+  }
+
+  void _loadConsumerSubscription(Store<AppState> store, LoadConsumerSubscriptionRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> consumerSubscriptionData = await repository.fetchConsumerSubscription(action.customer.id);
+      final ConsumerSubscription consumerSubscription = ConsumerSubscription.fromJson(consumerSubscriptionData[0]);
+      store.dispatch(LoadConsumerSubscriptionSuccess(consumerSubscription: consumerSubscription));
+    } catch (e) {
+      store.dispatch(LoadConsumerSubscriptionFailure(error: e.toString()));
+    }
+  }
+
+  void _loadPackages(Store<AppState> store, LoadPackagesRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> packagesData = await repository.fetchPackages();
+      final List<Package> packages = List<Package>.from(packagesData.map<dynamic>((dynamic x) => Package.fromJson(x)));
+      store.dispatch(LoadPackagesSuccess(packages: packages));
+    } catch (e) {
+      store.dispatch(LoadPackagesFailure(error: e.toString()));
     }
   }
 

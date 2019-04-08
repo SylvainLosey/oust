@@ -10,7 +10,8 @@ LoadPickupsRequest _$LoadPickupsRequestFromJson(Map<String, dynamic> json) {
   return LoadPickupsRequest(
       subscription: json['subscription'] == null
           ? null
-          : Subscription.fromJson(json['subscription'] as List));
+          : Subscription.fromJson(
+              json['subscription'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadPickupsRequestToJson(LoadPickupsRequest instance) =>

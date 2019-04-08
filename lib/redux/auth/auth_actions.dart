@@ -21,9 +21,8 @@ class UserLoginRequest {
 class UserLoginSuccess {
   final String token;
   final int id;
-  final String email;
 
-  UserLoginSuccess({this.token, this.id, this.email});
+  UserLoginSuccess({this.token, this.id});
 
   factory UserLoginSuccess.fromJson(Map<String, dynamic> json) => _$UserLoginSuccessFromJson(json);
   Map<String, dynamic> toJson() => _$UserLoginSuccessToJson(this);

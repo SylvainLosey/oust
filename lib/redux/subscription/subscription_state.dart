@@ -3,20 +3,26 @@ import 'package:meta/meta.dart';
 
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
+import '../../data/models/consumer_subscription.dart';
+import '../../data/models/package.dart';
 
 part 'subscription_state.g.dart';
 
 @JsonSerializable()
 @immutable
 class SubscriptionState {
-  final bool isLoading;
   final Subscription subscription;
+  final ConsumerSubscription consumerSubscription;
+  final List<Package> packages;
+  final int fetchCount;
   final String error;
 
   SubscriptionState({
-    @required this.isLoading,
-    @required this.subscription,
-    @required this.error,
+    this.subscription,
+    this.consumerSubscription,
+    this.packages,
+    this.fetchCount,
+    this.error,
   });
 
   factory SubscriptionState.fromJson(Map<String, dynamic> json) => _$SubscriptionStateFromJson(json);
@@ -24,21 +30,26 @@ class SubscriptionState {
 
   factory SubscriptionState.initial() {
     return SubscriptionState(
-      isLoading: null,
       subscription: null,
+      consumerSubscription: null,
+      packages: null,
+      fetchCount: 0,
       error: null,
     );
   }
 
   SubscriptionState copyWith({
-    bool isLoading,
     Subscription subscription,
-    List<Pickup> pickups,
+    ConsumerSubscription consumerSubscription,
+    List<Package> packages,
+    int fetchCount,
     String error
   }) {
     return SubscriptionState(
-      isLoading: isLoading ?? this.isLoading,
       subscription: subscription ?? this.subscription,
+      consumerSubscription: consumerSubscription ?? this.consumerSubscription,
+      packages: packages ?? this.packages,
+      fetchCount: fetchCount ?? this.fetchCount,
       error: error ?? this.error,
     );
   }

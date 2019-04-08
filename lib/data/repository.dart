@@ -10,19 +10,27 @@ class Repository {
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final Map<String, String> credentials = <String, String>{
-      'username': email,
+      'email': email,
       'password': password,
     };
 
-    return await client.post('/login/', credentials);
+    return await client.post('/rest-auth/login/', credentials);
   }
 
-  Future<Map<String, dynamic>> fetchCustomer(int id) async {
-    return await client.get('/customers/$id/');
+  Future<List<dynamic>> fetchCustomer(int id) async {
+    return await client.get('/customers/?user=$id/');
   }
 
   Future<List<dynamic>> fetchSubscription(int id) async {
+    return await client.get('/subscriptions/?customer=$id/');
+  }
+
+  Future<List<dynamic>> fetchConsumerSubscription(int id) async {
     return await client.get('/consumersubscriptions/?customer=$id/');
+  }
+
+  Future<List<dynamic>> fetchPackages() async {
+    return await client.get('/packages/');
   }
 
   Future<List<dynamic>> fetchPickups(int id) async {

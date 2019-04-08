@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_actions.dart';
 import '../customer/customer_actions.dart';
+import '../subscription/subscription_actions.dart';
 import '../app/app_state.dart';
 import '../../data/models/user.dart';
 import '../../data/repository.dart';
@@ -28,11 +29,10 @@ class AuthMiddleware {
     if (await _hasAuthData()) {
       final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
-        user: User(token: authData['token'], id: authData['id'], email: authData['email'])
+        user: User(token: authData['token'], id: authData['id'])
       ));
     }
   }
-
 
   void _userLoginRequest(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
     next(action);
@@ -40,12 +40,11 @@ class AuthMiddleware {
     try {
       final Map<String, dynamic> authData = await repository.login(action.email, action.password);
 
-      _persistAuthData(authData['token'], authData['id'], authData['email']);
+      _persistAuthData(authData['key'], authData['user']);
 
       store.dispatch(UserLoginSuccess(
-        token: authData['token'],
-        id: authData['id'],
-        email: authData['email']
+        token: authData['key'],
+        id: authData['user'],
       ));
     } catch (e) {
       store.dispatch(UserLoginFailure(error: e.toString()));
@@ -56,7 +55,7 @@ class AuthMiddleware {
   void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UserLoaded(user: User(token: action.token, id: action.id, email: action.email)));
+    store.dispatch(UserLoaded(user: User(token: action.token, id: action.id)));
   }
 
 
@@ -64,6 +63,7 @@ class AuthMiddleware {
     next(action);
 
     store.dispatch(LoadCustomerRequest(user: action.user));
+    store.dispatch(LoadPackagesRequest());
   }
 
 
@@ -81,7 +81,6 @@ class AuthMiddleware {
     final Map<String, dynamic> authData = <String, dynamic>{
       'token': prefs.getString('token'),
       'id': prefs.getInt('id'),
-      'email': prefs.getString('email'),
     };
 
     return authData;
@@ -91,13 +90,11 @@ class AuthMiddleware {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     await prefs.remove('id');
-    await prefs.remove('email');
   }
 
-  Future<void> _persistAuthData(String token, int id, String email) async {
+  Future<void> _persistAuthData(String token, int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
-    await prefs.setString('email', email);
     await prefs.setInt('id', id);
   }
 

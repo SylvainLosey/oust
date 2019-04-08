@@ -14,16 +14,13 @@ class Customer{
     @JsonKey(name: 'last_name')
     String lastName;
     String address;
-    String postcode;
+    int postcode;
     String city;
     @JsonKey(name: 'prefered_communication')
     String preferedCommunication;
     @JsonKey(name: 'prefered_payment_method')
     String preferedPaymentMethod;
     @JsonKey(name: 'bexio_id')
-    String bexioId;
-    String created;
-    String modified;
     int user;
 
     Customer({
@@ -38,9 +35,6 @@ class Customer{
         this.city,
         this.preferedCommunication,
         this.preferedPaymentMethod,
-        this.bexioId,
-        this.created,
-        this.modified,
         this.user,
     });
 

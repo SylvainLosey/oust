@@ -23,7 +23,8 @@ LoadSubscriptionSuccess _$LoadSubscriptionSuccessFromJson(
   return LoadSubscriptionSuccess(
       subscription: json['subscription'] == null
           ? null
-          : Subscription.fromJson(json['subscription'] as List));
+          : Subscription.fromJson(
+              json['subscription'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadSubscriptionSuccessToJson(
@@ -37,4 +38,66 @@ LoadSubscriptionFailure _$LoadSubscriptionFailureFromJson(
 
 Map<String, dynamic> _$LoadSubscriptionFailureToJson(
         LoadSubscriptionFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+LoadConsumerSubscriptionRequest _$LoadConsumerSubscriptionRequestFromJson(
+    Map<String, dynamic> json) {
+  return LoadConsumerSubscriptionRequest(
+      customer: json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$LoadConsumerSubscriptionRequestToJson(
+        LoadConsumerSubscriptionRequest instance) =>
+    <String, dynamic>{'customer': instance.customer};
+
+LoadConsumerSubscriptionSuccess _$LoadConsumerSubscriptionSuccessFromJson(
+    Map<String, dynamic> json) {
+  return LoadConsumerSubscriptionSuccess(
+      consumerSubscription: json['consumerSubscription'] == null
+          ? null
+          : ConsumerSubscription.fromJson(
+              json['consumerSubscription'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$LoadConsumerSubscriptionSuccessToJson(
+        LoadConsumerSubscriptionSuccess instance) =>
+    <String, dynamic>{'consumerSubscription': instance.consumerSubscription};
+
+LoadConsumerSubscriptionFailure _$LoadConsumerSubscriptionFailureFromJson(
+    Map<String, dynamic> json) {
+  return LoadConsumerSubscriptionFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadConsumerSubscriptionFailureToJson(
+        LoadConsumerSubscriptionFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+LoadPackagesRequest _$LoadPackagesRequestFromJson(Map<String, dynamic> json) {
+  return LoadPackagesRequest();
+}
+
+Map<String, dynamic> _$LoadPackagesRequestToJson(
+        LoadPackagesRequest instance) =>
+    <String, dynamic>{};
+
+LoadPackagesSuccess _$LoadPackagesSuccessFromJson(Map<String, dynamic> json) {
+  return LoadPackagesSuccess(
+      packages: (json['packages'] as List)
+          ?.map((e) =>
+              e == null ? null : Package.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$LoadPackagesSuccessToJson(
+        LoadPackagesSuccess instance) =>
+    <String, dynamic>{'packages': instance.packages};
+
+LoadPackagesFailure _$LoadPackagesFailureFromJson(Map<String, dynamic> json) {
+  return LoadPackagesFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadPackagesFailureToJson(
+        LoadPackagesFailure instance) =>
     <String, dynamic>{'error': instance.error};

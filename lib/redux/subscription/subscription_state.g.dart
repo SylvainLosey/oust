@@ -8,16 +8,26 @@ part of 'subscription_state.dart';
 
 SubscriptionState _$SubscriptionStateFromJson(Map<String, dynamic> json) {
   return SubscriptionState(
-      isLoading: json['isLoading'] as bool,
       subscription: json['subscription'] == null
           ? null
-          : Subscription.fromJson(json['subscription'] as List),
+          : Subscription.fromJson(json['subscription'] as Map<String, dynamic>),
+      consumerSubscription: json['consumerSubscription'] == null
+          ? null
+          : ConsumerSubscription.fromJson(
+              json['consumerSubscription'] as Map<String, dynamic>),
+      packages: (json['packages'] as List)
+          ?.map((e) =>
+              e == null ? null : Package.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      fetchCount: json['fetchCount'] as int,
       error: json['error'] as String);
 }
 
 Map<String, dynamic> _$SubscriptionStateToJson(SubscriptionState instance) =>
     <String, dynamic>{
-      'isLoading': instance.isLoading,
       'subscription': instance.subscription,
+      'consumerSubscription': instance.consumerSubscription,
+      'packages': instance.packages,
+      'fetchCount': instance.fetchCount,
       'error': instance.error
     };
