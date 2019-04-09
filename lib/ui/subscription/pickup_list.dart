@@ -45,7 +45,7 @@ class PickupList extends StatelessWidget {
   TimelineModel _buildTimelineModel(Pickup pickup) {
     return TimelineModel(
       PickupCard(
-        date: pickup.pickupDate,
+        date: DateTime.now(),
         hour: '08:00-10:100'
       ),
       position: TimelineItemPosition.left,

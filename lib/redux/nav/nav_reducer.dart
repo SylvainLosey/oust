@@ -13,18 +13,7 @@ Reducer<NavState> navReducer = combineReducers([
 ]);
 
 NavState _changeBottomNav(NavState state, ChangeBottomNavAction action) {
-  Widget rootScreen = state.rootScreen;
-
-  if (action.index == 0) {
-    rootScreen = LiftsScreen();
-  } else if (action.index == 1) {
-    rootScreen = SubscriptionScreen();
-  } else if (action.index == 2) {
-    rootScreen = ProfileScreen();
-  }
-
-  return state.copyWith(
-    selectedBottomNav: action.index,
-    rootScreen: rootScreen,
+  return state.rebuild((b) => b
+    ..selectedBottomNav = action.index,
   );
 }

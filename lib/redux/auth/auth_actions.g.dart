@@ -23,8 +23,9 @@ Map<String, dynamic> _$UserLoginSuccessToJson(UserLoginSuccess instance) =>
 
 UserLoaded _$UserLoadedFromJson(Map<String, dynamic> json) {
   return UserLoaded(
-      user:
-          json['user'] == null ? null : User.fromJson(json['user'] as String));
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$UserLoadedToJson(UserLoaded instance) =>

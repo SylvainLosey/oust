@@ -1,6 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+library AppState;
 
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import '../../data/models/serializers.dart';
 import '../auth/auth_state.dart';
 import '../customer/customer_state.dart';
 import '../nav/nav_state.dart';
@@ -10,40 +14,34 @@ import '../pickup/pickup_state.dart';
 
 part 'app_state.g.dart';
 
-@JsonSerializable()
-@immutable
-class AppState {
-  @JsonKey(fromJson: AuthState.fromJson)
-  final AuthState authState;
-  @JsonKey(fromJson: CustomerState.fromJson)
-  final CustomerState customerState;
-  @JsonKey(fromJson: SubscriptionState.fromJson)
-  final SubscriptionState subscriptionState;
-  final SubscriptionFormState subscriptionFormState;
-  final PickupState pickupState;
-  final NavState navState;
+abstract class AppState implements Built<AppState, AppStateBuilder> {
+  AuthState get authState;
+  NavState get navState;
+  CustomerState get customerState;
+  SubscriptionState get subscriptionState;
+  SubscriptionFormState get subscriptionFormState;
+  PickupState get pickupState;
 
-  AppState({
-    @required this.authState,
-    @required this.customerState,
-    @required this.subscriptionState,
-    @required this.subscriptionFormState,
-    @required this.pickupState,
-    @required this.navState,
-  });
+  AppState._();
 
- factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
-  Map<String, dynamic> toJson() => _$AppStateToJson(this);
-
-
-  factory AppState.initial() {
-    return AppState(
+  factory AppState() {
+    return _$AppState._(
       authState: AuthState(),
-      customerState: CustomerState(),
+      navState: NavState(),
+      customerState:  CustomerState(),
       subscriptionState: SubscriptionState(),
-      subscriptionFormState: SubscriptionFormState.initial(),
-      pickupState: PickupState.initial(),
-      navState: NavState.initial(),
+      subscriptionFormState: SubscriptionFormState(),
+      pickupState: PickupState()
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(AppState.serializer, this);
+  }
+
+  static AppState fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(AppState.serializer, jsonString);
+  }
+
+  static Serializer<AppState> get serializer => _$appStateSerializer;
 }

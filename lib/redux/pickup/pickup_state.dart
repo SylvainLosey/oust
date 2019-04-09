@@ -1,44 +1,36 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+library PickupState;
+
+import 'dart:convert';
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 import '../../data/models/pickup.dart';
-import '../../data/models/subscription.dart';
+import '../../data/models/serializers.dart';
 
 part 'pickup_state.g.dart';
 
-@JsonSerializable()
-@immutable
-class PickupState {
-  final bool isLoading;
-  final Map<dynamic, Pickup> pickups;
-  final String error;
+abstract class PickupState implements Built<PickupState, PickupStateBuilder> {
+  bool get isLoading;
+  @nullable
+  BuiltMap<int, Pickup> get pickups;
+  @nullable
+  String get error;
 
-  PickupState({
-    @required this.isLoading,
-    @required this.pickups,
-    @required this.error,
-  });
+  PickupState._();
 
-  factory PickupState.fromJson(Map<String, dynamic> json) => _$PickupStateFromJson(json);
-  Map<dynamic, dynamic> toJson() => _$PickupStateToJson(this);
+  factory PickupState([void Function(PickupStateBuilder) updates]) => _$PickupState((b) => b
+    ..isLoading = false
+  );
 
-  factory PickupState.initial() {
-    return PickupState(
-      isLoading: null,
-      pickups: null,
-      error: null,
-    );
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(PickupState.serializer, this);
   }
 
-  PickupState copyWith({
-    bool isLoading,
-    Map<dynamic, Pickup> pickups,
-    String error
-  }) {
-    return PickupState(
-      isLoading: isLoading ?? this.isLoading,
-      pickups: pickups ?? this.pickups,
-      error: error ?? this.error,
-    );
+  static PickupState fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(PickupState.serializer, jsonString);
   }
+
+  static Serializer<PickupState> get serializer => _$pickupStateSerializer;
 }

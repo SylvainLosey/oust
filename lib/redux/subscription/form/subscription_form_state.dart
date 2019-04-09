@@ -1,43 +1,34 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+library SubscriptionFormState;
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 import '../../../data/models/subscription_form.dart';
+import '../../../data/models/serializers.dart';
 
 part 'subscription_form_state.g.dart';
 
-@JsonSerializable()
-@immutable
-class SubscriptionFormState {
-  final SubscriptionForm subscriptionForm;
-  final bool isLoading;
-  final String error;
+abstract class SubscriptionFormState implements Built<SubscriptionFormState, SubscriptionFormStateBuilder> {
+  bool get isLoading;
+  @nullable
+  SubscriptionForm get subscriptionForm;
+  @nullable
+  String get error;
 
-  SubscriptionFormState({
-    @required this.subscriptionForm,
-    @required this.isLoading,
-    @required this.error,
-  });
+  SubscriptionFormState._();
 
-  factory SubscriptionFormState.fromJson(Map<String, dynamic> json) => _$SubscriptionFormStateFromJson(json);
-  Map<String, dynamic> toJson() => _$SubscriptionFormStateToJson(this);
+  factory SubscriptionFormState([void Function(SubscriptionFormStateBuilder) updates]) => _$SubscriptionFormState((b) => b
+    ..isLoading = false
+  );
 
-  factory SubscriptionFormState.initial() {
-    return SubscriptionFormState(
-      subscriptionForm: null,
-      isLoading: null,
-      error: null,
-    );
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(SubscriptionFormState.serializer, this);
   }
 
-  SubscriptionFormState copyWith({
-    SubscriptionForm subscriptionForm,
-    bool isLoading,
-    String error
-  }) {
-    return SubscriptionFormState(
-      subscriptionForm: subscriptionForm ?? this.subscriptionForm,
-      isLoading: isLoading ?? this.isLoading,
-      error: error ?? this.error,
-    );
+  static SubscriptionFormState fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(SubscriptionFormState.serializer, jsonString);
   }
+
+  static Serializer<SubscriptionFormState> get serializer => _$subscriptionFormStateSerializer;
 }

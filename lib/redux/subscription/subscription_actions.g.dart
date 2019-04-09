@@ -11,7 +11,7 @@ LoadSubscriptionRequest _$LoadSubscriptionRequestFromJson(
   return LoadSubscriptionRequest(
       customer: json['customer'] == null
           ? null
-          : Customer.fromJson(json['customer'] as String));
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadSubscriptionRequestToJson(
@@ -45,7 +45,7 @@ LoadConsumerSubscriptionRequest _$LoadConsumerSubscriptionRequestFromJson(
   return LoadConsumerSubscriptionRequest(
       customer: json['customer'] == null
           ? null
-          : Customer.fromJson(json['customer'] as String));
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadConsumerSubscriptionRequestToJson(

@@ -78,7 +78,7 @@ SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSucc
       action.packages,
       key: (dynamic package) => package.id,
       value: (dynamic package) => package,
-    )),
+    ))
   );
 }
 

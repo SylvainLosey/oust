@@ -12,25 +12,25 @@ Reducer<PickupState> pickupReducer = combineReducers([
 
 
 PickupState _loadPickupsRequest(PickupState state, LoadPickupsRequest action) {
-  return state.copyWith(
-    isLoading: true,
+  return state.rebuild((b) => b
+    ..isLoading = true
   );
 }
 
 PickupState _loadPickupsSuccess(PickupState state, LoadPickupsSuccess action) {
-  return state.copyWith(
-    isLoading: false,
-    pickups: Map<String, Pickup>.fromIterable(
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..pickups.addAll(Map<int, Pickup>.fromIterable(
       action.pickups,
-      key: (dynamic pickup) => pickup.id.toString(),
+      key: (dynamic pickup) => pickup.id,
       value: (dynamic pickup) => pickup,
-    ),
+    ))
   );
 }
 
 PickupState _loadPickupsFailure(PickupState state, LoadPickupsFailure action) {
-  return state.copyWith(
-    isLoading: false,
-    error: action.error,
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error
   );
 }

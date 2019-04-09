@@ -1,91 +1,59 @@
-import 'package:json_annotation/json_annotation.dart';
+library SubscriptionForm;
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'serializers.dart';
 
 part 'subscription_form.g.dart';
 
-@JsonSerializable()
-class SubscriptionForm{
-  int currentStep;
-  int packageId;
-  String firstName;
-  String lastName;
-  String address;
-  int postcodeId;
-  bool appRegistration;
-  int smallBins;
-  int bigBins;
-  int accessType;
-  String code;
-  bool doorKey;
-  String note;
-  String phoneNumber;
-  DateTime startDate;
-  String email;
-  String password;
+abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionFormBuilder> {
+  int get currentStep;
+  @nullable
+  int get packageId;
+  @nullable
+  String get firstName;
+  @nullable
+  String get lastName;
+  @nullable
+  String get address;
+  @nullable
+  int get postcodeId;
+  @nullable
+  bool get appRegistration;
+  @nullable
+  int get smallBins;
+  @nullable
+  int get bigBins;
+  @nullable
+  int get accessType;
+  @nullable
+  String get code;
+  @nullable
+  bool get doorKey;
+  @nullable
+  String get note;
+  @nullable
+  String get phoneNumber;
+  @nullable
+  DateTime get startDate;
+  @nullable
+  String get email;
+  @nullable
+  String get password;
 
-  SubscriptionForm({
-    this.currentStep,
-    this.packageId,
-    this.firstName,
-    this.lastName,
-    this.address,
-    this.postcodeId,
-    this.appRegistration,
-    this.smallBins,
-    this.bigBins,
-    this.accessType,
-    this.code,
-    this.doorKey,
-    this.note,
-    this.phoneNumber,
-    this.startDate,
-    this.email,
-    this.password,
-  });
+  SubscriptionForm._();
 
-    factory SubscriptionForm.fromJson(Map<String, dynamic> json) => _$SubscriptionFormFromJson(json);
-    Map<String, dynamic> toJson() => _$SubscriptionFormToJson(this);
+  factory SubscriptionForm([void Function(SubscriptionFormBuilder) updates]) = _$SubscriptionForm;
 
-    SubscriptionForm copyWith({
-      int currentStep,
-      int packageId,
-      String firstName,
-      String lastName,
-      String address,
-      int postcodeId,
-      bool appRegistration,
-      int smallBins,
-      int bigBins,
-      int accessType,
-      String code,
-      bool doorKey,
-      String note,
-      String phoneNumber,
-      DateTime startDate,
-      String email,
-      String password,
-    }) {
-      return SubscriptionForm(
-        currentStep: currentStep ?? this.currentStep,
-        packageId: packageId ?? this.packageId,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        address: address ?? this.address,
-        postcodeId: postcodeId ?? this.postcodeId,
-        appRegistration: appRegistration ?? this.appRegistration,
-        smallBins: smallBins ?? this.smallBins,
-        bigBins: bigBins ?? this.bigBins,
-        accessType: accessType ?? this.accessType,
-        code: code ?? this.code,
-        doorKey: doorKey ?? this.doorKey,
-        note: note ?? this.note,
-        phoneNumber: phoneNumber ?? this.phoneNumber, 
-        startDate: startDate ?? this. startDate,
-        email: email ?? this.email,
-        password: password ?? this.password,
-      );
-    }
-} 
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(SubscriptionForm.serializer, this);
+  }
 
+  static SubscriptionForm fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(SubscriptionForm.serializer, jsonString);
+  }
 
-
-
+  static Serializer<SubscriptionForm> get serializer => _$subscriptionFormSerializer;
+}

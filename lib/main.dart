@@ -18,7 +18,7 @@ void main() async {
 
   final Store<AppState> store = Store<AppState>(
     appReducer,
-    initialState: AppState.initial(),
+    initialState: AppState(),
     middleware: []
         ..addAll(AuthMiddleware().createAuthMiddleware())
         ..addAll(AppMiddleware().createAppMiddleware())

@@ -15,12 +15,12 @@ class LoadPickupsRequest {
   Map<String, dynamic> toJson() => _$LoadPickupsRequestToJson(this);
 }
 
-@JsonSerializable()
+// @JsonSerializable()
 class LoadPickupsSuccess {
   final List<Pickup> pickups;
 
   LoadPickupsSuccess({@required this.pickups});
-  Map<String, dynamic> toJson() => _$LoadPickupsSuccessToJson(this);
+  // Map<String, dynamic> toJson() => _$LoadPickupsSuccessToJson(this);
 }
 
 @JsonSerializable()

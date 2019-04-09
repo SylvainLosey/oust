@@ -1,8 +1,5 @@
 library customer;
 
-import 'dart:convert';
-
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'serializers.dart';
@@ -37,9 +34,9 @@ abstract class Customer implements Built<Customer, CustomerBuilder> {
     return serializers.serializeWith(Customer.serializer, this);
   }
 
-  static Customer fromJson(String jsonString) {
+  static Customer fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(
-        Customer.serializer, json.decode(jsonString));
+        Customer.serializer, jsonString);
   }
 
   static Serializer<Customer> get serializer => _$customerSerializer;

@@ -8,8 +8,9 @@ part of 'customer_actions.dart';
 
 LoadCustomerRequest _$LoadCustomerRequestFromJson(Map<String, dynamic> json) {
   return LoadCustomerRequest(
-      user:
-          json['user'] == null ? null : User.fromJson(json['user'] as String));
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadCustomerRequestToJson(
@@ -20,7 +21,7 @@ LoadCustomerSuccess _$LoadCustomerSuccessFromJson(Map<String, dynamic> json) {
   return LoadCustomerSuccess(
       customer: json['customer'] == null
           ? null
-          : Customer.fromJson(json['customer'] as String));
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$LoadCustomerSuccessToJson(

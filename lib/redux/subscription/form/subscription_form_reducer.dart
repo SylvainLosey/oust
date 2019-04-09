@@ -10,13 +10,13 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
 ]);
 
 SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNextStep action) {
-  return state.copyWith(
-    subscriptionForm: state.subscriptionForm.copyWith(currentStep: state.subscriptionForm.currentStep + 1)
+  return state.rebuild((b) => b
+    ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
   );
 }
 
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
-  return state.copyWith(
-    subscriptionForm: state.subscriptionForm.copyWith(currentStep: state.subscriptionForm.currentStep - 1)
+  return state.rebuild((b) => b
+    ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
   );
 }

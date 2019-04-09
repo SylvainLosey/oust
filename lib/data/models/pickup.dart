@@ -1,41 +1,56 @@
-import 'package:json_annotation/json_annotation.dart';
+library Pickup;
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'serializers.dart';
 
 part 'pickup.g.dart';
 
-@JsonSerializable()
-class Pickup {
-    int id;
-    String representation;
-    String city;
-    List<double> position;
-    @JsonKey(name: 'customer_duration')
-    int averageDuration;
-    @JsonKey(name: 'customer_quantity')
-    int averageQuantity;
-    @JsonKey(name: 'pickup_date')
-    DateTime pickupDate;
-    dynamic duration;
-    bool completed;
-    @JsonKey(name: 'customer_unvavailable')
-    bool customerUnavailable;
-    String note;
-    int subscription;
+abstract class Pickup implements Built<Pickup, PickupBuilder> {
+  int get id;
+  @nullable
+  String get representation;
+  @nullable
+  String get city;
+  @nullable
+  BuiltList<double> get position;
+  @nullable
+  @BuiltValueField(wireName: 'average_duration')
+  @nullable
+  int get averageDuration;
+  @BuiltValueField(wireName: 'average_quantity')
+  @nullable
+  int get averageQuantity;
+  @BuiltValueField(wireName: 'pickup_date')
+  @nullable
+  String get pickupDate;
+  @nullable
+  String get duration;
+  @nullable
+  bool get completed;
+  @nullable
+  @BuiltValueField(wireName: 'completed_at')
+  String get completedAt;
+  @nullable
+  @BuiltValueField(wireName: 'customer_unavailable')
+  bool get customerUnavailable;
+  @nullable
+  String get note;
+  int get subscription;
 
-    Pickup({
-        this.id,
-        this.representation,
-        this.city,
-        this.position,
-        this.averageDuration,
-        this.averageQuantity,
-        this.pickupDate,
-        this.duration,
-        this.completed,
-        this.customerUnavailable,
-        this.note,
-        this.subscription,
-    });
+  Pickup._();
 
-    factory Pickup.fromJson(Map<String, dynamic> json) => _$PickupFromJson(json);
-    Map<String, dynamic> toJson() => _$PickupToJson(this);
+  factory Pickup([void Function(PickupBuilder) updates]) = _$Pickup;
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(Pickup.serializer, this);
+  }
+
+  static Pickup fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(Pickup.serializer, jsonString);
+  }
+
+  static Serializer<Pickup> get serializer => _$pickupSerializer;
 }

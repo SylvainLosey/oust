@@ -12,6 +12,13 @@ import '../../data/models/serializers.dart';
 part 'auth_state.g.dart';
 
 abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
+  factory AuthState() {
+    return _$AuthState._(
+      isLoading: false,
+      isAuthenticated: false,
+    );
+  }
+
   bool get isLoading;
   bool get isAuthenticated;
   @nullable
@@ -20,10 +27,6 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   String get error;
 
   AuthState._();
-
-  factory AuthState([updates(AuthStateBuilder b)]) => _$AuthState((b) => b
-      ..isLoading = false
-      ..isAuthenticated = false);
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(AuthState.serializer, this);
