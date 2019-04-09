@@ -20,7 +20,7 @@ PickupState _loadPickupsRequest(PickupState state, LoadPickupsRequest action) {
 PickupState _loadPickupsSuccess(PickupState state, LoadPickupsSuccess action) {
   return state.copyWith(
     isLoading: false,
-    pickups: Map<dynamic, Pickup>.fromIterable(
+    pickups: Map<String, Pickup>.fromIterable(
       action.pickups,
       key: (dynamic pickup) => pickup.id.toString(),
       value: (dynamic pickup) => pickup,

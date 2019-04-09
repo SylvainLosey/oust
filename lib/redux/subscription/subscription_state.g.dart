@@ -15,10 +15,10 @@ SubscriptionState _$SubscriptionStateFromJson(Map<String, dynamic> json) {
           ? null
           : ConsumerSubscription.fromJson(
               json['consumerSubscription'] as Map<String, dynamic>),
-      packages: (json['packages'] as List)
-          ?.map((e) =>
-              e == null ? null : Package.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      packages: (json['packages'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(
+            k, e == null ? null : Package.fromJson(e as Map<String, dynamic>)),
+      ),
       fetchCount: json['fetchCount'] as int,
       error: json['error'] as String);
 }

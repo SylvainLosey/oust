@@ -19,9 +19,9 @@ class WebClient {
 
   Future<dynamic> get(String path) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String token = prefs.getString('token');
+    final String key = prefs.getString('key');
 
-    final Map<String, String> headers = <String, String>{'Authorization': 'Token $token'};
+    final Map<String, String> headers = <String, String>{'Authorization': 'Token $key'};
     final http.Response response = await http.Client().get('$baseUrl$path', headers: headers);
 
     if (response.statusCode == 200) {

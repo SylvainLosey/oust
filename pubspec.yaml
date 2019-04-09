@@ -25,6 +25,10 @@ dependencies:
   json_annotation: ^2.0.0
   timeline_list: ^0.0.3
   google_maps_flutter: ^0.5.2
+  built_value: ^6.3.2
+  built_collection: ^4.2.0
+
+
 
 
 
@@ -39,6 +43,7 @@ dev_dependencies:
 
   redux_remote_devtools: ^0.0.7
   build_runner: ^1.2.7
+  built_value_generator: ^6.3.2
   json_serializable: ^2.1.0
 
 

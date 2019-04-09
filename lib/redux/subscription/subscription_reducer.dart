@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import 'subscription_actions.dart';
 import 'subscription_state.dart';
+import '../../data/models/package.dart';
 
 
 Reducer<SubscriptionState> subscriptionReducer = combineReducers([
@@ -73,7 +74,11 @@ SubscriptionState _loadPackagesRequest(SubscriptionState state, LoadPackagesRequ
 SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSuccess action) {
   return state.copyWith(
     fetchCount: state.fetchCount -1,
-    packages: action.packages,
+    packages: Map<dynamic, Package>.fromIterable(
+      action.packages,
+      key: (dynamic package) => package.id,
+      value: (dynamic package) => package,
+    ),
   );
 }
 

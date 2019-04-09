@@ -8,9 +8,9 @@ import '../subscription/subscription_state.dart';
 import '../subscription/form/subscription_form_state.dart';
 import '../pickup/pickup_state.dart';
 
-part 'app_state.g.dart';
+// part 'app_state.g.dart';
 
-@JsonSerializable()
+// @JsonSerializable()
 @immutable
 class AppState {
   final AuthState authState;
@@ -29,13 +29,13 @@ class AppState {
     @required this.navState,
   });
 
- factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
-  Map<String, dynamic> toJson() => _$AppStateToJson(this);
+//  factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
+//   Map<String, dynamic> toJson() => _$AppStateToJson(this);
 
 
   factory AppState.initial() {
     return AppState(
-      authState: AuthState.initial(),
+      authState: AuthState(),
       customerState: CustomerState.initial(),
       subscriptionState: SubscriptionState.initial(),
       subscriptionFormState: SubscriptionFormState.initial(),

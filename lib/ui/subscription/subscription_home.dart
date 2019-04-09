@@ -15,6 +15,8 @@ import '../../redux/app/app_state.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
 import '../../data/models/customer.dart';
+import '../../data/models/consumer_subscription.dart';
+import '../../data/models/package.dart';
 import '../../utils/layout.dart';
 import '../../utils/colors.dart';
 import '../../utils/pickup_utils.dart';
@@ -117,7 +119,7 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
       Positioned(
         bottom: Layout.of(context).gridUnit(5),
         child: Text(
-          'Passage toutes les 2 semaines',
+          'Passage toutes les ${viewModel.packages[viewModel.consumerSubscription.package].frequencyWeeks} semaines',
           style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)
         )
       ),
@@ -125,7 +127,7 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
         bottom: -Layout.of(context).gridUnit(2),
         child: GradientButton(
           onPressed: () {print('Hello');},
-          child: Text('Abonnement Standard', style: TextStyle(color: Colors.white))
+          child: Text('Abonnement ${viewModel.packages[viewModel.consumerSubscription.package].name}', style: TextStyle(color: Colors.white))
         )
       )
     ],
@@ -141,12 +143,16 @@ class _ViewModel {
   final int fetchCount;
   final String error;
   final Subscription subscription;
+  final ConsumerSubscription consumerSubscription;
+  final Map<dynamic, Package> packages;
   final Customer customer;
 
   _ViewModel({
     this.fetchCount,
     this.error,
     this.subscription,
+    this.consumerSubscription,
+    this.packages,
     this.customer,
   });
 
@@ -155,6 +161,8 @@ class _ViewModel {
       fetchCount: store.state.subscriptionState.fetchCount,
       error: store.state.subscriptionState.error,
       subscription: store.state.subscriptionState.subscription,
+      consumerSubscription: store.state.subscriptionState.consumerSubscription,
+      packages: store.state.subscriptionState.packages,
       customer: store.state.customerState.customer,
     );
   }

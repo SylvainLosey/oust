@@ -1,7 +1,7 @@
 import 'package:redux/redux.dart';
 
 import 'auth_actions.dart';
-import '../auth/auth_state.dart';
+import 'auth_state.dart';
 
 
 Reducer<AuthState> authReducer = combineReducers([
@@ -13,36 +13,36 @@ Reducer<AuthState> authReducer = combineReducers([
 ]);
 
 AuthState _userLoginRequest(AuthState state, UserLoginRequest action) {
-  return state.copyWith(
-    isLoading: true,
+  return state.rebuild((b) => b
+    ..isLoading = true
   );
 }
 
 AuthState _userLoginRequestSuccess(AuthState state, UserLoginSuccess action) {
-  return state.copyWith(
-    isLoading: false,
+  return state.rebuild((b) => b
+    ..isLoading = false
   );
 }
 
 AuthState _userLoaded(AuthState state, UserLoaded action) {
-  return state.copyWith(
-    isLoading: false,
-    isAuthenticated: true,
-    user: action.user,
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..isAuthenticated = true
+    ..user.replace(action.user)
   );
 }
 
 AuthState _userLoginRequestFailure(AuthState state, UserLoginFailure action) {
-  return state.copyWith(
-    isLoading: false,
-    error: action.error,
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error
   );
 }
 
 AuthState _userLogout(AuthState state, UserLogout action) {
-  return state.copyWith(
-    isLoading: false,
-    isAuthenticated: false,
-    user: null,
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..isAuthenticated = false
+    ..user = null
   );
 }

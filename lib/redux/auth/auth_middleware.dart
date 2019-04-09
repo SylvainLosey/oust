@@ -29,7 +29,10 @@ class AuthMiddleware {
     if (await _hasAuthData()) {
       final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
-        user: User(token: authData['token'], id: authData['id'])
+        user: User((b) => b
+          ..key = authData['key']
+          ..id = authData['user']
+        )
       ));
     }
   }
@@ -43,7 +46,7 @@ class AuthMiddleware {
       _persistAuthData(authData['key'], authData['user']);
 
       store.dispatch(UserLoginSuccess(
-        token: authData['key'],
+        key: authData['key'],
         id: authData['user'],
       ));
     } catch (e) {
@@ -55,7 +58,12 @@ class AuthMiddleware {
   void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UserLoaded(user: User(token: action.token, id: action.id)));
+    store.dispatch(UserLoaded(user: User((b) => b
+          ..key = action.key
+          ..id = action.id
+        )
+      )
+    );
   }
 
 
@@ -79,7 +87,7 @@ class AuthMiddleware {
   Future<Map<String, dynamic>> _getAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final Map<String, dynamic> authData = <String, dynamic>{
-      'token': prefs.getString('token'),
+      'key': prefs.getString('key'),
       'id': prefs.getInt('id'),
     };
 
@@ -88,21 +96,21 @@ class AuthMiddleware {
 
   Future<void> _deleteAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+    await prefs.remove('key');
     await prefs.remove('id');
   }
 
-  Future<void> _persistAuthData(String token, int id) async {
+  Future<void> _persistAuthData(String key, int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
+    await prefs.setString('key', key);
     await prefs.setInt('id', id);
   }
 
   Future<bool> _hasAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String token = prefs.getString('token') ?? '';
+    final String key = prefs.getString('key') ?? '';
 
-    if (token != '') {
+    if (key != '') {
       return true;
     } else {
     return false;

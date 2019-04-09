@@ -1,46 +1,37 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:flutter/material.dart';
+library auth_state;
+
+import 'dart:convert';
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 import '../../data/models/user.dart';
 
 part 'auth_state.g.dart';
 
-@JsonSerializable()
-@immutable
-class AuthState {
-  final bool isLoading;
-  final bool isAuthenticated;
-  final User user;
-  final String error;
+abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
+  bool get isLoading;
+  bool get isAuthenticated;
+  @nullable
+  User get user;
+  @nullable
+  String get error;
 
-  AuthState({
-    this.isLoading,
-    this.isAuthenticated ,
-    this.user,
-    this.error,
-  });
+  AuthState._();
 
-  factory AuthState.fromJson(Map<String, dynamic> json) => _$AuthStateFromJson(json);
-  Map<String, dynamic> toJson() => _$AuthStateToJson(this);
+  factory AuthState([updates(AuthStateBuilder b)]) => _$AuthState((b) => b
+      ..isLoading = false
+      ..isAuthenticated = false);
 
-  factory AuthState.initial() {
-    return AuthState(
-      isLoading: false,
-      isAuthenticated: false,
-    );
-  }
+  // String toJson() {
+  //   return json.encode(serializers.serializeWith(AuthState.serializer, this));
+  // }
 
-  AuthState copyWith({
-    bool isLoading,
-    bool isAuthenticated,
-    User user,
-    String error
-  }) {
-    return AuthState(
-      isLoading: isLoading ?? this.isLoading,
-      isAuthenticated: isAuthenticated ?? this.isAuthenticated,
-      user: user ?? this.user,
-      error: error ?? this.error,
-    );
-  }
+  // static AuthState fromJson(String jsonString) {
+  //   return serializers.deserializeWith(AuthState.serializer, json.decode(jsonString));
+  // }
+
+  static Serializer<AuthState> get serializer => _$authStateSerializer;
 }
+

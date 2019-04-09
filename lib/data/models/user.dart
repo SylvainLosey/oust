@@ -1,14 +1,23 @@
-import 'package:json_annotation/json_annotation.dart';
+library user;
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 part 'user.g.dart';
 
-@JsonSerializable()
-class User {
-  final String token;
-  final int id;
+abstract class User implements Built<User, UserBuilder> {
+  static Serializer<User> get serializer => _$userSerializer;
 
-  User({this.token, this.id});
+  @nullable
+  @BuiltValueField(wireName: 'key')
+  String get key;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  @nullable
+  @BuiltValueField(wireName: 'user')
+  int get id;
+  
+  User._();
+  factory User([updates(UserBuilder b)]) = _$User;
 }
+

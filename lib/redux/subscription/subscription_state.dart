@@ -13,7 +13,7 @@ part 'subscription_state.g.dart';
 class SubscriptionState {
   final Subscription subscription;
   final ConsumerSubscription consumerSubscription;
-  final List<Package> packages;
+  final Map<dynamic, Package> packages;
   final int fetchCount;
   final String error;
 
@@ -41,7 +41,7 @@ class SubscriptionState {
   SubscriptionState copyWith({
     Subscription subscription,
     ConsumerSubscription consumerSubscription,
-    List<Package> packages,
+    Map<dynamic, Package> packages,
     int fetchCount,
     String error
   }) {
