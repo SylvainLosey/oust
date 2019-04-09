@@ -31,7 +31,7 @@ class AuthMiddleware {
       store.dispatch(UserLoaded(
         user: User((b) => b
           ..key = authData['key']
-          ..id = authData['user']
+          ..id = authData['id']
         )
       ));
     }

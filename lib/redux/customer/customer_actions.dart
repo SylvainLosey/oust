@@ -6,17 +6,19 @@ import '../../data/models/user.dart';
 
 part 'customer_actions.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class LoadCustomerRequest {
+  @JsonKey(fromJson: User.fromJson)
   final User user;
 
   LoadCustomerRequest({@required this.user});
 
-  // Map<String, dynamic> toJson() => _$LoadCustomerRequestToJson(this);
+  Map<String, dynamic> toJson() => _$LoadCustomerRequestToJson(this);
 }
 
 @JsonSerializable()
 class LoadCustomerSuccess {
+  @JsonKey(fromJson: Customer.fromJson)
   final Customer customer;
 
   LoadCustomerSuccess({@required this.customer});

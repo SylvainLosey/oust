@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
+import 'package:built_collection/built_collection.dart';
 
 import '../../data/models/customer.dart';
 import '../../data/models/subscription.dart';
@@ -13,6 +14,7 @@ part 'subscription_actions.g.dart';
 
 @JsonSerializable()
 class LoadSubscriptionRequest {
+  @JsonKey(fromJson: Customer.fromJson) 
   final Customer customer;
 
   LoadSubscriptionRequest({@required this.customer});
@@ -21,6 +23,7 @@ class LoadSubscriptionRequest {
 
 @JsonSerializable()
 class LoadSubscriptionSuccess {
+  @JsonKey(fromJson: Subscription.fromJson) 
   final Subscription subscription;
 
   LoadSubscriptionSuccess({@required this.subscription});
@@ -40,6 +43,7 @@ class LoadSubscriptionFailure {
 
 @JsonSerializable()
 class LoadConsumerSubscriptionRequest {
+  @JsonKey(fromJson: Customer.fromJson) 
   final Customer customer;
 
   LoadConsumerSubscriptionRequest({@required this.customer});
@@ -48,6 +52,7 @@ class LoadConsumerSubscriptionRequest {
 
 @JsonSerializable()
 class LoadConsumerSubscriptionSuccess {
+  @JsonKey(fromJson: ConsumerSubscription.fromJson)
   final ConsumerSubscription consumerSubscription;
 
   LoadConsumerSubscriptionSuccess({@required this.consumerSubscription});
@@ -70,12 +75,13 @@ class LoadPackagesRequest {
   Map<String, dynamic> toJson() => _$LoadPackagesRequestToJson(this);
 }
 
-@JsonSerializable()
+// @JsonSerializable()
 class LoadPackagesSuccess {
-  final List<Package> packages;
+  // @JsonKey(fromJson: Packages.fromJson)
+  final BuiltList<Package> packages;
 
   LoadPackagesSuccess({@required this.packages});
-  Map<String, dynamic> toJson() => _$LoadPackagesSuccessToJson(this);
+  // Map<String, dynamic> toJson() => _$LoadPackagesSuccessToJson(this);
 }
 
 @JsonSerializable()

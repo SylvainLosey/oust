@@ -21,44 +21,44 @@ Reducer<SubscriptionState> subscriptionReducer = combineReducers([
 /// SUBSCRIPTION
 
 SubscriptionState _loadSubscriptionRequest(SubscriptionState state, LoadSubscriptionRequest action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount + 1,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadSubscriptionSuccess(SubscriptionState state, LoadSubscriptionSuccess action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    subscription: action.subscription,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..subscription.replace(action.subscription)
   );
 }
 
 SubscriptionState _loadSubscriptionFailure(SubscriptionState state, LoadSubscriptionFailure action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    error: action.error,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..error = action.error
   );
 }
 
 /// CONSUMER SUBSCRIPTION
 
 SubscriptionState _loadConsumerSubscriptionRequest(SubscriptionState state, LoadConsumerSubscriptionRequest action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount + 1,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadConsumerSubscriptionSuccess(SubscriptionState state, LoadConsumerSubscriptionSuccess action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    consumerSubscription: action.consumerSubscription,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..consumerSubscription.replace(action.consumerSubscription)
   );
 }
 
 SubscriptionState _loadConsumerSubscriptionFailure(SubscriptionState state, LoadConsumerSubscriptionFailure action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    error: action.error,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..error = action.error
   );
 }
 
@@ -66,26 +66,26 @@ SubscriptionState _loadConsumerSubscriptionFailure(SubscriptionState state, Load
 /// PACKAGES
 
 SubscriptionState _loadPackagesRequest(SubscriptionState state, LoadPackagesRequest action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount + 1,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSuccess action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    packages: Map<dynamic, Package>.fromIterable(
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..packages.addAll(Map<int, Package>.fromIterable(
       action.packages,
       key: (dynamic package) => package.id,
       value: (dynamic package) => package,
-    ),
+    )),
   );
 }
 
 SubscriptionState _loadPackagesFailure(SubscriptionState state, LoadPackagesFailure action) {
-  return state.copyWith(
-    fetchCount: state.fetchCount -1,
-    error: action.error,
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount -1
+    ..error = action.error
   );
 }
 

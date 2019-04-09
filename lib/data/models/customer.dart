@@ -1,43 +1,46 @@
-import 'package:json_annotation/json_annotation.dart';
+library customer;
+
+import 'dart:convert';
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'serializers.dart';
 
 part 'customer.g.dart';
 
-@JsonSerializable()
-class Customer{
-    int id;
-    @JsonKey(name: 'customer_status')
-    String customerStatus;
-    dynamic company;
-    String gender;
-    @JsonKey(name: 'first_name')
-    String firstName;
-    @JsonKey(name: 'last_name')
-    String lastName;
-    String address;
-    int postcode;
-    String city;
-    @JsonKey(name: 'prefered_communication')
-    String preferedCommunication;
-    @JsonKey(name: 'prefered_payment_method')
-    String preferedPaymentMethod;
-    @JsonKey(name: 'bexio_id')
-    int user;
+abstract class Customer implements Built<Customer, CustomerBuilder> {
+  Customer._();
 
-    Customer({
-        this.id,
-        this.postcode,
-        this.customerStatus,
-        this.company,
-        this.gender,
-        this.firstName,
-        this.lastName,
-        this.address,
-        this.city,
-        this.preferedCommunication,
-        this.preferedPaymentMethod,
-        this.user,
-    });
+  factory Customer([void Function (CustomerBuilder) updates]) = _$Customer;
 
-    factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
-    Map<String, dynamic> toJson() => _$CustomerToJson(this);
+  int get id;
+  @BuiltValueField(wireName: 'customer_status')
+  String get customerStatus;
+  @nullable
+  String get company;
+  String get gender;
+  @BuiltValueField(wireName: 'first_name')
+  String get firstName;
+  @BuiltValueField(wireName: 'last_name')
+  String get lastName;
+  String get address;
+  String get city;
+  @BuiltValueField(wireName: 'prefered_communication')
+  String get preferedCommunication;
+  @BuiltValueField(wireName: 'prefered_payment_method')
+  String get preferedPaymentMethod;
+  int get postcode;
+  int get user;
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(Customer.serializer, this);
+  }
+
+  static Customer fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        Customer.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<Customer> get serializer => _$customerSerializer;
 }

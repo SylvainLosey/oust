@@ -7,6 +7,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import '../../data/models/user.dart';
+import '../../data/models/serializers.dart';
 
 part 'auth_state.g.dart';
 
@@ -24,13 +25,13 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       ..isLoading = false
       ..isAuthenticated = false);
 
-  // String toJson() {
-  //   return json.encode(serializers.serializeWith(AuthState.serializer, this));
-  // }
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(AuthState.serializer, this);
+  }
 
-  // static AuthState fromJson(String jsonString) {
-  //   return serializers.deserializeWith(AuthState.serializer, json.decode(jsonString));
-  // }
+  static AuthState fromJson(String jsonString) {
+    return serializers.deserializeWith(AuthState.serializer, json.decode(jsonString));
+  }
 
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }

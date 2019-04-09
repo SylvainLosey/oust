@@ -8,6 +8,7 @@ part 'pickup_actions.g.dart';
 
 @JsonSerializable()
 class LoadPickupsRequest {
+  @JsonKey(fromJson: Subscription.fromJson)
   final Subscription subscription;
 
   LoadPickupsRequest({@required this.subscription});

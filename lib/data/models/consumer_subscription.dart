@@ -1,17 +1,33 @@
-import 'package:json_annotation/json_annotation.dart';
+library consumer_subscription;
+
+import 'dart:convert';
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'serializers.dart';
 
 part 'consumer_subscription.g.dart';
 
-@JsonSerializable()
-class ConsumerSubscription{
-    int subscription;
-    int package;
+abstract class ConsumerSubscription implements Built<ConsumerSubscription, ConsumerSubscriptionBuilder> {
+  ConsumerSubscription._();
 
-    ConsumerSubscription({
-        this.subscription,
-        this.package,
-    });
+  factory ConsumerSubscription([updates(ConsumerSubscriptionBuilder b)]) =_$ConsumerSubscription;
 
-    factory ConsumerSubscription.fromJson(Map<String, dynamic> json) => _$ConsumerSubscriptionFromJson(json);
-    Map<String, dynamic> toJson() => _$ConsumerSubscriptionToJson(this);
+  @nullable
+  int get subscription;
+  @nullable
+  int get package;
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(ConsumerSubscription.serializer, this);
+  }
+
+  static ConsumerSubscription fromJson(Map<String,dynamic> jsonString) {
+    return serializers.deserializeWith(
+        ConsumerSubscription.serializer, jsonString);
+  }
+
+  static Serializer<ConsumerSubscription> get serializer =>_$consumerSubscriptionSerializer;
 }

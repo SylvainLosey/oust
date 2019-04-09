@@ -6,11 +6,21 @@ part of 'customer_actions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+LoadCustomerRequest _$LoadCustomerRequestFromJson(Map<String, dynamic> json) {
+  return LoadCustomerRequest(
+      user:
+          json['user'] == null ? null : User.fromJson(json['user'] as String));
+}
+
+Map<String, dynamic> _$LoadCustomerRequestToJson(
+        LoadCustomerRequest instance) =>
+    <String, dynamic>{'user': instance.user};
+
 LoadCustomerSuccess _$LoadCustomerSuccessFromJson(Map<String, dynamic> json) {
   return LoadCustomerSuccess(
       customer: json['customer'] == null
           ? null
-          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
+          : Customer.fromJson(json['customer'] as String));
 }
 
 Map<String, dynamic> _$LoadCustomerSuccessToJson(

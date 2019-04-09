@@ -29,7 +29,7 @@ class Repository {
     return await client.get('/consumersubscriptions/?customer=$id/');
   }
 
-  Future<List<dynamic>> fetchPackages() async {
+  Future<dynamic> fetchPackages() async {
     return await client.get('/packages/');
   }
 

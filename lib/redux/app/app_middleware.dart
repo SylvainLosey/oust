@@ -1,4 +1,5 @@
 import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 
 import '../customer/customer_actions.dart';
 import '../subscription/subscription_actions.dart';
@@ -9,6 +10,7 @@ import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
 import '../../data/models/consumer_subscription.dart';
 import '../../data/models/package.dart';
+import '../../data/models/serializers.dart';
 import '../../data/repository.dart';
 
 
@@ -38,7 +40,7 @@ class AppMiddleware {
 
     try {
       final List<dynamic> customerData = await repository.fetchCustomer(action.user.id);
-      final Customer customer = Customer.fromJson(customerData[0]);
+      final Customer customer = serializers.deserializeWith(Customer.serializer, customerData[0]);
 
       store.dispatch(LoadCustomerSuccess(customer: customer));
       store.dispatch(LoadSubscriptionRequest(customer: customer));
@@ -79,7 +81,7 @@ class AppMiddleware {
 
     try {
       final List<dynamic> packagesData = await repository.fetchPackages();
-      final List<Package> packages = List<Package>.from(packagesData.map<dynamic>((dynamic x) => Package.fromJson(x)));
+      final BuiltList<Package> packages = BuiltList<Package>.from(packagesData.map((e) => serializers.deserializeWith(Package.serializer, e)));
       store.dispatch(LoadPackagesSuccess(packages: packages));
     } catch (e) {
       store.dispatch(LoadPackagesFailure(error: e.toString()));

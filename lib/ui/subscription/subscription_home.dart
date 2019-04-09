@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
@@ -144,7 +146,7 @@ class _ViewModel {
   final String error;
   final Subscription subscription;
   final ConsumerSubscription consumerSubscription;
-  final Map<dynamic, Package> packages;
+  final BuiltMap<int, Package> packages;
   final Customer customer;
 
   _ViewModel({

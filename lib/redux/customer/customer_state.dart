@@ -1,44 +1,36 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+library CustomerState;
+
+import 'dart:convert';
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 import '../../data/models/customer.dart';
+import '../../data/models/serializers.dart';
 
 part 'customer_state.g.dart';
 
-@JsonSerializable()
-@immutable
-class CustomerState {
-  final bool isLoading;
-  final Customer customer;
-  final String error;
+abstract class CustomerState implements Built<CustomerState, CustomerStateBuilder> {
+  bool get isLoading;
+  @nullable
+  Customer get customer;
+  @nullable
+  String get error;
 
-  CustomerState({
-    @required this.isLoading,
-    @required this.customer,
-    @required this.error,
-  });
+  CustomerState._();
 
-  factory CustomerState.initial() {
-    return CustomerState(
-      isLoading: null,
-      customer: null,
-      error: null,
-    );
+  factory CustomerState([updates(CustomerStateBuilder b)]) => _$CustomerState((b) => b
+    ..isLoading = false
+  );
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(CustomerState.serializer, this);
   }
 
- factory CustomerState.fromJson(Map<String, dynamic> json) => _$CustomerStateFromJson(json);
-  Map<String, dynamic> toJson() => _$CustomerStateToJson(this);
-
-
-  CustomerState copyWith({
-    bool isLoading,
-    Customer customer,
-    String error
-  }) {
-    return CustomerState(
-      isLoading: isLoading ?? this.isLoading,
-      customer: customer ?? this.customer,
-      error: error ?? this.error,
-    );
+  static CustomerState fromJson(String jsonString) {
+    return serializers.deserializeWith(CustomerState.serializer, json.decode(jsonString));
   }
+
+  static Serializer<CustomerState> get serializer => _$customerStateSerializer;
 }
