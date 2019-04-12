@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of Pickup;
+part of pickup;
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -59,7 +59,7 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
       result
         ..add('pickup_date')
         ..add(serializers.serialize(object.pickupDate,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(DateTime)));
     }
     if (object.duration != null) {
       result
@@ -72,12 +72,6 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
         ..add('completed')
         ..add(serializers.serialize(object.completed,
             specifiedType: const FullType(bool)));
-    }
-    if (object.completedAt != null) {
-      result
-        ..add('completed_at')
-        ..add(serializers.serialize(object.completedAt,
-            specifiedType: const FullType(String)));
     }
     if (object.customerUnavailable != null) {
       result
@@ -134,7 +128,7 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
           break;
         case 'pickup_date':
           result.pickupDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
         case 'duration':
           result.duration = serializers.deserialize(value,
@@ -143,10 +137,6 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
         case 'completed':
           result.completed = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'completed_at':
-          result.completedAt = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'customer_unavailable':
           result.customerUnavailable = serializers.deserialize(value,
@@ -181,13 +171,11 @@ class _$Pickup extends Pickup {
   @override
   final int averageQuantity;
   @override
-  final String pickupDate;
+  final DateTime pickupDate;
   @override
   final String duration;
   @override
   final bool completed;
-  @override
-  final String completedAt;
   @override
   final bool customerUnavailable;
   @override
@@ -208,7 +196,6 @@ class _$Pickup extends Pickup {
       this.pickupDate,
       this.duration,
       this.completed,
-      this.completedAt,
       this.customerUnavailable,
       this.note,
       this.subscription})
@@ -241,7 +228,6 @@ class _$Pickup extends Pickup {
         pickupDate == other.pickupDate &&
         duration == other.duration &&
         completed == other.completed &&
-        completedAt == other.completedAt &&
         customerUnavailable == other.customerUnavailable &&
         note == other.note &&
         subscription == other.subscription;
@@ -259,17 +245,15 @@ class _$Pickup extends Pickup {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc(
-                                                $jc($jc(0, id.hashCode),
-                                                    representation.hashCode),
-                                                city.hashCode),
-                                            position.hashCode),
-                                        averageDuration.hashCode),
-                                    averageQuantity.hashCode),
-                                pickupDate.hashCode),
-                            duration.hashCode),
-                        completed.hashCode),
-                    completedAt.hashCode),
+                                            $jc($jc(0, id.hashCode),
+                                                representation.hashCode),
+                                            city.hashCode),
+                                        position.hashCode),
+                                    averageDuration.hashCode),
+                                averageQuantity.hashCode),
+                            pickupDate.hashCode),
+                        duration.hashCode),
+                    completed.hashCode),
                 customerUnavailable.hashCode),
             note.hashCode),
         subscription.hashCode));
@@ -287,7 +271,6 @@ class _$Pickup extends Pickup {
           ..add('pickupDate', pickupDate)
           ..add('duration', duration)
           ..add('completed', completed)
-          ..add('completedAt', completedAt)
           ..add('customerUnavailable', customerUnavailable)
           ..add('note', note)
           ..add('subscription', subscription))
@@ -326,9 +309,9 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   set averageQuantity(int averageQuantity) =>
       _$this._averageQuantity = averageQuantity;
 
-  String _pickupDate;
-  String get pickupDate => _$this._pickupDate;
-  set pickupDate(String pickupDate) => _$this._pickupDate = pickupDate;
+  DateTime _pickupDate;
+  DateTime get pickupDate => _$this._pickupDate;
+  set pickupDate(DateTime pickupDate) => _$this._pickupDate = pickupDate;
 
   String _duration;
   String get duration => _$this._duration;
@@ -337,10 +320,6 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   bool _completed;
   bool get completed => _$this._completed;
   set completed(bool completed) => _$this._completed = completed;
-
-  String _completedAt;
-  String get completedAt => _$this._completedAt;
-  set completedAt(String completedAt) => _$this._completedAt = completedAt;
 
   bool _customerUnavailable;
   bool get customerUnavailable => _$this._customerUnavailable;
@@ -368,7 +347,6 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
       _pickupDate = _$v.pickupDate;
       _duration = _$v.duration;
       _completed = _$v.completed;
-      _completedAt = _$v.completedAt;
       _customerUnavailable = _$v.customerUnavailable;
       _note = _$v.note;
       _subscription = _$v.subscription;
@@ -405,7 +383,6 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
               pickupDate: pickupDate,
               duration: duration,
               completed: completed,
-              completedAt: completedAt,
               customerUnavailable: customerUnavailable,
               note: note,
               subscription: subscription);

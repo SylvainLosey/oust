@@ -21,7 +21,6 @@ import '../../data/models/consumer_subscription.dart';
 import '../../data/models/package.dart';
 import '../../utils/layout.dart';
 import '../../utils/colors.dart';
-import '../../utils/pickup_utils.dart';
 import 'pickup_list.dart';
 
 
@@ -57,16 +56,15 @@ class SubscriptionHome extends StatelessWidget {
             Container(height: Layout.of(context).gridUnit(2)),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(2)),
-              child: PickupCard(date: DateTime.now(), hour: '08:00 - 10:00')
+              child: PickupCard(date: Pickup.getNextPickup(viewModel.pickups).pickupDate  , hour: '08:00 - 10:00')
             ),
             Container(height: Layout.of(context).gridUnit(4)),
             FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PickupList()));
+              },
               child: Text('Tous les passages')
             )
-
-              
-
           ],
         );
       },
@@ -89,10 +87,9 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
       Container(
         height: Layout.of(context).gridUnit(40),
         child: GoogleMap(
-          // onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
-            target: LatLng(46.816275, 6.942547),
-            zoom: 13.0,
+            target: LatLng(viewModel.subscription.position[0], viewModel.subscription.position[1]),
+            zoom: 14.0,
           ),
         )
       ),
@@ -148,6 +145,7 @@ class _ViewModel {
   final ConsumerSubscription consumerSubscription;
   final BuiltMap<int, Package> packages;
   final Customer customer;
+  final BuiltMap<int, Pickup> pickups;
 
   _ViewModel({
     this.fetchCount,
@@ -156,6 +154,7 @@ class _ViewModel {
     this.consumerSubscription,
     this.packages,
     this.customer,
+    this.pickups,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -166,7 +165,8 @@ class _ViewModel {
       consumerSubscription: store.state.subscriptionState.consumerSubscription,
       packages: store.state.subscriptionState.packages,
       customer: store.state.customerState.customer,
-    );
+      pickups: store.state.pickupState.pickups,
+     );
   }
 }
 

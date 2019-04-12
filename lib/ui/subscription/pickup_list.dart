@@ -3,13 +3,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
 import '../presentation/pickup_card.dart';
 import '../../redux/app/app_state.dart';
-import '../../data//models/pickup.dart';
-import '../../utils/pickup_utils.dart';
+import '../../data/models/pickup.dart';
 
 class PickupList extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class PickupList extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        if (viewModel.fetchCount > 0) {
+        if (viewModel.isLoading) {
           return Loading();
         }
 
@@ -26,18 +26,18 @@ class PickupList extends StatelessWidget {
           return ErrorText(error: viewModel.error);
         }
 
-        // final List<TimelineModel> items = <TimelineModel>[];
-        // final List<Pickup> pickupFromToday = PickupUtils.getPickupsFromToday(viewModel.pickups);
-        // pickupFromToday.forEach((Pickup pickup) => items.add(_buildTimelineModel(pickup)));
+        final List<TimelineModel> items = <TimelineModel>[];
+        final BuiltMap<int, Pickup> pickupFromToday = Pickup.getFuturePickups(viewModel.pickups);
+        pickupFromToday.forEach((int index, Pickup pickup) => items.add(_buildTimelineModel(pickup)));
 
-        // return Scaffold(
-        //   body:  Timeline(
-        //     children: items, 
-        //     position: TimelinePosition.Left, 
-        //     iconSize: 16,
-        //   )
-        // );
-        return Container();
+        return Scaffold(
+          body:  Timeline(
+            children: items, 
+            position: TimelinePosition.Left, 
+            iconSize: 16,
+          )
+        );
+        // return Container();
       },
     );
   }
@@ -45,7 +45,7 @@ class PickupList extends StatelessWidget {
   TimelineModel _buildTimelineModel(Pickup pickup) {
     return TimelineModel(
       PickupCard(
-        date: DateTime.now(),
+        date: pickup.pickupDate,
         hour: '08:00-10:100'
       ),
       position: TimelineItemPosition.left,
@@ -58,22 +58,22 @@ class PickupList extends StatelessWidget {
 
 @immutable
 class _ViewModel {
-  final int fetchCount;
+  final bool isLoading;
   final String error;
-  // final List<Pickup> pickups;
+  final BuiltMap<int, Pickup> pickups;
 
   _ViewModel({
-    @required this.fetchCount,
+    @required this.isLoading,
     @required this.error,
-    // @required this.pickups,
+    @required this.pickups,
 
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      fetchCount: store.state.subscriptionState.fetchCount,
-      error: store.state.subscriptionState.error,
-      // pickups: store.state.subscriptionState.pickups,
+      isLoading: store.state.pickupState.isLoading,
+      error: store.state.pickupState.error,
+      pickups: store.state.pickupState.pickups,
     );
   }
 }

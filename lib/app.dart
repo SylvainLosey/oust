@@ -7,8 +7,8 @@ import 'redux/app/app_state.dart';
 import 'ui/app/main_screen.dart';
 import 'utils/layout.dart';
 import 'utils/colors.dart';
-import 'ui/subscription/form/subscription_form_root.dart';
-import 'ui/subscription/form/subscription_form_1.dart';
+import 'ui/subscription/register/subscription_register_main.dart';
+
 
 class App extends StatelessWidget {
   final Store<AppState> store;
@@ -40,8 +40,7 @@ class App extends StatelessWidget {
           title: 'Oust!',
           routes: <String, WidgetBuilder>{
             '/': (BuildContext context) => MainScreen(),
-            '/subscription/register': (BuildContext context) => SubscriptionForm(),
-            '/subscription/register/1': (BuildContext context) => SubscriptionForm1(),
+            '/subscription/register/': (BuildContext context) => SubscriptionRegisterMain(),
           }
         )
       )

@@ -14,7 +14,7 @@ class Repository {
       'password': password,
     };
 
-    return await client.post('/rest-auth/login/', credentials);
+    return await client.post('/auth/login/', credentials);
   }
 
   Future<List<dynamic>> fetchCustomer(int id) async {

@@ -1,37 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of SubscriptionFormState;
+part of subscriptionRegisterState;
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<SubscriptionFormState> _$subscriptionFormStateSerializer =
-    new _$SubscriptionFormStateSerializer();
+Serializer<SubscriptionRegisterState> _$subscriptionRegisterStateSerializer =
+    new _$SubscriptionRegisterStateSerializer();
 
-class _$SubscriptionFormStateSerializer
-    implements StructuredSerializer<SubscriptionFormState> {
+class _$SubscriptionRegisterStateSerializer
+    implements StructuredSerializer<SubscriptionRegisterState> {
   @override
   final Iterable<Type> types = const [
-    SubscriptionFormState,
-    _$SubscriptionFormState
+    SubscriptionRegisterState,
+    _$SubscriptionRegisterState
   ];
   @override
-  final String wireName = 'SubscriptionFormState';
+  final String wireName = 'SubscriptionRegisterState';
 
   @override
-  Iterable serialize(Serializers serializers, SubscriptionFormState object,
+  Iterable serialize(Serializers serializers, SubscriptionRegisterState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
     ];
-    if (object.subscriptionForm != null) {
+    if (object.subscriptionRegister != null) {
       result
-        ..add('subscriptionForm')
-        ..add(serializers.serialize(object.subscriptionForm,
-            specifiedType: const FullType(SubscriptionForm)));
+        ..add('subscriptionRegister')
+        ..add(serializers.serialize(object.subscriptionRegister,
+            specifiedType: const FullType(SubscriptionRegister)));
     }
     if (object.error != null) {
       result
@@ -44,10 +44,10 @@ class _$SubscriptionFormStateSerializer
   }
 
   @override
-  SubscriptionFormState deserialize(
+  SubscriptionRegisterState deserialize(
       Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionFormStateBuilder();
+    final result = new SubscriptionRegisterStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -59,10 +59,10 @@ class _$SubscriptionFormStateSerializer
           result.isLoading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'subscriptionForm':
-          result.subscriptionForm.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SubscriptionForm))
-              as SubscriptionForm);
+        case 'subscriptionRegister':
+          result.subscriptionRegister.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SubscriptionRegister))
+              as SubscriptionRegister);
           break;
         case 'error':
           result.error = serializers.deserialize(value,
@@ -75,82 +75,87 @@ class _$SubscriptionFormStateSerializer
   }
 }
 
-class _$SubscriptionFormState extends SubscriptionFormState {
+class _$SubscriptionRegisterState extends SubscriptionRegisterState {
   @override
   final bool isLoading;
   @override
-  final SubscriptionForm subscriptionForm;
+  final SubscriptionRegister subscriptionRegister;
   @override
   final String error;
 
-  factory _$SubscriptionFormState(
-          [void updates(SubscriptionFormStateBuilder b)]) =>
-      (new SubscriptionFormStateBuilder()..update(updates)).build();
+  factory _$SubscriptionRegisterState(
+          [void updates(SubscriptionRegisterStateBuilder b)]) =>
+      (new SubscriptionRegisterStateBuilder()..update(updates)).build();
 
-  _$SubscriptionFormState._({this.isLoading, this.subscriptionForm, this.error})
+  _$SubscriptionRegisterState._(
+      {this.isLoading, this.subscriptionRegister, this.error})
       : super._() {
     if (isLoading == null) {
-      throw new BuiltValueNullFieldError('SubscriptionFormState', 'isLoading');
+      throw new BuiltValueNullFieldError(
+          'SubscriptionRegisterState', 'isLoading');
     }
   }
 
   @override
-  SubscriptionFormState rebuild(void updates(SubscriptionFormStateBuilder b)) =>
+  SubscriptionRegisterState rebuild(
+          void updates(SubscriptionRegisterStateBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SubscriptionFormStateBuilder toBuilder() =>
-      new SubscriptionFormStateBuilder()..replace(this);
+  SubscriptionRegisterStateBuilder toBuilder() =>
+      new SubscriptionRegisterStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SubscriptionFormState &&
+    return other is SubscriptionRegisterState &&
         isLoading == other.isLoading &&
-        subscriptionForm == other.subscriptionForm &&
+        subscriptionRegister == other.subscriptionRegister &&
         error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, isLoading.hashCode), subscriptionForm.hashCode),
+    return $jf($jc(
+        $jc($jc(0, isLoading.hashCode), subscriptionRegister.hashCode),
         error.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionFormState')
+    return (newBuiltValueToStringHelper('SubscriptionRegisterState')
           ..add('isLoading', isLoading)
-          ..add('subscriptionForm', subscriptionForm)
+          ..add('subscriptionRegister', subscriptionRegister)
           ..add('error', error))
         .toString();
   }
 }
 
-class SubscriptionFormStateBuilder
-    implements Builder<SubscriptionFormState, SubscriptionFormStateBuilder> {
-  _$SubscriptionFormState _$v;
+class SubscriptionRegisterStateBuilder
+    implements
+        Builder<SubscriptionRegisterState, SubscriptionRegisterStateBuilder> {
+  _$SubscriptionRegisterState _$v;
 
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
-  SubscriptionFormBuilder _subscriptionForm;
-  SubscriptionFormBuilder get subscriptionForm =>
-      _$this._subscriptionForm ??= new SubscriptionFormBuilder();
-  set subscriptionForm(SubscriptionFormBuilder subscriptionForm) =>
-      _$this._subscriptionForm = subscriptionForm;
+  SubscriptionRegisterBuilder _subscriptionRegister;
+  SubscriptionRegisterBuilder get subscriptionRegister =>
+      _$this._subscriptionRegister ??= new SubscriptionRegisterBuilder();
+  set subscriptionRegister(SubscriptionRegisterBuilder subscriptionRegister) =>
+      _$this._subscriptionRegister = subscriptionRegister;
 
   String _error;
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
-  SubscriptionFormStateBuilder();
+  SubscriptionRegisterStateBuilder();
 
-  SubscriptionFormStateBuilder get _$this {
+  SubscriptionRegisterStateBuilder get _$this {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
-      _subscriptionForm = _$v.subscriptionForm?.toBuilder();
+      _subscriptionRegister = _$v.subscriptionRegister?.toBuilder();
       _error = _$v.error;
       _$v = null;
     }
@@ -158,35 +163,35 @@ class SubscriptionFormStateBuilder
   }
 
   @override
-  void replace(SubscriptionFormState other) {
+  void replace(SubscriptionRegisterState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$SubscriptionFormState;
+    _$v = other as _$SubscriptionRegisterState;
   }
 
   @override
-  void update(void updates(SubscriptionFormStateBuilder b)) {
+  void update(void updates(SubscriptionRegisterStateBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$SubscriptionFormState build() {
-    _$SubscriptionFormState _$result;
+  _$SubscriptionRegisterState build() {
+    _$SubscriptionRegisterState _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionFormState._(
+          new _$SubscriptionRegisterState._(
               isLoading: isLoading,
-              subscriptionForm: _subscriptionForm?.build(),
+              subscriptionRegister: _subscriptionRegister?.build(),
               error: error);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'subscriptionForm';
-        _subscriptionForm?.build();
+        _$failedField = 'subscriptionRegister';
+        _subscriptionRegister?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionFormState', _$failedField, e.toString());
+            'SubscriptionRegisterState', _$failedField, e.toString());
       }
       rethrow;
     }

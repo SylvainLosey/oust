@@ -1,4 +1,4 @@
-library SubscriptionForm;
+library subscriptionRegister;
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -6,9 +6,9 @@ import 'package:built_value/serializer.dart';
 
 import 'serializers.dart';
 
-part 'subscription_form.g.dart';
+part 'subscription_register.g.dart';
 
-abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionFormBuilder> {
+abstract class SubscriptionRegister implements Built<SubscriptionRegister, SubscriptionRegisterBuilder> {
   int get currentStep;
   @nullable
   int get packageId;
@@ -43,17 +43,19 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   @nullable
   String get password;
 
-  SubscriptionForm._();
+  SubscriptionRegister._();
 
-  factory SubscriptionForm([void Function(SubscriptionFormBuilder) updates]) = _$SubscriptionForm;
+  factory SubscriptionRegister([void Function(SubscriptionRegisterBuilder) updates]) => _$SubscriptionRegister((b) => b
+    ..currentStep = 1
+  );
 
   Map<String, dynamic> toJson() {
-    return serializers.serializeWith(SubscriptionForm.serializer, this);
+    return serializers.serializeWith(SubscriptionRegister.serializer, this);
   }
 
-  static SubscriptionForm fromJson(Map<String, dynamic> jsonString) {
-    return serializers.deserializeWith(SubscriptionForm.serializer, jsonString);
+  static SubscriptionRegister fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(SubscriptionRegister.serializer, jsonString);
   }
 
-  static Serializer<SubscriptionForm> get serializer => _$subscriptionFormSerializer;
+  static Serializer<SubscriptionRegister> get serializer => _$subscriptionRegisterSerializer;
 }

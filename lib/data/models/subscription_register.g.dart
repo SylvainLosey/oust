@@ -1,23 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of SubscriptionForm;
+part of subscriptionRegister;
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<SubscriptionForm> _$subscriptionFormSerializer =
-    new _$SubscriptionFormSerializer();
+Serializer<SubscriptionRegister> _$subscriptionRegisterSerializer =
+    new _$SubscriptionRegisterSerializer();
 
-class _$SubscriptionFormSerializer
-    implements StructuredSerializer<SubscriptionForm> {
+class _$SubscriptionRegisterSerializer
+    implements StructuredSerializer<SubscriptionRegister> {
   @override
-  final Iterable<Type> types = const [SubscriptionForm, _$SubscriptionForm];
+  final Iterable<Type> types = const [
+    SubscriptionRegister,
+    _$SubscriptionRegister
+  ];
   @override
-  final String wireName = 'SubscriptionForm';
+  final String wireName = 'SubscriptionRegister';
 
   @override
-  Iterable serialize(Serializers serializers, SubscriptionForm object,
+  Iterable serialize(Serializers serializers, SubscriptionRegister object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'currentStep',
@@ -125,9 +128,9 @@ class _$SubscriptionFormSerializer
   }
 
   @override
-  SubscriptionForm deserialize(Serializers serializers, Iterable serialized,
+  SubscriptionRegister deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionFormBuilder();
+    final result = new SubscriptionRegisterBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -210,7 +213,7 @@ class _$SubscriptionFormSerializer
   }
 }
 
-class _$SubscriptionForm extends SubscriptionForm {
+class _$SubscriptionRegister extends SubscriptionRegister {
   @override
   final int currentStep;
   @override
@@ -246,10 +249,11 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String password;
 
-  factory _$SubscriptionForm([void updates(SubscriptionFormBuilder b)]) =>
-      (new SubscriptionFormBuilder()..update(updates)).build();
+  factory _$SubscriptionRegister(
+          [void updates(SubscriptionRegisterBuilder b)]) =>
+      (new SubscriptionRegisterBuilder()..update(updates)).build();
 
-  _$SubscriptionForm._(
+  _$SubscriptionRegister._(
       {this.currentStep,
       this.packageId,
       this.firstName,
@@ -269,22 +273,22 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.password})
       : super._() {
     if (currentStep == null) {
-      throw new BuiltValueNullFieldError('SubscriptionForm', 'currentStep');
+      throw new BuiltValueNullFieldError('SubscriptionRegister', 'currentStep');
     }
   }
 
   @override
-  SubscriptionForm rebuild(void updates(SubscriptionFormBuilder b)) =>
+  SubscriptionRegister rebuild(void updates(SubscriptionRegisterBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SubscriptionFormBuilder toBuilder() =>
-      new SubscriptionFormBuilder()..replace(this);
+  SubscriptionRegisterBuilder toBuilder() =>
+      new SubscriptionRegisterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SubscriptionForm &&
+    return other is SubscriptionRegister &&
         currentStep == other.currentStep &&
         packageId == other.packageId &&
         firstName == other.firstName &&
@@ -348,7 +352,7 @@ class _$SubscriptionForm extends SubscriptionForm {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionForm')
+    return (newBuiltValueToStringHelper('SubscriptionRegister')
           ..add('currentStep', currentStep)
           ..add('packageId', packageId)
           ..add('firstName', firstName)
@@ -370,9 +374,9 @@ class _$SubscriptionForm extends SubscriptionForm {
   }
 }
 
-class SubscriptionFormBuilder
-    implements Builder<SubscriptionForm, SubscriptionFormBuilder> {
-  _$SubscriptionForm _$v;
+class SubscriptionRegisterBuilder
+    implements Builder<SubscriptionRegister, SubscriptionRegisterBuilder> {
+  _$SubscriptionRegister _$v;
 
   int _currentStep;
   int get currentStep => _$this._currentStep;
@@ -443,9 +447,9 @@ class SubscriptionFormBuilder
   String get password => _$this._password;
   set password(String password) => _$this._password = password;
 
-  SubscriptionFormBuilder();
+  SubscriptionRegisterBuilder();
 
-  SubscriptionFormBuilder get _$this {
+  SubscriptionRegisterBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
       _packageId = _$v.packageId;
@@ -470,22 +474,22 @@ class SubscriptionFormBuilder
   }
 
   @override
-  void replace(SubscriptionForm other) {
+  void replace(SubscriptionRegister other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$SubscriptionForm;
+    _$v = other as _$SubscriptionRegister;
   }
 
   @override
-  void update(void updates(SubscriptionFormBuilder b)) {
+  void update(void updates(SubscriptionRegisterBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$SubscriptionForm build() {
+  _$SubscriptionRegister build() {
     final _$result = _$v ??
-        new _$SubscriptionForm._(
+        new _$SubscriptionRegister._(
             currentStep: currentStep,
             packageId: packageId,
             firstName: firstName,
