@@ -14,7 +14,6 @@ class SubscriptionFormPage1 extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-
         return WillPopScope(
           onWillPop: () async {
             viewModel.previousStep();
@@ -29,15 +28,41 @@ class SubscriptionFormPage1 extends StatelessWidget {
               backgroundColor: backgroundColor,
               elevation: 0.0,
             ),
-            body: Center(
-              child: Column(
-                children: <Widget>[
-                  Text('Welcome to the subscription form Page 1 !'),
-                  RaisedButton(
-                    child: Text('Continue'),
-                    onPressed: viewModel.nextStep
-                  )
-                ],
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Container()
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
+
+                    Expanded(
+                      flex: 1,
+                      child: Container()
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text('Fonctionnement', style: Theme.of(context).textTheme.title),
+                        Text('Nous passons collecter à ton domicile tous tes déchets triés, à la fréquence qui te convient.', textAlign: TextAlign.center,)
+                      ],
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Container(),
+                    ),
+                    RaisedButton(
+                      child: Text('Continue'),
+                      onPressed: viewModel.nextStep
+                    ),
+                  ],
+                )
               )
             )
           )
@@ -53,7 +78,6 @@ class _ViewModel {
   final SubscriptionForm subscriptionForm;
   final Function nextStep;
   final Function previousStep;
-
 
   _ViewModel({
     this.subscriptionForm,

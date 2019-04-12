@@ -18,6 +18,7 @@ void main() async {
 
   final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   final Store<AppState> store = Store<AppState>(
     appReducer,
     initialState: AppState(),
@@ -34,19 +35,3 @@ void main() async {
   runApp(App(store, navigatorKey));
   store.dispatch(AppStarted());
 }
-
-
-
-
-// void main() {
-//   final Store<AppState> store = Store<AppState>(
-//     appReducer,
-//     initialState: AppState.initial(),
-//     middleware: []
-//         ..addAll(AuthMiddleware().createAuthMiddleware())
-//         ..addAll(AppMiddleware().createAppMiddleware())
-//   );
-
-//   runApp(App(store));
-// }
-

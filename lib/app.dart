@@ -7,6 +7,7 @@ import 'redux/app/app_state.dart';
 import 'ui/app/main_screen.dart';
 import 'utils/layout.dart';
 import 'utils/colors.dart';
+import 'utils/theme.dart';
 import 'ui/subscription/subscription_screen.dart';
 import 'ui/subscription/form/subscription_form_page_1.dart';
 import 'ui/subscription/form/subscription_form_page_2.dart';
@@ -26,21 +27,7 @@ class App extends StatelessWidget {
         child: MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-          //  fontFamily: 'ProductSans',
-            primaryColor: primaryColor,
-            accentColor: accentColor,
-            scaffoldBackgroundColor: backgroundColor,
-
-            buttonTheme: ButtonThemeData(
-              //minWidth: 300,
-              //height: 40,
-              buttonColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              ),
-            )
-          ),
+          theme: appTheme(),
           title: 'Oust!',
           routes: <String, WidgetBuilder>{
             '/': (BuildContext context) => MainScreen(),
@@ -53,3 +40,5 @@ class App extends StatelessWidget {
     );
   }
 }
+
+
