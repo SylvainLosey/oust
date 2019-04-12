@@ -30,9 +30,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'subscriptionState',
       serializers.serialize(object.subscriptionState,
           specifiedType: const FullType(SubscriptionState)),
-      'subscriptionRegisterState',
-      serializers.serialize(object.subscriptionRegisterState,
-          specifiedType: const FullType(SubscriptionRegisterState)),
+      'subscriptionFormState',
+      serializers.serialize(object.subscriptionFormState,
+          specifiedType: const FullType(SubscriptionFormState)),
       'pickupState',
       serializers.serialize(object.pickupState,
           specifiedType: const FullType(PickupState)),
@@ -69,11 +69,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
                   specifiedType: const FullType(SubscriptionState))
               as SubscriptionState);
           break;
-        case 'subscriptionRegisterState':
-          result.subscriptionRegisterState.replace(serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(SubscriptionRegisterState))
-              as SubscriptionRegisterState);
+        case 'subscriptionFormState':
+          result.subscriptionFormState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SubscriptionFormState))
+              as SubscriptionFormState);
           break;
         case 'pickupState':
           result.pickupState.replace(serializers.deserialize(value,
@@ -96,7 +95,7 @@ class _$AppState extends AppState {
   @override
   final SubscriptionState subscriptionState;
   @override
-  final SubscriptionRegisterState subscriptionRegisterState;
+  final SubscriptionFormState subscriptionFormState;
   @override
   final PickupState pickupState;
 
@@ -108,7 +107,7 @@ class _$AppState extends AppState {
       this.navState,
       this.customerState,
       this.subscriptionState,
-      this.subscriptionRegisterState,
+      this.subscriptionFormState,
       this.pickupState})
       : super._() {
     if (authState == null) {
@@ -123,9 +122,8 @@ class _$AppState extends AppState {
     if (subscriptionState == null) {
       throw new BuiltValueNullFieldError('AppState', 'subscriptionState');
     }
-    if (subscriptionRegisterState == null) {
-      throw new BuiltValueNullFieldError(
-          'AppState', 'subscriptionRegisterState');
+    if (subscriptionFormState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'subscriptionFormState');
     }
     if (pickupState == null) {
       throw new BuiltValueNullFieldError('AppState', 'pickupState');
@@ -147,7 +145,7 @@ class _$AppState extends AppState {
         navState == other.navState &&
         customerState == other.customerState &&
         subscriptionState == other.subscriptionState &&
-        subscriptionRegisterState == other.subscriptionRegisterState &&
+        subscriptionFormState == other.subscriptionFormState &&
         pickupState == other.pickupState;
   }
 
@@ -159,7 +157,7 @@ class _$AppState extends AppState {
                 $jc($jc($jc(0, authState.hashCode), navState.hashCode),
                     customerState.hashCode),
                 subscriptionState.hashCode),
-            subscriptionRegisterState.hashCode),
+            subscriptionFormState.hashCode),
         pickupState.hashCode));
   }
 
@@ -170,7 +168,7 @@ class _$AppState extends AppState {
           ..add('navState', navState)
           ..add('customerState', customerState)
           ..add('subscriptionState', subscriptionState)
-          ..add('subscriptionRegisterState', subscriptionRegisterState)
+          ..add('subscriptionFormState', subscriptionFormState)
           ..add('pickupState', pickupState))
         .toString();
   }
@@ -200,13 +198,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set subscriptionState(SubscriptionStateBuilder subscriptionState) =>
       _$this._subscriptionState = subscriptionState;
 
-  SubscriptionRegisterStateBuilder _subscriptionRegisterState;
-  SubscriptionRegisterStateBuilder get subscriptionRegisterState =>
-      _$this._subscriptionRegisterState ??=
-          new SubscriptionRegisterStateBuilder();
-  set subscriptionRegisterState(
-          SubscriptionRegisterStateBuilder subscriptionRegisterState) =>
-      _$this._subscriptionRegisterState = subscriptionRegisterState;
+  SubscriptionFormStateBuilder _subscriptionFormState;
+  SubscriptionFormStateBuilder get subscriptionFormState =>
+      _$this._subscriptionFormState ??= new SubscriptionFormStateBuilder();
+  set subscriptionFormState(
+          SubscriptionFormStateBuilder subscriptionFormState) =>
+      _$this._subscriptionFormState = subscriptionFormState;
 
   PickupStateBuilder _pickupState;
   PickupStateBuilder get pickupState =>
@@ -222,7 +219,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _navState = _$v.navState?.toBuilder();
       _customerState = _$v.customerState?.toBuilder();
       _subscriptionState = _$v.subscriptionState?.toBuilder();
-      _subscriptionRegisterState = _$v.subscriptionRegisterState?.toBuilder();
+      _subscriptionFormState = _$v.subscriptionFormState?.toBuilder();
       _pickupState = _$v.pickupState?.toBuilder();
       _$v = null;
     }
@@ -252,7 +249,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               navState: navState.build(),
               customerState: customerState.build(),
               subscriptionState: subscriptionState.build(),
-              subscriptionRegisterState: subscriptionRegisterState.build(),
+              subscriptionFormState: subscriptionFormState.build(),
               pickupState: pickupState.build());
     } catch (_) {
       String _$failedField;
@@ -265,8 +262,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         customerState.build();
         _$failedField = 'subscriptionState';
         subscriptionState.build();
-        _$failedField = 'subscriptionRegisterState';
-        subscriptionRegisterState.build();
+        _$failedField = 'subscriptionFormState';
+        subscriptionFormState.build();
         _$failedField = 'pickupState';
         pickupState.build();
       } catch (e) {

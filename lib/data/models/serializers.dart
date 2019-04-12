@@ -9,7 +9,7 @@ import 'subscription.dart';
 import 'consumer_subscription.dart';
 import 'package.dart';
 import 'pickup.dart';
-import 'subscription_register.dart';
+import 'subscription_form.dart';
 import 'date_serializer.dart';
 
 // Do not use relative imports here - weird bug otherwise
@@ -17,7 +17,7 @@ import 'package:oust/redux/auth/auth_state.dart';
 import 'package:oust/redux/customer/customer_state.dart';
 import 'package:oust/redux/subscription/subscription_state.dart';
 import 'package:oust/redux/pickup/pickup_state.dart';
-import 'package:oust/redux/subscription/register/subscription_register_state.dart';
+import 'package:oust/redux/subscription/form/subscription_form_state.dart';
 import 'package:oust/redux/nav/nav_state.dart';
 import 'package:oust/redux/app/app_state.dart';
 
@@ -30,12 +30,12 @@ part 'serializers.g.dart';
   ConsumerSubscription,
   Package,
   Pickup,
-  SubscriptionRegister,
+  SubscriptionForm,
   AuthState,
   CustomerState,
   SubscriptionState,
   PickupState,
-  SubscriptionRegisterState,
+  SubscriptionFormState,
   NavState,
   AppState,
 ])

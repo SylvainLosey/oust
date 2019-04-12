@@ -7,13 +7,16 @@ import 'redux/app/app_state.dart';
 import 'ui/app/main_screen.dart';
 import 'utils/layout.dart';
 import 'utils/colors.dart';
-import 'ui/subscription/register/subscription_register_main.dart';
+import 'ui/subscription/subscription_screen.dart';
+import 'ui/subscription/form/subscription_form_page_1.dart';
+import 'ui/subscription/form/subscription_form_page_2.dart';
 
 
 class App extends StatelessWidget {
   final Store<AppState> store;
+  final GlobalKey<NavigatorState> navigatorKey;
 
-  const App(this.store);
+  App(this.store, this.navigatorKey);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class App extends StatelessWidget {
       store: store,
       child: Layout(
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
           //  fontFamily: 'ProductSans',
@@ -40,7 +44,9 @@ class App extends StatelessWidget {
           title: 'Oust!',
           routes: <String, WidgetBuilder>{
             '/': (BuildContext context) => MainScreen(),
-            '/subscription/register/': (BuildContext context) => SubscriptionRegisterMain(),
+            '/subscription/': (BuildContext context) => SubscriptionScreen(),
+            '/subscription/form/1': (BuildContext context) => SubscriptionFormPage1(),
+            '/subscription/form/2': (BuildContext context) => SubscriptionFormPage2(),
           }
         )
       )

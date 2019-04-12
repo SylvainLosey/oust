@@ -9,7 +9,7 @@ import '../auth/auth_state.dart';
 import '../customer/customer_state.dart';
 import '../nav/nav_state.dart';
 import '../subscription/subscription_state.dart';
-import '../subscription/register/subscription_register_state.dart';
+import '../subscription/form/subscription_form_state.dart';
 import '../pickup/pickup_state.dart';
 
 part 'app_state.g.dart';
@@ -19,7 +19,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   NavState get navState;
   CustomerState get customerState;
   SubscriptionState get subscriptionState;
-  SubscriptionRegisterState get subscriptionRegisterState;
+  SubscriptionFormState get subscriptionFormState;
   PickupState get pickupState;
 
   AppState._();
@@ -30,7 +30,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       navState: NavState(),
       customerState:  CustomerState(),
       subscriptionState: SubscriptionState(),
-      subscriptionRegisterState: SubscriptionRegisterState(),
+      subscriptionFormState: SubscriptionFormState(),
       pickupState: PickupState()
     );
   }

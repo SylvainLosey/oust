@@ -4,8 +4,9 @@ import 'package:redux/redux.dart';
 
 import '../../utils/layout.dart';
 import '../../redux/app/app_state.dart';
-import '../../redux/subscription/register/subscription_register_state.dart';
-import '../../data/models/subscription_register.dart';
+import '../../redux/subscription/form/subscription_form_state.dart';
+import '../../redux/subscription/form/subscription_form_actions.dart';
+import '../../data/models/subscription_form.dart';
 
 
 class SubscriptionEmpty extends StatelessWidget {
@@ -16,29 +17,27 @@ class SubscriptionEmpty extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(height: Layout.of(context).gridUnit(50)),
-        Text('Abonnement', style: Theme.of(context).textTheme.title),
-        Container(height: Layout.of(context).gridUnit(1)),
-        Text(
-          'Gagne 1 jour entier par année en nous laissant aller à la déchetterie pour toi!', 
-          style: Theme.of(context).textTheme.body1,
-          textAlign: TextAlign.center,
-        ),
-        Container(height: Layout.of(context).gridUnit(15)),
-        RaisedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/subscription/register/');
-          },
-          child: Text('Découvrir', style: TextStyle(color: Colors.white))
-        ),
-        FlatButton(
-          onPressed: () {},
-          child: Text('J\'ai déjà un abonnement')
-        )
-      ]
-    );
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(height: Layout.of(context).gridUnit(50)),
+            Text('Abonnement', style: Theme.of(context).textTheme.title),
+            Container(height: Layout.of(context).gridUnit(1)),
+            Text(
+              'Gagne 1 jour entier par année en nous laissant aller à la déchetterie pour toi!', 
+              style: Theme.of(context).textTheme.body1,
+              textAlign: TextAlign.center,
+            ),
+            Container(height: Layout.of(context).gridUnit(15)),
+            RaisedButton(
+              onPressed: viewModel.start,
+              child: Text('Découvrir', style: TextStyle(color: Colors.white))
+            ),
+            FlatButton(
+              onPressed: () {},
+              child: Text('J\'ai déjà un abonnement')
+            )
+          ]
+        );
       },
     );
   }
@@ -46,15 +45,18 @@ class SubscriptionEmpty extends StatelessWidget {
 
 @immutable
 class _ViewModel {
-  final SubscriptionRegister subscriptionRegister;
+  final SubscriptionForm subscriptionForm;
+  final Function start;
 
   _ViewModel({
-    this.subscriptionRegister,
+    this.subscriptionForm,
+    this.start
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionRegister: store.state.subscriptionRegisterState.subscriptionRegister,
+      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+      start: () => store.dispatch(SubscriptionFormStart())
      );
   }
 }
