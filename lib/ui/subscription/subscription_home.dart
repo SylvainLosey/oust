@@ -27,7 +27,6 @@ import 'pickup_list.dart';
 class SubscriptionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return StoreConnector<AppState, _ViewModel>(
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {

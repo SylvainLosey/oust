@@ -6,6 +6,7 @@ import '../../../redux/app/app_state.dart';
 import '../../../data/models/subscription_form.dart';
 import '../../../utils/colors.dart';
 import '../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../utils/layout.dart';
 
 
 class SubscriptionFormPage2 extends StatelessWidget {
@@ -37,7 +38,7 @@ class SubscriptionFormPage2 extends StatelessWidget {
             ),
             body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
+                padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(5)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -57,8 +58,8 @@ class SubscriptionFormPage2 extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text('Quantités', style: Theme.of(context).textTheme.title),
-                        Container(height: 8),
-                        Text('Par passage, nous collectons jusqu’à 200l, ce équivault par exemple à 2 caisses 35l et 2 caisses 60l. Tes déchets peuvent être dans tout type de conteneurs tant qu’ils sont triés.', textAlign: TextAlign.center,)
+                        Container(height: Layout.of(context).gridUnit(1)),
+                        Text('Par passage, nous collectons jusqu’à environ 200l. Tes déchets peuvent être dans tout type de conteneurs tant qu’ils sont triés.', textAlign: TextAlign.center,)
                       ],
                     ),
                     Expanded(
@@ -66,7 +67,7 @@ class SubscriptionFormPage2 extends StatelessWidget {
                       child: Container(),
                     ),
                     RaisedButton(
-                      child: Text('Continue'),
+                      child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
                       onPressed: viewModel.nextStep
                     ),
                   ],

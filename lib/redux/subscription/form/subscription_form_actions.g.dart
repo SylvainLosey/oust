@@ -40,3 +40,15 @@ SubscriptionFormExit _$SubscriptionFormExitFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$SubscriptionFormExitToJson(
         SubscriptionFormExit instance) =>
     <String, dynamic>{};
+
+UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
+    Map<String, dynamic> json) {
+  return UpdateSubscriptionForm(json['subscriptionForm'] == null
+      ? null
+      : SubscriptionForm.fromJson(
+          json['subscriptionForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$UpdateSubscriptionFormToJson(
+        UpdateSubscriptionForm instance) =>
+    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};

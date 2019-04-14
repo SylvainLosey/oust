@@ -23,7 +23,7 @@ ThemeData appTheme() {
 
 /// The font weights, and letter spacings in this version match the
 /// latest [Material Design specification](https://material.io/go/design-typography#typography-styles).
-/// Size has been downsized by aronud 2 from original specification
+/// Size has been downsized by around 2 from original specification
 
 const TextTheme dense2018 = TextTheme(
   display4  : TextStyle(debugLabel: 'dense display4 2018',  fontSize: 90.0, fontWeight: FontWeight.w100, textBaseline: TextBaseline.ideographic),

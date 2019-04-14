@@ -24,3 +24,12 @@ class SubscriptionFormStart {
 class SubscriptionFormExit {
   Map<String, dynamic> toJson() => _$SubscriptionFormExitToJson(this);
 }
+
+@JsonSerializable()
+class UpdateSubscriptionForm {
+  @JsonKey(fromJson: SubscriptionForm.fromJson) 
+  SubscriptionForm subscriptionForm;
+
+  UpdateSubscriptionForm(this.subscriptionForm);
+  Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
+}

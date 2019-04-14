@@ -29,9 +29,12 @@ dependencies:
   built_collection: ^4.2.0
 
 
+
    # Redux
   redux: ^3.0.0
   flutter_redux: ^0.5.2
+  redux_text_field: ^1.1.0
+
 
 
 dev_dependencies:

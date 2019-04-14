@@ -8,6 +8,7 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, SubscriptionFormStart>(_start),
   TypedReducer<SubscriptionFormState, SubscriptionFormNextStep>(_nextStep),
   TypedReducer<SubscriptionFormState, SubscriptionFormPreviousStep>(_previousStep),
+  TypedReducer<SubscriptionFormState, UpdateSubscriptionForm>(_update),
 ]);
 
 SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart action) {
@@ -31,5 +32,11 @@ SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNex
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
   return state.rebuild((b) => b
     ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
+  );
+}
+
+SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionForm action) {
+  return state.rebuild((b) => b
+    ..subscriptionForm.replace(action.subscriptionForm)
   );
 }
