@@ -48,10 +48,10 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.address,
             specifiedType: const FullType(String)));
     }
-    if (object.postcodeId != null) {
+    if (object.postcode != null) {
       result
-        ..add('postcodeId')
-        ..add(serializers.serialize(object.postcodeId,
+        ..add('postcode')
+        ..add(serializers.serialize(object.postcode,
             specifiedType: const FullType(int)));
     }
     if (object.appRegistration != null) {
@@ -155,8 +155,8 @@ class _$SubscriptionFormSerializer
           result.address = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'postcodeId':
-          result.postcodeId = serializers.deserialize(value,
+        case 'postcode':
+          result.postcode = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'appRegistration':
@@ -222,7 +222,7 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String address;
   @override
-  final int postcodeId;
+  final int postcode;
   @override
   final bool appRegistration;
   @override
@@ -255,7 +255,7 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.firstName,
       this.lastName,
       this.address,
-      this.postcodeId,
+      this.postcode,
       this.appRegistration,
       this.smallBins,
       this.bigBins,
@@ -290,7 +290,7 @@ class _$SubscriptionForm extends SubscriptionForm {
         firstName == other.firstName &&
         lastName == other.lastName &&
         address == other.address &&
-        postcodeId == other.postcodeId &&
+        postcode == other.postcode &&
         appRegistration == other.appRegistration &&
         smallBins == other.smallBins &&
         bigBins == other.bigBins &&
@@ -332,7 +332,7 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                     .hashCode),
                                                             lastName.hashCode),
                                                         address.hashCode),
-                                                    postcodeId.hashCode),
+                                                    postcode.hashCode),
                                                 appRegistration.hashCode),
                                             smallBins.hashCode),
                                         bigBins.hashCode),
@@ -354,7 +354,7 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('address', address)
-          ..add('postcodeId', postcodeId)
+          ..add('postcode', postcode)
           ..add('appRegistration', appRegistration)
           ..add('smallBins', smallBins)
           ..add('bigBins', bigBins)
@@ -394,9 +394,9 @@ class SubscriptionFormBuilder
   String get address => _$this._address;
   set address(String address) => _$this._address = address;
 
-  int _postcodeId;
-  int get postcodeId => _$this._postcodeId;
-  set postcodeId(int postcodeId) => _$this._postcodeId = postcodeId;
+  int _postcode;
+  int get postcode => _$this._postcode;
+  set postcode(int postcode) => _$this._postcode = postcode;
 
   bool _appRegistration;
   bool get appRegistration => _$this._appRegistration;
@@ -452,7 +452,7 @@ class SubscriptionFormBuilder
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _address = _$v.address;
-      _postcodeId = _$v.postcodeId;
+      _postcode = _$v.postcode;
       _appRegistration = _$v.appRegistration;
       _smallBins = _$v.smallBins;
       _bigBins = _$v.bigBins;
@@ -491,7 +491,7 @@ class SubscriptionFormBuilder
             firstName: firstName,
             lastName: lastName,
             address: address,
-            postcodeId: postcodeId,
+            postcode: postcode,
             appRegistration: appRegistration,
             smallBins: smallBins,
             bigBins: bigBins,

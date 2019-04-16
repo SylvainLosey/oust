@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebClient {
-  // static String baseUrl = 'http://10.0.2.2:8000/api';
   // static String baseUrl = 'https://admin.oust.ch/api';
 
   // ANDROID
@@ -30,7 +29,9 @@ class WebClient {
     }
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      // DRF doesn't set application/json, charset=utf-8 otherwise just json.decode would work
+      // Workaround is using bodyBytes, decoding to utf-8 and then to json
+      return json.decode(utf8.decode(response.bodyBytes));
     } else {
       throw Exception('An error occured: ' + response.body);
     }
@@ -43,7 +44,7 @@ class WebClient {
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      return json.decode(utf8.decode(response.bodyBytes));
     } else {
       throw Exception('An error occured: ' + response.body);
     }

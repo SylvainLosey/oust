@@ -12,7 +12,7 @@ import '../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../utils/layout.dart';
 
 
-class SubscriptionFormPage4 extends StatelessWidget {
+class SubscriptionFormPage100 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -75,78 +75,78 @@ class NameFormState extends State<NameForm> {
   FocusNode _postcodeNode;
   List<FocusNode> _focusNodes;
 
-  // On load set controllers to value stored in redux and add onChanged listeners
-  @override
-  void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
+  // // On load set controllers to value stored in redux and add onChanged listeners
+  // @override
+  // void didChangeDependencies() {
+  //   if (_controllers.isNotEmpty) {
+  //     return;
+  //   }
 
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
+  //   final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
 
-    _addressController.text = subscriptionForm.address;
+  //   _addressController.text = subscriptionForm.address;
 
 
-    if (subscriptionForm.postcode != null) {
-      final Postcode postcode = widget.viewModel.postcodes[subscriptionForm.postcode];
-      _selectedPostcode = widget.viewModel.postcodes[subscriptionForm.postcode];
-      _postcodeController.text = '${postcode.postcode} ${postcode.name}';
-    }
+  //   if (subscriptionForm.postcode != null) {
+  //     final Postcode postcode = widget.viewModel.postcodes[subscriptionForm.postcode];
+  //     _selectedPostcode = widget.viewModel.postcodes[subscriptionForm.postcode];
+  //     _postcodeController.text = '${postcode.postcode} ${postcode.name}';
+  //   }
 
-    _controllers = [
-      _addressController,
-      _postcodeController,
-    ];
+  //   _controllers = [
+  //     _addressController,
+  //     _postcodeController,
+  //   ];
      
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+  //   _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
 
-    _addressNode = FocusNode();
-    _postcodeNode = FocusNode();
+  //   _addressNode = FocusNode();
+  //   _postcodeNode = FocusNode();
 
-    _focusNodes = [
-      _addressNode,
-      _postcodeNode
-    ];
+  //   _focusNodes = [
+  //     _addressNode,
+  //     _postcodeNode
+  //   ];
 
-    super.didChangeDependencies();
-  }
-
-
-  void _onChanged() {
-    // At each field change send value to redux store
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
-      ..address = _addressController.text == '' ? null : _addressController.text.trim()
-      ..postcode = _postcodeController.text == '' ? null : _selectedPostcode?.id
-    );
-
-    if (subscriptionForm != widget.viewModel.subscriptionForm) {
-      widget.viewModel.onChanged(subscriptionForm);
-    }
+  //   super.didChangeDependencies();
+  // }
 
 
-    // Disable/enable button if conditions are met
-    if (_addressController.text.isNotEmpty && _selectedPostcode != null) {
-      if (_isButtonEnabled != true) setState(() {_isButtonEnabled = true;});
-    } else {
-      if (_isButtonEnabled != false) setState(() {_isButtonEnabled = false;}); 
-    }
-  }
+  // void _onChanged() {
+  //   // At each field change send value to redux store
+  //   final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
+  //     ..address = _addressController.text == '' ? null : _addressController.text.trim()
+  //     ..postcode = _postcodeController.text == '' ? null : _selectedPostcode?.id
+  //   );
+
+  //   if (subscriptionForm != widget.viewModel.subscriptionForm) {
+  //     widget.viewModel.onChanged(subscriptionForm);
+  //   }
 
 
-  @override
-  void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
+  //   // Disable/enable button if conditions are met
+  //   if (_addressController.text.isNotEmpty && _selectedPostcode != null) {
+  //     if (_isButtonEnabled != true) setState(() {_isButtonEnabled = true;});
+  //   } else {
+  //     if (_isButtonEnabled != false) setState(() {_isButtonEnabled = false;}); 
+  //   }
+  // }
 
-    _focusNodes.forEach((dynamic node) {
-      node.dispose();
-    });
 
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controllers.forEach((dynamic controller) {
+  //     controller.removeListener(_onChanged);
+  //     controller.dispose();
+  //   });
+
+  //   _focusNodes.forEach((dynamic node) {
+  //     node.dispose();
+  //   });
+
+  //   super.dispose();
+  // }
 
 
   @override
@@ -159,9 +159,9 @@ class NameFormState extends State<NameForm> {
           Container(height: Layout.of(context).gridUnit(3)),
           Column(
             children: <Widget>[
-              Text('Où habites-tu ?', style: Theme.of(context).textTheme.title),
+              Text('Oh non !', style: Theme.of(context).textTheme.title),
               Container(height: Layout.of(context).gridUnit(0.5)),
-              Text('Complète les champs ci-dessous', textAlign: TextAlign.center)
+              Text('Malheureusement nous n\'allons pas encore jusque chey toi.', textAlign: TextAlign.center)
             ],
           ),
           Container(height: Layout.of(context).gridUnit(7)),
@@ -220,7 +220,7 @@ class NameFormState extends State<NameForm> {
           Expanded(child:Container()),
           RaisedButton(
             child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-            onPressed: _isButtonEnabled ? () => widget.viewModel.nextStep(_selectedPostcode) : null
+            onPressed: _isButtonEnabled ? widget.viewModel.nextStep : null
           ),
           Container(height:Layout.of(context).gridUnit(1))
         ],
@@ -253,13 +253,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      nextStep: (Postcode selectedPostcode) {
-        if (selectedPostcode.subscriptionAvailable) {
-          store.dispatch(SubscriptionFormNextStep());
-        } else {
-          store.dispatch(SubscriptionFormNextStep(subscriptionIsUnavailable: true));
-        }
-      },
+      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),

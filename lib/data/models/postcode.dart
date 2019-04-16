@@ -35,4 +35,35 @@ abstract class Postcode implements Built<Postcode, PostcodeBuilder> {
   }
 
   static Serializer<Postcode> get serializer => _$postcodeSerializer;
+
+  // CLASS METHODS
+
+  static List<Postcode> getSuggestions(String pattern, Map<int, Postcode> postcodes) {
+    final List<Postcode> results = <Postcode>[];
+    final List<String> searchTerms = pattern.split(' ');
+
+    // Go through each swiss postcode
+    for (Postcode postcode in postcodes.values) {
+      if (postcode.country != 'CH') continue;
+      
+      // Check if every search term is a match to either the postcode or the town
+      bool matchUntilNow = true;
+      for (String searchTerm in searchTerms) {
+        if (matchUntilNow) {
+          matchUntilNow = postcode.postcode.startsWith(searchTerm) || postcode.name.toLowerCase().startsWith(searchTerm.toLowerCase());
+        }
+      }
+      
+      if (matchUntilNow) {
+        results.add(postcode);
+      }
+
+      if (results != null && results.length > 10) {
+        break;
+      }
+      
+    }
+
+    return results;
+  }
 }

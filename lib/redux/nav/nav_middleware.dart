@@ -31,29 +31,35 @@ class NavMiddleware {
     while (pushCounter <= currentStep) {
       final String route = '/subscription/form/$pushCounter';
       navigatorKey.currentState.pushNamed(route);
-      pushCounter = pushCounter + 1;
+
+      // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
+      if (pushCounter == 4 && currentStep >= 100 ) {
+        pushCounter = 100;
+      } else {
+      pushCounter++;
+      }
     }
   }
 
 
   void _subscriptionFormNextStep(Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async{
-    final String route = '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep + 1}';
-    navigatorKey.currentState.pushNamed(route);
-
     next(action);
+
+    final String route = '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep}';
+    navigatorKey.currentState.pushNamed(route);
   }
 
 
   void _subscriptionFormPreviousStep(Store<AppState> store, SubscriptionFormPreviousStep action, NextDispatcher next) async{    
-    navigatorKey.currentState.pop();
-
-    next(action);
+      next(action);
+        
+      navigatorKey.currentState.pop();
   }
 
 
-  void _subscriptionFormExit(Store<AppState> store, SubscriptionFormExit action, NextDispatcher next) async{    
-    navigatorKey.currentState.popUntil(ModalRoute.withName('/'));
-
+  void _subscriptionFormExit(Store<AppState> store, SubscriptionFormExit action, NextDispatcher next) async{
     next(action);
+
+    navigatorKey.currentState.popUntil(ModalRoute.withName('/'));
   }
 }

@@ -19,7 +19,7 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   @nullable
   String get address;
   @nullable
-  int get postcodeId;
+  int get postcode;
   @nullable
   bool get appRegistration;
   @nullable

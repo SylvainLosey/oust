@@ -109,7 +109,8 @@ class AppMiddleware {
 
     try {
       final List<dynamic> data = await repository.fetchPostcodes();
-      store.dispatch(LoadPostcodesSuccess(postcodes: List<Postcode>.from(data.map<dynamic>((dynamic x) => Postcode.fromJson(x)))));
+      final List<Postcode> postcodes = List<Postcode>.from(data.map<dynamic>((dynamic x) => Postcode.fromJson(x)));
+      store.dispatch(LoadPostcodesSuccess(postcodes: postcodes));
     } catch (e) {
       store.dispatch(LoadPostcodesFailure(error: e.toString()));
     }

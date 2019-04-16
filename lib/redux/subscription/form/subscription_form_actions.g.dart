@@ -8,12 +8,15 @@ part of 'subscription_form_actions.dart';
 
 SubscriptionFormNextStep _$SubscriptionFormNextStepFromJson(
     Map<String, dynamic> json) {
-  return SubscriptionFormNextStep();
+  return SubscriptionFormNextStep(
+      subscriptionIsUnavailable: json['subscriptionIsUnavailable'] as bool);
 }
 
 Map<String, dynamic> _$SubscriptionFormNextStepToJson(
         SubscriptionFormNextStep instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'subscriptionIsUnavailable': instance.subscriptionIsUnavailable
+    };
 
 SubscriptionFormPreviousStep _$SubscriptionFormPreviousStepFromJson(
     Map<String, dynamic> json) {

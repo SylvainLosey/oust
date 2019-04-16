@@ -24,12 +24,25 @@ SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart 
 }
 
 SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNextStep action) {
-  return state.rebuild((b) => b
-    ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
+  if (action.subscriptionIsUnavailable) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 100))
+    );
+  } else {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
   );
+  }
 }
 
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
+  // If user goes back from Postode unavailable, set to previous track
+  if (state.subscriptionForm.currentStep == 100) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 4))
+    );
+  }
+
   return state.rebuild((b) => b
     ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
   );
