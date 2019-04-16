@@ -12,6 +12,7 @@ import 'ui/subscription/subscription_screen.dart';
 import 'ui/subscription/form/subscription_form_page_1.dart';
 import 'ui/subscription/form/subscription_form_page_2.dart';
 import 'ui/subscription/form/subscription_form_page_3.dart';
+import 'ui/subscription/form/subscription_form_page_4.dart';
 
 
 class App extends StatelessWidget {
@@ -36,6 +37,7 @@ class App extends StatelessWidget {
             '/subscription/form/1': (BuildContext context) => SubscriptionFormPage1(),
             '/subscription/form/2': (BuildContext context) => SubscriptionFormPage2(),
             '/subscription/form/3': (BuildContext context) => SubscriptionFormPage3(),
+            '/subscription/form/4': (BuildContext context) => SubscriptionFormPage4(),
           }
         )
       )

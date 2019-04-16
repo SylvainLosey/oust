@@ -1,4 +1,4 @@
-library PickupState;
+library pickup_state;
 
 import 'dart:convert';
 

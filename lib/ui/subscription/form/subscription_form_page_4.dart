@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart' as http;
+
 
 import '../../../redux/app/app_state.dart';
 import '../../../data/models/subscription_form.dart';
@@ -9,7 +12,7 @@ import '../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../utils/layout.dart';
 
 
-class SubscriptionFormPage3 extends StatelessWidget {
+class SubscriptionFormPage4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -63,12 +66,12 @@ class NameFormState extends State<NameForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isButtonEnabled = false;
    
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _postcodeController = TextEditingController();
   List<TextEditingController> _controllers = [];
 
-  FocusNode _firstNameNode;
-  FocusNode _lastNameNode;
+  FocusNode _addressNode;
+  FocusNode _postcodeNode;
   List<FocusNode> _focusNodes;
 
 
@@ -81,23 +84,23 @@ class NameFormState extends State<NameForm> {
 
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
 
-    _firstNameController.text = subscriptionForm.firstName;
-    _lastNameController.text = subscriptionForm.lastName;
+    _addressController.text = subscriptionForm.address;
+    // _postcodeController.text = subscriptionForm.postcodeId;
 
     _controllers = [
-      _firstNameController,
-      _lastNameController,
+      _addressController,
+      _postcodeController,
     ];
      
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
 
-    _firstNameNode = FocusNode();
-    _lastNameNode = FocusNode();
+    _addressNode = FocusNode();
+    _postcodeNode = FocusNode();
 
     _focusNodes = [
-      _firstNameNode,
-      _lastNameNode
+      _addressNode,
+      _postcodeNode
     ];
 
     super.didChangeDependencies();
@@ -107,8 +110,8 @@ class NameFormState extends State<NameForm> {
   void _onChanged() {
     // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
-      ..firstName = _firstNameController.text == '' ? null : _firstNameController.text.trim()
-      ..lastName = _lastNameController.text == '' ? null : _lastNameController.text.trim()
+      ..address = _addressController.text == '' ? null : _addressController.text.trim()
+      // ..postcode = _postcodeController.text == '' ? null : _postcodeController.text.trim()
     );
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
@@ -116,7 +119,7 @@ class NameFormState extends State<NameForm> {
     }
 
     // Disable/enable button if conditions are met
-    if (_firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty) {
+    if (_addressController.text.isNotEmpty && _postcodeController.text.isNotEmpty) {
       if (_isButtonEnabled != true) setState(() {_isButtonEnabled = true;});
     } else {
       if (_isButtonEnabled != false) setState(() {_isButtonEnabled = false;}); 
@@ -149,44 +152,42 @@ class NameFormState extends State<NameForm> {
           Container(height: Layout.of(context).gridUnit(3)),
           Column(
             children: <Widget>[
-              Text('Comment t\'appelles-tu ?', style: Theme.of(context).textTheme.title),
+              Text('Où habites-tu ?', style: Theme.of(context).textTheme.title),
               Container(height: Layout.of(context).gridUnit(0.5)),
-              Text('Merci d\'entrer ton nom et prénom', textAlign: TextAlign.center,)
+              Text('Complète les champs ci-dessous', textAlign: TextAlign.center)
             ],
           ),
           Container(height: Layout.of(context).gridUnit(7)),
           TextFormField(
-            controller: _firstNameController,
-            focusNode: _firstNameNode,
+            controller: _addressController,
+            focusNode: _addressNode,
             autofocus: true,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
-              // enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[300])),
-              // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: primaryColor)),
               border: OutlineInputBorder(),
-              labelText: 'Prénom'
+              labelText: 'Adresse',
+              hintText: 'Rue et numéro',
             ),
             textInputAction: TextInputAction.next,
             onFieldSubmitted: (_){
-                FocusScope.of(context).requestFocus(_lastNameNode);
+                FocusScope.of(context).requestFocus(_postcodeNode);
               },
           ),
           Container(height: Layout.of(context).gridUnit(2)),
-          TextFormField(
-            
-            controller: _lastNameController,
-            focusNode: _lastNameNode,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              // enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[300])),
-              // focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: primaryColor)),
-              border: OutlineInputBorder(),
-              labelText: 'Nom'
+          TypeAheadFormField(
+            textFieldConfiguration: TextFieldConfiguration(
+              controller: _postcodeController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                labelText: 'Code postal'
+              )
             ),
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => widget.viewModel.nextStep(),
+            suggestionsCallback: (pattern) {},
+            onSuggestionSelected: (suggestion) {},
+            itemBuilder: (context, suggestion) => Container(),
           ),
           Expanded(child:Container()),
           RaisedButton(

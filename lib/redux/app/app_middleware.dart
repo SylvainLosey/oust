@@ -5,12 +5,14 @@ import '../customer/customer_actions.dart';
 import '../subscription/subscription_actions.dart';
 import '../pickup/pickup_actions.dart';
 import '../subscription/form/subscription_form_actions.dart';
+import '../data/data_actions.dart';
 import 'app_state.dart';
 import '../../data/models/customer.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
 import '../../data/models/consumer_subscription.dart';
 import '../../data/models/package.dart';
+import '../../data/models/postcode.dart';
 import '../../data/models/serializers.dart';
 import '../../data/repository.dart';
 
@@ -28,6 +30,7 @@ class AppMiddleware {
       TypedMiddleware<AppState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscription),
       TypedMiddleware<AppState, LoadPackagesRequest>(_loadPackages),
       TypedMiddleware<AppState, LoadPickupsRequest>(_loadPickups),
+      TypedMiddleware<AppState, LoadPostcodesRequest>(_loadPostcodes),
     ];
   }
 
@@ -97,6 +100,18 @@ class AppMiddleware {
       store.dispatch(LoadPickupsSuccess(pickups: List<Pickup>.from(pickupsData.map<dynamic>((dynamic x) => Pickup.fromJson(x)))));
     } catch (e) {
       store.dispatch(LoadPickupsFailure(error: e.toString()));
+    }
+  }
+
+
+  void _loadPostcodes(Store<AppState> store, LoadPostcodesRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> data = await repository.fetchPostcodes();
+      store.dispatch(LoadPostcodesSuccess(postcodes: List<Postcode>.from(data.map<dynamic>((dynamic x) => Postcode.fromJson(x)))));
+    } catch (e) {
+      store.dispatch(LoadPostcodesFailure(error: e.toString()));
     }
   }
 }

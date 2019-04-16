@@ -1,33 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of pickup_state;
+part of data_state;
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<PickupState> _$pickupStateSerializer = new _$PickupStateSerializer();
+Serializer<DataState> _$dataStateSerializer = new _$DataStateSerializer();
 
-class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
+class _$DataStateSerializer implements StructuredSerializer<DataState> {
   @override
-  final Iterable<Type> types = const [PickupState, _$PickupState];
+  final Iterable<Type> types = const [DataState, _$DataState];
   @override
-  final String wireName = 'PickupState';
+  final String wireName = 'DataState';
 
   @override
-  Iterable serialize(Serializers serializers, PickupState object,
+  Iterable serialize(Serializers serializers, DataState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
     ];
-    if (object.pickups != null) {
+    if (object.postcodes != null) {
       result
-        ..add('pickups')
-        ..add(serializers.serialize(object.pickups,
+        ..add('postcodes')
+        ..add(serializers.serialize(object.postcodes,
             specifiedType: const FullType(BuiltMap,
-                const [const FullType(int), const FullType(Pickup)])));
+                const [const FullType(int), const FullType(Postcode)])));
     }
     if (object.error != null) {
       result
@@ -40,9 +40,9 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
   }
 
   @override
-  PickupState deserialize(Serializers serializers, Iterable serialized,
+  DataState deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PickupStateBuilder();
+    final result = new DataStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -54,11 +54,11 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
           result.isLoading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'pickups':
-          result.pickups.replace(serializers.deserialize(value,
+        case 'postcodes':
+          result.postcodes.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
-                const FullType(Pickup)
+                const FullType(Postcode)
               ])) as BuiltMap);
           break;
         case 'error':
@@ -72,77 +72,78 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
   }
 }
 
-class _$PickupState extends PickupState {
+class _$DataState extends DataState {
   @override
   final bool isLoading;
   @override
-  final BuiltMap<int, Pickup> pickups;
+  final BuiltMap<int, Postcode> postcodes;
   @override
   final String error;
 
-  factory _$PickupState([void updates(PickupStateBuilder b)]) =>
-      (new PickupStateBuilder()..update(updates)).build();
+  factory _$DataState([void updates(DataStateBuilder b)]) =>
+      (new DataStateBuilder()..update(updates)).build();
 
-  _$PickupState._({this.isLoading, this.pickups, this.error}) : super._() {
+  _$DataState._({this.isLoading, this.postcodes, this.error}) : super._() {
     if (isLoading == null) {
-      throw new BuiltValueNullFieldError('PickupState', 'isLoading');
+      throw new BuiltValueNullFieldError('DataState', 'isLoading');
     }
   }
 
   @override
-  PickupState rebuild(void updates(PickupStateBuilder b)) =>
+  DataState rebuild(void updates(DataStateBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PickupStateBuilder toBuilder() => new PickupStateBuilder()..replace(this);
+  DataStateBuilder toBuilder() => new DataStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PickupState &&
+    return other is DataState &&
         isLoading == other.isLoading &&
-        pickups == other.pickups &&
+        postcodes == other.postcodes &&
         error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, isLoading.hashCode), pickups.hashCode), error.hashCode));
+    return $jf($jc(
+        $jc($jc(0, isLoading.hashCode), postcodes.hashCode), error.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PickupState')
+    return (newBuiltValueToStringHelper('DataState')
           ..add('isLoading', isLoading)
-          ..add('pickups', pickups)
+          ..add('postcodes', postcodes)
           ..add('error', error))
         .toString();
   }
 }
 
-class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
-  _$PickupState _$v;
+class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
+  _$DataState _$v;
 
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
-  MapBuilder<int, Pickup> _pickups;
-  MapBuilder<int, Pickup> get pickups =>
-      _$this._pickups ??= new MapBuilder<int, Pickup>();
-  set pickups(MapBuilder<int, Pickup> pickups) => _$this._pickups = pickups;
+  MapBuilder<int, Postcode> _postcodes;
+  MapBuilder<int, Postcode> get postcodes =>
+      _$this._postcodes ??= new MapBuilder<int, Postcode>();
+  set postcodes(MapBuilder<int, Postcode> postcodes) =>
+      _$this._postcodes = postcodes;
 
   String _error;
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
-  PickupStateBuilder();
+  DataStateBuilder();
 
-  PickupStateBuilder get _$this {
+  DataStateBuilder get _$this {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
-      _pickups = _$v.pickups?.toBuilder();
+      _postcodes = _$v.postcodes?.toBuilder();
       _error = _$v.error;
       _$v = null;
     }
@@ -150,33 +151,35 @@ class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
   }
 
   @override
-  void replace(PickupState other) {
+  void replace(DataState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$PickupState;
+    _$v = other as _$DataState;
   }
 
   @override
-  void update(void updates(PickupStateBuilder b)) {
+  void update(void updates(DataStateBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$PickupState build() {
-    _$PickupState _$result;
+  _$DataState build() {
+    _$DataState _$result;
     try {
       _$result = _$v ??
-          new _$PickupState._(
-              isLoading: isLoading, pickups: _pickups?.build(), error: error);
+          new _$DataState._(
+              isLoading: isLoading,
+              postcodes: _postcodes?.build(),
+              error: error);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'pickups';
-        _pickups?.build();
+        _$failedField = 'postcodes';
+        _postcodes?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PickupState', _$failedField, e.toString());
+            'DataState', _$failedField, e.toString());
       }
       rethrow;
     }

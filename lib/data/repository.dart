@@ -36,4 +36,8 @@ class Repository {
   Future<List<dynamic>> fetchPickups(int id) async {
     return await client.get('/pickups/?subscription=$id/');
   }
+
+  Future<List<dynamic>> fetchPostcodes() async {
+    return await client.get('/postcodes/', auth: false);
+  }
 }

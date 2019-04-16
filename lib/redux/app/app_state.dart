@@ -11,6 +11,7 @@ import '../nav/nav_state.dart';
 import '../subscription/subscription_state.dart';
 import '../subscription/form/subscription_form_state.dart';
 import '../pickup/pickup_state.dart';
+import '../data/data_state.dart';
 
 part 'app_state.g.dart';
 
@@ -21,6 +22,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   SubscriptionState get subscriptionState;
   SubscriptionFormState get subscriptionFormState;
   PickupState get pickupState;
+  DataState get dataState;
 
   AppState._();
 
@@ -31,7 +33,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       customerState:  CustomerState(),
       subscriptionState: SubscriptionState(),
       subscriptionFormState: SubscriptionFormState(),
-      pickupState: PickupState()
+      pickupState: PickupState(),
+      dataState: DataState(),
     );
   }
 

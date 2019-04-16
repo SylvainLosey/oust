@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_actions.dart';
 import '../customer/customer_actions.dart';
 import '../subscription/subscription_actions.dart';
+import '../data/data_actions.dart';
 import '../app/app_state.dart';
 import '../../data/models/user.dart';
 import '../../data/repository.dart';
@@ -35,6 +36,11 @@ class AuthMiddleware {
         )
       ));
     }
+
+    // Let app load 2 seconds and load this after as this is low priority
+    await Future.delayed(const Duration(seconds: 2), () {
+      store.dispatch(LoadPostcodesRequest());
+    });
   }
 
   void _userLoginRequest(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {

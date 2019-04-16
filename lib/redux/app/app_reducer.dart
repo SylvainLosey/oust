@@ -6,6 +6,7 @@ import '../subscription/subscription_reducer.dart';
 import '../subscription/form/subscription_form_reducer.dart';
 import '../pickup/pickup_reducer.dart';
 import '../auth/auth_actions.dart';
+import '../data/data_reducer.dart';
 
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
@@ -19,5 +20,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..subscriptionState.replace(subscriptionReducer(state.subscriptionState, action))
     ..subscriptionFormState.replace(subscriptionFormReducer(state.subscriptionFormState, action))
     ..pickupState.replace(pickupReducer(state.pickupState, action))
+    ..dataState.replace(dataReducer(state.dataState, action))
   );
 }

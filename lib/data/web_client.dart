@@ -17,12 +17,17 @@ class WebClient {
 
   const WebClient();
 
-  Future<dynamic> get(String path) async {
+  Future<dynamic> get(String path, {bool auth = true}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String key = prefs.getString('key');
 
     final Map<String, String> headers = <String, String>{'Authorization': 'Token $key'};
-    final http.Response response = await http.Client().get('$baseUrl$path', headers: headers);
+    http.Response response;
+    if (auth == false) {
+      response = await http.Client().get('$baseUrl$path');
+    } else {
+      response = await http.Client().get('$baseUrl$path', headers: headers);
+    }
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
