@@ -4,7 +4,6 @@ import 'package:redux/redux.dart';
 
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
-import '../presentation/partial_bold_text.dart';
 import '../../redux/app/app_state.dart';
 import '../../data/models/customer.dart';
 import '../../redux/customer/customer_state.dart';
@@ -26,35 +25,10 @@ class CustomerDetails extends StatelessWidget {
         return Container(
             padding: EdgeInsets.all(16),
             child: Center(
-              child: _createColumn(context, viewModel),
+              child: Text('${viewModel.customerState.customer.firstName} ${viewModel.customerState.customer.lastName}'),
             ), 
         );
       },
-    );
-  }
-
-  Column _createColumn(BuildContext context, _ViewModel viewModel) {
-    final Customer customer = viewModel.customerState.customer;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        PartialBoldText(
-          boldText: 'Client: ',
-          normalText: '${customer.firstName} ${customer.lastName}',
-          defaultText: 'Not set',
-        ),
-        PartialBoldText(
-          boldText: 'Adresse: ',
-          normalText: customer.address,
-          defaultText: 'Not set',
-        ),
-        PartialBoldText(
-          boldText: 'Localité: ',
-          normalText: '${customer.postcode} ${customer.city}',
-          defaultText: 'Not set',
-        ),
-      ],
     );
   }
 }

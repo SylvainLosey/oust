@@ -10,7 +10,11 @@ ThemeData appTheme() {
     primaryColor: primaryColor,
     accentColor: accentColor,
     scaffoldBackgroundColor: backgroundColor,
-
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(),
+    ),
     buttonTheme: ButtonThemeData(
       buttonColor: primaryColor,
       shape: RoundedRectangleBorder(

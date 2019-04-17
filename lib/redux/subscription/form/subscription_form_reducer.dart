@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import 'subscription_form_actions.dart';
 import 'subscription_form_state.dart';
+import '../../../data/models/subscription_form.dart';
 
 
 Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
@@ -9,6 +10,9 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, SubscriptionFormNextStep>(_nextStep),
   TypedReducer<SubscriptionFormState, SubscriptionFormPreviousStep>(_previousStep),
   TypedReducer<SubscriptionFormState, UpdateSubscriptionForm>(_update),
+  TypedReducer<SubscriptionFormState, PostLeadRequest>(_postLeadRequest),
+  TypedReducer<SubscriptionFormState, PostLeadSuccess>(_postLeadSuccess),
+  TypedReducer<SubscriptionFormState, PostLeadFailure>(_postLeadFailure),
 ]);
 
 SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart action) {
@@ -51,5 +55,25 @@ SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFor
 SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionForm action) {
   return state.rebuild((b) => b
     ..subscriptionForm.replace(action.subscriptionForm)
+  );
+}
+
+SubscriptionFormState _postLeadRequest(SubscriptionFormState state, PostLeadRequest action) {
+  return state.rebuild((b) => b
+    ..isLoading = true
+  );
+}
+
+SubscriptionFormState _postLeadSuccess(SubscriptionFormState state, PostLeadSuccess action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..subscriptionForm.replace(SubscriptionForm())
+  );
+}
+
+SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFailure action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error
   );
 }

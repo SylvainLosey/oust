@@ -1,15 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../../redux/app/app_state.dart';
-import '../../../data/models/subscription_form.dart';
-import '../../../utils/colors.dart';
 import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
+import '../../presentation/layout/widget_title_button_layout.dart';
+import '../../presentation/main_app_bar.dart';
+import '../../presentation/title_widget.dart';
 
 
-class SubscriptionFormPage2 extends StatelessWidget {
+class SubscriptionFormQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -22,57 +23,17 @@ class SubscriptionFormPage2 extends StatelessWidget {
             return false;
           },
           child: Scaffold(
-            appBar: AppBar(
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.close, size: 30,),
-                  onPressed: viewModel.exit
-                )
-              ],
-              brightness: Brightness.light,
-              iconTheme: IconThemeData(
-                color: Colors.black,
+            appBar: MainAppBar(onExit: viewModel.exit),
+            body: WidgetTitleButtonLayout(
+              widget: Image.asset('assets/images/logo.png'),
+              title: TitleWidget(
+                title:'Quantités',
+                subtitle: 'Par passage, nous collectons jusqu’à environ 200l. Tes déchets peuvent être dans tout type de conteneurs tant qu’ils sont triés.',
               ),
-              backgroundColor: backgroundColor,
-              elevation: 0.0,
-            ),
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(5)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Container()
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: Image.asset('assets/images/logo.png'),
-                    ),
-
-                    Expanded(
-                      flex: 1,
-                      child: Container()
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text('Quantités', style: Theme.of(context).textTheme.title),
-                        Container(height: Layout.of(context).gridUnit(1)),
-                        Text('Par passage, nous collectons jusqu’à environ 200l. Tes déchets peuvent être dans tout type de conteneurs tant qu’ils sont triés.', textAlign: TextAlign.center,)
-                      ],
-                    ),
-                    Expanded(
-                      flex: 14,
-                      child: Container(),
-                    ),
-                    RaisedButton(
-                      child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-                      onPressed: viewModel.nextStep
-                    ),
-                  ],
-                )
-              )
+              button: RaisedButton(
+                child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+                onPressed: viewModel.nextStep
+              ),
             )
           )
         );
@@ -81,23 +42,22 @@ class SubscriptionFormPage2 extends StatelessWidget {
   }
 }
 
+
 @immutable
 class _ViewModel {
-  final SubscriptionForm subscriptionForm;
   final Function nextStep;
   final Function previousStep;
   final Function exit;
 
+
   _ViewModel({
-    this.subscriptionForm,
     this.nextStep,
     this.previousStep,
-    this.exit
+    this.exit,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
       nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),

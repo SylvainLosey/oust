@@ -31,6 +31,7 @@ class AppMiddleware {
       TypedMiddleware<AppState, LoadPackagesRequest>(_loadPackages),
       TypedMiddleware<AppState, LoadPickupsRequest>(_loadPickups),
       TypedMiddleware<AppState, LoadPostcodesRequest>(_loadPostcodes),
+      TypedMiddleware<AppState, PostLeadRequest>(_postLead),
     ];
   }
 
@@ -113,6 +114,26 @@ class AppMiddleware {
       store.dispatch(LoadPostcodesSuccess(postcodes: postcodes));
     } catch (e) {
       store.dispatch(LoadPostcodesFailure(error: e.toString()));
+    }
+  }
+
+  void _postLead(Store<AppState> store, PostLeadRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final response = await repository.postLead(
+        firstName: action.subscriptionForm.firstName,
+        lastName: action.subscriptionForm.lastName,
+        address: action.subscriptionForm.address,
+        postcode: action.subscriptionForm.postcode,
+        email: action.subscriptionForm.email
+      );
+
+      // Navifate to succes page then delete form data
+      store.dispatch(SubscriptionFormNextStep());
+      store.dispatch(PostLeadSuccess());
+    } catch (e) {
+      store.dispatch(PostLeadFailure(error: e.toString()));
     }
   }
 }

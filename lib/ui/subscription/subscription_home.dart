@@ -8,11 +8,8 @@ import 'package:built_collection/built_collection.dart';
 
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
-import '../presentation/location_card.dart';
-import '../presentation/payment_card.dart';
 import '../presentation/pickup_card.dart';
 import '../presentation/buttons.dart';
-import '../presentation/title.dart';
 import '../../redux/app/app_state.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';

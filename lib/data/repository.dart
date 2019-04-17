@@ -29,7 +29,7 @@ class Repository {
     return await client.get('/consumersubscriptions/?customer=$id/');
   }
 
-  Future<dynamic> fetchPackages() async {
+  Future<List<dynamic>> fetchPackages() async {
     return await client.get('/packages/');
   }
 
@@ -39,5 +39,18 @@ class Repository {
 
   Future<List<dynamic>> fetchPostcodes() async {
     return await client.get('/postcodes/', auth: false);
+  }
+
+  Future<Map<String, dynamic>> postLead({String firstName, String lastName, String address, int postcode, String email}) async {
+    final Map<String, String> body = <String, String>{
+      'first_name': firstName,
+      'last_name': lastName,
+      'address': address,
+      'postcode': postcode.toString(),
+      'email': email,
+      'origin': 'app',
+    };
+
+    return await client.post('/leads/', body);
   }
 }

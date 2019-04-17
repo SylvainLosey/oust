@@ -33,7 +33,7 @@ class WebClient {
       // Workaround is using bodyBytes, decoding to utf-8 and then to json
       return json.decode(utf8.decode(response.bodyBytes));
     } else {
-      throw Exception('An error occured: ' + response.body);
+      throw Exception(response.body);
     }
   }
 
@@ -43,10 +43,10 @@ class WebClient {
       body: data,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(utf8.decode(response.bodyBytes));
     } else {
-      throw Exception('An error occured: ' + response.body);
+      throw Exception(response.body);
     }
   }
 

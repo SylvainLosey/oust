@@ -55,3 +55,27 @@ UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
 Map<String, dynamic> _$UpdateSubscriptionFormToJson(
         UpdateSubscriptionForm instance) =>
     <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
+
+PostLeadRequest _$PostLeadRequestFromJson(Map<String, dynamic> json) {
+  return PostLeadRequest(json['subscriptionForm'] == null
+      ? null
+      : SubscriptionForm.fromJson(
+          json['subscriptionForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$PostLeadRequestToJson(PostLeadRequest instance) =>
+    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
+
+PostLeadSuccess _$PostLeadSuccessFromJson(Map<String, dynamic> json) {
+  return PostLeadSuccess();
+}
+
+Map<String, dynamic> _$PostLeadSuccessToJson(PostLeadSuccess instance) =>
+    <String, dynamic>{};
+
+PostLeadFailure _$PostLeadFailureFromJson(Map<String, dynamic> json) {
+  return PostLeadFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$PostLeadFailureToJson(PostLeadFailure instance) =>
+    <String, dynamic>{'error': instance.error};

@@ -35,6 +35,7 @@ abstract class Postcode implements Built<Postcode, PostcodeBuilder> {
   }
 
   static Serializer<Postcode> get serializer => _$postcodeSerializer;
+  
 
   // CLASS METHODS
 

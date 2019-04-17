@@ -36,3 +36,26 @@ class UpdateSubscriptionForm {
   UpdateSubscriptionForm(this.subscriptionForm);
   Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
 }
+
+@JsonSerializable()
+class PostLeadRequest {
+  @JsonKey(fromJson: SubscriptionForm.fromJson) 
+  SubscriptionForm subscriptionForm;
+
+  PostLeadRequest(this.subscriptionForm);
+  Map<String, dynamic> toJson() => _$PostLeadRequestToJson(this);
+}
+
+@JsonSerializable()
+class PostLeadSuccess {
+  PostLeadSuccess();
+  Map<String, dynamic> toJson() => _$PostLeadSuccessToJson(this);
+}
+
+@JsonSerializable()
+class PostLeadFailure {
+  String error;
+
+  PostLeadFailure({@required this.error});
+  Map<String, dynamic> toJson() => _$PostLeadFailureToJson(this);
+}
