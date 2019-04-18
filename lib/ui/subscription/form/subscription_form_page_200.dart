@@ -15,7 +15,7 @@ import '../../presentation/main_app_bar.dart';
 import '../../presentation/title_widget.dart';
 
 
-class SubscriptionFormLead extends StatelessWidget {
+class SubscriptionFormAppointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

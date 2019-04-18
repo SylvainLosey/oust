@@ -11,6 +11,8 @@ part 'subscription_form.g.dart';
 abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionFormBuilder> {
   int get currentStep;
   @nullable
+  String get method;
+  @nullable
   int get packageId;
   @nullable
   String get firstName;

@@ -16,7 +16,7 @@ import '../../presentation/title_widget.dart';
 import '../../presentation/base_card.dart';
 
 
-class SubscriptionFormMethod extends StatelessWidget {
+class SubscriptionFormBins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -30,7 +30,7 @@ class SubscriptionFormMethod extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: MethodForm(viewModel),
+            body: Text('Hellow'),
           )
         );
       },
@@ -89,25 +89,17 @@ class MethodFormState extends State<MethodForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _selectedMethod != null ? () => widget.viewModel.nextStep(_selectedMethod) : null
+        onPressed: _selectedMethod != null ? widget.viewModel.nextStep : null
       )
     );
-  }
-
-  @override
-  void initState() {
-    _selectedMethod = widget.viewModel.subscriptionForm.method;
-    super.initState();
   }
 
   void _onTap({String method}) {
     setState(() {
       if(_selectedMethod == method) {
         _selectedMethod = null;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..method = null));
       } else {
         _selectedMethod = method;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..method = method));  
       }
     });
   }
@@ -120,29 +112,20 @@ class _ViewModel {
   final Function nextStep;
   final Function previousStep;
   final Function exit;
-  final Function onChanged;
 
   _ViewModel({
     this.subscriptionForm,
     this.nextStep,
     this.previousStep,
     this.exit,
-    this.onChanged
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      nextStep: (String selectedMethod) {
-        if (selectedMethod == 'app') {
-          store.dispatch(SubscriptionFormNextStep());
-        } else if (selectedMethod == 'rdv') {
-          store.dispatch(SubscriptionFormNextStep(customerRequestsAppointment: true));
-        }
-      },
+      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
-      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
     );
   }
 }

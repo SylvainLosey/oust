@@ -33,8 +33,10 @@ class NavMiddleware {
       navigatorKey.currentState.pushNamed(route);
 
       // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
-      if (pushCounter == 4 && currentStep >= 100 ) {
+      if (pushCounter == 4 && currentStep >= 100  && currentStep < 200) {
         pushCounter = 100;
+      } else if (pushCounter == 5 && currentStep >= 200) {
+        pushCounter = 200;
       } else {
       pushCounter++;
       }

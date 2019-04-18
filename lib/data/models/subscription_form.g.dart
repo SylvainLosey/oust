@@ -24,6 +24,12 @@ class _$SubscriptionFormSerializer
       serializers.serialize(object.currentStep,
           specifiedType: const FullType(int)),
     ];
+    if (object.method != null) {
+      result
+        ..add('method')
+        ..add(serializers.serialize(object.method,
+            specifiedType: const FullType(String)));
+    }
     if (object.packageId != null) {
       result
         ..add('packageId')
@@ -139,6 +145,10 @@ class _$SubscriptionFormSerializer
           result.currentStep = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'method':
+          result.method = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'packageId':
           result.packageId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -214,6 +224,8 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int currentStep;
   @override
+  final String method;
+  @override
   final int packageId;
   @override
   final String firstName;
@@ -251,6 +263,7 @@ class _$SubscriptionForm extends SubscriptionForm {
 
   _$SubscriptionForm._(
       {this.currentStep,
+      this.method,
       this.packageId,
       this.firstName,
       this.lastName,
@@ -286,6 +299,7 @@ class _$SubscriptionForm extends SubscriptionForm {
     if (identical(other, this)) return true;
     return other is SubscriptionForm &&
         currentStep == other.currentStep &&
+        method == other.method &&
         packageId == other.packageId &&
         firstName == other.firstName &&
         lastName == other.lastName &&
@@ -323,8 +337,11 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        currentStep
+                                                                        $jc(
+                                                                            0,
+                                                                            currentStep
+                                                                                .hashCode),
+                                                                        method
                                                                             .hashCode),
                                                                     packageId
                                                                         .hashCode),
@@ -350,6 +367,7 @@ class _$SubscriptionForm extends SubscriptionForm {
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionForm')
           ..add('currentStep', currentStep)
+          ..add('method', method)
           ..add('packageId', packageId)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
@@ -377,6 +395,10 @@ class SubscriptionFormBuilder
   int _currentStep;
   int get currentStep => _$this._currentStep;
   set currentStep(int currentStep) => _$this._currentStep = currentStep;
+
+  String _method;
+  String get method => _$this._method;
+  set method(String method) => _$this._method = method;
 
   int _packageId;
   int get packageId => _$this._packageId;
@@ -448,6 +470,7 @@ class SubscriptionFormBuilder
   SubscriptionFormBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
+      _method = _$v.method;
       _packageId = _$v.packageId;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
@@ -487,6 +510,7 @@ class SubscriptionFormBuilder
     final _$result = _$v ??
         new _$SubscriptionForm._(
             currentStep: currentStep,
+            method: method,
             packageId: packageId,
             firstName: firstName,
             lastName: lastName,

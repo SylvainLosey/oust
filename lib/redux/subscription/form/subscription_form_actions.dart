@@ -8,8 +8,9 @@ part 'subscription_form_actions.g.dart';
 @JsonSerializable()
 class SubscriptionFormNextStep {
   bool subscriptionIsUnavailable;
+  bool customerRequestsAppointment;
 
-  SubscriptionFormNextStep({this.subscriptionIsUnavailable = false});
+  SubscriptionFormNextStep({this.subscriptionIsUnavailable = false, this.customerRequestsAppointment = false});
   Map<String, dynamic> toJson() => _$SubscriptionFormNextStepToJson(this);
 }
 

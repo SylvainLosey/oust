@@ -32,6 +32,10 @@ SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNex
     return state.rebuild((b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 100))
     );
+  } else if (action.customerRequestsAppointment) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 200))
+    );
   } else {
     return state.rebuild((b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
@@ -40,16 +44,19 @@ SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNex
 }
 
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
-  // If user goes back from Postode unavailable, set to previous track
   if (state.subscriptionForm.currentStep == 100) {
     return state.rebuild((b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 4))
     );
+  } else if (state.subscriptionForm.currentStep == 200) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 5))
+    ); 
+  } else {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
+    );
   }
-
-  return state.rebuild((b) => b
-    ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
-  );
 }
 
 SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionForm action) {
