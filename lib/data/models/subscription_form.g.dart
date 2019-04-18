@@ -30,6 +30,12 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.method,
             specifiedType: const FullType(String)));
     }
+    if (object.appointmentContact != null) {
+      result
+        ..add('appointmentContact')
+        ..add(serializers.serialize(object.appointmentContact,
+            specifiedType: const FullType(String)));
+    }
     if (object.packageId != null) {
       result
         ..add('packageId')
@@ -149,6 +155,10 @@ class _$SubscriptionFormSerializer
           result.method = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'appointmentContact':
+          result.appointmentContact = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'packageId':
           result.packageId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -226,6 +236,8 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String method;
   @override
+  final String appointmentContact;
+  @override
   final int packageId;
   @override
   final String firstName;
@@ -264,6 +276,7 @@ class _$SubscriptionForm extends SubscriptionForm {
   _$SubscriptionForm._(
       {this.currentStep,
       this.method,
+      this.appointmentContact,
       this.packageId,
       this.firstName,
       this.lastName,
@@ -300,6 +313,7 @@ class _$SubscriptionForm extends SubscriptionForm {
     return other is SubscriptionForm &&
         currentStep == other.currentStep &&
         method == other.method &&
+        appointmentContact == other.appointmentContact &&
         packageId == other.packageId &&
         firstName == other.firstName &&
         lastName == other.lastName &&
@@ -338,10 +352,13 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            currentStep
+                                                                            $jc(
+                                                                                0,
+                                                                                currentStep
+                                                                                    .hashCode),
+                                                                            method
                                                                                 .hashCode),
-                                                                        method
+                                                                        appointmentContact
                                                                             .hashCode),
                                                                     packageId
                                                                         .hashCode),
@@ -368,6 +385,7 @@ class _$SubscriptionForm extends SubscriptionForm {
     return (newBuiltValueToStringHelper('SubscriptionForm')
           ..add('currentStep', currentStep)
           ..add('method', method)
+          ..add('appointmentContact', appointmentContact)
           ..add('packageId', packageId)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
@@ -399,6 +417,11 @@ class SubscriptionFormBuilder
   String _method;
   String get method => _$this._method;
   set method(String method) => _$this._method = method;
+
+  String _appointmentContact;
+  String get appointmentContact => _$this._appointmentContact;
+  set appointmentContact(String appointmentContact) =>
+      _$this._appointmentContact = appointmentContact;
 
   int _packageId;
   int get packageId => _$this._packageId;
@@ -471,6 +494,7 @@ class SubscriptionFormBuilder
     if (_$v != null) {
       _currentStep = _$v.currentStep;
       _method = _$v.method;
+      _appointmentContact = _$v.appointmentContact;
       _packageId = _$v.packageId;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
@@ -511,6 +535,7 @@ class SubscriptionFormBuilder
         new _$SubscriptionForm._(
             currentStep: currentStep,
             method: method,
+            appointmentContact: appointmentContact,
             packageId: packageId,
             firstName: firstName,
             lastName: lastName,

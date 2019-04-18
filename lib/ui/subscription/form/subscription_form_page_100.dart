@@ -87,11 +87,13 @@ class EmailFormState extends State<EmailForm> {
           : Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: widget.viewModel.isLoading
           ? null
-          : () {
-            if (_formKey.currentState.validate()) {
-              widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+          : _emailController.text.length < 3 
+            ? null
+            : () {
+              if (_formKey.currentState.validate()) {
+                widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+              }
             }
-          }
       ),
     );
   }

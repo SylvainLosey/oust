@@ -13,6 +13,8 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   @nullable
   String get method;
   @nullable
+  String get appointmentContact;
+  @nullable
   int get packageId;
   @nullable
   String get firstName;

@@ -8,6 +8,7 @@ import '../../../data/models/postcode.dart';
 import '../../../data/models/subscription_form.dart';
 import '../../../redux/app/app_state.dart';
 import '../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../utils/layout.dart';
 import '../../../utils/validators.dart';
 import '../../presentation/error_text.dart';
 import '../../presentation/layout/title_form_button_layout.dart';
@@ -29,7 +30,7 @@ class SubscriptionFormAppointment extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: EmailForm(viewModel),
+            body: AppointmentForm(viewModel),
           )
         );
       },
@@ -38,29 +39,33 @@ class SubscriptionFormAppointment extends StatelessWidget {
 }
 
 
+enum ContactMethod {phone, email}
 
-class EmailForm extends StatefulWidget {
+class AppointmentForm extends StatefulWidget {
   final _ViewModel viewModel;
 
-  EmailForm(this.viewModel);
+  AppointmentForm(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => EmailFormState();
+  State<StatefulWidget> createState() => AppointmentFormState();
 }
 
-class EmailFormState extends State<EmailForm> {
+class AppointmentFormState extends State<AppointmentForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
    
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   List<TextEditingController> _controllers = [];
+
+  ContactMethod _contactMethod;
 
   // On load set controllers to value stored in redux and add onChanged listeners
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Oh non !',
-        subtitle: 'Malheureusement nous n\'allons pas encore jusque chez toi. Tu peux entrer ton email ci-dessous pour recevoir une notification et un crédit de 20.- dès que nous y seront disponibles'
+        title: 'Rendez-vous',
+        subtitle: 'Entres tes coordonées ci-dessous et nous te recontacterons pour fixer un rendez-vous',
       ),
       form: Form(
         key: _formKey,
@@ -76,6 +81,31 @@ class EmailFormState extends State<EmailForm> {
                 hintText: 'example@gmail.com',
               ),
             ),
+            Container(height: Layout.of(context).gridUnit(2)),
+            TextFormField(
+              controller: _phoneController,
+              validator: phoneValidator,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'Téléphone',
+                hintText: '079 433 01 92',
+              ),
+            ),
+            Container(height: Layout.of(context).gridUnit(6)),
+            Text('Me contacter par', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w500)),
+            Container(height: Layout.of(context).gridUnit(2)),
+            RadioListTile<ContactMethod>(
+              title: const Text('Téléphone'),
+              value: ContactMethod.phone,
+              groupValue: _contactMethod,
+              onChanged: (ContactMethod value) { setState(() { _contactMethod = value; _onChanged();}); },
+            ),
+            RadioListTile<ContactMethod>(
+              title: const Text('Email'),
+              value: ContactMethod.email,
+              groupValue: _contactMethod,
+              onChanged: (ContactMethod value) { setState(() { _contactMethod = value; _onChanged();}); },
+            ),
             // TODO - Replace by collection if when Dart 2.3 is out
             widget.viewModel.error != null ? ErrorText(error: widget.viewModel.error) : null,
           ].where((Widget widget) => widget != null).toList(),
@@ -87,11 +117,13 @@ class EmailFormState extends State<EmailForm> {
           : Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: widget.viewModel.isLoading
           ? null
-          : () {
-            if (_formKey.currentState.validate()) {
-              widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+          : _emailController.text.length < 3 || _phoneController.text.length < 3 || _contactMethod == null
+            ? null
+            : () {
+              if (_formKey.currentState.validate()) {
+                // widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+              }
             }
-          }
       ),
     );
   }
@@ -105,8 +137,11 @@ class EmailFormState extends State<EmailForm> {
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
 
     _emailController.text = subscriptionForm.email;
+    _phoneController.text = subscriptionForm.phoneNumber;
+
     _controllers = [
       _emailController,
+      _phoneController
     ];
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -126,9 +161,11 @@ class EmailFormState extends State<EmailForm> {
 
 
   void _onChanged() {
-    // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
+      // Keep only digits and + characters. Validator check that there is no letter in it
+      ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), '')
+      ..appointmentContact = _contactMethod.toString().substring(14)
     );
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
@@ -136,7 +173,6 @@ class EmailFormState extends State<EmailForm> {
     }
   }
 }
-
 
 @immutable
 class _ViewModel {
