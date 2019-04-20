@@ -84,7 +84,7 @@ class _$SubscriptionFormState extends SubscriptionFormState {
   final String error;
 
   factory _$SubscriptionFormState(
-          [void updates(SubscriptionFormStateBuilder b)]) =>
+          [void Function(SubscriptionFormStateBuilder) updates]) =>
       (new SubscriptionFormStateBuilder()..update(updates)).build();
 
   _$SubscriptionFormState._({this.isLoading, this.subscriptionForm, this.error})
@@ -95,7 +95,8 @@ class _$SubscriptionFormState extends SubscriptionFormState {
   }
 
   @override
-  SubscriptionFormState rebuild(void updates(SubscriptionFormStateBuilder b)) =>
+  SubscriptionFormState rebuild(
+          void Function(SubscriptionFormStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -166,7 +167,7 @@ class SubscriptionFormStateBuilder
   }
 
   @override
-  void update(void updates(SubscriptionFormStateBuilder b)) {
+  void update(void Function(SubscriptionFormStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

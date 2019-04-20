@@ -107,7 +107,8 @@ class _$SubscriptionState extends SubscriptionState {
   @override
   final String error;
 
-  factory _$SubscriptionState([void updates(SubscriptionStateBuilder b)]) =>
+  factory _$SubscriptionState(
+          [void Function(SubscriptionStateBuilder) updates]) =>
       (new SubscriptionStateBuilder()..update(updates)).build();
 
   _$SubscriptionState._(
@@ -123,7 +124,7 @@ class _$SubscriptionState extends SubscriptionState {
   }
 
   @override
-  SubscriptionState rebuild(void updates(SubscriptionStateBuilder b)) =>
+  SubscriptionState rebuild(void Function(SubscriptionStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -216,7 +217,7 @@ class SubscriptionStateBuilder
   }
 
   @override
-  void update(void updates(SubscriptionStateBuilder b)) {
+  void update(void Function(SubscriptionStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

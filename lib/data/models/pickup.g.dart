@@ -183,7 +183,7 @@ class _$Pickup extends Pickup {
   @override
   final int subscription;
 
-  factory _$Pickup([void updates(PickupBuilder b)]) =>
+  factory _$Pickup([void Function(PickupBuilder) updates]) =>
       (new PickupBuilder()..update(updates)).build();
 
   _$Pickup._(
@@ -209,7 +209,7 @@ class _$Pickup extends Pickup {
   }
 
   @override
-  Pickup rebuild(void updates(PickupBuilder b)) =>
+  Pickup rebuild(void Function(PickupBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -364,7 +364,7 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   }
 
   @override
-  void update(void updates(PickupBuilder b)) {
+  void update(void Function(PickupBuilder) updates) {
     if (updates != null) updates(this);
   }
 

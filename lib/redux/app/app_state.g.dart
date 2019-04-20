@@ -108,7 +108,7 @@ class _$AppState extends AppState {
   @override
   final DataState dataState;
 
-  factory _$AppState([void updates(AppStateBuilder b)]) =>
+  factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
   _$AppState._(
@@ -144,7 +144,7 @@ class _$AppState extends AppState {
   }
 
   @override
-  AppState rebuild(void updates(AppStateBuilder b)) =>
+  AppState rebuild(void Function(AppStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -258,7 +258,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 
   @override
-  void update(void updates(AppStateBuilder b)) {
+  void update(void Function(AppStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

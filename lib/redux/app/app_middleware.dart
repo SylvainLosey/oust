@@ -121,12 +121,15 @@ class AppMiddleware {
     next(action);
 
     try {
-      final response = await repository.postLead(
+      await repository.postLead(
         firstName: action.subscriptionForm.firstName,
         lastName: action.subscriptionForm.lastName,
         address: action.subscriptionForm.address,
         postcode: action.subscriptionForm.postcode,
-        email: action.subscriptionForm.email
+        email: action.subscriptionForm.email,
+        phoneNumber: action.subscriptionForm.phoneNumber,
+        contactMethod: action.subscriptionForm.contactMethod,
+        status: action.subscriptionForm.leadStatus,
       );
 
       // Navifate to succes page then delete form data

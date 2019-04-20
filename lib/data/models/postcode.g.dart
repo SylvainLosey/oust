@@ -107,7 +107,7 @@ class _$Postcode extends Postcode {
   @override
   final int state;
 
-  factory _$Postcode([void updates(PostcodeBuilder b)]) =>
+  factory _$Postcode([void Function(PostcodeBuilder) updates]) =>
       (new PostcodeBuilder()..update(updates)).build();
 
   _$Postcode._(
@@ -140,7 +140,7 @@ class _$Postcode extends Postcode {
   }
 
   @override
-  Postcode rebuild(void updates(PostcodeBuilder b)) =>
+  Postcode rebuild(void Function(PostcodeBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -245,7 +245,7 @@ class PostcodeBuilder implements Builder<Postcode, PostcodeBuilder> {
   }
 
   @override
-  void update(void updates(PostcodeBuilder b)) {
+  void update(void Function(PostcodeBuilder) updates) {
     if (updates != null) updates(this);
   }
 

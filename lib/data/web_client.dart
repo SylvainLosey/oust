@@ -38,9 +38,15 @@ class WebClient {
   }
 
     Future<dynamic> post(String path, Map<String, dynamic> data) async {
-    final http.Response response = await http.Client().post(
+    final Map<String, String> headers = <String, String>{      
+        'content-type' : 'application/json',
+        'accept' : 'application/json',
+      };
+
+    final http.Response response = await http.post(
       '$baseUrl$path',
-      body: data,
+      body: json.encode(data),
+      headers: headers,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {

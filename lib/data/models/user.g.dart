@@ -66,13 +66,13 @@ class _$User extends User {
   @override
   final int id;
 
-  factory _$User([void updates(UserBuilder b)]) =>
+  factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
   _$User._({this.key, this.id}) : super._();
 
   @override
-  User rebuild(void updates(UserBuilder b)) =>
+  User rebuild(void Function(UserBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -127,7 +127,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
   }
 
   @override
-  void update(void updates(UserBuilder b)) {
+  void update(void Function(UserBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -151,7 +151,7 @@ class _$Customer extends Customer {
   @override
   final int user;
 
-  factory _$Customer([void updates(CustomerBuilder b)]) =>
+  factory _$Customer([void Function(CustomerBuilder) updates]) =>
       (new CustomerBuilder()..update(updates)).build();
 
   _$Customer._(
@@ -204,7 +204,7 @@ class _$Customer extends Customer {
   }
 
   @override
-  Customer rebuild(void updates(CustomerBuilder b)) =>
+  Customer rebuild(void Function(CustomerBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -357,7 +357,7 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   }
 
   @override
-  void update(void updates(CustomerBuilder b)) {
+  void update(void Function(CustomerBuilder) updates) {
     if (updates != null) updates(this);
   }
 

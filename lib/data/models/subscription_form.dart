@@ -11,9 +11,11 @@ part 'subscription_form.g.dart';
 abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionFormBuilder> {
   int get currentStep;
   @nullable
-  String get method;
+  String get registrationMethod;
   @nullable
-  String get appointmentContact;
+  String get contactMethod;
+  @nullable
+  String get leadStatus;
   @nullable
   int get packageId;
   @nullable
@@ -24,8 +26,6 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   String get address;
   @nullable
   int get postcode;
-  @nullable
-  bool get appRegistration;
   @nullable
   int get smallBins;
   @nullable

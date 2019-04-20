@@ -24,16 +24,22 @@ class _$SubscriptionFormSerializer
       serializers.serialize(object.currentStep,
           specifiedType: const FullType(int)),
     ];
-    if (object.method != null) {
+    if (object.registrationMethod != null) {
       result
-        ..add('method')
-        ..add(serializers.serialize(object.method,
+        ..add('registrationMethod')
+        ..add(serializers.serialize(object.registrationMethod,
             specifiedType: const FullType(String)));
     }
-    if (object.appointmentContact != null) {
+    if (object.contactMethod != null) {
       result
-        ..add('appointmentContact')
-        ..add(serializers.serialize(object.appointmentContact,
+        ..add('contactMethod')
+        ..add(serializers.serialize(object.contactMethod,
+            specifiedType: const FullType(String)));
+    }
+    if (object.leadStatus != null) {
+      result
+        ..add('leadStatus')
+        ..add(serializers.serialize(object.leadStatus,
             specifiedType: const FullType(String)));
     }
     if (object.packageId != null) {
@@ -65,12 +71,6 @@ class _$SubscriptionFormSerializer
         ..add('postcode')
         ..add(serializers.serialize(object.postcode,
             specifiedType: const FullType(int)));
-    }
-    if (object.appRegistration != null) {
-      result
-        ..add('appRegistration')
-        ..add(serializers.serialize(object.appRegistration,
-            specifiedType: const FullType(bool)));
     }
     if (object.smallBins != null) {
       result
@@ -151,12 +151,16 @@ class _$SubscriptionFormSerializer
           result.currentStep = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'method':
-          result.method = serializers.deserialize(value,
+        case 'registrationMethod':
+          result.registrationMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'appointmentContact':
-          result.appointmentContact = serializers.deserialize(value,
+        case 'contactMethod':
+          result.contactMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'leadStatus':
+          result.leadStatus = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'packageId':
@@ -178,10 +182,6 @@ class _$SubscriptionFormSerializer
         case 'postcode':
           result.postcode = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'appRegistration':
-          result.appRegistration = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'smallBins':
           result.smallBins = serializers.deserialize(value,
@@ -234,9 +234,11 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int currentStep;
   @override
-  final String method;
+  final String registrationMethod;
   @override
-  final String appointmentContact;
+  final String contactMethod;
+  @override
+  final String leadStatus;
   @override
   final int packageId;
   @override
@@ -247,8 +249,6 @@ class _$SubscriptionForm extends SubscriptionForm {
   final String address;
   @override
   final int postcode;
-  @override
-  final bool appRegistration;
   @override
   final int smallBins;
   @override
@@ -270,19 +270,20 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String password;
 
-  factory _$SubscriptionForm([void updates(SubscriptionFormBuilder b)]) =>
+  factory _$SubscriptionForm(
+          [void Function(SubscriptionFormBuilder) updates]) =>
       (new SubscriptionFormBuilder()..update(updates)).build();
 
   _$SubscriptionForm._(
       {this.currentStep,
-      this.method,
-      this.appointmentContact,
+      this.registrationMethod,
+      this.contactMethod,
+      this.leadStatus,
       this.packageId,
       this.firstName,
       this.lastName,
       this.address,
       this.postcode,
-      this.appRegistration,
       this.smallBins,
       this.bigBins,
       this.accessType,
@@ -300,7 +301,7 @@ class _$SubscriptionForm extends SubscriptionForm {
   }
 
   @override
-  SubscriptionForm rebuild(void updates(SubscriptionFormBuilder b)) =>
+  SubscriptionForm rebuild(void Function(SubscriptionFormBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -312,14 +313,14 @@ class _$SubscriptionForm extends SubscriptionForm {
     if (identical(other, this)) return true;
     return other is SubscriptionForm &&
         currentStep == other.currentStep &&
-        method == other.method &&
-        appointmentContact == other.appointmentContact &&
+        registrationMethod == other.registrationMethod &&
+        contactMethod == other.contactMethod &&
+        leadStatus == other.leadStatus &&
         packageId == other.packageId &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         address == other.address &&
         postcode == other.postcode &&
-        appRegistration == other.appRegistration &&
         smallBins == other.smallBins &&
         bigBins == other.bigBins &&
         accessType == other.accessType &&
@@ -356,18 +357,18 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                                 0,
                                                                                 currentStep
                                                                                     .hashCode),
-                                                                            method
+                                                                            registrationMethod
                                                                                 .hashCode),
-                                                                        appointmentContact
+                                                                        contactMethod
                                                                             .hashCode),
-                                                                    packageId
+                                                                    leadStatus
                                                                         .hashCode),
-                                                                firstName
+                                                                packageId
                                                                     .hashCode),
-                                                            lastName.hashCode),
-                                                        address.hashCode),
-                                                    postcode.hashCode),
-                                                appRegistration.hashCode),
+                                                            firstName.hashCode),
+                                                        lastName.hashCode),
+                                                    address.hashCode),
+                                                postcode.hashCode),
                                             smallBins.hashCode),
                                         bigBins.hashCode),
                                     accessType.hashCode),
@@ -384,14 +385,14 @@ class _$SubscriptionForm extends SubscriptionForm {
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionForm')
           ..add('currentStep', currentStep)
-          ..add('method', method)
-          ..add('appointmentContact', appointmentContact)
+          ..add('registrationMethod', registrationMethod)
+          ..add('contactMethod', contactMethod)
+          ..add('leadStatus', leadStatus)
           ..add('packageId', packageId)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('address', address)
           ..add('postcode', postcode)
-          ..add('appRegistration', appRegistration)
           ..add('smallBins', smallBins)
           ..add('bigBins', bigBins)
           ..add('accessType', accessType)
@@ -414,14 +415,19 @@ class SubscriptionFormBuilder
   int get currentStep => _$this._currentStep;
   set currentStep(int currentStep) => _$this._currentStep = currentStep;
 
-  String _method;
-  String get method => _$this._method;
-  set method(String method) => _$this._method = method;
+  String _registrationMethod;
+  String get registrationMethod => _$this._registrationMethod;
+  set registrationMethod(String registrationMethod) =>
+      _$this._registrationMethod = registrationMethod;
 
-  String _appointmentContact;
-  String get appointmentContact => _$this._appointmentContact;
-  set appointmentContact(String appointmentContact) =>
-      _$this._appointmentContact = appointmentContact;
+  String _contactMethod;
+  String get contactMethod => _$this._contactMethod;
+  set contactMethod(String contactMethod) =>
+      _$this._contactMethod = contactMethod;
+
+  String _leadStatus;
+  String get leadStatus => _$this._leadStatus;
+  set leadStatus(String leadStatus) => _$this._leadStatus = leadStatus;
 
   int _packageId;
   int get packageId => _$this._packageId;
@@ -442,11 +448,6 @@ class SubscriptionFormBuilder
   int _postcode;
   int get postcode => _$this._postcode;
   set postcode(int postcode) => _$this._postcode = postcode;
-
-  bool _appRegistration;
-  bool get appRegistration => _$this._appRegistration;
-  set appRegistration(bool appRegistration) =>
-      _$this._appRegistration = appRegistration;
 
   int _smallBins;
   int get smallBins => _$this._smallBins;
@@ -493,14 +494,14 @@ class SubscriptionFormBuilder
   SubscriptionFormBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
-      _method = _$v.method;
-      _appointmentContact = _$v.appointmentContact;
+      _registrationMethod = _$v.registrationMethod;
+      _contactMethod = _$v.contactMethod;
+      _leadStatus = _$v.leadStatus;
       _packageId = _$v.packageId;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _address = _$v.address;
       _postcode = _$v.postcode;
-      _appRegistration = _$v.appRegistration;
       _smallBins = _$v.smallBins;
       _bigBins = _$v.bigBins;
       _accessType = _$v.accessType;
@@ -525,7 +526,7 @@ class SubscriptionFormBuilder
   }
 
   @override
-  void update(void updates(SubscriptionFormBuilder b)) {
+  void update(void Function(SubscriptionFormBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -534,14 +535,14 @@ class SubscriptionFormBuilder
     final _$result = _$v ??
         new _$SubscriptionForm._(
             currentStep: currentStep,
-            method: method,
-            appointmentContact: appointmentContact,
+            registrationMethod: registrationMethod,
+            contactMethod: contactMethod,
+            leadStatus: leadStatus,
             packageId: packageId,
             firstName: firstName,
             lastName: lastName,
             address: address,
             postcode: postcode,
-            appRegistration: appRegistration,
             smallBins: smallBins,
             bigBins: bigBins,
             accessType: accessType,

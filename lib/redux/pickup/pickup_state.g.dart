@@ -80,7 +80,7 @@ class _$PickupState extends PickupState {
   @override
   final String error;
 
-  factory _$PickupState([void updates(PickupStateBuilder b)]) =>
+  factory _$PickupState([void Function(PickupStateBuilder) updates]) =>
       (new PickupStateBuilder()..update(updates)).build();
 
   _$PickupState._({this.isLoading, this.pickups, this.error}) : super._() {
@@ -90,7 +90,7 @@ class _$PickupState extends PickupState {
   }
 
   @override
-  PickupState rebuild(void updates(PickupStateBuilder b)) =>
+  PickupState rebuild(void Function(PickupStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -158,7 +158,7 @@ class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
   }
 
   @override
-  void update(void updates(PickupStateBuilder b)) {
+  void update(void Function(PickupStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -41,13 +41,16 @@ class Repository {
     return await client.get('/postcodes/', auth: false);
   }
 
-  Future<Map<String, dynamic>> postLead({String firstName, String lastName, String address, int postcode, String email}) async {
-    final Map<String, String> body = <String, String>{
+  Future<Map<String, dynamic>> postLead({String firstName, String lastName, String address, int postcode, String email, String phoneNumber, String contactMethod, String status}) async {
+    final Map<String, dynamic> body = <String, dynamic>{
       'first_name': firstName,
       'last_name': lastName,
       'address': address,
       'postcode': postcode.toString(),
       'email': email,
+      'phone_number': phoneNumber,
+      'contact_method': contactMethod,
+      'status': status,
       'origin': 'app',
     };
 

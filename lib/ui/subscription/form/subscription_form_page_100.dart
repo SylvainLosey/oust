@@ -168,7 +168,9 @@ class _ViewModel {
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
-      postLeadRequest: (SubscriptionForm subscriptionForm) => store.dispatch(PostLeadRequest(subscriptionForm)),
+      postLeadRequest: (SubscriptionForm subscriptionForm) {
+        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((b) => b..leadStatus = 'postcode_not_covered')));
+      },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),

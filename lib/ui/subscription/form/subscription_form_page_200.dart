@@ -121,7 +121,7 @@ class AppointmentFormState extends State<AppointmentForm> {
             ? null
             : () {
               if (_formKey.currentState.validate()) {
-                // widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+                widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
               }
             }
       ),
@@ -165,7 +165,7 @@ class AppointmentFormState extends State<AppointmentForm> {
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
       // Keep only digits and + characters. Validator check that there is no letter in it
       ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), '')
-      ..appointmentContact = _contactMethod.toString().substring(14)
+      ..contactMethod = _contactMethod?.toString()?.substring(14)
     );
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
@@ -202,7 +202,9 @@ class _ViewModel {
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
-      postLeadRequest: (SubscriptionForm subscriptionForm) => store.dispatch(PostLeadRequest(subscriptionForm)),
+      postLeadRequest: (SubscriptionForm subscriptionForm) {
+        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((b) => b..leadStatus = 'requested_appointment')));
+      },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),

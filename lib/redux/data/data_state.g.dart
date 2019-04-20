@@ -80,7 +80,7 @@ class _$DataState extends DataState {
   @override
   final String error;
 
-  factory _$DataState([void updates(DataStateBuilder b)]) =>
+  factory _$DataState([void Function(DataStateBuilder) updates]) =>
       (new DataStateBuilder()..update(updates)).build();
 
   _$DataState._({this.isLoading, this.postcodes, this.error}) : super._() {
@@ -90,7 +90,7 @@ class _$DataState extends DataState {
   }
 
   @override
-  DataState rebuild(void updates(DataStateBuilder b)) =>
+  DataState rebuild(void Function(DataStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -159,7 +159,7 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
   }
 
   @override
-  void update(void updates(DataStateBuilder b)) {
+  void update(void Function(DataStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

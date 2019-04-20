@@ -94,7 +94,7 @@ class _$Package extends Package {
   @override
   final String unitPrice;
 
-  factory _$Package([void updates(PackageBuilder b)]) =>
+  factory _$Package([void Function(PackageBuilder) updates]) =>
       (new PackageBuilder()..update(updates)).build();
 
   _$Package._(
@@ -126,7 +126,7 @@ class _$Package extends Package {
   }
 
   @override
-  Package rebuild(void updates(PackageBuilder b)) =>
+  Package rebuild(void Function(PackageBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -219,7 +219,7 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
   }
 
   @override
-  void update(void updates(PackageBuilder b)) {
+  void update(void Function(PackageBuilder) updates) {
     if (updates != null) updates(this);
   }
 

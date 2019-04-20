@@ -77,7 +77,7 @@ class _$CustomerState extends CustomerState {
   @override
   final String error;
 
-  factory _$CustomerState([void updates(CustomerStateBuilder b)]) =>
+  factory _$CustomerState([void Function(CustomerStateBuilder) updates]) =>
       (new CustomerStateBuilder()..update(updates)).build();
 
   _$CustomerState._({this.isLoading, this.customer, this.error}) : super._() {
@@ -87,7 +87,7 @@ class _$CustomerState extends CustomerState {
   }
 
   @override
-  CustomerState rebuild(void updates(CustomerStateBuilder b)) =>
+  CustomerState rebuild(void Function(CustomerStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -155,7 +155,7 @@ class CustomerStateBuilder
   }
 
   @override
-  void update(void updates(CustomerStateBuilder b)) {
+  void update(void Function(CustomerStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

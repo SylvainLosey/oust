@@ -220,7 +220,7 @@ class _$Subscription extends Subscription {
   @override
   final int postcode;
 
-  factory _$Subscription([void updates(SubscriptionBuilder b)]) =>
+  factory _$Subscription([void Function(SubscriptionBuilder) updates]) =>
       (new SubscriptionBuilder()..update(updates)).build();
 
   _$Subscription._(
@@ -249,7 +249,7 @@ class _$Subscription extends Subscription {
   }
 
   @override
-  Subscription rebuild(void updates(SubscriptionBuilder b)) =>
+  Subscription rebuild(void Function(SubscriptionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -434,7 +434,7 @@ class SubscriptionBuilder
   }
 
   @override
-  void update(void updates(SubscriptionBuilder b)) {
+  void update(void Function(SubscriptionBuilder) updates) {
     if (updates != null) updates(this);
   }
 

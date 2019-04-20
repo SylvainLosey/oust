@@ -52,7 +52,7 @@ class _$NavState extends NavState {
   @override
   final int selectedBottomNav;
 
-  factory _$NavState([void updates(NavStateBuilder b)]) =>
+  factory _$NavState([void Function(NavStateBuilder) updates]) =>
       (new NavStateBuilder()..update(updates)).build();
 
   _$NavState._({this.selectedBottomNav}) : super._() {
@@ -62,7 +62,7 @@ class _$NavState extends NavState {
   }
 
   @override
-  NavState rebuild(void updates(NavStateBuilder b)) =>
+  NavState rebuild(void Function(NavStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -114,7 +114,7 @@ class NavStateBuilder implements Builder<NavState, NavStateBuilder> {
   }
 
   @override
-  void update(void updates(NavStateBuilder b)) {
+  void update(void Function(NavStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

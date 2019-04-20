@@ -96,7 +96,7 @@ class MethodFormState extends State<MethodForm> {
 
   @override
   void initState() {
-    _selectedMethod = widget.viewModel.subscriptionForm.method;
+    _selectedMethod = widget.viewModel.subscriptionForm.registrationMethod;
     super.initState();
   }
 
@@ -104,10 +104,10 @@ class MethodFormState extends State<MethodForm> {
     setState(() {
       if(_selectedMethod == method) {
         _selectedMethod = null;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..method = null));
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..registrationMethod= null));
       } else {
         _selectedMethod = method;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..method = method));  
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..registrationMethod = method));  
       }
     });
   }

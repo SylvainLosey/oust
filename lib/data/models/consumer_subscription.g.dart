@@ -72,13 +72,14 @@ class _$ConsumerSubscription extends ConsumerSubscription {
   final int package;
 
   factory _$ConsumerSubscription(
-          [void updates(ConsumerSubscriptionBuilder b)]) =>
+          [void Function(ConsumerSubscriptionBuilder) updates]) =>
       (new ConsumerSubscriptionBuilder()..update(updates)).build();
 
   _$ConsumerSubscription._({this.subscription, this.package}) : super._();
 
   @override
-  ConsumerSubscription rebuild(void updates(ConsumerSubscriptionBuilder b)) =>
+  ConsumerSubscription rebuild(
+          void Function(ConsumerSubscriptionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -139,7 +140,7 @@ class ConsumerSubscriptionBuilder
   }
 
   @override
-  void update(void updates(ConsumerSubscriptionBuilder b)) {
+  void update(void Function(ConsumerSubscriptionBuilder) updates) {
     if (updates != null) updates(this);
   }
 
