@@ -30,15 +30,6 @@ class SubscriptionFormExit {
 }
 
 @JsonSerializable()
-class UpdateSubscriptionForm {
-  @JsonKey(fromJson: SubscriptionForm.fromJson) 
-  SubscriptionForm subscriptionForm;
-
-  UpdateSubscriptionForm(this.subscriptionForm);
-  Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
-}
-
-@JsonSerializable()
 class PostLeadRequest {
   @JsonKey(fromJson: SubscriptionForm.fromJson) 
   SubscriptionForm subscriptionForm;
@@ -59,4 +50,31 @@ class PostLeadFailure {
 
   PostLeadFailure({@required this.error});
   Map<String, dynamic> toJson() => _$PostLeadFailureToJson(this);
+}
+
+
+// User for simple data entry - rebuild of model is done directly in the viewmodel
+@JsonSerializable()
+class UpdateSubscriptionForm {
+  @JsonKey(fromJson: SubscriptionForm.fromJson) 
+  SubscriptionForm subscriptionForm;
+
+  UpdateSubscriptionForm(this.subscriptionForm);
+  Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
+}
+
+@JsonSerializable()
+class IncrementProductQuantity {
+  String product;
+
+  IncrementProductQuantity({this.product});
+  Map<String, dynamic> toJson() => _$IncrementProductQuantityToJson(this);
+}
+
+@JsonSerializable()
+class DecrementProductQuantity {
+  String product;
+
+  DecrementProductQuantity({this.product});
+  Map<String, dynamic> toJson() => _$DecrementProductQuantityToJson(this);
 }

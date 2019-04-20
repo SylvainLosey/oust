@@ -13,6 +13,8 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, PostLeadRequest>(_postLeadRequest),
   TypedReducer<SubscriptionFormState, PostLeadSuccess>(_postLeadSuccess),
   TypedReducer<SubscriptionFormState, PostLeadFailure>(_postLeadFailure),
+  TypedReducer<SubscriptionFormState, IncrementProductQuantity>(_increment),
+  TypedReducer<SubscriptionFormState, DecrementProductQuantity>(_decrement),
 ]);
 
 SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart action) {
@@ -83,4 +85,32 @@ SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFail
     ..isLoading = false
     ..error = action.error
   );
+}
+
+SubscriptionFormState _increment(SubscriptionFormState state, IncrementProductQuantity action) {
+  if (action.product == 'smallContainer') {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity + 1))
+    );
+  } else if (action.product == 'bigContainer') {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity + 1))
+    ); 
+  } else {
+    return state;
+  }
+}
+
+SubscriptionFormState _decrement(SubscriptionFormState state, DecrementProductQuantity action) {
+  if (action.product == 'smallContainer' && state.subscriptionForm.smallContainerQuantity > 0) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity - 1))
+    );
+  } else if (action.product == 'bigContainer' && state.subscriptionForm.bigContainerQuantity > 0) {
+    return state.rebuild((b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity - 1))
+    ); 
+  } else {
+    return state;
+  }
 }

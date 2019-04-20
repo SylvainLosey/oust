@@ -20,7 +20,12 @@ class WebClient {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String key = prefs.getString('key');
 
-    final Map<String, String> headers = <String, String>{'Authorization': 'Token $key'};
+    final Map<String, String> headers = <String, String>{
+      'Authorization': 'Token $key',
+      'content-type' : 'application/json',
+      'accept' : 'application/json',
+    };
+    
     http.Response response;
     if (auth == false) {
       response = await http.Client().get('$baseUrl$path');

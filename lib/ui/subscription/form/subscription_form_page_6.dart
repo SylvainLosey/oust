@@ -16,7 +16,7 @@ import '../../presentation/title_widget.dart';
 import '../../presentation/base_card.dart';
 
 
-class SubscriptionFormBins extends StatelessWidget {
+class SubscriptionFormContainersYesNo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -30,7 +30,7 @@ class SubscriptionFormBins extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: Text('Hellow'),
+            body: DoYouWantContainers(viewModel),
           )
         );
       },
@@ -40,66 +40,74 @@ class SubscriptionFormBins extends StatelessWidget {
 
 
 
-class MethodForm extends StatefulWidget {
+class DoYouWantContainers extends StatefulWidget {
   final _ViewModel viewModel;
 
-  MethodForm(this.viewModel);
+  DoYouWantContainers(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => MethodFormState();
+  State<StatefulWidget> createState() => DoYouWantContainersState();
 }
 
-class MethodFormState extends State<MethodForm> {
-  String _selectedMethod;
+class DoYouWantContainersState extends State<DoYouWantContainers> {
+  bool _wantsContainers;
 
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Méthode d\'inscription',
-        subtitle: 'Comment souhaites-tu créer ton abonnement?'
+        title: 'Conteneurs',
+        subtitle: 'Tu peux utiliser tes propres conteneurs si tu en as déjà. Sinon, nous pouvons t\'en fournir.'
       ),
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           GestureDetector(
-            onTap: () => _onTap(method: 'app'),
+            onTap: () => _onTap(choice: true),
             child: BaseCard(
               child: CardText(
-                title: 'M\'inscrire tout de suite',
-                text: 'Terminer l\'inscription depuis l\'application en quelques minutes.',
-                color: _selectedMethod == 'app' ? Colors.white : null
+                title: 'J\'aimerais des caisses de tri',
+                text: 'Nous te les livrons avec le premier passage dès 15.00 CHF pièce.',
+                color: _wantsContainers ?? false ? Colors.white : null
               ),
-              color: _selectedMethod == 'app' ? primaryColor : null
+              color: _wantsContainers ?? false ? primaryColor : null
             ),
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           GestureDetector(
-            onTap: () => _onTap(method: 'rdv'),
+            onTap: () => _onTap(choice: false),
             child: BaseCard(
               child: CardText(
-                title: 'Fixer un rendez-vous', 
-                text: 'Convenir d\'un rendez-vous à ton domicile. Idéal si tu as des demandes spéciales.',
-                color: _selectedMethod == 'rdv' ? Colors.white : null
+                title: 'J\'ai tout ce qu\'il me faut', 
+                text: 'Tant que tes déchets sont triés, tu peux utiliser tout type de conteneurs.',
+                color: _wantsContainers ?? true ? null : Colors.white
               ),
-              color: _selectedMethod == 'rdv' ? primaryColor : null
+              color: _wantsContainers ?? true ? null : primaryColor
             ),
           )
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _selectedMethod != null ? widget.viewModel.nextStep : null
+        onPressed: _wantsContainers != null ? widget.viewModel.nextStep : null
       )
     );
   }
 
-  void _onTap({String method}) {
+  @override
+  void initState() {
+    _wantsContainers = widget.viewModel.subscriptionForm.wantsContainers;
+    super.initState();
+  }
+
+  void _onTap({bool choice}) {
     setState(() {
-      if(_selectedMethod == method) {
-        _selectedMethod = null;
+      if(_wantsContainers == choice) {
+        _wantsContainers = null;
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..wantsContainers= null));
       } else {
-        _selectedMethod = method;
+        _wantsContainers = choice;
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..wantsContainers = choice));  
       }
     });
   }
@@ -112,12 +120,14 @@ class _ViewModel {
   final Function nextStep;
   final Function previousStep;
   final Function exit;
+  final Function onChanged;
 
   _ViewModel({
     this.subscriptionForm,
     this.nextStep,
     this.previousStep,
     this.exit,
+    this.onChanged
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -126,6 +136,7 @@ class _ViewModel {
       nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
+      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
     );
   }
 }

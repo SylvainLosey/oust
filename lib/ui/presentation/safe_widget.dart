@@ -11,7 +11,7 @@ class SafePadding extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(5)),
+        padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(3)),
         child: child,
       )
     );

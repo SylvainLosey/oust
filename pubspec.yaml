@@ -65,7 +65,7 @@ flutter:
   assets:
    - assets/images/
    - assets/flare/
-
+   
   fonts:
     - family: Poppins
       fonts:

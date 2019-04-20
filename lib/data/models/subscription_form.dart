@@ -10,47 +10,50 @@ part 'subscription_form.g.dart';
 
 abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionFormBuilder> {
   int get currentStep;
-  @nullable
-  String get registrationMethod;
-  @nullable
-  String get contactMethod;
-  @nullable
-  String get leadStatus;
-  @nullable
-  int get packageId;
+
   @nullable
   String get firstName;
+
   @nullable
   String get lastName;
+
   @nullable
   String get address;
+
   @nullable
   int get postcode;
-  @nullable
-  int get smallBins;
-  @nullable
-  int get bigBins;
-  @nullable
-  int get accessType;
-  @nullable
-  String get code;
-  @nullable
-  bool get doorKey;
-  @nullable
-  String get note;
-  @nullable
-  String get phoneNumber;
-  @nullable
-  DateTime get startDate;
+
   @nullable
   String get email;
+
   @nullable
-  String get password;
+  String get phoneNumber;
+
+  @nullable
+  String get registrationMethod;
+
+  @nullable
+  String get contactMethod;
+
+  @nullable
+  String get leadStatus;
+
+  @nullable
+  bool get wantsContainers;
+
+  @nullable
+  int get smallContainerQuantity;
+
+  @nullable
+  int get bigContainerQuantity;
+
 
   SubscriptionForm._();
 
   factory SubscriptionForm([void Function(SubscriptionFormBuilder) updates]) => _$SubscriptionForm((b) => b
     ..currentStep = 0
+    ..smallContainerQuantity = 0
+    ..bigContainerQuantity = 0
   );
 
   Map<String, dynamic> toJson() {

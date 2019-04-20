@@ -24,30 +24,6 @@ class _$SubscriptionFormSerializer
       serializers.serialize(object.currentStep,
           specifiedType: const FullType(int)),
     ];
-    if (object.registrationMethod != null) {
-      result
-        ..add('registrationMethod')
-        ..add(serializers.serialize(object.registrationMethod,
-            specifiedType: const FullType(String)));
-    }
-    if (object.contactMethod != null) {
-      result
-        ..add('contactMethod')
-        ..add(serializers.serialize(object.contactMethod,
-            specifiedType: const FullType(String)));
-    }
-    if (object.leadStatus != null) {
-      result
-        ..add('leadStatus')
-        ..add(serializers.serialize(object.leadStatus,
-            specifiedType: const FullType(String)));
-    }
-    if (object.packageId != null) {
-      result
-        ..add('packageId')
-        ..add(serializers.serialize(object.packageId,
-            specifiedType: const FullType(int)));
-    }
     if (object.firstName != null) {
       result
         ..add('firstName')
@@ -72,40 +48,10 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.postcode,
             specifiedType: const FullType(int)));
     }
-    if (object.smallBins != null) {
+    if (object.email != null) {
       result
-        ..add('smallBins')
-        ..add(serializers.serialize(object.smallBins,
-            specifiedType: const FullType(int)));
-    }
-    if (object.bigBins != null) {
-      result
-        ..add('bigBins')
-        ..add(serializers.serialize(object.bigBins,
-            specifiedType: const FullType(int)));
-    }
-    if (object.accessType != null) {
-      result
-        ..add('accessType')
-        ..add(serializers.serialize(object.accessType,
-            specifiedType: const FullType(int)));
-    }
-    if (object.code != null) {
-      result
-        ..add('code')
-        ..add(serializers.serialize(object.code,
-            specifiedType: const FullType(String)));
-    }
-    if (object.doorKey != null) {
-      result
-        ..add('doorKey')
-        ..add(serializers.serialize(object.doorKey,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.note != null) {
-      result
-        ..add('note')
-        ..add(serializers.serialize(object.note,
+        ..add('email')
+        ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
     if (object.phoneNumber != null) {
@@ -114,23 +60,41 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.phoneNumber,
             specifiedType: const FullType(String)));
     }
-    if (object.startDate != null) {
+    if (object.registrationMethod != null) {
       result
-        ..add('startDate')
-        ..add(serializers.serialize(object.startDate,
-            specifiedType: const FullType(DateTime)));
-    }
-    if (object.email != null) {
-      result
-        ..add('email')
-        ..add(serializers.serialize(object.email,
+        ..add('registrationMethod')
+        ..add(serializers.serialize(object.registrationMethod,
             specifiedType: const FullType(String)));
     }
-    if (object.password != null) {
+    if (object.contactMethod != null) {
       result
-        ..add('password')
-        ..add(serializers.serialize(object.password,
+        ..add('contactMethod')
+        ..add(serializers.serialize(object.contactMethod,
             specifiedType: const FullType(String)));
+    }
+    if (object.leadStatus != null) {
+      result
+        ..add('leadStatus')
+        ..add(serializers.serialize(object.leadStatus,
+            specifiedType: const FullType(String)));
+    }
+    if (object.wantsContainers != null) {
+      result
+        ..add('wantsContainers')
+        ..add(serializers.serialize(object.wantsContainers,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.smallContainerQuantity != null) {
+      result
+        ..add('smallContainerQuantity')
+        ..add(serializers.serialize(object.smallContainerQuantity,
+            specifiedType: const FullType(int)));
+    }
+    if (object.bigContainerQuantity != null) {
+      result
+        ..add('bigContainerQuantity')
+        ..add(serializers.serialize(object.bigContainerQuantity,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -151,22 +115,6 @@ class _$SubscriptionFormSerializer
           result.currentStep = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'registrationMethod':
-          result.registrationMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'contactMethod':
-          result.contactMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'leadStatus':
-          result.leadStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'packageId':
-          result.packageId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'firstName':
           result.firstName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -183,45 +131,37 @@ class _$SubscriptionFormSerializer
           result.postcode = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'smallBins':
-          result.smallBins = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'bigBins':
-          result.bigBins = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'accessType':
-          result.accessType = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'code':
-          result.code = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'doorKey':
-          result.doorKey = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'note':
-          result.note = serializers.deserialize(value,
+        case 'email':
+          result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'phoneNumber':
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'startDate':
-          result.startDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
-          break;
-        case 'email':
-          result.email = serializers.deserialize(value,
+        case 'registrationMethod':
+          result.registrationMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'password':
-          result.password = serializers.deserialize(value,
+        case 'contactMethod':
+          result.contactMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'leadStatus':
+          result.leadStatus = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'wantsContainers':
+          result.wantsContainers = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'smallContainerQuantity':
+          result.smallContainerQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'bigContainerQuantity':
+          result.bigContainerQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -234,14 +174,6 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int currentStep;
   @override
-  final String registrationMethod;
-  @override
-  final String contactMethod;
-  @override
-  final String leadStatus;
-  @override
-  final int packageId;
-  @override
   final String firstName;
   @override
   final String lastName;
@@ -250,25 +182,21 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int postcode;
   @override
-  final int smallBins;
-  @override
-  final int bigBins;
-  @override
-  final int accessType;
-  @override
-  final String code;
-  @override
-  final bool doorKey;
-  @override
-  final String note;
+  final String email;
   @override
   final String phoneNumber;
   @override
-  final DateTime startDate;
+  final String registrationMethod;
   @override
-  final String email;
+  final String contactMethod;
   @override
-  final String password;
+  final String leadStatus;
+  @override
+  final bool wantsContainers;
+  @override
+  final int smallContainerQuantity;
+  @override
+  final int bigContainerQuantity;
 
   factory _$SubscriptionForm(
           [void Function(SubscriptionFormBuilder) updates]) =>
@@ -276,24 +204,18 @@ class _$SubscriptionForm extends SubscriptionForm {
 
   _$SubscriptionForm._(
       {this.currentStep,
-      this.registrationMethod,
-      this.contactMethod,
-      this.leadStatus,
-      this.packageId,
       this.firstName,
       this.lastName,
       this.address,
       this.postcode,
-      this.smallBins,
-      this.bigBins,
-      this.accessType,
-      this.code,
-      this.doorKey,
-      this.note,
-      this.phoneNumber,
-      this.startDate,
       this.email,
-      this.password})
+      this.phoneNumber,
+      this.registrationMethod,
+      this.contactMethod,
+      this.leadStatus,
+      this.wantsContainers,
+      this.smallContainerQuantity,
+      this.bigContainerQuantity})
       : super._() {
     if (currentStep == null) {
       throw new BuiltValueNullFieldError('SubscriptionForm', 'currentStep');
@@ -313,24 +235,18 @@ class _$SubscriptionForm extends SubscriptionForm {
     if (identical(other, this)) return true;
     return other is SubscriptionForm &&
         currentStep == other.currentStep &&
-        registrationMethod == other.registrationMethod &&
-        contactMethod == other.contactMethod &&
-        leadStatus == other.leadStatus &&
-        packageId == other.packageId &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         address == other.address &&
         postcode == other.postcode &&
-        smallBins == other.smallBins &&
-        bigBins == other.bigBins &&
-        accessType == other.accessType &&
-        code == other.code &&
-        doorKey == other.doorKey &&
-        note == other.note &&
-        phoneNumber == other.phoneNumber &&
-        startDate == other.startDate &&
         email == other.email &&
-        password == other.password;
+        phoneNumber == other.phoneNumber &&
+        registrationMethod == other.registrationMethod &&
+        contactMethod == other.contactMethod &&
+        leadStatus == other.leadStatus &&
+        wantsContainers == other.wantsContainers &&
+        smallContainerQuantity == other.smallContainerQuantity &&
+        bigContainerQuantity == other.bigContainerQuantity;
   }
 
   @override
@@ -347,62 +263,38 @@ class _$SubscriptionForm extends SubscriptionForm {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                currentStep
-                                                                                    .hashCode),
-                                                                            registrationMethod
-                                                                                .hashCode),
-                                                                        contactMethod
-                                                                            .hashCode),
-                                                                    leadStatus
-                                                                        .hashCode),
-                                                                packageId
-                                                                    .hashCode),
-                                                            firstName.hashCode),
-                                                        lastName.hashCode),
-                                                    address.hashCode),
-                                                postcode.hashCode),
-                                            smallBins.hashCode),
-                                        bigBins.hashCode),
-                                    accessType.hashCode),
-                                code.hashCode),
-                            doorKey.hashCode),
-                        note.hashCode),
-                    phoneNumber.hashCode),
-                startDate.hashCode),
-            email.hashCode),
-        password.hashCode));
+                                                    $jc(0,
+                                                        currentStep.hashCode),
+                                                    firstName.hashCode),
+                                                lastName.hashCode),
+                                            address.hashCode),
+                                        postcode.hashCode),
+                                    email.hashCode),
+                                phoneNumber.hashCode),
+                            registrationMethod.hashCode),
+                        contactMethod.hashCode),
+                    leadStatus.hashCode),
+                wantsContainers.hashCode),
+            smallContainerQuantity.hashCode),
+        bigContainerQuantity.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionForm')
           ..add('currentStep', currentStep)
-          ..add('registrationMethod', registrationMethod)
-          ..add('contactMethod', contactMethod)
-          ..add('leadStatus', leadStatus)
-          ..add('packageId', packageId)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('address', address)
           ..add('postcode', postcode)
-          ..add('smallBins', smallBins)
-          ..add('bigBins', bigBins)
-          ..add('accessType', accessType)
-          ..add('code', code)
-          ..add('doorKey', doorKey)
-          ..add('note', note)
-          ..add('phoneNumber', phoneNumber)
-          ..add('startDate', startDate)
           ..add('email', email)
-          ..add('password', password))
+          ..add('phoneNumber', phoneNumber)
+          ..add('registrationMethod', registrationMethod)
+          ..add('contactMethod', contactMethod)
+          ..add('leadStatus', leadStatus)
+          ..add('wantsContainers', wantsContainers)
+          ..add('smallContainerQuantity', smallContainerQuantity)
+          ..add('bigContainerQuantity', bigContainerQuantity))
         .toString();
   }
 }
@@ -414,24 +306,6 @@ class SubscriptionFormBuilder
   int _currentStep;
   int get currentStep => _$this._currentStep;
   set currentStep(int currentStep) => _$this._currentStep = currentStep;
-
-  String _registrationMethod;
-  String get registrationMethod => _$this._registrationMethod;
-  set registrationMethod(String registrationMethod) =>
-      _$this._registrationMethod = registrationMethod;
-
-  String _contactMethod;
-  String get contactMethod => _$this._contactMethod;
-  set contactMethod(String contactMethod) =>
-      _$this._contactMethod = contactMethod;
-
-  String _leadStatus;
-  String get leadStatus => _$this._leadStatus;
-  set leadStatus(String leadStatus) => _$this._leadStatus = leadStatus;
-
-  int _packageId;
-  int get packageId => _$this._packageId;
-  set packageId(int packageId) => _$this._packageId = packageId;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -449,69 +323,60 @@ class SubscriptionFormBuilder
   int get postcode => _$this._postcode;
   set postcode(int postcode) => _$this._postcode = postcode;
 
-  int _smallBins;
-  int get smallBins => _$this._smallBins;
-  set smallBins(int smallBins) => _$this._smallBins = smallBins;
-
-  int _bigBins;
-  int get bigBins => _$this._bigBins;
-  set bigBins(int bigBins) => _$this._bigBins = bigBins;
-
-  int _accessType;
-  int get accessType => _$this._accessType;
-  set accessType(int accessType) => _$this._accessType = accessType;
-
-  String _code;
-  String get code => _$this._code;
-  set code(String code) => _$this._code = code;
-
-  bool _doorKey;
-  bool get doorKey => _$this._doorKey;
-  set doorKey(bool doorKey) => _$this._doorKey = doorKey;
-
-  String _note;
-  String get note => _$this._note;
-  set note(String note) => _$this._note = note;
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
 
   String _phoneNumber;
   String get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String phoneNumber) => _$this._phoneNumber = phoneNumber;
 
-  DateTime _startDate;
-  DateTime get startDate => _$this._startDate;
-  set startDate(DateTime startDate) => _$this._startDate = startDate;
+  String _registrationMethod;
+  String get registrationMethod => _$this._registrationMethod;
+  set registrationMethod(String registrationMethod) =>
+      _$this._registrationMethod = registrationMethod;
 
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
+  String _contactMethod;
+  String get contactMethod => _$this._contactMethod;
+  set contactMethod(String contactMethod) =>
+      _$this._contactMethod = contactMethod;
 
-  String _password;
-  String get password => _$this._password;
-  set password(String password) => _$this._password = password;
+  String _leadStatus;
+  String get leadStatus => _$this._leadStatus;
+  set leadStatus(String leadStatus) => _$this._leadStatus = leadStatus;
+
+  bool _wantsContainers;
+  bool get wantsContainers => _$this._wantsContainers;
+  set wantsContainers(bool wantsContainers) =>
+      _$this._wantsContainers = wantsContainers;
+
+  int _smallContainerQuantity;
+  int get smallContainerQuantity => _$this._smallContainerQuantity;
+  set smallContainerQuantity(int smallContainerQuantity) =>
+      _$this._smallContainerQuantity = smallContainerQuantity;
+
+  int _bigContainerQuantity;
+  int get bigContainerQuantity => _$this._bigContainerQuantity;
+  set bigContainerQuantity(int bigContainerQuantity) =>
+      _$this._bigContainerQuantity = bigContainerQuantity;
 
   SubscriptionFormBuilder();
 
   SubscriptionFormBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
-      _registrationMethod = _$v.registrationMethod;
-      _contactMethod = _$v.contactMethod;
-      _leadStatus = _$v.leadStatus;
-      _packageId = _$v.packageId;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _address = _$v.address;
       _postcode = _$v.postcode;
-      _smallBins = _$v.smallBins;
-      _bigBins = _$v.bigBins;
-      _accessType = _$v.accessType;
-      _code = _$v.code;
-      _doorKey = _$v.doorKey;
-      _note = _$v.note;
-      _phoneNumber = _$v.phoneNumber;
-      _startDate = _$v.startDate;
       _email = _$v.email;
-      _password = _$v.password;
+      _phoneNumber = _$v.phoneNumber;
+      _registrationMethod = _$v.registrationMethod;
+      _contactMethod = _$v.contactMethod;
+      _leadStatus = _$v.leadStatus;
+      _wantsContainers = _$v.wantsContainers;
+      _smallContainerQuantity = _$v.smallContainerQuantity;
+      _bigContainerQuantity = _$v.bigContainerQuantity;
       _$v = null;
     }
     return this;
@@ -535,24 +400,18 @@ class SubscriptionFormBuilder
     final _$result = _$v ??
         new _$SubscriptionForm._(
             currentStep: currentStep,
-            registrationMethod: registrationMethod,
-            contactMethod: contactMethod,
-            leadStatus: leadStatus,
-            packageId: packageId,
             firstName: firstName,
             lastName: lastName,
             address: address,
             postcode: postcode,
-            smallBins: smallBins,
-            bigBins: bigBins,
-            accessType: accessType,
-            code: code,
-            doorKey: doorKey,
-            note: note,
-            phoneNumber: phoneNumber,
-            startDate: startDate,
             email: email,
-            password: password);
+            phoneNumber: phoneNumber,
+            registrationMethod: registrationMethod,
+            contactMethod: contactMethod,
+            leadStatus: leadStatus,
+            wantsContainers: wantsContainers,
+            smallContainerQuantity: smallContainerQuantity,
+            bigContainerQuantity: bigContainerQuantity);
     replace(_$result);
     return _$result;
   }

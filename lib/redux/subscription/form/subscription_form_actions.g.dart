@@ -46,18 +46,6 @@ Map<String, dynamic> _$SubscriptionFormExitToJson(
         SubscriptionFormExit instance) =>
     <String, dynamic>{};
 
-UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
-    Map<String, dynamic> json) {
-  return UpdateSubscriptionForm(json['subscriptionForm'] == null
-      ? null
-      : SubscriptionForm.fromJson(
-          json['subscriptionForm'] as Map<String, dynamic>));
-}
-
-Map<String, dynamic> _$UpdateSubscriptionFormToJson(
-        UpdateSubscriptionForm instance) =>
-    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
-
 PostLeadRequest _$PostLeadRequestFromJson(Map<String, dynamic> json) {
   return PostLeadRequest(json['subscriptionForm'] == null
       ? null
@@ -81,3 +69,33 @@ PostLeadFailure _$PostLeadFailureFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PostLeadFailureToJson(PostLeadFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
+    Map<String, dynamic> json) {
+  return UpdateSubscriptionForm(json['subscriptionForm'] == null
+      ? null
+      : SubscriptionForm.fromJson(
+          json['subscriptionForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$UpdateSubscriptionFormToJson(
+        UpdateSubscriptionForm instance) =>
+    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
+
+IncrementProductQuantity _$IncrementProductQuantityFromJson(
+    Map<String, dynamic> json) {
+  return IncrementProductQuantity(product: json['product'] as String);
+}
+
+Map<String, dynamic> _$IncrementProductQuantityToJson(
+        IncrementProductQuantity instance) =>
+    <String, dynamic>{'product': instance.product};
+
+DecrementProductQuantity _$DecrementProductQuantityFromJson(
+    Map<String, dynamic> json) {
+  return DecrementProductQuantity(product: json['product'] as String);
+}
+
+Map<String, dynamic> _$DecrementProductQuantityToJson(
+        DecrementProductQuantity instance) =>
+    <String, dynamic>{'product': instance.product};
