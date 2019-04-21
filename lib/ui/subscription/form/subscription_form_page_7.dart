@@ -81,7 +81,7 @@ class WhatContainersState extends State<WhatContainers> {
           ),
           Container(height: Layout.of(context).gridUnit(4)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(4)),
+            padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(3)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
