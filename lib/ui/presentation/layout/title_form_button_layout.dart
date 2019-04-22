@@ -7,8 +7,9 @@ class TitleFormButton extends StatelessWidget {
   final Widget title;
   final Widget form;
   final Widget button;
+  final bool expanded;
 
-  TitleFormButton({this.title, this.form, this.button});
+  TitleFormButton({this.title, this.form, this.button, this.expanded = true});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class TitleFormButton extends StatelessWidget {
         title,
         Container(height: Layout.of(context).gridUnit(7)),
         form,
-        Spacer(),
+        if (expanded) 
+          Spacer(),
         button,
         Container(height:Layout.of(context).gridUnit(1))
       ],

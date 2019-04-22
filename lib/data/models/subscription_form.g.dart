@@ -96,6 +96,18 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.bigContainerQuantity,
             specifiedType: const FullType(int)));
     }
+    if (object.selectedLocationIndex != null) {
+      result
+        ..add('selectedLocationIndex')
+        ..add(serializers.serialize(object.selectedLocationIndex,
+            specifiedType: const FullType(int)));
+    }
+    if (object.location != null) {
+      result
+        ..add('location')
+        ..add(serializers.serialize(object.location,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -163,6 +175,14 @@ class _$SubscriptionFormSerializer
           result.bigContainerQuantity = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'selectedLocationIndex':
+          result.selectedLocationIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -197,6 +217,10 @@ class _$SubscriptionForm extends SubscriptionForm {
   final int smallContainerQuantity;
   @override
   final int bigContainerQuantity;
+  @override
+  final int selectedLocationIndex;
+  @override
+  final String location;
 
   factory _$SubscriptionForm(
           [void Function(SubscriptionFormBuilder) updates]) =>
@@ -215,7 +239,9 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.leadStatus,
       this.wantsContainers,
       this.smallContainerQuantity,
-      this.bigContainerQuantity})
+      this.bigContainerQuantity,
+      this.selectedLocationIndex,
+      this.location})
       : super._() {
     if (currentStep == null) {
       throw new BuiltValueNullFieldError('SubscriptionForm', 'currentStep');
@@ -246,7 +272,9 @@ class _$SubscriptionForm extends SubscriptionForm {
         leadStatus == other.leadStatus &&
         wantsContainers == other.wantsContainers &&
         smallContainerQuantity == other.smallContainerQuantity &&
-        bigContainerQuantity == other.bigContainerQuantity;
+        bigContainerQuantity == other.bigContainerQuantity &&
+        selectedLocationIndex == other.selectedLocationIndex &&
+        location == other.location;
   }
 
   @override
@@ -263,20 +291,26 @@ class _$SubscriptionForm extends SubscriptionForm {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(0,
-                                                        currentStep.hashCode),
-                                                    firstName.hashCode),
-                                                lastName.hashCode),
-                                            address.hashCode),
-                                        postcode.hashCode),
-                                    email.hashCode),
-                                phoneNumber.hashCode),
-                            registrationMethod.hashCode),
-                        contactMethod.hashCode),
-                    leadStatus.hashCode),
-                wantsContainers.hashCode),
-            smallContainerQuantity.hashCode),
-        bigContainerQuantity.hashCode));
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                currentStep
+                                                                    .hashCode),
+                                                            firstName.hashCode),
+                                                        lastName.hashCode),
+                                                    address.hashCode),
+                                                postcode.hashCode),
+                                            email.hashCode),
+                                        phoneNumber.hashCode),
+                                    registrationMethod.hashCode),
+                                contactMethod.hashCode),
+                            leadStatus.hashCode),
+                        wantsContainers.hashCode),
+                    smallContainerQuantity.hashCode),
+                bigContainerQuantity.hashCode),
+            selectedLocationIndex.hashCode),
+        location.hashCode));
   }
 
   @override
@@ -294,7 +328,9 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('leadStatus', leadStatus)
           ..add('wantsContainers', wantsContainers)
           ..add('smallContainerQuantity', smallContainerQuantity)
-          ..add('bigContainerQuantity', bigContainerQuantity))
+          ..add('bigContainerQuantity', bigContainerQuantity)
+          ..add('selectedLocationIndex', selectedLocationIndex)
+          ..add('location', location))
         .toString();
   }
 }
@@ -360,6 +396,15 @@ class SubscriptionFormBuilder
   set bigContainerQuantity(int bigContainerQuantity) =>
       _$this._bigContainerQuantity = bigContainerQuantity;
 
+  int _selectedLocationIndex;
+  int get selectedLocationIndex => _$this._selectedLocationIndex;
+  set selectedLocationIndex(int selectedLocationIndex) =>
+      _$this._selectedLocationIndex = selectedLocationIndex;
+
+  String _location;
+  String get location => _$this._location;
+  set location(String location) => _$this._location = location;
+
   SubscriptionFormBuilder();
 
   SubscriptionFormBuilder get _$this {
@@ -377,6 +422,8 @@ class SubscriptionFormBuilder
       _wantsContainers = _$v.wantsContainers;
       _smallContainerQuantity = _$v.smallContainerQuantity;
       _bigContainerQuantity = _$v.bigContainerQuantity;
+      _selectedLocationIndex = _$v.selectedLocationIndex;
+      _location = _$v.location;
       _$v = null;
     }
     return this;
@@ -411,7 +458,9 @@ class SubscriptionFormBuilder
             leadStatus: leadStatus,
             wantsContainers: wantsContainers,
             smallContainerQuantity: smallContainerQuantity,
-            bigContainerQuantity: bigContainerQuantity);
+            bigContainerQuantity: bigContainerQuantity,
+            selectedLocationIndex: selectedLocationIndex,
+            location: location);
     replace(_$result);
     return _$result;
   }

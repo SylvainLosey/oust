@@ -6,9 +6,8 @@ import '../../utils/colors.dart';
 class BaseCard extends StatelessWidget {
   final Widget child;
   final Color color;
-  final bool border;
 
-  BaseCard({this.child, this.color, this.border = false});
+  BaseCard({this.child, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +15,7 @@ class BaseCard extends StatelessWidget {
       // margin: EdgeInsets.symmetric(vertical: 12.0),
       // elevation: 2.0,
       color: color,
-      shape: border 
-        ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: BorderSide(width: 2, color: primaryColor))
-        : RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
         padding: EdgeInsets.all(Layout.of(context).gridUnit(2)),
         child: child,

@@ -47,6 +47,13 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   @nullable
   int get bigContainerQuantity;
 
+  @nullable
+  int get selectedLocationIndex;
+
+  @nullable 
+  String get location;
+
+
 
   SubscriptionForm._();
 

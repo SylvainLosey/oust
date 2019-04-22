@@ -21,17 +21,13 @@ class WebClient {
     final String key = prefs.getString('key');
 
     final Map<String, String> headers = <String, String>{
-      'Authorization': 'Token $key',
       'content-type' : 'application/json',
       'accept' : 'application/json',
+      if (auth)
+        'Authorization': 'Token $key',
     };
     
-    http.Response response;
-    if (auth == false) {
-      response = await http.Client().get('$baseUrl$path');
-    } else {
-      response = await http.Client().get('$baseUrl$path', headers: headers);
-    }
+    final http.Response response = await http.Client().get('$baseUrl$path', headers: headers);
 
     if (response.statusCode == 200) {
       // DRF doesn't set application/json, charset=utf-8 otherwise just json.decode would work

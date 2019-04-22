@@ -22,11 +22,12 @@ void main() async {
   final Store<AppState> store = Store<AppState>(
     appReducer,
     initialState: AppState(),
-    middleware: []
-        ..addAll(AuthMiddleware().createAuthMiddleware())
-        ..addAll(AppMiddleware().createAppMiddleware())
-        ..addAll(NavMiddleware(navigatorKey).createNavMiddleware())
-        ..add(remoteDevtools)
+    middleware: [
+        ...AuthMiddleware().createAuthMiddleware(),
+        ...AppMiddleware().createAppMiddleware(),
+        ...NavMiddleware(navigatorKey).createNavMiddleware(),
+        remoteDevtools
+    ]
   );
 
   remoteDevtools.store = store;
