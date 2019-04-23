@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flare_flutter/flare_actor.dart';
+// import 'package:flare_flutter/flare_actor.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/layout.dart';
@@ -24,10 +24,10 @@ class SubscriptionFormAppointmentSuccess extends StatelessWidget {
                 SizedBox(
                   height: 80,
                   width: 100,
-                  child: FlareActor(
-                    'assets/flare/success.flr', 
-                    animation: 'pop'
-                    )
+                  // child: FlareActor(
+                  //   'assets/flare/success.flr', 
+                  //   animation: 'pop'
+                  //   )
                   ),
                   Expanded(
                     child: Column(

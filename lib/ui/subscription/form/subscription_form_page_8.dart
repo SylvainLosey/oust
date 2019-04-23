@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:built_collection/built_collection.dart';
 
 import '../../../redux/app/app_state.dart';
 import '../../../data/models/subscription_form.dart';
-import '../../../data/models/postcode.dart';
-import '../../../utils/colors.dart';
 import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
-import '../../../utils/colors.dart';
 import '../../presentation/layout/title_form_button_layout.dart';
 import '../../presentation/main_app_bar.dart';
 import '../../presentation/title_widget.dart';
-import '../../presentation/base_card.dart';
 import '../../presentation/selectable_item.dart';
 
 
@@ -58,8 +51,6 @@ class SubscriptionFormLocation extends StatelessWidget {
 }
 
 
-
-
 class LocationForm extends StatefulWidget {
   final _ViewModel viewModel;
 
@@ -71,13 +62,11 @@ class LocationForm extends StatefulWidget {
 
 class LocationFormState extends State<LocationForm> {
   final TextEditingController _otherLocationController = TextEditingController();
-  List<TextEditingController> _controllers = [];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FocusNode _otherLocationNode;
-  List<FocusNode> _focusNodes;
-
 
   int _selectedLocationIndex;
-  List<String> _locationChoices = <String>[
+  final List<String> _locationChoices = <String>[
     'Devant la porte d\'entrée',
     'Dans le jardin ou sur la terasse',
     'Devant ou dans le garage',
@@ -89,8 +78,8 @@ class LocationFormState extends State<LocationForm> {
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Conteneurs',
-        subtitle: 'Tu peux utiliser tes propres conteneurs si tu en as déjà. Sinon, nous pouvons t\'en fournir.'
+        title: 'Emplacement',
+        subtitle: 'Où se trouveront tes conteneurs lors de notre passage ?'
       ),
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -107,29 +96,38 @@ class LocationFormState extends State<LocationForm> {
             selected: _selectedLocationIndex == 5,
             onTap: () => _onTap(selectedItem: 5),
             child: Flexible(
-              child: TextField(
-                onTap: () => _onTap(selectedItem: 5),
-                controller: _otherLocationController,
-                focusNode: _otherLocationNode,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.done,
-                maxLines: null,
-                style: Theme.of(context).textTheme.body1,
-                decoration: InputDecoration(
-                  hintText: 'Autre',
-                  hintStyle: Theme.of(context).textTheme.body1,
-                  contentPadding: EdgeInsets.symmetric(vertical: 0),
-                  border: InputBorder.none,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  validator: (value) {
+                    return (_selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
+                  },
+                  autovalidate: true,
+                  controller: _otherLocationController,
+                  focusNode: _otherLocationNode,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.done,
+                  maxLines: null,
+                  style: Theme.of(context).textTheme.body1,
+                  decoration: InputDecoration(
+                    labelText: 'Autre',
+                    labelStyle: Theme.of(context).textTheme.body1,
+                    hintText: 'Préciser ...',
+                    hintStyle: Theme.of(context).textTheme.body1,
+                    contentPadding: EdgeInsets.symmetric(vertical: -10),
+                    border: InputBorder.none,
+                  )
                 )
               )
-        ),
-        ),
-      ],
+            ),
+          ),
+        ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: null,
-        // onPressed: _wantsContainers != null ? widget.viewModel.nextStep : null
+        onPressed: widget.viewModel.subscriptionForm.selectedLocationIndex == null 
+          ? null
+          : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep;}
       )
     );
   }
@@ -137,56 +135,37 @@ class LocationFormState extends State<LocationForm> {
 
 @override
   void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
-
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-
-    _selectedLocationIndex = subscriptionForm.selectedLocationIndex;
+    _otherLocationController.removeListener(_onChanged);
+    _selectedLocationIndex = widget.viewModel.subscriptionForm.selectedLocationIndex;
     if (_selectedLocationIndex == 5) {
-      _otherLocationController.text = subscriptionForm.location;
+      _otherLocationController.text = widget.viewModel.subscriptionForm.location;
     }
-    _controllers = [
-      _otherLocationController,
-    ];
-
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
-
+    _otherLocationController.addListener(_onChanged);
 
     _otherLocationNode = FocusNode();
-    _focusNodes = [
-      _otherLocationNode,
-    ];
-        
+
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
-    _focusNodes.forEach((dynamic node) {
-      node.dispose();
-    });
+    _otherLocationController.removeListener(_onChanged);
+    _otherLocationController.dispose();
+    _otherLocationNode.dispose();
 
     super.dispose();
   }
 
   void _onChanged() {
-    // At each field change send value to redux store
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
-      ..location = _otherLocationController.text == '' ? null : _otherLocationController.text.trim()
-    );
-
-    if (subscriptionForm != widget.viewModel.subscriptionForm) {
-      widget.viewModel.onChanged(subscriptionForm);
+    // When we tap on 5 (other) onTap is called, then onChanged too - with the same copy of the viewModel
+    // Therefore we get a new copy from the store each time
+    final SubscriptionForm subscriptionForm = StoreProvider.of<AppState>(context).state.subscriptionFormState.subscriptionForm;
+    final SubscriptionForm newSubscriptionForm = subscriptionForm.rebuild((b) => b
+      ..location = _otherLocationController.text == '' ? null : _otherLocationController.text.trim());
+    if (subscriptionForm != newSubscriptionForm && subscriptionForm.selectedLocationIndex == 5) {
+      widget.viewModel.onChanged(newSubscriptionForm);
     }
   }
-
 
   void _onTap({int selectedItem}) {
     if (selectedItem != _selectedLocationIndex) {
@@ -194,7 +173,7 @@ class LocationFormState extends State<LocationForm> {
         _selectedLocationIndex = selectedItem;
         widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b
           ..selectedLocationIndex = selectedItem
-          ..location = selectedItem != 5 ? _locationChoices[selectedItem] : null
+          ..location = selectedItem != 5 ? _locationChoices[selectedItem] : _otherLocationController.text.trim()
         ));
       });
     }
@@ -206,10 +185,7 @@ class LocationFormState extends State<LocationForm> {
       FocusScope.of(context).requestFocus(FocusNode());
     }
   }
-
-
 }
-
 
 
 class _ViewModel {
