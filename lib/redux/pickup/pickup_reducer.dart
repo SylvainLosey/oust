@@ -12,13 +12,13 @@ Reducer<PickupState> pickupReducer = combineReducers([
 
 
 PickupState _loadPickupsRequest(PickupState state, LoadPickupsRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((PickupStateBuilder b) => b
     ..isLoading = true
   );
 }
 
 PickupState _loadPickupsSuccess(PickupState state, LoadPickupsSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((PickupStateBuilder b) => b
     ..isLoading = false
     ..pickups.addAll(Map<int, Pickup>.fromIterable(
       action.pickups,
@@ -29,7 +29,7 @@ PickupState _loadPickupsSuccess(PickupState state, LoadPickupsSuccess action) {
 }
 
 PickupState _loadPickupsFailure(PickupState state, LoadPickupsFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((PickupStateBuilder b) => b
     ..isLoading = false
     ..error = action.error
   );

@@ -5,19 +5,17 @@ import 'package:built_value/serializer.dart';
 class DateSerializer implements PrimitiveSerializer<DateTime> {
   final bool structured = false;
   @override
-  final Iterable<Type> types = new BuiltList<Type>([DateTime]);
+  final Iterable<Type> types = BuiltList<Type>(<Type>[DateTime]);
   @override
   final String wireName = 'DateTime';
 
   @override
-  Object serialize(Serializers serializers, DateTime dateTime,
-      {FullType specifiedType: FullType.unspecified}) {
-    return dateTime.toString().substring(0,10);
+  DateTime deserialize(Serializers serializers, Object serialized, {FullType specifiedType = FullType.unspecified}) {
+    return DateTime.parse(serialized as String);
   }
 
   @override
-  DateTime deserialize(Serializers serializers, Object serialized,
-      {FullType specifiedType: FullType.unspecified}) {
-    return DateTime.parse(serialized as String);
+  Object serialize(Serializers serializers, DateTime dateTime, {FullType specifiedType = FullType.unspecified}) {
+    return dateTime.toString().substring(0,10);
   }
 }

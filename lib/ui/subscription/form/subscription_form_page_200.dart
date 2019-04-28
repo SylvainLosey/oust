@@ -55,7 +55,7 @@ class AppointmentFormState extends State<AppointmentForm> {
    
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers = <TextEditingController>[];
 
   ContactMethod _contactMethod;
 
@@ -139,7 +139,7 @@ class AppointmentFormState extends State<AppointmentForm> {
     _emailController.text = subscriptionForm.email;
     _phoneController.text = subscriptionForm.phoneNumber;
 
-    _controllers = [
+    _controllers = <TextEditingController>[
       _emailController,
       _phoneController
     ];
@@ -161,7 +161,7 @@ class AppointmentFormState extends State<AppointmentForm> {
 
 
   void _onChanged() {
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
       // Keep only digits and + characters. Validator check that there is no letter in it
       ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), '')
@@ -203,7 +203,7 @@ class _ViewModel {
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
       postLeadRequest: (SubscriptionForm subscriptionForm) {
-        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((b) => b..leadStatus = 'requested_appointment')));
+        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'requested_appointment')));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),

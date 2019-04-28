@@ -9,43 +9,46 @@ import 'serializers.dart';
 part 'subscription.g.dart';
 
 abstract class Subscription implements Built<Subscription, SubscriptionBuilder> {
-  Subscription._();
+  static Serializer<Subscription> get serializer => _$subscriptionSerializer;
 
   factory Subscription([updates(SubscriptionBuilder b)]) = _$Subscription;
 
-  int get id;
-  String get representation;
+  Subscription._();
+  
   @nullable
-  BuiltList<double> get position;
+  String get address;
   @nullable
-  @BuiltValueField(wireName: 'subscription_type')
-  @nullable
-  String get subscriptionType;
-  @nullable
-  String get status;
+  @BuiltValueField(wireName: 'average_quantity')
+  int get averageQuantity;
   @BuiltValueField(wireName: 'base_date')
   @nullable
   String get baseDate;
   @nullable
-  int get remainingPickups;
+  String get city;
+  @nullable
+  int get customer;
+  int get id;
+  @nullable
+  String get name;
+  @nullable
+  String get note;
   @nullable
   @BuiltValueField(wireName: 'pickup_day')
   int get pickupDay;
   @nullable
-  @BuiltValueField(wireName: 'average_quantity')
-  int get averageQuantity;
-  @nullable
-  String get note;
-  @nullable
-  String get name;
-  @nullable
-  String get address;
-  @nullable
-  String get city;
-  @nullable
-  int get customer;
+  BuiltList<double> get position;
   @nullable
   int get postcode;
+  @nullable
+  int get remainingPickups;
+  String get representation;
+  @nullable
+  String get status;
+
+  @nullable
+  @BuiltValueField(wireName: 'subscription_type')
+  @nullable
+  String get subscriptionType;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(Subscription.serializer, this);
@@ -54,6 +57,4 @@ abstract class Subscription implements Built<Subscription, SubscriptionBuilder> 
   static Subscription fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(Subscription.serializer, jsonString);
   }
-
-  static Serializer<Subscription> get serializer => _$subscriptionSerializer;
 }

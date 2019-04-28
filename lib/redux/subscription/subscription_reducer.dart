@@ -21,20 +21,20 @@ Reducer<SubscriptionState> subscriptionReducer = combineReducers([
 /// SUBSCRIPTION
 
 SubscriptionState _loadSubscriptionRequest(SubscriptionState state, LoadSubscriptionRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadSubscriptionSuccess(SubscriptionState state, LoadSubscriptionSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..subscription.replace(action.subscription)
   );
 }
 
 SubscriptionState _loadSubscriptionFailure(SubscriptionState state, LoadSubscriptionFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..error = action.error
   );
@@ -43,20 +43,20 @@ SubscriptionState _loadSubscriptionFailure(SubscriptionState state, LoadSubscrip
 /// CONSUMER SUBSCRIPTION
 
 SubscriptionState _loadConsumerSubscriptionRequest(SubscriptionState state, LoadConsumerSubscriptionRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadConsumerSubscriptionSuccess(SubscriptionState state, LoadConsumerSubscriptionSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..consumerSubscription.replace(action.consumerSubscription)
   );
 }
 
 SubscriptionState _loadConsumerSubscriptionFailure(SubscriptionState state, LoadConsumerSubscriptionFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..error = action.error
   );
@@ -66,13 +66,13 @@ SubscriptionState _loadConsumerSubscriptionFailure(SubscriptionState state, Load
 /// PACKAGES
 
 SubscriptionState _loadPackagesRequest(SubscriptionState state, LoadPackagesRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount + 1
   );
 }
 
 SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..packages.addAll(Map<int, Package>.fromIterable(
       action.packages,
@@ -83,7 +83,7 @@ SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSucc
 }
 
 SubscriptionState _loadPackagesFailure(SubscriptionState state, LoadPackagesFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
     ..error = action.error
   );

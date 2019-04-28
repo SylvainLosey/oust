@@ -21,8 +21,8 @@ SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart 
 
   // If user has never started the form (step 0), increment to page 1, otherwise leave him to current step
   if (state.subscriptionForm.currentStep == 0) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1))
     );
   } else {
     return state;
@@ -31,57 +31,57 @@ SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart 
 
 SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNextStep action) {
   if (action.subscriptionIsUnavailable) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 100))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 100))
     );
   } else if (action.customerRequestsAppointment) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 200))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 200))
     );
   } else {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep + 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1))
   );
   }
 }
 
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
   if (state.subscriptionForm.currentStep == 100) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 4))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 4))
     );
   } else if (state.subscriptionForm.currentStep == 200) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = 5))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 5))
     ); 
   } else {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..currentStep = state.subscriptionForm.currentStep - 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep - 1))
     );
   }
 }
 
 SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionForm action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..subscriptionForm.replace(action.subscriptionForm)
   );
 }
 
 SubscriptionFormState _postLeadRequest(SubscriptionFormState state, PostLeadRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = true
   );
 }
 
 SubscriptionFormState _postLeadSuccess(SubscriptionFormState state, PostLeadSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..subscriptionForm.replace(SubscriptionForm())
   );
 }
 
 SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..error = action.error
   );
@@ -89,12 +89,12 @@ SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFail
 
 SubscriptionFormState _increment(SubscriptionFormState state, IncrementProductQuantity action) {
   if (action.product == 'smallContainer') {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity + 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity + 1))
     );
   } else if (action.product == 'bigContainer') {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity + 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity + 1))
     ); 
   } else {
     return state;
@@ -103,12 +103,12 @@ SubscriptionFormState _increment(SubscriptionFormState state, IncrementProductQu
 
 SubscriptionFormState _decrement(SubscriptionFormState state, DecrementProductQuantity action) {
   if (action.product == 'smallContainer' && state.subscriptionForm.smallContainerQuantity > 0) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity - 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity - 1))
     );
   } else if (action.product == 'bigContainer' && state.subscriptionForm.bigContainerQuantity > 0) {
-    return state.rebuild((b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity - 1))
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity - 1))
     ); 
   } else {
     return state;

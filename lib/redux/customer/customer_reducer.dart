@@ -12,20 +12,20 @@ Reducer<CustomerState> customerReducer = combineReducers([
 ]);
 
 CustomerState _loadCustomerRequest(CustomerState state, LoadCustomerRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((CustomerStateBuilder b) => b
     .. isLoading = true
   );
 }
 
 CustomerState _loadCustomerSuccess(CustomerState state, LoadCustomerSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((CustomerStateBuilder b) => b
     ..isLoading = false
     ..customer.replace(action.customer)
   );
 }
 
 CustomerState _loadCustomerFailure(CustomerState state, LoadCustomerFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((CustomerStateBuilder b) => b
     ..isLoading = false
     ..error = action.error
   );

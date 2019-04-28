@@ -54,7 +54,7 @@ class AddressFormState extends State<AddressForm> {
    
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _postcodeController = TextEditingController();
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers = <TextEditingController>[];
 
   FocusNode _addressNode;
   FocusNode _postcodeNode;
@@ -81,7 +81,7 @@ class AddressFormState extends State<AddressForm> {
               hintText: 'Rue et numéro',
             ),
             textInputAction: TextInputAction.next,
-            inputFormatters: [LengthLimitingTextInputFormatter(80)],
+            inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(80)],
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_postcodeNode);
             },
@@ -167,7 +167,7 @@ class AddressFormState extends State<AddressForm> {
       _postcodeController.text = '${postcode.postcode} ${postcode.name}';
     }
 
-    _controllers = [
+    _controllers = <TextEditingController>[
       _addressController,
       _postcodeController,
     ];
@@ -175,7 +175,7 @@ class AddressFormState extends State<AddressForm> {
 
     _addressNode = FocusNode();
     _postcodeNode = FocusNode();
-    _focusNodes = [
+    _focusNodes = <FocusNode>[
       _addressNode,
       _postcodeNode
     ];
@@ -199,7 +199,7 @@ class AddressFormState extends State<AddressForm> {
 
   void _onChanged() {
     // At each field change send value to redux store
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..address = _addressController.text == '' ? null : _addressController.text.trim()
       ..postcode = _postcodeController.text == '' ? null : _selectedPostcode?.id
     );

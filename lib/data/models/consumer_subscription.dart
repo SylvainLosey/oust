@@ -8,14 +8,16 @@ import 'serializers.dart';
 part 'consumer_subscription.g.dart';
 
 abstract class ConsumerSubscription implements Built<ConsumerSubscription, ConsumerSubscriptionBuilder> {
-  ConsumerSubscription._();
+  static Serializer<ConsumerSubscription> get serializer =>_$consumerSubscriptionSerializer;
 
   factory ConsumerSubscription([updates(ConsumerSubscriptionBuilder b)]) =_$ConsumerSubscription;
 
-  @nullable
-  int get subscription;
+  ConsumerSubscription._();
   @nullable
   int get package;
+
+  @nullable
+  int get subscription;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(ConsumerSubscription.serializer, this);
@@ -25,6 +27,4 @@ abstract class ConsumerSubscription implements Built<ConsumerSubscription, Consu
     return serializers.deserializeWith(
         ConsumerSubscription.serializer, jsonString);
   }
-
-  static Serializer<ConsumerSubscription> get serializer =>_$consumerSubscriptionSerializer;
 }

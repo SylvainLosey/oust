@@ -5,7 +5,6 @@ import 'package:redux/redux.dart';
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
 import '../../redux/app/app_state.dart';
-import '../../data/models/customer.dart';
 import '../../redux/customer/customer_state.dart';
 
 class CustomerDetails extends StatelessWidget {

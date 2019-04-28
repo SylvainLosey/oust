@@ -52,7 +52,7 @@ class EmailFormState extends State<EmailForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
    
   final TextEditingController _emailController = TextEditingController();
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers = <TextEditingController>[];
 
   // On load set controllers to value stored in redux and add onChanged listeners
   @override
@@ -107,7 +107,7 @@ class EmailFormState extends State<EmailForm> {
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
 
     _emailController.text = subscriptionForm.email;
-    _controllers = [
+    _controllers = <TextEditingController>[
       _emailController,
     ];
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -129,7 +129,7 @@ class EmailFormState extends State<EmailForm> {
 
   void _onChanged() {
     // At each field change send value to redux store
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
     );
 
@@ -169,7 +169,7 @@ class _ViewModel {
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
       postLeadRequest: (SubscriptionForm subscriptionForm) {
-        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((b) => b..leadStatus = 'postcode_not_covered')));
+        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'postcode_not_covered')));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),

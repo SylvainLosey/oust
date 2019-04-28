@@ -86,7 +86,7 @@ class AppMiddleware {
 
     try {
       final List<dynamic> packagesData = await repository.fetchPackages();
-      final BuiltList<Package> packages = BuiltList<Package>.from(packagesData.map((e) => serializers.deserializeWith(Package.serializer, e)));
+      final BuiltList<Package> packages = BuiltList<Package>.from(packagesData.map((dynamic e) => serializers.deserializeWith(Package.serializer, e)));
       store.dispatch(LoadPackagesSuccess(packages: packages));
     } catch (e) {
       store.dispatch(LoadPackagesFailure(error: e.toString()));

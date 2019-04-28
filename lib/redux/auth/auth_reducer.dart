@@ -13,19 +13,19 @@ Reducer<AuthState> authReducer = combineReducers([
 ]);
 
 AuthState _userLoginRequest(AuthState state, UserLoginRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((AuthStateBuilder b) => b
     ..isLoading = true
   );
 }
 
 AuthState _userLoginRequestSuccess(AuthState state, UserLoginSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((AuthStateBuilder b) => b
     ..isLoading = false
   );
 }
 
 AuthState _userLoaded(AuthState state, UserLoaded action) {
-  return state.rebuild((b) => b
+  return state.rebuild((AuthStateBuilder b) => b
     ..isLoading = false
     ..isAuthenticated = true
     ..user.replace(action.user)
@@ -33,14 +33,14 @@ AuthState _userLoaded(AuthState state, UserLoaded action) {
 }
 
 AuthState _userLoginRequestFailure(AuthState state, UserLoginFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((AuthStateBuilder b) => b
     ..isLoading = false
     ..error = action.error
   );
 }
 
 AuthState _userLogout(AuthState state, UserLogout action) {
-  return state.rebuild((b) => b
+  return state.rebuild((AuthStateBuilder b) => b
     ..isLoading = false
     ..isAuthenticated = false
     ..user = null

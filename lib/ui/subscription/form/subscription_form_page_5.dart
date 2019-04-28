@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:built_collection/built_collection.dart';
 
 import '../../../redux/app/app_state.dart';
 import '../../../data/models/subscription_form.dart';
-import '../../../data/models/postcode.dart';
 import '../../../utils/colors.dart';
 import '../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../utils/layout.dart';
@@ -104,10 +101,10 @@ class MethodFormState extends State<MethodForm> {
     setState(() {
       if(_selectedMethod == method) {
         _selectedMethod = null;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..registrationMethod= null));
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod= null));
       } else {
         _selectedMethod = method;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..registrationMethod = method));  
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = method));  
       }
     });
   }

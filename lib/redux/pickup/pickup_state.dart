@@ -1,7 +1,5 @@
 library pickup_state;
 
-import 'dart:convert';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -12,17 +10,19 @@ import '../../data/models/serializers.dart';
 part 'pickup_state.g.dart';
 
 abstract class PickupState implements Built<PickupState, PickupStateBuilder> {
-  bool get isLoading;
-  @nullable
-  BuiltMap<int, Pickup> get pickups;
+  static Serializer<PickupState> get serializer => _$pickupStateSerializer;
+  factory PickupState() => _$PickupState((PickupStateBuilder b) => b
+    ..isLoading = false
+  );
+  PickupState._();
+
   @nullable
   String get error;
 
-  PickupState._();
+  bool get isLoading;
 
-  factory PickupState([void Function(PickupStateBuilder) updates]) => _$PickupState((b) => b
-    ..isLoading = false
-  );
+  @nullable
+  BuiltMap<int, Pickup> get pickups;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(PickupState.serializer, this);
@@ -31,6 +31,4 @@ abstract class PickupState implements Built<PickupState, PickupStateBuilder> {
   static PickupState fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(PickupState.serializer, jsonString);
   }
-
-  static Serializer<PickupState> get serializer => _$pickupStateSerializer;
 }

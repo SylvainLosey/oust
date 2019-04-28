@@ -30,7 +30,7 @@ class AuthMiddleware {
     if (await _hasAuthData()) {
       final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
-        user: User((b) => b
+        user: User((UserBuilder b) => b
           ..key = authData['key']
           ..id = authData['id']
         )
@@ -38,7 +38,7 @@ class AuthMiddleware {
     }
 
     // Let app load 2 seconds and load this after as this is low priority
-    await Future.delayed(const Duration(seconds: 2), () {
+    await Future<void>.delayed(const Duration(seconds: 2), () {
       store.dispatch(LoadPostcodesRequest());
     });
   }
@@ -64,7 +64,7 @@ class AuthMiddleware {
   void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UserLoaded(user: User((b) => b
+    store.dispatch(UserLoaded(user: User((UserBuilder b) => b
           ..key = action.key
           ..id = action.id
         )

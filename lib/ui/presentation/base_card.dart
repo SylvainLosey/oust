@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/layout.dart';
-import '../../utils/colors.dart';
 
 class BaseCard extends StatelessWidget {
   final Widget child;

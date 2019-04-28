@@ -99,7 +99,7 @@ class LocationFormState extends State<LocationForm> {
               child: Form(
                 key: _formKey,
                 child: TextFormField(
-                  validator: (value) {
+                  validator: (String value) {
                     return (_selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
                   },
                   autovalidate: true,
@@ -160,7 +160,7 @@ class LocationFormState extends State<LocationForm> {
     // When we tap on 5 (other) onTap is called, then onChanged too - with the same copy of the viewModel
     // Therefore we get a new copy from the store each time
     final SubscriptionForm subscriptionForm = StoreProvider.of<AppState>(context).state.subscriptionFormState.subscriptionForm;
-    final SubscriptionForm newSubscriptionForm = subscriptionForm.rebuild((b) => b
+    final SubscriptionForm newSubscriptionForm = subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..location = _otherLocationController.text == '' ? null : _otherLocationController.text.trim());
     if (subscriptionForm != newSubscriptionForm && subscriptionForm.selectedLocationIndex == 5) {
       widget.viewModel.onChanged(newSubscriptionForm);
@@ -171,7 +171,7 @@ class LocationFormState extends State<LocationForm> {
     if (selectedItem != _selectedLocationIndex) {
       setState(() {
         _selectedLocationIndex = selectedItem;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
           ..selectedLocationIndex = selectedItem
           ..location = selectedItem != 5 ? _locationChoices[selectedItem] : _otherLocationController.text.trim()
         ));

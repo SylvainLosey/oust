@@ -13,7 +13,7 @@ AppState appReducer(AppState state, dynamic action) {
     return AppState();
   }
 
-  return state.rebuild((b) => b
+  return state.rebuild((AppStateBuilder b) => b
     ..authState.replace(authReducer(state.authState, action))
     ..navState.replace(navReducer(state.navState, action))
     ..customerState.replace(customerReducer(state.customerState, action))

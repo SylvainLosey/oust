@@ -53,7 +53,7 @@ class NameFormState extends State<NameForm> {
    
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers = <TextEditingController>[];
 
   FocusNode _firstNameNode;
   FocusNode _lastNameNode;
@@ -76,7 +76,7 @@ class NameFormState extends State<NameForm> {
               controller: _firstNameController,
               focusNode: _firstNameNode,
               decoration: InputDecoration(labelText: 'Prénom'),
-              inputFormatters: [LengthLimitingTextInputFormatter(50)],
+              inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_){
                 FocusScope.of(context).requestFocus(_lastNameNode);
@@ -88,7 +88,7 @@ class NameFormState extends State<NameForm> {
               focusNode: _lastNameNode,
               decoration: InputDecoration(labelText: 'Nom'),
               textInputAction: TextInputAction.done,
-              inputFormatters: [LengthLimitingTextInputFormatter(50)],
+              inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
               onFieldSubmitted: (_) => widget.viewModel.nextStep(),
             ),
           ],
@@ -110,7 +110,7 @@ class NameFormState extends State<NameForm> {
 
     _firstNameController.text = subscriptionForm.firstName;
     _lastNameController.text = subscriptionForm.lastName;
-    _controllers = [
+    _controllers = <TextEditingController>[
       _firstNameController,
       _lastNameController,
     ];
@@ -119,7 +119,7 @@ class NameFormState extends State<NameForm> {
 
     _firstNameNode = FocusNode();
     _lastNameNode = FocusNode();
-    _focusNodes = [
+    _focusNodes = <FocusNode>[
       _firstNameNode,
       _lastNameNode
     ];
@@ -145,7 +145,7 @@ class NameFormState extends State<NameForm> {
 
   void _onChanged() {
     // At each field change send value to redux store
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((b) => b
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..firstName = _firstNameController.text == '' ? null : _firstNameController.text.trim()
       ..lastName = _lastNameController.text == '' ? null : _lastNameController.text.trim()
     );

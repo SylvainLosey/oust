@@ -4,31 +4,34 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-import '../../data/models/pickup.dart';
-import '../../data/models/subscription.dart';
 import '../../data/models/consumer_subscription.dart';
 import '../../data/models/package.dart';
 import '../../data/models/serializers.dart';
+import '../../data/models/subscription.dart';
 
 part 'subscription_state.g.dart';
 
 
 abstract class SubscriptionState implements Built<SubscriptionState, SubscriptionStateBuilder> {
-  int get fetchCount;
-  @nullable
-  Subscription get subscription;
+  static Serializer<SubscriptionState> get serializer => _$subscriptionStateSerializer;
+  factory SubscriptionState() => _$SubscriptionState((b) => b
+    ..fetchCount = 0
+  );
+
+  SubscriptionState._();
+  
   @nullable
   ConsumerSubscription get consumerSubscription;
   @nullable
-  BuiltMap<int, Package> get packages;
-  @nullable
   String get error;
 
-  SubscriptionState._();
+  int get fetchCount;
 
-  factory SubscriptionState([void Function(SubscriptionStateBuilder) updates]) => _$SubscriptionState((b) => b
-    ..fetchCount = 0
-  );
+  @nullable
+  BuiltMap<int, Package> get packages;
+
+  @nullable
+  Subscription get subscription;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(SubscriptionState.serializer, this);
@@ -37,6 +40,4 @@ abstract class SubscriptionState implements Built<SubscriptionState, Subscriptio
   static SubscriptionState fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(SubscriptionState.serializer, jsonString);
   }
-
-  static Serializer<SubscriptionState> get serializer => _$subscriptionStateSerializer;
 }

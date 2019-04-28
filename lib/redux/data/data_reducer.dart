@@ -12,13 +12,13 @@ Reducer<DataState> dataReducer = combineReducers([
 
 
 DataState _loadPostcodesRequest(DataState state, LoadPostcodesRequest action) {
-  return state.rebuild((b) => b
+  return state.rebuild((DataStateBuilder b) => b
     ..isLoading = true
   );
 }
 
 DataState _loadPostcodesSuccess(DataState state, LoadPostcodesSuccess action) {
-  return state.rebuild((b) => b
+  return state.rebuild((DataStateBuilder b) => b
     ..isLoading = false
     ..postcodes.addAll(Map<int, Postcode>.fromIterable(
       action.postcodes,
@@ -29,7 +29,7 @@ DataState _loadPostcodesSuccess(DataState state, LoadPostcodesSuccess action) {
 }
 
 DataState _loadPostcodesFailure(DataState state, LoadPostcodesFailure action) {
-  return state.rebuild((b) => b
+  return state.rebuild((DataStateBuilder b) => b
     ..isLoading = false
     ..error = action.error
   );

@@ -1,14 +1,8 @@
 
 String emailValidator(String value) {
   // This is just a regular expression for email addresses
-  String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
-      "\\@" +
-      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-      "(" +
-      "\\." +
-      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-      ")+";
-  RegExp regExp = new RegExp(p);
+  final String p = '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+';
+  final RegExp regExp = RegExp(p);
 
   if (regExp.hasMatch(value)) {
     // So, the email is valid
@@ -21,7 +15,7 @@ String emailValidator(String value) {
 
 String phoneValidator(String value) {
   //Trim everythin but numbers, and letters
-  String trimmed = value.replaceAll(RegExp(r'[^0-9a-zA-Z]'), '');
+  final String trimmed = value.replaceAll(RegExp(r'[^0-9a-zA-Z]'), '');
 
   if (isNumeric(trimmed) && trimmed.length >= 9 && trimmed.length <=14) {
     return null;

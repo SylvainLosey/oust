@@ -6,7 +6,6 @@ import 'package:redux/redux.dart';
 import 'subscription_home.dart';
 import 'subscription_empty.dart';
 import '../../redux/app/app_state.dart';
-import '../auth/login_screen.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   @override

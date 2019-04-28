@@ -4,7 +4,6 @@ import 'package:redux/redux.dart';
 
 import '../../utils/layout.dart';
 import '../../redux/app/app_state.dart';
-import '../../redux/subscription/form/subscription_form_state.dart';
 import '../../redux/subscription/form/subscription_form_actions.dart';
 import '../../data/models/subscription_form.dart';
 

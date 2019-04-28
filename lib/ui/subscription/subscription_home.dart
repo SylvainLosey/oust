@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -17,7 +15,6 @@ import '../../data/models/customer.dart';
 import '../../data/models/consumer_subscription.dart';
 import '../../data/models/package.dart';
 import '../../utils/layout.dart';
-import '../../utils/colors.dart';
 import 'pickup_list.dart';
 
 
@@ -57,7 +54,7 @@ class SubscriptionHome extends StatelessWidget {
             Container(height: Layout.of(context).gridUnit(4)),
             FlatButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PickupList()));
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PickupList()));
               },
               child: Text('Tous les passages')
             )
@@ -77,7 +74,7 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
       Container(
         height: Layout.of(context).gridUnit(40),
         decoration: BoxDecoration(
-          boxShadow: [BoxShadow(spreadRadius: 10, blurRadius: 10, color: Colors.grey.withOpacity(0.2))]
+          boxShadow: <BoxShadow>[BoxShadow(spreadRadius: 10, blurRadius: 10, color: Colors.grey.withOpacity(0.2))]
         )
       ),
       Container(
@@ -96,7 +93,7 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[Colors.white.withOpacity(0), Colors.white],
-            stops: [0.2, 0.9],
+            stops: <double>[0.2, 0.9],
           ),
         ),
       ),

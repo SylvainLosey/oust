@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../redux/auth/auth_actions.dart';
 import '../../redux/app/app_state.dart';
-import 'bottom_nav.dart';
-import '../lift/lifts_screen.dart';
 import '../account/profile_screen.dart';
+import '../lift/lifts_screen.dart';
 import '../subscription/subscription_screen.dart';
+import 'bottom_nav.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> _views = [
+    final List<Widget> _views = <Widget>[
       LiftsScreen(),
       SubscriptionScreen(),
       ProfileScreen(),
@@ -24,19 +22,12 @@ class MainScreen extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         return Scaffold(
-          // appBar: _createAppBar(),
           body: _views[viewModel.selectedBottomNav],
           bottomNavigationBar: BottomNav(),
         );
       }
     );
   }
-
-  // AppBar _createAppBar() {
-  //   return AppBar(
-  //     title: Text('Oust!'),
-  //   );
-  // }
 }
 
 class _ViewModel {

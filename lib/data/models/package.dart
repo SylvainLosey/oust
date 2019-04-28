@@ -8,16 +8,18 @@ import 'serializers.dart';
 part 'package.g.dart';
 
 abstract class Package implements Built<Package, PackageBuilder> {
-  Package._();
+  static Serializer<Package> get serializer => _$packageSerializer;
 
   factory Package([updates(PackageBuilder b)]) = _$Package;
 
-  int get id;
-  String get name;
-  String get length;
+  Package._();
   @BuiltValueField(wireName: 'frequency_weeks')
   int get frequencyWeeks;
+  int get id;
+  String get length;
+  String get name;
   int get pickups;
+
   @BuiltValueField(wireName: 'unit_price')
   String get unitPrice;
 
@@ -28,7 +30,5 @@ abstract class Package implements Built<Package, PackageBuilder> {
   static Package fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(Package.serializer, jsonString);
   }
-
-  static Serializer<Package> get serializer => _$packageSerializer;
 }
 
