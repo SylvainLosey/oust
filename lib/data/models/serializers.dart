@@ -22,7 +22,7 @@ import 'user.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor(<Object>[
+@SerializersFor([
   User,
   Customer,
   Subscription,

@@ -9,8 +9,9 @@ part 'subscription_form_actions.g.dart';
 class SubscriptionFormNextStep {
   bool subscriptionIsUnavailable;
   bool customerRequestsAppointment;
+  bool doesNotWantContainers;
 
-  SubscriptionFormNextStep({this.subscriptionIsUnavailable = false, this.customerRequestsAppointment = false});
+  SubscriptionFormNextStep({this.subscriptionIsUnavailable = false, this.customerRequestsAppointment = false, this.doesNotWantContainers = false});
   Map<String, dynamic> toJson() => _$SubscriptionFormNextStepToJson(this);
 }
 

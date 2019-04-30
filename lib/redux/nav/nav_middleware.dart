@@ -37,6 +37,8 @@ class NavMiddleware {
         pushCounter = 100;
       } else if (pushCounter == 5 && currentStep >= 200) {
         pushCounter = 200;
+      } else if (pushCounter == 6 && !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
+        pushCounter = 8;
       } else {
       pushCounter++;
       }

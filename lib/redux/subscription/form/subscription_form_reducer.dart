@@ -38,6 +38,10 @@ SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNex
     return state.rebuild((SubscriptionFormStateBuilder b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 200))
     );
+  } else if (action.doesNotWantContainers) {
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 8))
+    );
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1))
@@ -53,6 +57,10 @@ SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFor
   } else if (state.subscriptionForm.currentStep == 200) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
       ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 5))
+    ); 
+  } else if (state.subscriptionForm.currentStep == 8 && !state.subscriptionForm.wantsContainers) {
+    return state.rebuild((SubscriptionFormStateBuilder b) => b
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 6))
     ); 
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b

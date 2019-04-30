@@ -98,24 +98,27 @@ class LocationFormState extends State<LocationForm> {
             child: Flexible(
               child: Form(
                 key: _formKey,
-                child: TextFormField(
-                  validator: (String value) {
-                    return (_selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
-                  },
-                  autovalidate: true,
-                  controller: _otherLocationController,
-                  focusNode: _otherLocationNode,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.done,
-                  maxLines: null,
-                  style: Theme.of(context).textTheme.body1,
-                  decoration: InputDecoration(
-                    labelText: 'Autre',
-                    labelStyle: Theme.of(context).textTheme.body1,
-                    hintText: 'Préciser ...',
-                    hintStyle: Theme.of(context).textTheme.body1,
-                    contentPadding: EdgeInsets.symmetric(vertical: -10),
-                    border: InputBorder.none,
+                // We use IgnorePointer to disable the interception of the tap by TextField
+                // Therefore SelectableItem (GestureDetector) gets it (via _onTap), from which we request focus subsequently
+                child: IgnorePointer(
+                  child: TextFormField(
+                    validator: (String value) {
+                      return (_selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
+                    },
+                    controller: _otherLocationController,
+                    focusNode: _otherLocationNode,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.done,
+                    maxLines: null,
+                    style: Theme.of(context).textTheme.body1,
+                    decoration: InputDecoration(
+                      labelText: 'Autre',
+                      labelStyle: Theme.of(context).textTheme.body1,
+                      hintText: 'Préciser ...',
+                      hintStyle: Theme.of(context).textTheme.body1,
+                      contentPadding: EdgeInsets.symmetric(vertical: -10),
+                      border: InputBorder.none,
+                    )
                   )
                 )
               )

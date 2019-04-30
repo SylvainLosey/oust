@@ -86,7 +86,7 @@ class DoYouWantContainersState extends State<DoYouWantContainers> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _wantsContainers != null ? widget.viewModel.nextStep : null
+        onPressed: _wantsContainers != null ? () => widget.viewModel.nextStep(_wantsContainers) : null
       )
     );
   }
@@ -130,7 +130,13 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+      nextStep: (bool _wantsContainers) {
+        if (_wantsContainers) {
+          store.dispatch(SubscriptionFormNextStep());
+        } else {
+          store.dispatch(SubscriptionFormNextStep(doesNotWantContainers: true));
+        }
+      },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
