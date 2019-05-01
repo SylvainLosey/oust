@@ -2,41 +2,32 @@ import 'package:flutter/material.dart';
 
 import '../ui/app/main_screen.dart';
 import '../ui/subscription/subscription_screen.dart';
-import '../ui/subscription/form/subscription_form_page_1.dart';
-import '../ui/subscription/form/subscription_form_page_2.dart';
-import '../ui/subscription/form/subscription_form_page_3.dart';
-import '../ui/subscription/form/subscription_form_page_4.dart';
-import '../ui/subscription/form/subscription_form_page_5.dart';
-import '../ui/subscription/form/subscription_form_page_6.dart';
-import '../ui/subscription/form/subscription_form_page_7.dart';
-import '../ui/subscription/form/subscription_form_page_8.dart';
-import '../ui/subscription/form/subscription_form_page_9.dart';
-import '../ui/subscription/form/subscription_form_page_100.dart';
-import '../ui/subscription/form/subscription_form_page_101.dart';
-import '../ui/subscription/form/subscription_form_page_200.dart';
-import '../ui/subscription/form/subscription_form_page_201.dart';
 
+import '../ui/subscription/form/info/subscription_form_infos.dart';
+import '../ui/subscription/form/page/subscription_form_pages.dart';
 
+// Se store steps inside a static int of the class to be able to reorder steps and not lose conditional navigation
 Map<String, WidgetBuilder> getRoutes(BuildContext context) {
   return <String, WidgetBuilder>{
     '/': (BuildContext context) => MainScreen(),
     '/subscription/': (BuildContext context) => SubscriptionScreen(),
-    '/subscription/form/1': (BuildContext context) => SubscriptionFormHowItWorks(),
-    '/subscription/form/2': (BuildContext context) => SubscriptionFormQuantity(),
-    '/subscription/form/3': (BuildContext context) => SubscriptionFormName(),
-    '/subscription/form/4': (BuildContext context) => SubscriptionFormAddress(),
-    '/subscription/form/5': (BuildContext context) => SubscriptionFormMethod(),
-    '/subscription/form/6': (BuildContext context) => SubscriptionFormContainersYesNo(),
-    '/subscription/form/7': (BuildContext context) => SubscriptionFormContainers(),
-    '/subscription/form/8': (BuildContext context) => SubscriptionFormLocation(),
-    '/subscription/form/9': (BuildContext context) => SubscriptionFormPhone(),
+    '/subscription/form/${SubscriptionFormHowItWorks.step}': (BuildContext context) => SubscriptionFormHowItWorks(), // 1
+    '/subscription/form/${SubscriptionFormQuantity.step}': (BuildContext context) => SubscriptionFormQuantity(), // 2
+    '/subscription/form/${SubscriptionFormFrequency.step}': (BuildContext context) => SubscriptionFormFrequency(), // 3
+    '/subscription/form/${SubscriptionFormName.step}': (BuildContext context) => SubscriptionFormName(), // 4
+    '/subscription/form/${SubscriptionFormAddress.step}': (BuildContext context) => SubscriptionFormAddress(), //5
+    '/subscription/form/${SubscriptionFormMethod.step}': (BuildContext context) => SubscriptionFormMethod(), // 6
+    '/subscription/form/${SubscriptionFormContainersYesNo.step}': (BuildContext context) => SubscriptionFormContainersYesNo(), // 7
+    '/subscription/form/${SubscriptionFormContainers.step}': (BuildContext context) => SubscriptionFormContainers(), // 8
+    '/subscription/form/${SubscriptionFormLocation.step}': (BuildContext context) => SubscriptionFormLocation(), // 9
+    '/subscription/form/${SubscriptionFormPhone.step}': (BuildContext context) => SubscriptionFormPhone(), // 10
 
     // Subscription unabailable - Lead track
-    '/subscription/form/100': (BuildContext context) => SubscriptionFormLead(),
-    '/subscription/form/101': (BuildContext context) => SubscriptionFormLeadSuccess(),
+    '/subscription/form/${SubscriptionFormLead.step}': (BuildContext context) => SubscriptionFormLead(), // 100
+    '/subscription/form/${SubscriptionFormLeadSuccess.step}': (BuildContext context) => SubscriptionFormLeadSuccess(), // 101
 
     // Appointment requested
-    '/subscription/form/200': (BuildContext context) => SubscriptionFormAppointment(),
-    '/subscription/form/201': (BuildContext context) => SubscriptionFormAppointmentSuccess(),
+    '/subscription/form/${SubscriptionFormAppointment.step}': (BuildContext context) => SubscriptionFormAppointment(), // 200
+    '/subscription/form/${SubscriptionFormAppointmentSuccess.step}': (BuildContext context) => SubscriptionFormAppointmentSuccess(), // 201
   };
 }

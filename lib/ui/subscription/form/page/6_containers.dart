@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../../redux/app/app_state.dart';
-import '../../../data/models/subscription_form.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
-import '../../presentation/layout/title_form_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
-import '../../presentation/product_card.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../data/models/subscription_form.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../../utils/layout.dart';
+import '../../../presentation/layout/title_form_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
+import '../../../presentation/product_card.dart';
 
 
 class SubscriptionFormContainers extends StatelessWidget {
+  static int step = 8;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

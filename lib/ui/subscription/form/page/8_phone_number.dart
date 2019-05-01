@@ -1,21 +1,19 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:redux/redux.dart';
 
-import '../../../data/models/postcode.dart';
-import '../../../data/models/subscription_form.dart';
-import '../../../redux/app/app_state.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/validators.dart';
-import '../../presentation/error_text.dart';
-import '../../presentation/layout/title_form_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
+import '../../../../data/models/subscription_form.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../../utils/validators.dart';
+import '../../../presentation/layout/title_form_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
 
 
 class SubscriptionFormPhone extends StatelessWidget {
+  static int step = 10;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -38,7 +36,6 @@ class SubscriptionFormPhone extends StatelessWidget {
 }
 
 
-
 class PhoneForm extends StatefulWidget {
   final _ViewModel viewModel;
 
@@ -53,7 +50,6 @@ class PhoneFormState extends State<PhoneForm> {
    
   final TextEditingController _phoneController = TextEditingController();
 
-  // On load set controllers to value stored in redux and add onChanged listeners
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(

@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../../redux/app/app_state.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../presentation/layout/widget_title_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../presentation/layout/widget_title_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
 
 
 class SubscriptionFormHowItWorks extends StatelessWidget {
+  static int step = 1;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

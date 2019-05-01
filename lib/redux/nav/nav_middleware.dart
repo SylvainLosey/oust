@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 
 import '../subscription/form/subscription_form_actions.dart';
 import '../app/app_state.dart';
+import '../../ui/subscription/form/page/subscription_form_pages.dart';
 
 class NavMiddleware {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -33,12 +34,12 @@ class NavMiddleware {
       navigatorKey.currentState.pushNamed(route);
 
       // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
-      if (pushCounter == 4 && currentStep >= 100  && currentStep < 200) {
-        pushCounter = 100;
-      } else if (pushCounter == 5 && currentStep >= 200) {
-        pushCounter = 200;
-      } else if (pushCounter == 6 && !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
-        pushCounter = 8;
+      if (pushCounter == SubscriptionFormAddress.step && currentStep >= SubscriptionFormLead.step  && currentStep < SubscriptionFormAppointment.step) {
+        pushCounter = SubscriptionFormLead.step;
+      } else if (pushCounter == SubscriptionFormMethod.step && currentStep >= SubscriptionFormAppointment.step) {
+        pushCounter = SubscriptionFormAppointment.step;
+      } else if (pushCounter == SubscriptionFormContainersYesNo.step && !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
+        pushCounter = SubscriptionFormLocation.step;
       } else {
       pushCounter++;
       }

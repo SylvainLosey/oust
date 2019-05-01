@@ -3,19 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../../data/models/subscription_form.dart';
-import '../../../redux/app/app_state.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
-import '../../presentation/layout/title_form_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
+import '../../../../data/models/subscription_form.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../../utils/layout.dart';
+import '../../../presentation/layout/title_form_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
 
 // Notes on the stucture of form pages
 // It is best to keep the form and button in the same Stateful widget to avoid having to pass State up/down
 // There needs to be a Stateful widget below storeprovider in the hierarchy, placing it above would leave it without acces to the viewmodel
 // Don't try to refactor this unless you are sure - Columns and Spaced/Flex widget when nested don't go well together
 class SubscriptionFormName extends StatelessWidget {
+  static int step = 4;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

@@ -1,9 +1,11 @@
+import 'package:oust/ui/subscription/form/page/100_postcode_unavailable.dart';
+import 'package:oust/ui/subscription/form/page/200_appointment_requested.dart';
 import 'package:redux/redux.dart';
 
 import 'subscription_form_actions.dart';
 import 'subscription_form_state.dart';
 import '../../../data/models/subscription_form.dart';
-
+import '../../../ui/subscription/form/page/subscription_form_pages.dart';
 
 Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, SubscriptionFormStart>(_start),
@@ -32,15 +34,15 @@ SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart 
 SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNextStep action) {
   if (action.subscriptionIsUnavailable) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 100))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormLead.step))
     );
   } else if (action.customerRequestsAppointment) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 200))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormAppointment.step))
     );
   } else if (action.doesNotWantContainers) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 8))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormLocation.step))
     );
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
@@ -50,17 +52,17 @@ SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNex
 }
 
 SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
-  if (state.subscriptionForm.currentStep == 100) {
+  if (state.subscriptionForm.currentStep == SubscriptionFormLead.step) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 4))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormAddress.step))
     );
-  } else if (state.subscriptionForm.currentStep == 200) {
+  } else if (state.subscriptionForm.currentStep == SubscriptionFormAppointment.step) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 5))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormMethod.step))
     ); 
-  } else if (state.subscriptionForm.currentStep == 8 && !state.subscriptionForm.wantsContainers) {
+  } else if (state.subscriptionForm.currentStep == SubscriptionFormLocation.step && !state.subscriptionForm.wantsContainers) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 6))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormContainersYesNo.step))
     ); 
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b

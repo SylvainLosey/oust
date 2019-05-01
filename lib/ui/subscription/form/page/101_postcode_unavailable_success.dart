@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 
-import '../../../utils/layout.dart';
+import '../../../../utils/layout.dart';
 
 
-class SubscriptionFormAppointmentSuccess extends StatelessWidget {
+class SubscriptionFormLeadSuccess extends StatelessWidget {
+  static int step = 101;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

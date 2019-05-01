@@ -5,17 +5,19 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:redux/redux.dart';
 
-import '../../../data/models/postcode.dart';
-import '../../../data/models/subscription_form.dart';
-import '../../../redux/app/app_state.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
-import '../../presentation/layout/title_form_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
+import '../../../../data/models/postcode.dart';
+import '../../../../data/models/subscription_form.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../../utils/layout.dart';
+import '../../../presentation/layout/title_form_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
 
 
 class SubscriptionFormAddress extends StatelessWidget {
+  static int step = 5;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

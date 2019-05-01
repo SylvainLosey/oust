@@ -4,19 +4,20 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:redux/redux.dart';
 
-import '../../../data/models/postcode.dart';
-import '../../../data/models/subscription_form.dart';
-import '../../../redux/app/app_state.dart';
-import '../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../utils/layout.dart';
-import '../../../utils/validators.dart';
-import '../../presentation/error_text.dart';
-import '../../presentation/layout/title_form_button_layout.dart';
-import '../../presentation/main_app_bar.dart';
-import '../../presentation/title_widget.dart';
+import '../../../../data/models/postcode.dart';
+import '../../../../data/models/subscription_form.dart';
+import '../../../../redux/app/app_state.dart';
+import '../../../../redux/subscription/form/subscription_form_actions.dart';
+import '../../../../utils/validators.dart';
+import '../../../presentation/error_text.dart';
+import '../../../presentation/layout/title_form_button_layout.dart';
+import '../../../presentation/main_app_bar.dart';
+import '../../../presentation/title_widget.dart';
 
 
-class SubscriptionFormAppointment extends StatelessWidget {
+class SubscriptionFormLead extends StatelessWidget {
+  static int step = 100;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -30,7 +31,7 @@ class SubscriptionFormAppointment extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: AppointmentForm(viewModel),
+            body: EmailForm(viewModel),
           )
         );
       },
@@ -39,33 +40,28 @@ class SubscriptionFormAppointment extends StatelessWidget {
 }
 
 
-enum ContactMethod {phone, email}
 
-class AppointmentForm extends StatefulWidget {
+class EmailForm extends StatefulWidget {
   final _ViewModel viewModel;
 
-  AppointmentForm(this.viewModel);
+  EmailForm(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => AppointmentFormState();
+  State<StatefulWidget> createState() => EmailFormState();
 }
 
-class AppointmentFormState extends State<AppointmentForm> {
+class EmailFormState extends State<EmailForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
    
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  List<TextEditingController> _controllers = <TextEditingController>[];
-
-  ContactMethod _contactMethod;
 
   // On load set controllers to value stored in redux and add onChanged listeners
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Rendez-vous',
-        subtitle: 'Entres tes coordonées ci-dessous et nous te recontacterons pour fixer un rendez-vous',
+        title: 'Oh non !',
+        subtitle: 'Malheureusement nous n\'allons pas encore jusque chez toi. Tu peux entrer ton email ci-dessous pour recevoir une notification et un crédit de 20.- dès que nous y seront disponibles'
       ),
       form: Form(
         key: _formKey,
@@ -81,31 +77,6 @@ class AppointmentFormState extends State<AppointmentForm> {
                 hintText: 'example@gmail.com',
               ),
             ),
-            Container(height: Layout.of(context).gridUnit(2)),
-            TextFormField(
-              controller: _phoneController,
-              validator: phoneValidator,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                labelText: 'Téléphone',
-                hintText: '079 433 01 92',
-              ),
-            ),
-            Container(height: Layout.of(context).gridUnit(6)),
-            Text('Me contacter par', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w500)),
-            Container(height: Layout.of(context).gridUnit(2)),
-            RadioListTile<ContactMethod>(
-              title: const Text('Téléphone'),
-              value: ContactMethod.phone,
-              groupValue: _contactMethod,
-              onChanged: (ContactMethod value) { setState(() { _contactMethod = value; _onChanged();}); },
-            ),
-            RadioListTile<ContactMethod>(
-              title: const Text('Email'),
-              value: ContactMethod.email,
-              groupValue: _contactMethod,
-              onChanged: (ContactMethod value) { setState(() { _contactMethod = value; _onChanged();}); },
-            ),
             if (widget.viewModel.error != null)
               ErrorText(error: widget.viewModel.error)
           ]
@@ -117,7 +88,7 @@ class AppointmentFormState extends State<AppointmentForm> {
           : Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: widget.viewModel.isLoading
           ? null
-          : _emailController.text.length < 3 || _phoneController.text.length < 3 || _contactMethod == null
+          : _emailController.text.length < 3 
             ? null
             : () {
               if (_formKey.currentState.validate()) {
@@ -131,37 +102,25 @@ class AppointmentFormState extends State<AppointmentForm> {
 
   @override
   void didChangeDependencies() {
-    _controllers = <TextEditingController>[
-      _emailController,
-      _phoneController
-    ];
-
-    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+    _emailController.removeListener(_onChanged);
     _emailController.text = widget.viewModel.subscriptionForm.email;
-    _phoneController.text = widget.viewModel.subscriptionForm.phoneNumber;
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _emailController.addListener(_onChanged);
 
     super.didChangeDependencies();
   }
 
-
   @override
   void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
+    _emailController.removeListener(_onChanged);
+    _emailController.dispose();
 
     super.dispose();
   }
 
-
   void _onChanged() {
+    // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
-      // Keep only digits and + characters. Validator check that there is no letter in it
-      ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), '')
-      ..contactMethod = _contactMethod?.toString()?.substring(14)
     );
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
@@ -169,6 +128,7 @@ class AppointmentFormState extends State<AppointmentForm> {
     }
   }
 }
+
 
 @immutable
 class _ViewModel {
@@ -199,7 +159,7 @@ class _ViewModel {
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
       postLeadRequest: (SubscriptionForm subscriptionForm) {
-        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'requested_appointment')));
+        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'postcode_not_covered')));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
