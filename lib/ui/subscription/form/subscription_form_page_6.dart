@@ -111,7 +111,6 @@ class DoYouWantContainersState extends State<DoYouWantContainers> {
 }
 
 
-
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
   final Function nextStep;

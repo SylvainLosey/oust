@@ -154,24 +154,22 @@ class AddressFormState extends State<AddressForm> {
   // Redux 
   @override
   void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
+    _controllers = <TextEditingController>[
+      _addressController,
+      _postcodeController,
+    ];
+
+    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
 
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-    _addressController.text = subscriptionForm.address;
-
+    _addressController.text = widget.viewModel.subscriptionForm.address;
     if (subscriptionForm.postcode != null) {
       final Postcode postcode = widget.viewModel.postcodes[subscriptionForm.postcode];
       _selectedPostcode = widget.viewModel.postcodes[subscriptionForm.postcode];
       _postcodeController.text = '${postcode.postcode} ${postcode.name}';
     }
-
-    _controllers = <TextEditingController>[
-      _addressController,
-      _postcodeController,
-    ];
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    
+    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
 
     _addressNode = FocusNode();
     _postcodeNode = FocusNode();

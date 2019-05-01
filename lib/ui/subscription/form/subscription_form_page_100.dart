@@ -52,7 +52,6 @@ class EmailFormState extends State<EmailForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
    
   final TextEditingController _emailController = TextEditingController();
-  List<TextEditingController> _controllers = <TextEditingController>[];
 
   // On load set controllers to value stored in redux and add onChanged listeners
   @override
@@ -101,31 +100,20 @@ class EmailFormState extends State<EmailForm> {
 
   @override
   void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-
-    _emailController.text = subscriptionForm.email;
-    _controllers = <TextEditingController>[
-      _emailController,
-    ];
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _emailController.removeListener(_onChanged);
+    _emailController.text = widget.viewModel.subscriptionForm.email;
+    _emailController.addListener(_onChanged);
 
     super.didChangeDependencies();
   }
 
-
   @override
   void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
+    _emailController.removeListener(_onChanged);
+    _emailController.dispose();
 
     super.dispose();
   }
-
 
   void _onChanged() {
     // At each field change send value to redux store

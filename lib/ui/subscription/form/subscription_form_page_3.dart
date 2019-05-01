@@ -103,18 +103,15 @@ class NameFormState extends State<NameForm> {
 
   @override
   void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-
-    _firstNameController.text = subscriptionForm.firstName;
-    _lastNameController.text = subscriptionForm.lastName;
     _controllers = <TextEditingController>[
       _firstNameController,
       _lastNameController,
     ];
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+    _firstNameController.text = widget.viewModel.subscriptionForm.firstName;
+    _lastNameController.text = widget.viewModel.subscriptionForm.lastName;
+    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
 
 
     _firstNameNode = FocusNode();
