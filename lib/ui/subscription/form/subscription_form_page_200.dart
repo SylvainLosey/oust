@@ -106,9 +106,9 @@ class AppointmentFormState extends State<AppointmentForm> {
               groupValue: _contactMethod,
               onChanged: (ContactMethod value) { setState(() { _contactMethod = value; _onChanged();}); },
             ),
-            // TODO - Replace by collection if when Dart 2.3 is out
-            widget.viewModel.error != null ? ErrorText(error: widget.viewModel.error) : null,
-          ].where((Widget widget) => widget != null).toList(),
+            if (widget.viewModel.error != null)
+              ErrorText(error: widget.viewModel.error)
+          ]
         )
       ),
       button: RaisedButton(
@@ -131,18 +131,14 @@ class AppointmentFormState extends State<AppointmentForm> {
 
   @override
   void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-
-    _emailController.text = subscriptionForm.email;
-    _phoneController.text = subscriptionForm.phoneNumber;
-
     _controllers = <TextEditingController>[
       _emailController,
       _phoneController
     ];
+
+    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+    _emailController.text = widget.viewModel.subscriptionForm.email;
+    _phoneController.text = widget.viewModel.subscriptionForm.phoneNumber;
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();

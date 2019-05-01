@@ -130,7 +130,7 @@ class LocationFormState extends State<LocationForm> {
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: widget.viewModel.subscriptionForm.selectedLocationIndex == null 
           ? null
-          : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep;}
+          : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep(); }
       )
     );
   }

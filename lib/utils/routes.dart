@@ -10,6 +10,7 @@ import '../ui/subscription/form/subscription_form_page_5.dart';
 import '../ui/subscription/form/subscription_form_page_6.dart';
 import '../ui/subscription/form/subscription_form_page_7.dart';
 import '../ui/subscription/form/subscription_form_page_8.dart';
+import '../ui/subscription/form/subscription_form_page_9.dart';
 import '../ui/subscription/form/subscription_form_page_100.dart';
 import '../ui/subscription/form/subscription_form_page_101.dart';
 import '../ui/subscription/form/subscription_form_page_200.dart';
@@ -28,6 +29,7 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     '/subscription/form/6': (BuildContext context) => SubscriptionFormContainersYesNo(),
     '/subscription/form/7': (BuildContext context) => SubscriptionFormContainers(),
     '/subscription/form/8': (BuildContext context) => SubscriptionFormLocation(),
+    '/subscription/form/9': (BuildContext context) => SubscriptionFormPhone(),
 
     // Subscription unabailable - Lead track
     '/subscription/form/100': (BuildContext context) => SubscriptionFormLead(),

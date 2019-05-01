@@ -75,9 +75,9 @@ class EmailFormState extends State<EmailForm> {
                 hintText: 'example@gmail.com',
               ),
             ),
-            // TODO - Replace by collection if when Dart 2.3 is out
-            widget.viewModel.error != null ? ErrorText(error: widget.viewModel.error) : null,
-          ].where((Widget widget) => widget != null).toList(),
+            if (widget.viewModel.error != null)
+              ErrorText(error: widget.viewModel.error)
+          ]
         )
       ),
       button: RaisedButton(
