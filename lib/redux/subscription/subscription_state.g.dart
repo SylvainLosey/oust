@@ -24,17 +24,17 @@ class _$SubscriptionStateSerializer
       serializers.serialize(object.fetchCount,
           specifiedType: const FullType(int)),
     ];
-    if (object.subscription != null) {
-      result
-        ..add('subscription')
-        ..add(serializers.serialize(object.subscription,
-            specifiedType: const FullType(Subscription)));
-    }
     if (object.consumerSubscription != null) {
       result
         ..add('consumerSubscription')
         ..add(serializers.serialize(object.consumerSubscription,
             specifiedType: const FullType(ConsumerSubscription)));
+    }
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(String)));
     }
     if (object.packages != null) {
       result
@@ -43,11 +43,11 @@ class _$SubscriptionStateSerializer
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(int), const FullType(Package)])));
     }
-    if (object.error != null) {
+    if (object.subscription != null) {
       result
-        ..add('error')
-        ..add(serializers.serialize(object.error,
-            specifiedType: const FullType(String)));
+        ..add('subscription')
+        ..add(serializers.serialize(object.subscription,
+            specifiedType: const FullType(Subscription)));
     }
 
     return result;
@@ -64,18 +64,18 @@ class _$SubscriptionStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'fetchCount':
-          result.fetchCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'subscription':
-          result.subscription.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Subscription)) as Subscription);
-          break;
         case 'consumerSubscription':
           result.consumerSubscription.replace(serializers.deserialize(value,
                   specifiedType: const FullType(ConsumerSubscription))
               as ConsumerSubscription);
+          break;
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'fetchCount':
+          result.fetchCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'packages':
           result.packages.replace(serializers.deserialize(value,
@@ -84,9 +84,9 @@ class _$SubscriptionStateSerializer
                 const FullType(Package)
               ])) as BuiltMap);
           break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'subscription':
+          result.subscription.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Subscription)) as Subscription);
           break;
       }
     }
@@ -97,26 +97,26 @@ class _$SubscriptionStateSerializer
 
 class _$SubscriptionState extends SubscriptionState {
   @override
-  final int fetchCount;
-  @override
-  final Subscription subscription;
-  @override
   final ConsumerSubscription consumerSubscription;
+  @override
+  final String error;
+  @override
+  final int fetchCount;
   @override
   final BuiltMap<int, Package> packages;
   @override
-  final String error;
+  final Subscription subscription;
 
   factory _$SubscriptionState(
           [void Function(SubscriptionStateBuilder) updates]) =>
       (new SubscriptionStateBuilder()..update(updates)).build();
 
   _$SubscriptionState._(
-      {this.fetchCount,
-      this.subscription,
-      this.consumerSubscription,
+      {this.consumerSubscription,
+      this.error,
+      this.fetchCount,
       this.packages,
-      this.error})
+      this.subscription})
       : super._() {
     if (fetchCount == null) {
       throw new BuiltValueNullFieldError('SubscriptionState', 'fetchCount');
@@ -135,31 +135,31 @@ class _$SubscriptionState extends SubscriptionState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SubscriptionState &&
-        fetchCount == other.fetchCount &&
-        subscription == other.subscription &&
         consumerSubscription == other.consumerSubscription &&
+        error == other.error &&
+        fetchCount == other.fetchCount &&
         packages == other.packages &&
-        error == other.error;
+        subscription == other.subscription;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, fetchCount.hashCode), subscription.hashCode),
-                consumerSubscription.hashCode),
+            $jc($jc($jc(0, consumerSubscription.hashCode), error.hashCode),
+                fetchCount.hashCode),
             packages.hashCode),
-        error.hashCode));
+        subscription.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionState')
-          ..add('fetchCount', fetchCount)
-          ..add('subscription', subscription)
           ..add('consumerSubscription', consumerSubscription)
+          ..add('error', error)
+          ..add('fetchCount', fetchCount)
           ..add('packages', packages)
-          ..add('error', error))
+          ..add('subscription', subscription))
         .toString();
   }
 }
@@ -168,21 +168,19 @@ class SubscriptionStateBuilder
     implements Builder<SubscriptionState, SubscriptionStateBuilder> {
   _$SubscriptionState _$v;
 
-  int _fetchCount;
-  int get fetchCount => _$this._fetchCount;
-  set fetchCount(int fetchCount) => _$this._fetchCount = fetchCount;
-
-  SubscriptionBuilder _subscription;
-  SubscriptionBuilder get subscription =>
-      _$this._subscription ??= new SubscriptionBuilder();
-  set subscription(SubscriptionBuilder subscription) =>
-      _$this._subscription = subscription;
-
   ConsumerSubscriptionBuilder _consumerSubscription;
   ConsumerSubscriptionBuilder get consumerSubscription =>
       _$this._consumerSubscription ??= new ConsumerSubscriptionBuilder();
   set consumerSubscription(ConsumerSubscriptionBuilder consumerSubscription) =>
       _$this._consumerSubscription = consumerSubscription;
+
+  String _error;
+  String get error => _$this._error;
+  set error(String error) => _$this._error = error;
+
+  int _fetchCount;
+  int get fetchCount => _$this._fetchCount;
+  set fetchCount(int fetchCount) => _$this._fetchCount = fetchCount;
 
   MapBuilder<int, Package> _packages;
   MapBuilder<int, Package> get packages =>
@@ -190,19 +188,21 @@ class SubscriptionStateBuilder
   set packages(MapBuilder<int, Package> packages) =>
       _$this._packages = packages;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
+  SubscriptionBuilder _subscription;
+  SubscriptionBuilder get subscription =>
+      _$this._subscription ??= new SubscriptionBuilder();
+  set subscription(SubscriptionBuilder subscription) =>
+      _$this._subscription = subscription;
 
   SubscriptionStateBuilder();
 
   SubscriptionStateBuilder get _$this {
     if (_$v != null) {
-      _fetchCount = _$v.fetchCount;
-      _subscription = _$v.subscription?.toBuilder();
       _consumerSubscription = _$v.consumerSubscription?.toBuilder();
-      _packages = _$v.packages?.toBuilder();
       _error = _$v.error;
+      _fetchCount = _$v.fetchCount;
+      _packages = _$v.packages?.toBuilder();
+      _subscription = _$v.subscription?.toBuilder();
       _$v = null;
     }
     return this;
@@ -227,20 +227,21 @@ class SubscriptionStateBuilder
     try {
       _$result = _$v ??
           new _$SubscriptionState._(
-              fetchCount: fetchCount,
-              subscription: _subscription?.build(),
               consumerSubscription: _consumerSubscription?.build(),
+              error: error,
+              fetchCount: fetchCount,
               packages: _packages?.build(),
-              error: error);
+              subscription: _subscription?.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'subscription';
-        _subscription?.build();
         _$failedField = 'consumerSubscription';
         _consumerSubscription?.build();
+
         _$failedField = 'packages';
         _packages?.build();
+        _$failedField = 'subscription';
+        _subscription?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SubscriptionState', _$failedField, e.toString());

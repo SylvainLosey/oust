@@ -1,6 +1,7 @@
 import 'package:oust/ui/subscription/form/page/100_postcode_unavailable.dart';
 import 'package:oust/ui/subscription/form/page/200_appointment_requested.dart';
 import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 
 import 'subscription_form_actions.dart';
 import 'subscription_form_state.dart';
@@ -15,6 +16,9 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, PostLeadRequest>(_postLeadRequest),
   TypedReducer<SubscriptionFormState, PostLeadSuccess>(_postLeadSuccess),
   TypedReducer<SubscriptionFormState, PostLeadFailure>(_postLeadFailure),
+  TypedReducer<SubscriptionFormState, LoadStartDatesRequest>(_loadStartDatesRequest),
+  TypedReducer<SubscriptionFormState, LoadStartDatesSuccess>(_loadStartDatesSuccess),
+  TypedReducer<SubscriptionFormState, LoadStartDatesFailure>(_loadStartDatesFailure),
   TypedReducer<SubscriptionFormState, IncrementProductQuantity>(_increment),
   TypedReducer<SubscriptionFormState, DecrementProductQuantity>(_decrement),
 ]);
@@ -96,6 +100,31 @@ SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFail
     ..error = action.error
   );
 }
+
+
+SubscriptionFormState _loadStartDatesRequest(SubscriptionFormState state, LoadStartDatesRequest action) {
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
+    ..isLoading = true
+  );
+}
+
+SubscriptionFormState _loadStartDatesSuccess(SubscriptionFormState state, LoadStartDatesSuccess action) {
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
+    ..isLoading = false
+    ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
+      ..startDates.replace(action.startDates)
+      ..selectedStartDate = null
+    ))
+  );
+}
+
+SubscriptionFormState _loadStartDatesFailure(SubscriptionFormState state, LoadStartDatesFailure action) {
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
+    ..isLoading = false
+    ..error = action.error
+  );
+}
+
 
 SubscriptionFormState _increment(SubscriptionFormState state, IncrementProductQuantity action) {
   if (action.product == 'smallContainer') {

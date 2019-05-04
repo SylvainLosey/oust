@@ -24,25 +24,6 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
       serializers.serialize(object.subscription,
           specifiedType: const FullType(int)),
     ];
-    if (object.representation != null) {
-      result
-        ..add('representation')
-        ..add(serializers.serialize(object.representation,
-            specifiedType: const FullType(String)));
-    }
-    if (object.city != null) {
-      result
-        ..add('city')
-        ..add(serializers.serialize(object.city,
-            specifiedType: const FullType(String)));
-    }
-    if (object.position != null) {
-      result
-        ..add('position')
-        ..add(serializers.serialize(object.position,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(double)])));
-    }
     if (object.averageDuration != null) {
       result
         ..add('average_duration')
@@ -55,16 +36,10 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
         ..add(serializers.serialize(object.averageQuantity,
             specifiedType: const FullType(int)));
     }
-    if (object.pickupDate != null) {
+    if (object.city != null) {
       result
-        ..add('pickup_date')
-        ..add(serializers.serialize(object.pickupDate,
-            specifiedType: const FullType(DateTime)));
-    }
-    if (object.duration != null) {
-      result
-        ..add('duration')
-        ..add(serializers.serialize(object.duration,
+        ..add('city')
+        ..add(serializers.serialize(object.city,
             specifiedType: const FullType(String)));
     }
     if (object.completed != null) {
@@ -79,10 +54,35 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
         ..add(serializers.serialize(object.customerUnavailable,
             specifiedType: const FullType(bool)));
     }
+    if (object.duration != null) {
+      result
+        ..add('duration')
+        ..add(serializers.serialize(object.duration,
+            specifiedType: const FullType(String)));
+    }
     if (object.note != null) {
       result
         ..add('note')
         ..add(serializers.serialize(object.note,
+            specifiedType: const FullType(String)));
+    }
+    if (object.pickupDate != null) {
+      result
+        ..add('pickup_date')
+        ..add(serializers.serialize(object.pickupDate,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.position != null) {
+      result
+        ..add('position')
+        ..add(serializers.serialize(object.position,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(double)])));
+    }
+    if (object.representation != null) {
+      result
+        ..add('representation')
+        ..add(serializers.serialize(object.representation,
             specifiedType: const FullType(String)));
     }
 
@@ -100,24 +100,6 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'representation':
-          result.representation = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'city':
-          result.city = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'position':
-          result.position.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(double)]))
-              as BuiltList);
-          break;
         case 'average_duration':
           result.averageDuration = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -126,12 +108,8 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
           result.averageQuantity = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'pickup_date':
-          result.pickupDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
-          break;
-        case 'duration':
-          result.duration = serializers.deserialize(value,
+        case 'city':
+          result.city = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'completed':
@@ -142,8 +120,30 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
           result.customerUnavailable = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'duration':
+          result.duration = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'note':
           result.note = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'pickup_date':
+          result.pickupDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'position':
+          result.position.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(double)]))
+              as BuiltList);
+          break;
+        case 'representation':
+          result.representation = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'subscription':
@@ -159,27 +159,27 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
 
 class _$Pickup extends Pickup {
   @override
-  final int id;
-  @override
-  final String representation;
-  @override
-  final String city;
-  @override
-  final BuiltList<double> position;
-  @override
   final int averageDuration;
   @override
   final int averageQuantity;
   @override
-  final DateTime pickupDate;
-  @override
-  final String duration;
+  final String city;
   @override
   final bool completed;
   @override
   final bool customerUnavailable;
   @override
+  final String duration;
+  @override
+  final int id;
+  @override
   final String note;
+  @override
+  final DateTime pickupDate;
+  @override
+  final BuiltList<double> position;
+  @override
+  final String representation;
   @override
   final int subscription;
 
@@ -187,17 +187,17 @@ class _$Pickup extends Pickup {
       (new PickupBuilder()..update(updates)).build();
 
   _$Pickup._(
-      {this.id,
-      this.representation,
-      this.city,
-      this.position,
-      this.averageDuration,
+      {this.averageDuration,
       this.averageQuantity,
-      this.pickupDate,
-      this.duration,
+      this.city,
       this.completed,
       this.customerUnavailable,
+      this.duration,
+      this.id,
       this.note,
+      this.pickupDate,
+      this.position,
+      this.representation,
       this.subscription})
       : super._() {
     if (id == null) {
@@ -219,17 +219,17 @@ class _$Pickup extends Pickup {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Pickup &&
-        id == other.id &&
-        representation == other.representation &&
-        city == other.city &&
-        position == other.position &&
         averageDuration == other.averageDuration &&
         averageQuantity == other.averageQuantity &&
-        pickupDate == other.pickupDate &&
-        duration == other.duration &&
+        city == other.city &&
         completed == other.completed &&
         customerUnavailable == other.customerUnavailable &&
+        duration == other.duration &&
+        id == other.id &&
         note == other.note &&
+        pickupDate == other.pickupDate &&
+        position == other.position &&
+        representation == other.representation &&
         subscription == other.subscription;
   }
 
@@ -245,34 +245,36 @@ class _$Pickup extends Pickup {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, id.hashCode),
-                                                representation.hashCode),
+                                            $jc(
+                                                $jc(0,
+                                                    averageDuration.hashCode),
+                                                averageQuantity.hashCode),
                                             city.hashCode),
-                                        position.hashCode),
-                                    averageDuration.hashCode),
-                                averageQuantity.hashCode),
-                            pickupDate.hashCode),
-                        duration.hashCode),
-                    completed.hashCode),
-                customerUnavailable.hashCode),
-            note.hashCode),
+                                        completed.hashCode),
+                                    customerUnavailable.hashCode),
+                                duration.hashCode),
+                            id.hashCode),
+                        note.hashCode),
+                    pickupDate.hashCode),
+                position.hashCode),
+            representation.hashCode),
         subscription.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Pickup')
-          ..add('id', id)
-          ..add('representation', representation)
-          ..add('city', city)
-          ..add('position', position)
           ..add('averageDuration', averageDuration)
           ..add('averageQuantity', averageQuantity)
-          ..add('pickupDate', pickupDate)
-          ..add('duration', duration)
+          ..add('city', city)
           ..add('completed', completed)
           ..add('customerUnavailable', customerUnavailable)
+          ..add('duration', duration)
+          ..add('id', id)
           ..add('note', note)
+          ..add('pickupDate', pickupDate)
+          ..add('position', position)
+          ..add('representation', representation)
           ..add('subscription', subscription))
         .toString();
   }
@@ -280,24 +282,6 @@ class _$Pickup extends Pickup {
 
 class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   _$Pickup _$v;
-
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
-  String _representation;
-  String get representation => _$this._representation;
-  set representation(String representation) =>
-      _$this._representation = representation;
-
-  String _city;
-  String get city => _$this._city;
-  set city(String city) => _$this._city = city;
-
-  ListBuilder<double> _position;
-  ListBuilder<double> get position =>
-      _$this._position ??= new ListBuilder<double>();
-  set position(ListBuilder<double> position) => _$this._position = position;
 
   int _averageDuration;
   int get averageDuration => _$this._averageDuration;
@@ -309,13 +293,9 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   set averageQuantity(int averageQuantity) =>
       _$this._averageQuantity = averageQuantity;
 
-  DateTime _pickupDate;
-  DateTime get pickupDate => _$this._pickupDate;
-  set pickupDate(DateTime pickupDate) => _$this._pickupDate = pickupDate;
-
-  String _duration;
-  String get duration => _$this._duration;
-  set duration(String duration) => _$this._duration = duration;
+  String _city;
+  String get city => _$this._city;
+  set city(String city) => _$this._city = city;
 
   bool _completed;
   bool get completed => _$this._completed;
@@ -326,9 +306,31 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   set customerUnavailable(bool customerUnavailable) =>
       _$this._customerUnavailable = customerUnavailable;
 
+  String _duration;
+  String get duration => _$this._duration;
+  set duration(String duration) => _$this._duration = duration;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   String _note;
   String get note => _$this._note;
   set note(String note) => _$this._note = note;
+
+  DateTime _pickupDate;
+  DateTime get pickupDate => _$this._pickupDate;
+  set pickupDate(DateTime pickupDate) => _$this._pickupDate = pickupDate;
+
+  ListBuilder<double> _position;
+  ListBuilder<double> get position =>
+      _$this._position ??= new ListBuilder<double>();
+  set position(ListBuilder<double> position) => _$this._position = position;
+
+  String _representation;
+  String get representation => _$this._representation;
+  set representation(String representation) =>
+      _$this._representation = representation;
 
   int _subscription;
   int get subscription => _$this._subscription;
@@ -338,17 +340,17 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
 
   PickupBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _representation = _$v.representation;
-      _city = _$v.city;
-      _position = _$v.position?.toBuilder();
       _averageDuration = _$v.averageDuration;
       _averageQuantity = _$v.averageQuantity;
-      _pickupDate = _$v.pickupDate;
-      _duration = _$v.duration;
+      _city = _$v.city;
       _completed = _$v.completed;
       _customerUnavailable = _$v.customerUnavailable;
+      _duration = _$v.duration;
+      _id = _$v.id;
       _note = _$v.note;
+      _pickupDate = _$v.pickupDate;
+      _position = _$v.position?.toBuilder();
+      _representation = _$v.representation;
       _subscription = _$v.subscription;
       _$v = null;
     }
@@ -374,17 +376,17 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
     try {
       _$result = _$v ??
           new _$Pickup._(
-              id: id,
-              representation: representation,
-              city: city,
-              position: _position?.build(),
               averageDuration: averageDuration,
               averageQuantity: averageQuantity,
-              pickupDate: pickupDate,
-              duration: duration,
+              city: city,
               completed: completed,
               customerUnavailable: customerUnavailable,
+              duration: duration,
+              id: id,
               note: note,
+              pickupDate: pickupDate,
+              position: _position?.build(),
+              representation: representation,
               subscription: subscription);
     } catch (_) {
       String _$failedField;

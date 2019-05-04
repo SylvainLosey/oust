@@ -24,7 +24,7 @@ class AppMiddleware {
 
   List<Middleware<AppState>> createAppMiddleware() {
     return <Middleware<AppState>>[
-      TypedMiddleware<AppState, dynamic>(_logAction),
+      // TypedMiddleware<AppState, dynamic>(_logAction),
       TypedMiddleware<AppState, LoadCustomerRequest>(_loadCustomer),
       TypedMiddleware<AppState, LoadSubscriptionRequest>(_loadSubscription),
       TypedMiddleware<AppState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscription),
@@ -32,13 +32,14 @@ class AppMiddleware {
       TypedMiddleware<AppState, LoadPickupsRequest>(_loadPickups),
       TypedMiddleware<AppState, LoadPostcodesRequest>(_loadPostcodes),
       TypedMiddleware<AppState, PostLeadRequest>(_postLead),
+      TypedMiddleware<AppState, LoadStartDatesRequest>(_loadStartDates),
     ];
   }
 
-  void _logAction(Store<AppState> store, dynamic action, NextDispatcher next) {
-    print(action);
-    next(action);
-  }
+  // void _logAction(Store<AppState> store, dynamic action, NextDispatcher next) {
+  //   print(action);
+  //   next(action);
+  // }
 
   void _loadCustomer(Store<AppState> store, LoadCustomerRequest action, NextDispatcher next) async{
     next(action);
@@ -117,7 +118,7 @@ class AppMiddleware {
     }
   }
 
-  void _postLead(Store<AppState> store, PostLeadRequest action, NextDispatcher next) async{
+  void _postLead(Store<AppState> store, PostLeadRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -137,6 +138,22 @@ class AppMiddleware {
       store.dispatch(PostLeadSuccess());
     } catch (e) {
       store.dispatch(PostLeadFailure(error: e.toString()));
+    }
+  }
+
+  void _loadStartDates(Store<AppState> store, LoadStartDatesRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final dynamic data = await repository.fetchStartDates(
+        address: action.address,
+        postcode: action.postcode,
+        frequency: action.frequency
+      );
+      final List<DateTime> startDates = List<DateTime>.from(data['dates'].map<dynamic>((dynamic x) => DateTime.parse(x)));
+      store.dispatch(LoadStartDatesSuccess(startDates: startDates));
+    } catch (e) {
+      store.dispatch(LoadStartDatesFailure(error: e.toString()));
     }
   }
 }

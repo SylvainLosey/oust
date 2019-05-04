@@ -22,18 +22,18 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
     ];
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(String)));
+    }
     if (object.pickups != null) {
       result
         ..add('pickups')
         ..add(serializers.serialize(object.pickups,
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(int), const FullType(Pickup)])));
-    }
-    if (object.error != null) {
-      result
-        ..add('error')
-        ..add(serializers.serialize(object.error,
-            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -50,6 +50,10 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isLoading':
           result.isLoading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -61,10 +65,6 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
                 const FullType(Pickup)
               ])) as BuiltMap);
           break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
       }
     }
 
@@ -74,16 +74,16 @@ class _$PickupStateSerializer implements StructuredSerializer<PickupState> {
 
 class _$PickupState extends PickupState {
   @override
+  final String error;
+  @override
   final bool isLoading;
   @override
   final BuiltMap<int, Pickup> pickups;
-  @override
-  final String error;
 
   factory _$PickupState([void Function(PickupStateBuilder) updates]) =>
       (new PickupStateBuilder()..update(updates)).build();
 
-  _$PickupState._({this.isLoading, this.pickups, this.error}) : super._() {
+  _$PickupState._({this.error, this.isLoading, this.pickups}) : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('PickupState', 'isLoading');
     }
@@ -100,29 +100,33 @@ class _$PickupState extends PickupState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is PickupState &&
+        error == other.error &&
         isLoading == other.isLoading &&
-        pickups == other.pickups &&
-        error == other.error;
+        pickups == other.pickups;
   }
 
   @override
   int get hashCode {
     return $jf(
-        $jc($jc($jc(0, isLoading.hashCode), pickups.hashCode), error.hashCode));
+        $jc($jc($jc(0, error.hashCode), isLoading.hashCode), pickups.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PickupState')
+          ..add('error', error)
           ..add('isLoading', isLoading)
-          ..add('pickups', pickups)
-          ..add('error', error))
+          ..add('pickups', pickups))
         .toString();
   }
 }
 
 class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
   _$PickupState _$v;
+
+  String _error;
+  String get error => _$this._error;
+  set error(String error) => _$this._error = error;
 
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
@@ -133,17 +137,13 @@ class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
       _$this._pickups ??= new MapBuilder<int, Pickup>();
   set pickups(MapBuilder<int, Pickup> pickups) => _$this._pickups = pickups;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
-
   PickupStateBuilder();
 
   PickupStateBuilder get _$this {
     if (_$v != null) {
+      _error = _$v.error;
       _isLoading = _$v.isLoading;
       _pickups = _$v.pickups?.toBuilder();
-      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -168,7 +168,7 @@ class PickupStateBuilder implements Builder<PickupState, PickupStateBuilder> {
     try {
       _$result = _$v ??
           new _$PickupState._(
-              isLoading: isLoading, pickups: _pickups?.build(), error: error);
+              error: error, isLoading: isLoading, pickups: _pickups?.build());
     } catch (_) {
       String _$failedField;
       try {

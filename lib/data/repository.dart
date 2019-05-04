@@ -14,7 +14,7 @@ class Repository {
       'password': password,
     };
 
-    return await client.post('/auth/login/', credentials);
+    return await client.post('/auth/login/', credentials, auth: false);
   }
 
   Future<List<dynamic>> fetchCustomer(int id) async {
@@ -54,6 +54,16 @@ class Repository {
       'origin': 'app',
     };
 
-    return await client.post('/leads/', body);
+    return await client.post('/leads/', body, auth: false);
+  }
+
+  Future<Map<String, dynamic>> fetchStartDates({String address, int postcode, int frequency}) async {
+    final Map<String, dynamic> body = <String, dynamic>{
+      'address': address,
+      'postcode_id': postcode,
+      'frequency': frequency
+    };
+
+    return await client.post('/subscriptions/available_start_dates/', body, auth: false);
   }
 }

@@ -23,16 +23,16 @@ class _$ConsumerSubscriptionSerializer
   Iterable serialize(Serializers serializers, ConsumerSubscription object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
-    if (object.subscription != null) {
-      result
-        ..add('subscription')
-        ..add(serializers.serialize(object.subscription,
-            specifiedType: const FullType(int)));
-    }
     if (object.package != null) {
       result
         ..add('package')
         ..add(serializers.serialize(object.package,
+            specifiedType: const FullType(int)));
+    }
+    if (object.subscription != null) {
+      result
+        ..add('subscription')
+        ..add(serializers.serialize(object.subscription,
             specifiedType: const FullType(int)));
     }
 
@@ -50,12 +50,12 @@ class _$ConsumerSubscriptionSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'subscription':
-          result.subscription = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'package':
           result.package = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'subscription':
+          result.subscription = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -67,15 +67,15 @@ class _$ConsumerSubscriptionSerializer
 
 class _$ConsumerSubscription extends ConsumerSubscription {
   @override
-  final int subscription;
-  @override
   final int package;
+  @override
+  final int subscription;
 
   factory _$ConsumerSubscription(
           [void Function(ConsumerSubscriptionBuilder) updates]) =>
       (new ConsumerSubscriptionBuilder()..update(updates)).build();
 
-  _$ConsumerSubscription._({this.subscription, this.package}) : super._();
+  _$ConsumerSubscription._({this.package, this.subscription}) : super._();
 
   @override
   ConsumerSubscription rebuild(
@@ -90,20 +90,20 @@ class _$ConsumerSubscription extends ConsumerSubscription {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ConsumerSubscription &&
-        subscription == other.subscription &&
-        package == other.package;
+        package == other.package &&
+        subscription == other.subscription;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, subscription.hashCode), package.hashCode));
+    return $jf($jc($jc(0, package.hashCode), subscription.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ConsumerSubscription')
-          ..add('subscription', subscription)
-          ..add('package', package))
+          ..add('package', package)
+          ..add('subscription', subscription))
         .toString();
   }
 }
@@ -112,20 +112,20 @@ class ConsumerSubscriptionBuilder
     implements Builder<ConsumerSubscription, ConsumerSubscriptionBuilder> {
   _$ConsumerSubscription _$v;
 
-  int _subscription;
-  int get subscription => _$this._subscription;
-  set subscription(int subscription) => _$this._subscription = subscription;
-
   int _package;
   int get package => _$this._package;
   set package(int package) => _$this._package = package;
+
+  int _subscription;
+  int get subscription => _$this._subscription;
+  set subscription(int subscription) => _$this._subscription = subscription;
 
   ConsumerSubscriptionBuilder();
 
   ConsumerSubscriptionBuilder get _$this {
     if (_$v != null) {
-      _subscription = _$v.subscription;
       _package = _$v.package;
+      _subscription = _$v.subscription;
       _$v = null;
     }
     return this;
@@ -148,7 +148,7 @@ class ConsumerSubscriptionBuilder
   _$ConsumerSubscription build() {
     final _$result = _$v ??
         new _$ConsumerSubscription._(
-            subscription: subscription, package: package);
+            package: package, subscription: subscription);
     replace(_$result);
     return _$result;
   }

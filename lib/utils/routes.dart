@@ -21,6 +21,7 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     '/subscription/form/${SubscriptionFormContainers.step}': (BuildContext context) => SubscriptionFormContainers(), // 8
     '/subscription/form/${SubscriptionFormLocation.step}': (BuildContext context) => SubscriptionFormLocation(), // 9
     '/subscription/form/${SubscriptionFormPhone.step}': (BuildContext context) => SubscriptionFormPhone(), // 10
+    '/subscription/form/${SubscriptionFormStartDate.step}': (BuildContext context) => SubscriptionFormStartDate(), // 10
 
     // Subscription unabailable - Lead track
     '/subscription/form/${SubscriptionFormLead.step}': (BuildContext context) => SubscriptionFormLead(), // 100

@@ -38,10 +38,15 @@ class WebClient {
     }
   }
 
-    Future<dynamic> post(String path, Map<String, dynamic> data) async {
+    Future<dynamic> post(String path, Map<String, dynamic> data, {bool auth = true}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String key = prefs.getString('key');
+    
     final Map<String, String> headers = <String, String>{      
         'content-type' : 'application/json',
         'accept' : 'application/json',
+        if (auth)
+          'Authorization': 'Token $key',
       };
 
     final http.Response response = await http.post(

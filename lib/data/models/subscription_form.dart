@@ -1,5 +1,6 @@
 library subscriptionForm;
 
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -15,20 +16,21 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
     ..currentStep = 0
     ..smallContainerQuantity = 0
     ..bigContainerQuantity = 0
+    ..frequency = 2
   );
 
   SubscriptionForm._();
+
+  int get currentStep;
+
+  @nullable
+  int get frequency;
 
   @nullable
   String get address;
 
   @nullable
-  int get bigContainerQuantity;
-
-  @nullable
   String get contactMethod;
-
-  int get currentStep;
 
   @nullable
   String get email;
@@ -54,8 +56,6 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   @nullable
   String get registrationMethod;
 
-
-
   @nullable
   int get selectedLocationIndex;
 
@@ -63,7 +63,16 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   int get smallContainerQuantity;
 
   @nullable
+  int get bigContainerQuantity;
+
+  @nullable
   bool get wantsContainers;
+
+  @nullable
+  DateTime get selectedStartDate;
+
+  @nullable
+  BuiltList<DateTime> get startDates;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(SubscriptionForm.serializer, this);

@@ -54,7 +54,34 @@ class PostLeadFailure {
 }
 
 
-// User for simple data entry - rebuild of model is done directly in the viewmodel
+@JsonSerializable()
+class LoadStartDatesRequest {
+  final String address;
+  final int postcode;
+  final int frequency;
+
+  LoadStartDatesRequest({@required this.address, @required this.postcode, @required this.frequency});
+  Map<String, dynamic> toJson() => _$LoadStartDatesRequestToJson(this);
+}
+
+@JsonSerializable()
+class LoadStartDatesSuccess {
+  final List<DateTime> startDates;
+
+  LoadStartDatesSuccess({this.startDates});
+  Map<String, dynamic> toJson() => _$LoadStartDatesSuccessToJson(this);
+}
+
+@JsonSerializable()
+class LoadStartDatesFailure {
+  final String error;
+
+  LoadStartDatesFailure({this.error});
+  Map<String, dynamic> toJson() => _$LoadStartDatesFailureToJson(this);
+}
+
+
+// Used for simple data entry - rebuild of model is done directly in the viewmodel
 @JsonSerializable()
 class UpdateSubscriptionForm {
   @JsonKey(fromJson: SubscriptionForm.fromJson) 
@@ -79,3 +106,5 @@ class DecrementProductQuantity {
   DecrementProductQuantity({this.product});
   Map<String, dynamic> toJson() => _$DecrementProductQuantityToJson(this);
 }
+
+

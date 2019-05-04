@@ -22,14 +22,14 @@ class SubscriptionFormLeadSuccess extends StatelessWidget {
               ),
               Row(
               children: <Widget>[
-                SizedBox(
-                  height: 80,
-                  width: 100,
-                  // child: FlareActor(
-                  //   'assets/flare/success.flr', 
-                  //   animation: 'pop'
-                  //   )
-                  ),
+                // SizedBox(
+                //   height: 80,
+                //   width: 100,
+                //   child: FlareActor(
+                //     'assets/flare/success.flr', 
+                //     animation: 'pop'
+                //     )
+                //   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

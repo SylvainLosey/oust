@@ -47,7 +47,6 @@ class PhoneForm extends StatefulWidget {
 
 class PhoneFormState extends State<PhoneForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   
   final TextEditingController _phoneController = TextEditingController();
 
   @override

@@ -10,14 +10,16 @@ SubscriptionFormNextStep _$SubscriptionFormNextStepFromJson(
     Map<String, dynamic> json) {
   return SubscriptionFormNextStep(
       subscriptionIsUnavailable: json['subscriptionIsUnavailable'] as bool,
-      customerRequestsAppointment: json['customerRequestsAppointment'] as bool);
+      customerRequestsAppointment: json['customerRequestsAppointment'] as bool,
+      doesNotWantContainers: json['doesNotWantContainers'] as bool);
 }
 
 Map<String, dynamic> _$SubscriptionFormNextStepToJson(
         SubscriptionFormNextStep instance) =>
     <String, dynamic>{
       'subscriptionIsUnavailable': instance.subscriptionIsUnavailable,
-      'customerRequestsAppointment': instance.customerRequestsAppointment
+      'customerRequestsAppointment': instance.customerRequestsAppointment,
+      'doesNotWantContainers': instance.doesNotWantContainers
     };
 
 SubscriptionFormPreviousStep _$SubscriptionFormPreviousStepFromJson(
@@ -68,6 +70,46 @@ PostLeadFailure _$PostLeadFailureFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$PostLeadFailureToJson(PostLeadFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+LoadStartDatesRequest _$LoadStartDatesRequestFromJson(
+    Map<String, dynamic> json) {
+  return LoadStartDatesRequest(
+      address: json['address'] as String,
+      postcode: json['postcode'] as int,
+      frequency: json['frequency'] as int);
+}
+
+Map<String, dynamic> _$LoadStartDatesRequestToJson(
+        LoadStartDatesRequest instance) =>
+    <String, dynamic>{
+      'address': instance.address,
+      'postcode': instance.postcode,
+      'frequency': instance.frequency
+    };
+
+LoadStartDatesSuccess _$LoadStartDatesSuccessFromJson(
+    Map<String, dynamic> json) {
+  return LoadStartDatesSuccess(
+      startDates: (json['startDates'] as List)
+          ?.map((e) => e == null ? null : DateTime.parse(e as String))
+          ?.toList());
+}
+
+Map<String, dynamic> _$LoadStartDatesSuccessToJson(
+        LoadStartDatesSuccess instance) =>
+    <String, dynamic>{
+      'startDates':
+          instance.startDates?.map((e) => e?.toIso8601String())?.toList()
+    };
+
+LoadStartDatesFailure _$LoadStartDatesFailureFromJson(
+    Map<String, dynamic> json) {
+  return LoadStartDatesFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadStartDatesFailureToJson(
+        LoadStartDatesFailure instance) =>
     <String, dynamic>{'error': instance.error};
 
 UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(

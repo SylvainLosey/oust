@@ -24,6 +24,30 @@ class _$SubscriptionFormSerializer
       serializers.serialize(object.currentStep,
           specifiedType: const FullType(int)),
     ];
+    if (object.frequency != null) {
+      result
+        ..add('frequency')
+        ..add(serializers.serialize(object.frequency,
+            specifiedType: const FullType(int)));
+    }
+    if (object.address != null) {
+      result
+        ..add('address')
+        ..add(serializers.serialize(object.address,
+            specifiedType: const FullType(String)));
+    }
+    if (object.contactMethod != null) {
+      result
+        ..add('contactMethod')
+        ..add(serializers.serialize(object.contactMethod,
+            specifiedType: const FullType(String)));
+    }
+    if (object.email != null) {
+      result
+        ..add('email')
+        ..add(serializers.serialize(object.email,
+            specifiedType: const FullType(String)));
+    }
     if (object.firstName != null) {
       result
         ..add('firstName')
@@ -36,22 +60,16 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.lastName,
             specifiedType: const FullType(String)));
     }
-    if (object.address != null) {
+    if (object.leadStatus != null) {
       result
-        ..add('address')
-        ..add(serializers.serialize(object.address,
+        ..add('leadStatus')
+        ..add(serializers.serialize(object.leadStatus,
             specifiedType: const FullType(String)));
     }
-    if (object.postcode != null) {
+    if (object.location != null) {
       result
-        ..add('postcode')
-        ..add(serializers.serialize(object.postcode,
-            specifiedType: const FullType(int)));
-    }
-    if (object.email != null) {
-      result
-        ..add('email')
-        ..add(serializers.serialize(object.email,
+        ..add('location')
+        ..add(serializers.serialize(object.location,
             specifiedType: const FullType(String)));
     }
     if (object.phoneNumber != null) {
@@ -60,29 +78,23 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.phoneNumber,
             specifiedType: const FullType(String)));
     }
+    if (object.postcode != null) {
+      result
+        ..add('postcode')
+        ..add(serializers.serialize(object.postcode,
+            specifiedType: const FullType(int)));
+    }
     if (object.registrationMethod != null) {
       result
         ..add('registrationMethod')
         ..add(serializers.serialize(object.registrationMethod,
             specifiedType: const FullType(String)));
     }
-    if (object.contactMethod != null) {
+    if (object.selectedLocationIndex != null) {
       result
-        ..add('contactMethod')
-        ..add(serializers.serialize(object.contactMethod,
-            specifiedType: const FullType(String)));
-    }
-    if (object.leadStatus != null) {
-      result
-        ..add('leadStatus')
-        ..add(serializers.serialize(object.leadStatus,
-            specifiedType: const FullType(String)));
-    }
-    if (object.wantsContainers != null) {
-      result
-        ..add('wantsContainers')
-        ..add(serializers.serialize(object.wantsContainers,
-            specifiedType: const FullType(bool)));
+        ..add('selectedLocationIndex')
+        ..add(serializers.serialize(object.selectedLocationIndex,
+            specifiedType: const FullType(int)));
     }
     if (object.smallContainerQuantity != null) {
       result
@@ -96,17 +108,24 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.bigContainerQuantity,
             specifiedType: const FullType(int)));
     }
-    if (object.selectedLocationIndex != null) {
+    if (object.wantsContainers != null) {
       result
-        ..add('selectedLocationIndex')
-        ..add(serializers.serialize(object.selectedLocationIndex,
-            specifiedType: const FullType(int)));
+        ..add('wantsContainers')
+        ..add(serializers.serialize(object.wantsContainers,
+            specifiedType: const FullType(bool)));
     }
-    if (object.location != null) {
+    if (object.selectedStartDate != null) {
       result
-        ..add('location')
-        ..add(serializers.serialize(object.location,
-            specifiedType: const FullType(String)));
+        ..add('selectedStartDate')
+        ..add(serializers.serialize(object.selectedStartDate,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.startDates != null) {
+      result
+        ..add('startDates')
+        ..add(serializers.serialize(object.startDates,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(DateTime)])));
     }
 
     return result;
@@ -127,6 +146,22 @@ class _$SubscriptionFormSerializer
           result.currentStep = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'frequency':
+          result.frequency = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'address':
+          result.address = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'contactMethod':
+          result.contactMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email':
+          result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'firstName':
           result.firstName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -135,37 +170,29 @@ class _$SubscriptionFormSerializer
           result.lastName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'address':
-          result.address = serializers.deserialize(value,
+        case 'leadStatus':
+          result.leadStatus = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'postcode':
-          result.postcode = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'email':
-          result.email = serializers.deserialize(value,
+        case 'location':
+          result.location = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'phoneNumber':
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'postcode':
+          result.postcode = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'registrationMethod':
           result.registrationMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'contactMethod':
-          result.contactMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'leadStatus':
-          result.leadStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'wantsContainers':
-          result.wantsContainers = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'selectedLocationIndex':
+          result.selectedLocationIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'smallContainerQuantity':
           result.smallContainerQuantity = serializers.deserialize(value,
@@ -175,13 +202,18 @@ class _$SubscriptionFormSerializer
           result.bigContainerQuantity = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'selectedLocationIndex':
-          result.selectedLocationIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'wantsContainers':
+          result.wantsContainers = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
-        case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'selectedStartDate':
+          result.selectedStartDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'startDates':
+          result.startDates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(DateTime)])) as BuiltList);
           break;
       }
     }
@@ -194,33 +226,39 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int currentStep;
   @override
+  final int frequency;
+  @override
+  final String address;
+  @override
+  final String contactMethod;
+  @override
+  final String email;
+  @override
   final String firstName;
   @override
   final String lastName;
   @override
-  final String address;
+  final String leadStatus;
   @override
-  final int postcode;
-  @override
-  final String email;
+  final String location;
   @override
   final String phoneNumber;
   @override
+  final int postcode;
+  @override
   final String registrationMethod;
   @override
-  final String contactMethod;
-  @override
-  final String leadStatus;
-  @override
-  final bool wantsContainers;
+  final int selectedLocationIndex;
   @override
   final int smallContainerQuantity;
   @override
   final int bigContainerQuantity;
   @override
-  final int selectedLocationIndex;
+  final bool wantsContainers;
   @override
-  final String location;
+  final DateTime selectedStartDate;
+  @override
+  final BuiltList<DateTime> startDates;
 
   factory _$SubscriptionForm(
           [void Function(SubscriptionFormBuilder) updates]) =>
@@ -228,20 +266,23 @@ class _$SubscriptionForm extends SubscriptionForm {
 
   _$SubscriptionForm._(
       {this.currentStep,
+      this.frequency,
+      this.address,
+      this.contactMethod,
+      this.email,
       this.firstName,
       this.lastName,
-      this.address,
-      this.postcode,
-      this.email,
-      this.phoneNumber,
-      this.registrationMethod,
-      this.contactMethod,
       this.leadStatus,
-      this.wantsContainers,
+      this.location,
+      this.phoneNumber,
+      this.postcode,
+      this.registrationMethod,
+      this.selectedLocationIndex,
       this.smallContainerQuantity,
       this.bigContainerQuantity,
-      this.selectedLocationIndex,
-      this.location})
+      this.wantsContainers,
+      this.selectedStartDate,
+      this.startDates})
       : super._() {
     if (currentStep == null) {
       throw new BuiltValueNullFieldError('SubscriptionForm', 'currentStep');
@@ -261,20 +302,23 @@ class _$SubscriptionForm extends SubscriptionForm {
     if (identical(other, this)) return true;
     return other is SubscriptionForm &&
         currentStep == other.currentStep &&
+        frequency == other.frequency &&
+        address == other.address &&
+        contactMethod == other.contactMethod &&
+        email == other.email &&
         firstName == other.firstName &&
         lastName == other.lastName &&
-        address == other.address &&
-        postcode == other.postcode &&
-        email == other.email &&
-        phoneNumber == other.phoneNumber &&
-        registrationMethod == other.registrationMethod &&
-        contactMethod == other.contactMethod &&
         leadStatus == other.leadStatus &&
-        wantsContainers == other.wantsContainers &&
+        location == other.location &&
+        phoneNumber == other.phoneNumber &&
+        postcode == other.postcode &&
+        registrationMethod == other.registrationMethod &&
+        selectedLocationIndex == other.selectedLocationIndex &&
         smallContainerQuantity == other.smallContainerQuantity &&
         bigContainerQuantity == other.bigContainerQuantity &&
-        selectedLocationIndex == other.selectedLocationIndex &&
-        location == other.location;
+        wantsContainers == other.wantsContainers &&
+        selectedStartDate == other.selectedStartDate &&
+        startDates == other.startDates;
   }
 
   @override
@@ -294,43 +338,55 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                currentStep
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            0,
+                                                                            currentStep
+                                                                                .hashCode),
+                                                                        frequency
+                                                                            .hashCode),
+                                                                    address
+                                                                        .hashCode),
+                                                                contactMethod
                                                                     .hashCode),
-                                                            firstName.hashCode),
-                                                        lastName.hashCode),
-                                                    address.hashCode),
-                                                postcode.hashCode),
-                                            email.hashCode),
+                                                            email.hashCode),
+                                                        firstName.hashCode),
+                                                    lastName.hashCode),
+                                                leadStatus.hashCode),
+                                            location.hashCode),
                                         phoneNumber.hashCode),
-                                    registrationMethod.hashCode),
-                                contactMethod.hashCode),
-                            leadStatus.hashCode),
-                        wantsContainers.hashCode),
-                    smallContainerQuantity.hashCode),
-                bigContainerQuantity.hashCode),
-            selectedLocationIndex.hashCode),
-        location.hashCode));
+                                    postcode.hashCode),
+                                registrationMethod.hashCode),
+                            selectedLocationIndex.hashCode),
+                        smallContainerQuantity.hashCode),
+                    bigContainerQuantity.hashCode),
+                wantsContainers.hashCode),
+            selectedStartDate.hashCode),
+        startDates.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionForm')
           ..add('currentStep', currentStep)
+          ..add('frequency', frequency)
+          ..add('address', address)
+          ..add('contactMethod', contactMethod)
+          ..add('email', email)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
-          ..add('address', address)
-          ..add('postcode', postcode)
-          ..add('email', email)
-          ..add('phoneNumber', phoneNumber)
-          ..add('registrationMethod', registrationMethod)
-          ..add('contactMethod', contactMethod)
           ..add('leadStatus', leadStatus)
-          ..add('wantsContainers', wantsContainers)
+          ..add('location', location)
+          ..add('phoneNumber', phoneNumber)
+          ..add('postcode', postcode)
+          ..add('registrationMethod', registrationMethod)
+          ..add('selectedLocationIndex', selectedLocationIndex)
           ..add('smallContainerQuantity', smallContainerQuantity)
           ..add('bigContainerQuantity', bigContainerQuantity)
-          ..add('selectedLocationIndex', selectedLocationIndex)
-          ..add('location', location))
+          ..add('wantsContainers', wantsContainers)
+          ..add('selectedStartDate', selectedStartDate)
+          ..add('startDates', startDates))
         .toString();
   }
 }
@@ -343,6 +399,23 @@ class SubscriptionFormBuilder
   int get currentStep => _$this._currentStep;
   set currentStep(int currentStep) => _$this._currentStep = currentStep;
 
+  int _frequency;
+  int get frequency => _$this._frequency;
+  set frequency(int frequency) => _$this._frequency = frequency;
+
+  String _address;
+  String get address => _$this._address;
+  set address(String address) => _$this._address = address;
+
+  String _contactMethod;
+  String get contactMethod => _$this._contactMethod;
+  set contactMethod(String contactMethod) =>
+      _$this._contactMethod = contactMethod;
+
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
+
   String _firstName;
   String get firstName => _$this._firstName;
   set firstName(String firstName) => _$this._firstName = firstName;
@@ -351,40 +424,31 @@ class SubscriptionFormBuilder
   String get lastName => _$this._lastName;
   set lastName(String lastName) => _$this._lastName = lastName;
 
-  String _address;
-  String get address => _$this._address;
-  set address(String address) => _$this._address = address;
+  String _leadStatus;
+  String get leadStatus => _$this._leadStatus;
+  set leadStatus(String leadStatus) => _$this._leadStatus = leadStatus;
 
-  int _postcode;
-  int get postcode => _$this._postcode;
-  set postcode(int postcode) => _$this._postcode = postcode;
-
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
+  String _location;
+  String get location => _$this._location;
+  set location(String location) => _$this._location = location;
 
   String _phoneNumber;
   String get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String phoneNumber) => _$this._phoneNumber = phoneNumber;
+
+  int _postcode;
+  int get postcode => _$this._postcode;
+  set postcode(int postcode) => _$this._postcode = postcode;
 
   String _registrationMethod;
   String get registrationMethod => _$this._registrationMethod;
   set registrationMethod(String registrationMethod) =>
       _$this._registrationMethod = registrationMethod;
 
-  String _contactMethod;
-  String get contactMethod => _$this._contactMethod;
-  set contactMethod(String contactMethod) =>
-      _$this._contactMethod = contactMethod;
-
-  String _leadStatus;
-  String get leadStatus => _$this._leadStatus;
-  set leadStatus(String leadStatus) => _$this._leadStatus = leadStatus;
-
-  bool _wantsContainers;
-  bool get wantsContainers => _$this._wantsContainers;
-  set wantsContainers(bool wantsContainers) =>
-      _$this._wantsContainers = wantsContainers;
+  int _selectedLocationIndex;
+  int get selectedLocationIndex => _$this._selectedLocationIndex;
+  set selectedLocationIndex(int selectedLocationIndex) =>
+      _$this._selectedLocationIndex = selectedLocationIndex;
 
   int _smallContainerQuantity;
   int get smallContainerQuantity => _$this._smallContainerQuantity;
@@ -396,34 +460,44 @@ class SubscriptionFormBuilder
   set bigContainerQuantity(int bigContainerQuantity) =>
       _$this._bigContainerQuantity = bigContainerQuantity;
 
-  int _selectedLocationIndex;
-  int get selectedLocationIndex => _$this._selectedLocationIndex;
-  set selectedLocationIndex(int selectedLocationIndex) =>
-      _$this._selectedLocationIndex = selectedLocationIndex;
+  bool _wantsContainers;
+  bool get wantsContainers => _$this._wantsContainers;
+  set wantsContainers(bool wantsContainers) =>
+      _$this._wantsContainers = wantsContainers;
 
-  String _location;
-  String get location => _$this._location;
-  set location(String location) => _$this._location = location;
+  DateTime _selectedStartDate;
+  DateTime get selectedStartDate => _$this._selectedStartDate;
+  set selectedStartDate(DateTime selectedStartDate) =>
+      _$this._selectedStartDate = selectedStartDate;
+
+  ListBuilder<DateTime> _startDates;
+  ListBuilder<DateTime> get startDates =>
+      _$this._startDates ??= new ListBuilder<DateTime>();
+  set startDates(ListBuilder<DateTime> startDates) =>
+      _$this._startDates = startDates;
 
   SubscriptionFormBuilder();
 
   SubscriptionFormBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
+      _frequency = _$v.frequency;
+      _address = _$v.address;
+      _contactMethod = _$v.contactMethod;
+      _email = _$v.email;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
-      _address = _$v.address;
-      _postcode = _$v.postcode;
-      _email = _$v.email;
-      _phoneNumber = _$v.phoneNumber;
-      _registrationMethod = _$v.registrationMethod;
-      _contactMethod = _$v.contactMethod;
       _leadStatus = _$v.leadStatus;
-      _wantsContainers = _$v.wantsContainers;
+      _location = _$v.location;
+      _phoneNumber = _$v.phoneNumber;
+      _postcode = _$v.postcode;
+      _registrationMethod = _$v.registrationMethod;
+      _selectedLocationIndex = _$v.selectedLocationIndex;
       _smallContainerQuantity = _$v.smallContainerQuantity;
       _bigContainerQuantity = _$v.bigContainerQuantity;
-      _selectedLocationIndex = _$v.selectedLocationIndex;
-      _location = _$v.location;
+      _wantsContainers = _$v.wantsContainers;
+      _selectedStartDate = _$v.selectedStartDate;
+      _startDates = _$v.startDates?.toBuilder();
       _$v = null;
     }
     return this;
@@ -444,23 +518,39 @@ class SubscriptionFormBuilder
 
   @override
   _$SubscriptionForm build() {
-    final _$result = _$v ??
-        new _$SubscriptionForm._(
-            currentStep: currentStep,
-            firstName: firstName,
-            lastName: lastName,
-            address: address,
-            postcode: postcode,
-            email: email,
-            phoneNumber: phoneNumber,
-            registrationMethod: registrationMethod,
-            contactMethod: contactMethod,
-            leadStatus: leadStatus,
-            wantsContainers: wantsContainers,
-            smallContainerQuantity: smallContainerQuantity,
-            bigContainerQuantity: bigContainerQuantity,
-            selectedLocationIndex: selectedLocationIndex,
-            location: location);
+    _$SubscriptionForm _$result;
+    try {
+      _$result = _$v ??
+          new _$SubscriptionForm._(
+              currentStep: currentStep,
+              frequency: frequency,
+              address: address,
+              contactMethod: contactMethod,
+              email: email,
+              firstName: firstName,
+              lastName: lastName,
+              leadStatus: leadStatus,
+              location: location,
+              phoneNumber: phoneNumber,
+              postcode: postcode,
+              registrationMethod: registrationMethod,
+              selectedLocationIndex: selectedLocationIndex,
+              smallContainerQuantity: smallContainerQuantity,
+              bigContainerQuantity: bigContainerQuantity,
+              wantsContainers: wantsContainers,
+              selectedStartDate: selectedStartDate,
+              startDates: _startDates?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'startDates';
+        _startDates?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SubscriptionForm', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

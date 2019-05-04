@@ -27,17 +27,17 @@ class _$SubscriptionFormStateSerializer
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
     ];
-    if (object.subscriptionForm != null) {
-      result
-        ..add('subscriptionForm')
-        ..add(serializers.serialize(object.subscriptionForm,
-            specifiedType: const FullType(SubscriptionForm)));
-    }
     if (object.error != null) {
       result
         ..add('error')
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(String)));
+    }
+    if (object.subscriptionForm != null) {
+      result
+        ..add('subscriptionForm')
+        ..add(serializers.serialize(object.subscriptionForm,
+            specifiedType: const FullType(SubscriptionForm)));
     }
 
     return result;
@@ -55,6 +55,10 @@ class _$SubscriptionFormStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isLoading':
           result.isLoading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -63,10 +67,6 @@ class _$SubscriptionFormStateSerializer
           result.subscriptionForm.replace(serializers.deserialize(value,
                   specifiedType: const FullType(SubscriptionForm))
               as SubscriptionForm);
-          break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -77,17 +77,17 @@ class _$SubscriptionFormStateSerializer
 
 class _$SubscriptionFormState extends SubscriptionFormState {
   @override
+  final String error;
+  @override
   final bool isLoading;
   @override
   final SubscriptionForm subscriptionForm;
-  @override
-  final String error;
 
   factory _$SubscriptionFormState(
           [void Function(SubscriptionFormStateBuilder) updates]) =>
       (new SubscriptionFormStateBuilder()..update(updates)).build();
 
-  _$SubscriptionFormState._({this.isLoading, this.subscriptionForm, this.error})
+  _$SubscriptionFormState._({this.error, this.isLoading, this.subscriptionForm})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('SubscriptionFormState', 'isLoading');
@@ -107,23 +107,23 @@ class _$SubscriptionFormState extends SubscriptionFormState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SubscriptionFormState &&
+        error == other.error &&
         isLoading == other.isLoading &&
-        subscriptionForm == other.subscriptionForm &&
-        error == other.error;
+        subscriptionForm == other.subscriptionForm;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, isLoading.hashCode), subscriptionForm.hashCode),
-        error.hashCode));
+    return $jf($jc($jc($jc(0, error.hashCode), isLoading.hashCode),
+        subscriptionForm.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionFormState')
+          ..add('error', error)
           ..add('isLoading', isLoading)
-          ..add('subscriptionForm', subscriptionForm)
-          ..add('error', error))
+          ..add('subscriptionForm', subscriptionForm))
         .toString();
   }
 }
@@ -131,6 +131,10 @@ class _$SubscriptionFormState extends SubscriptionFormState {
 class SubscriptionFormStateBuilder
     implements Builder<SubscriptionFormState, SubscriptionFormStateBuilder> {
   _$SubscriptionFormState _$v;
+
+  String _error;
+  String get error => _$this._error;
+  set error(String error) => _$this._error = error;
 
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
@@ -142,17 +146,13 @@ class SubscriptionFormStateBuilder
   set subscriptionForm(SubscriptionFormBuilder subscriptionForm) =>
       _$this._subscriptionForm = subscriptionForm;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
-
   SubscriptionFormStateBuilder();
 
   SubscriptionFormStateBuilder get _$this {
     if (_$v != null) {
+      _error = _$v.error;
       _isLoading = _$v.isLoading;
       _subscriptionForm = _$v.subscriptionForm?.toBuilder();
-      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -177,9 +177,9 @@ class SubscriptionFormStateBuilder
     try {
       _$result = _$v ??
           new _$SubscriptionFormState._(
+              error: error,
               isLoading: isLoading,
-              subscriptionForm: _subscriptionForm?.build(),
-              error: error);
+              subscriptionForm: _subscriptionForm?.build());
     } catch (_) {
       String _$failedField;
       try {

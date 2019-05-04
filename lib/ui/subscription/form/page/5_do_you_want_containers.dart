@@ -103,7 +103,7 @@ class DoYouWantContainersState extends State<DoYouWantContainers> {
     setState(() {
       if(_wantsContainers == choice) {
         _wantsContainers = null;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers= null));
+        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = null));
       } else {
         _wantsContainers = choice;
         widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = choice));  

@@ -22,18 +22,18 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
     ];
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(String)));
+    }
     if (object.postcodes != null) {
       result
         ..add('postcodes')
         ..add(serializers.serialize(object.postcodes,
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(int), const FullType(Postcode)])));
-    }
-    if (object.error != null) {
-      result
-        ..add('error')
-        ..add(serializers.serialize(object.error,
-            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -50,6 +50,10 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isLoading':
           result.isLoading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -61,10 +65,6 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
                 const FullType(Postcode)
               ])) as BuiltMap);
           break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
       }
     }
 
@@ -74,16 +74,16 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
 
 class _$DataState extends DataState {
   @override
+  final String error;
+  @override
   final bool isLoading;
   @override
   final BuiltMap<int, Postcode> postcodes;
-  @override
-  final String error;
 
   factory _$DataState([void Function(DataStateBuilder) updates]) =>
       (new DataStateBuilder()..update(updates)).build();
 
-  _$DataState._({this.isLoading, this.postcodes, this.error}) : super._() {
+  _$DataState._({this.error, this.isLoading, this.postcodes}) : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('DataState', 'isLoading');
     }
@@ -100,29 +100,33 @@ class _$DataState extends DataState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is DataState &&
+        error == other.error &&
         isLoading == other.isLoading &&
-        postcodes == other.postcodes &&
-        error == other.error;
+        postcodes == other.postcodes;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, isLoading.hashCode), postcodes.hashCode), error.hashCode));
+        $jc($jc(0, error.hashCode), isLoading.hashCode), postcodes.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DataState')
+          ..add('error', error)
           ..add('isLoading', isLoading)
-          ..add('postcodes', postcodes)
-          ..add('error', error))
+          ..add('postcodes', postcodes))
         .toString();
   }
 }
 
 class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
   _$DataState _$v;
+
+  String _error;
+  String get error => _$this._error;
+  set error(String error) => _$this._error = error;
 
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
@@ -134,17 +138,13 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
   set postcodes(MapBuilder<int, Postcode> postcodes) =>
       _$this._postcodes = postcodes;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
-
   DataStateBuilder();
 
   DataStateBuilder get _$this {
     if (_$v != null) {
+      _error = _$v.error;
       _isLoading = _$v.isLoading;
       _postcodes = _$v.postcodes?.toBuilder();
-      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -169,9 +169,9 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
     try {
       _$result = _$v ??
           new _$DataState._(
+              error: error,
               isLoading: isLoading,
-              postcodes: _postcodes?.build(),
-              error: error);
+              postcodes: _postcodes?.build());
     } catch (_) {
       String _$failedField;
       try {

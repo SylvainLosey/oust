@@ -18,16 +18,16 @@ class _$PackageSerializer implements StructuredSerializer<Package> {
   Iterable serialize(Serializers serializers, Package object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'length',
-      serializers.serialize(object.length,
-          specifiedType: const FullType(String)),
       'frequency_weeks',
       serializers.serialize(object.frequencyWeeks,
           specifiedType: const FullType(int)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'length',
+      serializers.serialize(object.length,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
       'pickups',
       serializers.serialize(object.pickups, specifiedType: const FullType(int)),
       'unit_price',
@@ -49,21 +49,21 @@ class _$PackageSerializer implements StructuredSerializer<Package> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'frequency_weeks':
+          result.frequencyWeeks = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'length':
           result.length = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'frequency_weeks':
-          result.frequencyWeeks = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'pickups':
           result.pickups = serializers.deserialize(value,
@@ -82,13 +82,13 @@ class _$PackageSerializer implements StructuredSerializer<Package> {
 
 class _$Package extends Package {
   @override
-  final int id;
+  final int frequencyWeeks;
   @override
-  final String name;
+  final int id;
   @override
   final String length;
   @override
-  final int frequencyWeeks;
+  final String name;
   @override
   final int pickups;
   @override
@@ -98,24 +98,24 @@ class _$Package extends Package {
       (new PackageBuilder()..update(updates)).build();
 
   _$Package._(
-      {this.id,
-      this.name,
+      {this.frequencyWeeks,
+      this.id,
       this.length,
-      this.frequencyWeeks,
+      this.name,
       this.pickups,
       this.unitPrice})
       : super._() {
+    if (frequencyWeeks == null) {
+      throw new BuiltValueNullFieldError('Package', 'frequencyWeeks');
+    }
     if (id == null) {
       throw new BuiltValueNullFieldError('Package', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('Package', 'name');
     }
     if (length == null) {
       throw new BuiltValueNullFieldError('Package', 'length');
     }
-    if (frequencyWeeks == null) {
-      throw new BuiltValueNullFieldError('Package', 'frequencyWeeks');
+    if (name == null) {
+      throw new BuiltValueNullFieldError('Package', 'name');
     }
     if (pickups == null) {
       throw new BuiltValueNullFieldError('Package', 'pickups');
@@ -136,10 +136,10 @@ class _$Package extends Package {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Package &&
-        id == other.id &&
-        name == other.name &&
-        length == other.length &&
         frequencyWeeks == other.frequencyWeeks &&
+        id == other.id &&
+        length == other.length &&
+        name == other.name &&
         pickups == other.pickups &&
         unitPrice == other.unitPrice;
   }
@@ -148,8 +148,10 @@ class _$Package extends Package {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc($jc(0, id.hashCode), name.hashCode), length.hashCode),
-                frequencyWeeks.hashCode),
+            $jc(
+                $jc($jc($jc(0, frequencyWeeks.hashCode), id.hashCode),
+                    length.hashCode),
+                name.hashCode),
             pickups.hashCode),
         unitPrice.hashCode));
   }
@@ -157,10 +159,10 @@ class _$Package extends Package {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Package')
-          ..add('id', id)
-          ..add('name', name)
-          ..add('length', length)
           ..add('frequencyWeeks', frequencyWeeks)
+          ..add('id', id)
+          ..add('length', length)
+          ..add('name', name)
           ..add('pickups', pickups)
           ..add('unitPrice', unitPrice))
         .toString();
@@ -170,22 +172,22 @@ class _$Package extends Package {
 class PackageBuilder implements Builder<Package, PackageBuilder> {
   _$Package _$v;
 
+  int _frequencyWeeks;
+  int get frequencyWeeks => _$this._frequencyWeeks;
+  set frequencyWeeks(int frequencyWeeks) =>
+      _$this._frequencyWeeks = frequencyWeeks;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
 
   String _length;
   String get length => _$this._length;
   set length(String length) => _$this._length = length;
 
-  int _frequencyWeeks;
-  int get frequencyWeeks => _$this._frequencyWeeks;
-  set frequencyWeeks(int frequencyWeeks) =>
-      _$this._frequencyWeeks = frequencyWeeks;
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
 
   int _pickups;
   int get pickups => _$this._pickups;
@@ -199,10 +201,10 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
 
   PackageBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _name = _$v.name;
-      _length = _$v.length;
       _frequencyWeeks = _$v.frequencyWeeks;
+      _id = _$v.id;
+      _length = _$v.length;
+      _name = _$v.name;
       _pickups = _$v.pickups;
       _unitPrice = _$v.unitPrice;
       _$v = null;
@@ -227,10 +229,10 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
   _$Package build() {
     final _$result = _$v ??
         new _$Package._(
-            id: id,
-            name: name,
-            length: length,
             frequencyWeeks: frequencyWeeks,
+            id: id,
+            length: length,
+            name: name,
             pickups: pickups,
             unitPrice: unitPrice);
     replace(_$result);

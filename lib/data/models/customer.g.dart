@@ -18,34 +18,34 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
   Iterable serialize(Serializers serializers, Customer object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'customer_status',
-      serializers.serialize(object.customerStatus,
-          specifiedType: const FullType(String)),
-      'gender',
-      serializers.serialize(object.gender,
-          specifiedType: const FullType(String)),
-      'first_name',
-      serializers.serialize(object.firstName,
-          specifiedType: const FullType(String)),
-      'last_name',
-      serializers.serialize(object.lastName,
-          specifiedType: const FullType(String)),
       'address',
       serializers.serialize(object.address,
           specifiedType: const FullType(String)),
       'city',
       serializers.serialize(object.city, specifiedType: const FullType(String)),
+      'customer_status',
+      serializers.serialize(object.customerStatus,
+          specifiedType: const FullType(String)),
+      'first_name',
+      serializers.serialize(object.firstName,
+          specifiedType: const FullType(String)),
+      'gender',
+      serializers.serialize(object.gender,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'last_name',
+      serializers.serialize(object.lastName,
+          specifiedType: const FullType(String)),
+      'postcode',
+      serializers.serialize(object.postcode,
+          specifiedType: const FullType(int)),
       'prefered_communication',
       serializers.serialize(object.preferedCommunication,
           specifiedType: const FullType(String)),
       'prefered_payment_method',
       serializers.serialize(object.preferedPaymentMethod,
           specifiedType: const FullType(String)),
-      'postcode',
-      serializers.serialize(object.postcode,
-          specifiedType: const FullType(int)),
       'user',
       serializers.serialize(object.user, specifiedType: const FullType(int)),
     ];
@@ -70,30 +70,6 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'customer_status':
-          result.customerStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'company':
-          result.company = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'gender':
-          result.gender = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'first_name':
-          result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'last_name':
-          result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'address':
           result.address = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -102,6 +78,34 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
           result.city = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'company':
+          result.company = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'customer_status':
+          result.customerStatus = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'first_name':
+          result.firstName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'last_name':
+          result.lastName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'postcode':
+          result.postcode = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'prefered_communication':
           result.preferedCommunication = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -109,10 +113,6 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
         case 'prefered_payment_method':
           result.preferedPaymentMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'postcode':
-          result.postcode = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'user':
           result.user = serializers.deserialize(value,
@@ -127,27 +127,27 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
 
 class _$Customer extends Customer {
   @override
-  final int id;
-  @override
-  final String customerStatus;
-  @override
-  final String company;
-  @override
-  final String gender;
-  @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
   final String address;
   @override
   final String city;
   @override
+  final String company;
+  @override
+  final String customerStatus;
+  @override
+  final String firstName;
+  @override
+  final String gender;
+  @override
+  final int id;
+  @override
+  final String lastName;
+  @override
+  final int postcode;
+  @override
   final String preferedCommunication;
   @override
   final String preferedPaymentMethod;
-  @override
-  final int postcode;
   @override
   final int user;
 
@@ -155,48 +155,48 @@ class _$Customer extends Customer {
       (new CustomerBuilder()..update(updates)).build();
 
   _$Customer._(
-      {this.id,
-      this.customerStatus,
-      this.company,
-      this.gender,
-      this.firstName,
-      this.lastName,
-      this.address,
+      {this.address,
       this.city,
+      this.company,
+      this.customerStatus,
+      this.firstName,
+      this.gender,
+      this.id,
+      this.lastName,
+      this.postcode,
       this.preferedCommunication,
       this.preferedPaymentMethod,
-      this.postcode,
       this.user})
       : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Customer', 'id');
-    }
-    if (customerStatus == null) {
-      throw new BuiltValueNullFieldError('Customer', 'customerStatus');
-    }
-    if (gender == null) {
-      throw new BuiltValueNullFieldError('Customer', 'gender');
-    }
-    if (firstName == null) {
-      throw new BuiltValueNullFieldError('Customer', 'firstName');
-    }
-    if (lastName == null) {
-      throw new BuiltValueNullFieldError('Customer', 'lastName');
-    }
     if (address == null) {
       throw new BuiltValueNullFieldError('Customer', 'address');
     }
     if (city == null) {
       throw new BuiltValueNullFieldError('Customer', 'city');
     }
+    if (customerStatus == null) {
+      throw new BuiltValueNullFieldError('Customer', 'customerStatus');
+    }
+    if (firstName == null) {
+      throw new BuiltValueNullFieldError('Customer', 'firstName');
+    }
+    if (gender == null) {
+      throw new BuiltValueNullFieldError('Customer', 'gender');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Customer', 'id');
+    }
+    if (lastName == null) {
+      throw new BuiltValueNullFieldError('Customer', 'lastName');
+    }
+    if (postcode == null) {
+      throw new BuiltValueNullFieldError('Customer', 'postcode');
+    }
     if (preferedCommunication == null) {
       throw new BuiltValueNullFieldError('Customer', 'preferedCommunication');
     }
     if (preferedPaymentMethod == null) {
       throw new BuiltValueNullFieldError('Customer', 'preferedPaymentMethod');
-    }
-    if (postcode == null) {
-      throw new BuiltValueNullFieldError('Customer', 'postcode');
     }
     if (user == null) {
       throw new BuiltValueNullFieldError('Customer', 'user');
@@ -214,17 +214,17 @@ class _$Customer extends Customer {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Customer &&
-        id == other.id &&
-        customerStatus == other.customerStatus &&
-        company == other.company &&
-        gender == other.gender &&
-        firstName == other.firstName &&
-        lastName == other.lastName &&
         address == other.address &&
         city == other.city &&
+        company == other.company &&
+        customerStatus == other.customerStatus &&
+        firstName == other.firstName &&
+        gender == other.gender &&
+        id == other.id &&
+        lastName == other.lastName &&
+        postcode == other.postcode &&
         preferedCommunication == other.preferedCommunication &&
         preferedPaymentMethod == other.preferedPaymentMethod &&
-        postcode == other.postcode &&
         user == other.user;
   }
 
@@ -240,34 +240,34 @@ class _$Customer extends Customer {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, id.hashCode),
-                                                customerStatus.hashCode),
+                                            $jc($jc(0, address.hashCode),
+                                                city.hashCode),
                                             company.hashCode),
-                                        gender.hashCode),
+                                        customerStatus.hashCode),
                                     firstName.hashCode),
-                                lastName.hashCode),
-                            address.hashCode),
-                        city.hashCode),
-                    preferedCommunication.hashCode),
-                preferedPaymentMethod.hashCode),
-            postcode.hashCode),
+                                gender.hashCode),
+                            id.hashCode),
+                        lastName.hashCode),
+                    postcode.hashCode),
+                preferedCommunication.hashCode),
+            preferedPaymentMethod.hashCode),
         user.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Customer')
-          ..add('id', id)
-          ..add('customerStatus', customerStatus)
-          ..add('company', company)
-          ..add('gender', gender)
-          ..add('firstName', firstName)
-          ..add('lastName', lastName)
           ..add('address', address)
           ..add('city', city)
+          ..add('company', company)
+          ..add('customerStatus', customerStatus)
+          ..add('firstName', firstName)
+          ..add('gender', gender)
+          ..add('id', id)
+          ..add('lastName', lastName)
+          ..add('postcode', postcode)
           ..add('preferedCommunication', preferedCommunication)
           ..add('preferedPaymentMethod', preferedPaymentMethod)
-          ..add('postcode', postcode)
           ..add('user', user))
         .toString();
   }
@@ -276,31 +276,6 @@ class _$Customer extends Customer {
 class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   _$Customer _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
-  String _customerStatus;
-  String get customerStatus => _$this._customerStatus;
-  set customerStatus(String customerStatus) =>
-      _$this._customerStatus = customerStatus;
-
-  String _company;
-  String get company => _$this._company;
-  set company(String company) => _$this._company = company;
-
-  String _gender;
-  String get gender => _$this._gender;
-  set gender(String gender) => _$this._gender = gender;
-
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
-
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
-
   String _address;
   String get address => _$this._address;
   set address(String address) => _$this._address = address;
@@ -308,6 +283,35 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   String _city;
   String get city => _$this._city;
   set city(String city) => _$this._city = city;
+
+  String _company;
+  String get company => _$this._company;
+  set company(String company) => _$this._company = company;
+
+  String _customerStatus;
+  String get customerStatus => _$this._customerStatus;
+  set customerStatus(String customerStatus) =>
+      _$this._customerStatus = customerStatus;
+
+  String _firstName;
+  String get firstName => _$this._firstName;
+  set firstName(String firstName) => _$this._firstName = firstName;
+
+  String _gender;
+  String get gender => _$this._gender;
+  set gender(String gender) => _$this._gender = gender;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _lastName;
+  String get lastName => _$this._lastName;
+  set lastName(String lastName) => _$this._lastName = lastName;
+
+  int _postcode;
+  int get postcode => _$this._postcode;
+  set postcode(int postcode) => _$this._postcode = postcode;
 
   String _preferedCommunication;
   String get preferedCommunication => _$this._preferedCommunication;
@@ -319,10 +323,6 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   set preferedPaymentMethod(String preferedPaymentMethod) =>
       _$this._preferedPaymentMethod = preferedPaymentMethod;
 
-  int _postcode;
-  int get postcode => _$this._postcode;
-  set postcode(int postcode) => _$this._postcode = postcode;
-
   int _user;
   int get user => _$this._user;
   set user(int user) => _$this._user = user;
@@ -331,17 +331,17 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
 
   CustomerBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _customerStatus = _$v.customerStatus;
-      _company = _$v.company;
-      _gender = _$v.gender;
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
       _address = _$v.address;
       _city = _$v.city;
+      _company = _$v.company;
+      _customerStatus = _$v.customerStatus;
+      _firstName = _$v.firstName;
+      _gender = _$v.gender;
+      _id = _$v.id;
+      _lastName = _$v.lastName;
+      _postcode = _$v.postcode;
       _preferedCommunication = _$v.preferedCommunication;
       _preferedPaymentMethod = _$v.preferedPaymentMethod;
-      _postcode = _$v.postcode;
       _user = _$v.user;
       _$v = null;
     }
@@ -365,17 +365,17 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   _$Customer build() {
     final _$result = _$v ??
         new _$Customer._(
-            id: id,
-            customerStatus: customerStatus,
-            company: company,
-            gender: gender,
-            firstName: firstName,
-            lastName: lastName,
             address: address,
             city: city,
+            company: company,
+            customerStatus: customerStatus,
+            firstName: firstName,
+            gender: gender,
+            id: id,
+            lastName: lastName,
+            postcode: postcode,
             preferedCommunication: preferedCommunication,
             preferedPaymentMethod: preferedPaymentMethod,
-            postcode: postcode,
             user: user);
     replace(_$result);
     return _$result;

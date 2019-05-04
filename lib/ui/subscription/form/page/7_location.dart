@@ -67,7 +67,6 @@ class LocationFormState extends State<LocationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FocusNode _otherLocationNode;
 
-  int _selectedLocationIndex;
   final List<String> _locationChoices = <String>[
     'Devant la porte d\'entrée',
     'Dans le jardin ou sur la terasse',
@@ -90,12 +89,12 @@ class LocationFormState extends State<LocationForm> {
             return SelectableItem(
               onTap: () => _onTap(selectedItem: index),
               text: _locationChoices[index],
-              selected: _selectedLocationIndex == index,
+              selected: widget.viewModel.selectedLocationIndex == index,
             );
           },
         ),
         SelectableItem(
-            selected: _selectedLocationIndex == 5,
+            selected: widget.viewModel.selectedLocationIndex == 5,
             onTap: () => _onTap(selectedItem: 5),
             child: Flexible(
               child: Form(
@@ -105,7 +104,7 @@ class LocationFormState extends State<LocationForm> {
                 child: IgnorePointer(
                   child: TextFormField(
                     validator: (String value) {
-                      return (_selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
+                      return (widget.viewModel.selectedLocationIndex == 5 && value.isEmpty) ? 'Veuillez préciser où se trouvent vos conteurs' : null;
                     },
                     controller: _otherLocationController,
                     focusNode: _otherLocationNode,
@@ -130,7 +129,7 @@ class LocationFormState extends State<LocationForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.subscriptionForm.selectedLocationIndex == null 
+        onPressed: widget.viewModel.selectedLocationIndex == null 
           ? null
           : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep(); }
       )
@@ -141,8 +140,7 @@ class LocationFormState extends State<LocationForm> {
 @override
   void didChangeDependencies() {
     _otherLocationController.removeListener(_onChanged);
-    _selectedLocationIndex = widget.viewModel.subscriptionForm.selectedLocationIndex;
-    if (_selectedLocationIndex == 5) {
+    if (widget.viewModel.selectedLocationIndex == 5) {
       _otherLocationController.text = widget.viewModel.subscriptionForm.location;
     }
     _otherLocationController.addListener(_onChanged);
@@ -173,15 +171,13 @@ class LocationFormState extends State<LocationForm> {
   }
 
   void _onTap({int selectedItem}) {
-    if (selectedItem != _selectedLocationIndex) {
-      setState(() {
-        _selectedLocationIndex = selectedItem;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-          ..selectedLocationIndex = selectedItem
-          ..location = selectedItem != 5 ? _locationChoices[selectedItem] : _otherLocationController.text.trim()
-        ));
-      });
+    if (selectedItem != widget.viewModel.selectedLocationIndex) {
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
+        ..selectedLocationIndex = selectedItem
+        ..location = selectedItem != 5 ? _locationChoices[selectedItem] : _otherLocationController.text.trim()
+      ));
     }
+    
 
     // Set and dismiss focus when clicking / leaving other
     if (selectedItem == 5) {
@@ -195,6 +191,7 @@ class LocationFormState extends State<LocationForm> {
 
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
+  final int selectedLocationIndex;
   final Function nextStep;
   final Function previousStep;
   final Function exit;
@@ -202,6 +199,7 @@ class _ViewModel {
 
   _ViewModel({
     this.subscriptionForm,
+    this.selectedLocationIndex,
     this.nextStep,
     this.previousStep,
     this.exit,
@@ -211,6 +209,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+      selectedLocationIndex: store.state.subscriptionFormState.subscriptionForm.selectedLocationIndex,
       nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),

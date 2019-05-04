@@ -18,21 +18,21 @@ class _$PostcodeSerializer implements StructuredSerializer<Postcode> {
   Iterable serialize(Serializers serializers, Postcode object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'postcode',
-      serializers.serialize(object.postcode,
-          specifiedType: const FullType(String)),
       'country',
       serializers.serialize(object.country,
           specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'subscription_available',
-      serializers.serialize(object.subscriptionAvailable,
-          specifiedType: const FullType(bool)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'lift_available',
       serializers.serialize(object.liftAvailable,
+          specifiedType: const FullType(bool)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'postcode',
+      serializers.serialize(object.postcode,
+          specifiedType: const FullType(String)),
+      'subscription_available',
+      serializers.serialize(object.subscriptionAvailable,
           specifiedType: const FullType(bool)),
     ];
     if (object.state != null) {
@@ -56,33 +56,33 @@ class _$PostcodeSerializer implements StructuredSerializer<Postcode> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'postcode':
-          result.postcode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'country':
           result.country = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'subscription_available':
-          result.subscriptionAvailable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'lift_available':
           result.liftAvailable = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'postcode':
+          result.postcode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'state':
           result.state = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'subscription_available':
+          result.subscriptionAvailable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -93,49 +93,49 @@ class _$PostcodeSerializer implements StructuredSerializer<Postcode> {
 
 class _$Postcode extends Postcode {
   @override
-  final int id;
-  @override
-  final String postcode;
-  @override
   final String country;
   @override
-  final String name;
-  @override
-  final bool subscriptionAvailable;
+  final int id;
   @override
   final bool liftAvailable;
   @override
+  final String name;
+  @override
+  final String postcode;
+  @override
   final int state;
+  @override
+  final bool subscriptionAvailable;
 
   factory _$Postcode([void Function(PostcodeBuilder) updates]) =>
       (new PostcodeBuilder()..update(updates)).build();
 
   _$Postcode._(
-      {this.id,
-      this.postcode,
-      this.country,
-      this.name,
-      this.subscriptionAvailable,
+      {this.country,
+      this.id,
       this.liftAvailable,
-      this.state})
+      this.name,
+      this.postcode,
+      this.state,
+      this.subscriptionAvailable})
       : super._() {
+    if (country == null) {
+      throw new BuiltValueNullFieldError('Postcode', 'country');
+    }
     if (id == null) {
       throw new BuiltValueNullFieldError('Postcode', 'id');
     }
-    if (postcode == null) {
-      throw new BuiltValueNullFieldError('Postcode', 'postcode');
-    }
-    if (country == null) {
-      throw new BuiltValueNullFieldError('Postcode', 'country');
+    if (liftAvailable == null) {
+      throw new BuiltValueNullFieldError('Postcode', 'liftAvailable');
     }
     if (name == null) {
       throw new BuiltValueNullFieldError('Postcode', 'name');
     }
+    if (postcode == null) {
+      throw new BuiltValueNullFieldError('Postcode', 'postcode');
+    }
     if (subscriptionAvailable == null) {
       throw new BuiltValueNullFieldError('Postcode', 'subscriptionAvailable');
-    }
-    if (liftAvailable == null) {
-      throw new BuiltValueNullFieldError('Postcode', 'liftAvailable');
     }
   }
 
@@ -150,13 +150,13 @@ class _$Postcode extends Postcode {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Postcode &&
-        id == other.id &&
-        postcode == other.postcode &&
         country == other.country &&
-        name == other.name &&
-        subscriptionAvailable == other.subscriptionAvailable &&
+        id == other.id &&
         liftAvailable == other.liftAvailable &&
-        state == other.state;
+        name == other.name &&
+        postcode == other.postcode &&
+        state == other.state &&
+        subscriptionAvailable == other.subscriptionAvailable;
   }
 
   @override
@@ -165,24 +165,24 @@ class _$Postcode extends Postcode {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, id.hashCode), postcode.hashCode),
-                        country.hashCode),
+                    $jc($jc($jc(0, country.hashCode), id.hashCode),
+                        liftAvailable.hashCode),
                     name.hashCode),
-                subscriptionAvailable.hashCode),
-            liftAvailable.hashCode),
-        state.hashCode));
+                postcode.hashCode),
+            state.hashCode),
+        subscriptionAvailable.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Postcode')
-          ..add('id', id)
-          ..add('postcode', postcode)
           ..add('country', country)
-          ..add('name', name)
-          ..add('subscriptionAvailable', subscriptionAvailable)
+          ..add('id', id)
           ..add('liftAvailable', liftAvailable)
-          ..add('state', state))
+          ..add('name', name)
+          ..add('postcode', postcode)
+          ..add('state', state)
+          ..add('subscriptionAvailable', subscriptionAvailable))
         .toString();
   }
 }
@@ -190,47 +190,47 @@ class _$Postcode extends Postcode {
 class PostcodeBuilder implements Builder<Postcode, PostcodeBuilder> {
   _$Postcode _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
-  String _postcode;
-  String get postcode => _$this._postcode;
-  set postcode(String postcode) => _$this._postcode = postcode;
-
   String _country;
   String get country => _$this._country;
   set country(String country) => _$this._country = country;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  bool _subscriptionAvailable;
-  bool get subscriptionAvailable => _$this._subscriptionAvailable;
-  set subscriptionAvailable(bool subscriptionAvailable) =>
-      _$this._subscriptionAvailable = subscriptionAvailable;
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   bool _liftAvailable;
   bool get liftAvailable => _$this._liftAvailable;
   set liftAvailable(bool liftAvailable) =>
       _$this._liftAvailable = liftAvailable;
 
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _postcode;
+  String get postcode => _$this._postcode;
+  set postcode(String postcode) => _$this._postcode = postcode;
+
   int _state;
   int get state => _$this._state;
   set state(int state) => _$this._state = state;
+
+  bool _subscriptionAvailable;
+  bool get subscriptionAvailable => _$this._subscriptionAvailable;
+  set subscriptionAvailable(bool subscriptionAvailable) =>
+      _$this._subscriptionAvailable = subscriptionAvailable;
 
   PostcodeBuilder();
 
   PostcodeBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _postcode = _$v.postcode;
       _country = _$v.country;
-      _name = _$v.name;
-      _subscriptionAvailable = _$v.subscriptionAvailable;
+      _id = _$v.id;
       _liftAvailable = _$v.liftAvailable;
+      _name = _$v.name;
+      _postcode = _$v.postcode;
       _state = _$v.state;
+      _subscriptionAvailable = _$v.subscriptionAvailable;
       _$v = null;
     }
     return this;
@@ -253,13 +253,13 @@ class PostcodeBuilder implements Builder<Postcode, PostcodeBuilder> {
   _$Postcode build() {
     final _$result = _$v ??
         new _$Postcode._(
-            id: id,
-            postcode: postcode,
             country: country,
-            name: name,
-            subscriptionAvailable: subscriptionAvailable,
+            id: id,
             liftAvailable: liftAvailable,
-            state: state);
+            name: name,
+            postcode: postcode,
+            state: state,
+            subscriptionAvailable: subscriptionAvailable);
     replace(_$result);
     return _$result;
   }

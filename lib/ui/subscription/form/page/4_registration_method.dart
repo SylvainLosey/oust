@@ -138,6 +138,13 @@ class _ViewModel {
         } else if (selectedMethod == 'rdv') {
           store.dispatch(SubscriptionFormNextStep(customerRequestsAppointment: true));
         }
+
+        // Dispatch action here a bit after the address if the user changes his mind
+        store.dispatch(LoadStartDatesRequest(
+          address: store.state.subscriptionFormState.subscriptionForm.address,
+          postcode: store.state.subscriptionFormState.subscriptionForm.postcode,
+          frequency: store.state.subscriptionFormState.subscriptionForm.frequency,
+        ));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),

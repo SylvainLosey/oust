@@ -18,17 +18,17 @@ class _$UserSerializer implements StructuredSerializer<User> {
   Iterable serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
-    if (object.key != null) {
-      result
-        ..add('key')
-        ..add(serializers.serialize(object.key,
-            specifiedType: const FullType(String)));
-    }
     if (object.id != null) {
       result
         ..add('user')
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
+    }
+    if (object.key != null) {
+      result
+        ..add('key')
+        ..add(serializers.serialize(object.key,
+            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -45,13 +45,13 @@ class _$UserSerializer implements StructuredSerializer<User> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'key':
-          result.key = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'user':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'key':
+          result.key = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -62,14 +62,14 @@ class _$UserSerializer implements StructuredSerializer<User> {
 
 class _$User extends User {
   @override
-  final String key;
-  @override
   final int id;
+  @override
+  final String key;
 
   factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._({this.key, this.id}) : super._();
+  _$User._({this.id, this.key}) : super._();
 
   @override
   User rebuild(void Function(UserBuilder) updates) =>
@@ -81,17 +81,17 @@ class _$User extends User {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is User && key == other.key && id == other.id;
+    return other is User && id == other.id && key == other.key;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, key.hashCode), id.hashCode));
+    return $jf($jc($jc(0, id.hashCode), key.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('User')..add('key', key)..add('id', id))
+    return (newBuiltValueToStringHelper('User')..add('id', id)..add('key', key))
         .toString();
   }
 }
@@ -99,20 +99,20 @@ class _$User extends User {
 class UserBuilder implements Builder<User, UserBuilder> {
   _$User _$v;
 
-  String _key;
-  String get key => _$this._key;
-  set key(String key) => _$this._key = key;
-
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
+
+  String _key;
+  String get key => _$this._key;
+  set key(String key) => _$this._key = key;
 
   UserBuilder();
 
   UserBuilder get _$this {
     if (_$v != null) {
-      _key = _$v.key;
       _id = _$v.id;
+      _key = _$v.key;
       _$v = null;
     }
     return this;
@@ -133,7 +133,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
   @override
   _$User build() {
-    final _$result = _$v ?? new _$User._(key: key, id: id);
+    final _$result = _$v ?? new _$User._(id: id, key: key);
     replace(_$result);
     return _$result;
   }

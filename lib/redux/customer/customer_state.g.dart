@@ -50,10 +50,6 @@ class _$CustomerStateSerializer implements StructuredSerializer<CustomerState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'customer':
           result.customer.replace(serializers.deserialize(value,
               specifiedType: const FullType(Customer)) as Customer);
@@ -61,6 +57,10 @@ class _$CustomerStateSerializer implements StructuredSerializer<CustomerState> {
         case 'error':
           result.error = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isLoading':
+          result.isLoading = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -71,16 +71,16 @@ class _$CustomerStateSerializer implements StructuredSerializer<CustomerState> {
 
 class _$CustomerState extends CustomerState {
   @override
-  final bool isLoading;
-  @override
   final Customer customer;
   @override
   final String error;
+  @override
+  final bool isLoading;
 
   factory _$CustomerState([void Function(CustomerStateBuilder) updates]) =>
       (new CustomerStateBuilder()..update(updates)).build();
 
-  _$CustomerState._({this.isLoading, this.customer, this.error}) : super._() {
+  _$CustomerState._({this.customer, this.error, this.isLoading}) : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('CustomerState', 'isLoading');
     }
@@ -97,23 +97,23 @@ class _$CustomerState extends CustomerState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CustomerState &&
-        isLoading == other.isLoading &&
         customer == other.customer &&
-        error == other.error;
+        error == other.error &&
+        isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, isLoading.hashCode), customer.hashCode), error.hashCode));
+        $jc($jc(0, customer.hashCode), error.hashCode), isLoading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CustomerState')
-          ..add('isLoading', isLoading)
           ..add('customer', customer)
-          ..add('error', error))
+          ..add('error', error)
+          ..add('isLoading', isLoading))
         .toString();
   }
 }
@@ -121,10 +121,6 @@ class _$CustomerState extends CustomerState {
 class CustomerStateBuilder
     implements Builder<CustomerState, CustomerStateBuilder> {
   _$CustomerState _$v;
-
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   CustomerBuilder _customer;
   CustomerBuilder get customer => _$this._customer ??= new CustomerBuilder();
@@ -134,13 +130,17 @@ class CustomerStateBuilder
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
+  bool _isLoading;
+  bool get isLoading => _$this._isLoading;
+  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
+
   CustomerStateBuilder();
 
   CustomerStateBuilder get _$this {
     if (_$v != null) {
-      _isLoading = _$v.isLoading;
       _customer = _$v.customer?.toBuilder();
       _error = _$v.error;
+      _isLoading = _$v.isLoading;
       _$v = null;
     }
     return this;
@@ -165,7 +165,7 @@ class CustomerStateBuilder
     try {
       _$result = _$v ??
           new _$CustomerState._(
-              isLoading: isLoading, customer: _customer?.build(), error: error);
+              customer: _customer?.build(), error: error, isLoading: isLoading);
     } catch (_) {
       String _$failedField;
       try {

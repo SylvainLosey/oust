@@ -24,6 +24,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(SubscriptionState.serializer)
       ..add(User.serializer)
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DateTime)]),
+          () => new ListBuilder<DateTime>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(double)]),
           () => new ListBuilder<double>())
       ..addBuilderFactory(
