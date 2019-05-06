@@ -30,7 +30,7 @@ class Repository {
   }
 
   Future<List<dynamic>> fetchPackages() async {
-    return await client.get('/packages/');
+    return await client.get('/packages/', auth: false);
   }
 
   Future<List<dynamic>> fetchPickups(int id) async {

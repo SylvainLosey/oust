@@ -12,9 +12,6 @@ Reducer<SubscriptionState> subscriptionReducer = combineReducers([
   TypedReducer<SubscriptionState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscriptionRequest),
   TypedReducer<SubscriptionState, LoadConsumerSubscriptionSuccess>(_loadConsumerSubscriptionSuccess),
   TypedReducer<SubscriptionState, LoadConsumerSubscriptionFailure>(_loadConsumerSubscriptionFailure),
-  TypedReducer<SubscriptionState, LoadPackagesRequest>(_loadPackagesRequest),
-  TypedReducer<SubscriptionState, LoadPackagesSuccess>(_loadPackagesSuccess),
-  TypedReducer<SubscriptionState, LoadPackagesFailure>(_loadPackagesFailure),
 ]);
 
 
@@ -62,30 +59,4 @@ SubscriptionState _loadConsumerSubscriptionFailure(SubscriptionState state, Load
   );
 }
 
-
-/// PACKAGES
-
-SubscriptionState _loadPackagesRequest(SubscriptionState state, LoadPackagesRequest action) {
-  return state.rebuild((SubscriptionStateBuilder b) => b
-    ..fetchCount = state.fetchCount + 1
-  );
-}
-
-SubscriptionState _loadPackagesSuccess(SubscriptionState state, LoadPackagesSuccess action) {
-  return state.rebuild((SubscriptionStateBuilder b) => b
-    ..fetchCount = state.fetchCount -1
-    ..packages.addAll(Map<int, Package>.fromIterable(
-      action.packages,
-      key: (dynamic package) => package.id,
-      value: (dynamic package) => package,
-    ))
-  );
-}
-
-SubscriptionState _loadPackagesFailure(SubscriptionState state, LoadPackagesFailure action) {
-  return state.rebuild((SubscriptionStateBuilder b) => b
-    ..fetchCount = state.fetchCount -1
-    ..error = action.error
-  );
-}
 

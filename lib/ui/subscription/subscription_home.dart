@@ -156,7 +156,7 @@ class _ViewModel {
       error: store.state.subscriptionState.error,
       subscription: store.state.subscriptionState.subscription,
       consumerSubscription: store.state.subscriptionState.consumerSubscription,
-      packages: store.state.subscriptionState.packages,
+      packages: store.state.dataState.packages,
       customer: store.state.customerState.customer,
       pickups: store.state.pickupState.pickups,
      );

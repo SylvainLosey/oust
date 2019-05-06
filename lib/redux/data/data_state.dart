@@ -6,20 +6,25 @@ import 'package:built_value/serializer.dart';
 
 import '../../data/models/postcode.dart';
 import '../../data/models/serializers.dart';
+import '../../data/models/package.dart';
+
 
 part 'data_state.g.dart';
 
 abstract class DataState implements Built<DataState, DataStateBuilder> {
   static Serializer<DataState> get serializer => _$dataStateSerializer;
   factory DataState() => _$DataState((DataStateBuilder b) => b
-    ..isLoading = false
+    ..fetchCount = 0
   );
   DataState._();
 
   @nullable
   String get error;
 
-  bool get isLoading;
+  int get fetchCount;
+
+  @nullable
+  BuiltMap<int, Package> get packages;
 
   @nullable
   BuiltMap<int, Postcode> get postcodes;

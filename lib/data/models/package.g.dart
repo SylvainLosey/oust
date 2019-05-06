@@ -30,6 +30,9 @@ class _$PackageSerializer implements StructuredSerializer<Package> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'pickups',
       serializers.serialize(object.pickups, specifiedType: const FullType(int)),
+      'base_package',
+      serializers.serialize(object.basePackage,
+          specifiedType: const FullType(bool)),
       'unit_price',
       serializers.serialize(object.unitPrice,
           specifiedType: const FullType(String)),
@@ -69,6 +72,10 @@ class _$PackageSerializer implements StructuredSerializer<Package> {
           result.pickups = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'base_package':
+          result.basePackage = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'unit_price':
           result.unitPrice = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -92,6 +99,8 @@ class _$Package extends Package {
   @override
   final int pickups;
   @override
+  final bool basePackage;
+  @override
   final String unitPrice;
 
   factory _$Package([void Function(PackageBuilder) updates]) =>
@@ -103,6 +112,7 @@ class _$Package extends Package {
       this.length,
       this.name,
       this.pickups,
+      this.basePackage,
       this.unitPrice})
       : super._() {
     if (frequencyWeeks == null) {
@@ -119,6 +129,9 @@ class _$Package extends Package {
     }
     if (pickups == null) {
       throw new BuiltValueNullFieldError('Package', 'pickups');
+    }
+    if (basePackage == null) {
+      throw new BuiltValueNullFieldError('Package', 'basePackage');
     }
     if (unitPrice == null) {
       throw new BuiltValueNullFieldError('Package', 'unitPrice');
@@ -141,6 +154,7 @@ class _$Package extends Package {
         length == other.length &&
         name == other.name &&
         pickups == other.pickups &&
+        basePackage == other.basePackage &&
         unitPrice == other.unitPrice;
   }
 
@@ -149,10 +163,12 @@ class _$Package extends Package {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, frequencyWeeks.hashCode), id.hashCode),
-                    length.hashCode),
-                name.hashCode),
-            pickups.hashCode),
+                $jc(
+                    $jc($jc($jc(0, frequencyWeeks.hashCode), id.hashCode),
+                        length.hashCode),
+                    name.hashCode),
+                pickups.hashCode),
+            basePackage.hashCode),
         unitPrice.hashCode));
   }
 
@@ -164,6 +180,7 @@ class _$Package extends Package {
           ..add('length', length)
           ..add('name', name)
           ..add('pickups', pickups)
+          ..add('basePackage', basePackage)
           ..add('unitPrice', unitPrice))
         .toString();
   }
@@ -193,6 +210,10 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
   int get pickups => _$this._pickups;
   set pickups(int pickups) => _$this._pickups = pickups;
 
+  bool _basePackage;
+  bool get basePackage => _$this._basePackage;
+  set basePackage(bool basePackage) => _$this._basePackage = basePackage;
+
   String _unitPrice;
   String get unitPrice => _$this._unitPrice;
   set unitPrice(String unitPrice) => _$this._unitPrice = unitPrice;
@@ -206,6 +227,7 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
       _length = _$v.length;
       _name = _$v.name;
       _pickups = _$v.pickups;
+      _basePackage = _$v.basePackage;
       _unitPrice = _$v.unitPrice;
       _$v = null;
     }
@@ -234,6 +256,7 @@ class PackageBuilder implements Builder<Package, PackageBuilder> {
             length: length,
             name: name,
             pickups: pickups,
+            basePackage: basePackage,
             unitPrice: unitPrice);
     replace(_$result);
     return _$result;

@@ -5,7 +5,6 @@ import 'package:built_collection/built_collection.dart';
 import '../../data/models/customer.dart';
 import '../../data/models/subscription.dart';
 import '../../data/models/consumer_subscription.dart';
-import '../../data/models/package.dart';
 
 part 'subscription_actions.g.dart';
 
@@ -67,27 +66,3 @@ class LoadConsumerSubscriptionFailure {
   Map<String, dynamic> toJson() => _$LoadConsumerSubscriptionFailureToJson(this);
 }
 
-/// PACKAGES
-
-@JsonSerializable()
-class LoadPackagesRequest {
-  LoadPackagesRequest();
-  Map<String, dynamic> toJson() => _$LoadPackagesRequestToJson(this);
-}
-
-// @JsonSerializable()
-class LoadPackagesSuccess {
-  // @JsonKey(fromJson: Packages.fromJson)
-  final BuiltList<Package> packages;
-
-  LoadPackagesSuccess({@required this.packages});
-  // Map<String, dynamic> toJson() => _$LoadPackagesSuccessToJson(this);
-}
-
-@JsonSerializable()
-class LoadPackagesFailure {
-  final String error;
-
-  LoadPackagesFailure({@required this.error});
-  Map<String, dynamic> toJson() => _$LoadPackagesFailureToJson(this);
-}

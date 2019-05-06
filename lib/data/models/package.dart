@@ -13,12 +13,20 @@ abstract class Package implements Built<Package, PackageBuilder> {
   factory Package([updates(PackageBuilder b)]) = _$Package;
 
   Package._();
+
   @BuiltValueField(wireName: 'frequency_weeks')
   int get frequencyWeeks;
+
   int get id;
+
   String get length;
+
   String get name;
+
   int get pickups;
+
+  @BuiltValueField(wireName: 'base_package')
+  bool get basePackage;
 
   @BuiltValueField(wireName: 'unit_price')
   String get unitPrice;

@@ -21,6 +21,15 @@ ThemeData appTheme() {
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
       ),
     ),
+    sliderTheme: SliderThemeData(
+      trackHeight: 8,
+      activeTrackColor: Colors.grey[300],
+      inactiveTrackColor: Colors.grey[300],
+      activeTickMarkColor: Colors.grey,
+      inactiveTickMarkColor: Colors.grey,
+      thumbColor: Colors.grey[700],
+      overlayColor: accentColor.withOpacity(0.3)
+    )
     
   );
 }

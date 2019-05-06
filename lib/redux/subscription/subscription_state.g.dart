@@ -36,13 +36,6 @@ class _$SubscriptionStateSerializer
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(String)));
     }
-    if (object.packages != null) {
-      result
-        ..add('packages')
-        ..add(serializers.serialize(object.packages,
-            specifiedType: const FullType(BuiltMap,
-                const [const FullType(int), const FullType(Package)])));
-    }
     if (object.subscription != null) {
       result
         ..add('subscription')
@@ -77,13 +70,6 @@ class _$SubscriptionStateSerializer
           result.fetchCount = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'packages':
-          result.packages.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
-                const FullType(Package)
-              ])) as BuiltMap);
-          break;
         case 'subscription':
           result.subscription.replace(serializers.deserialize(value,
               specifiedType: const FullType(Subscription)) as Subscription);
@@ -103,8 +89,6 @@ class _$SubscriptionState extends SubscriptionState {
   @override
   final int fetchCount;
   @override
-  final BuiltMap<int, Package> packages;
-  @override
   final Subscription subscription;
 
   factory _$SubscriptionState(
@@ -115,7 +99,6 @@ class _$SubscriptionState extends SubscriptionState {
       {this.consumerSubscription,
       this.error,
       this.fetchCount,
-      this.packages,
       this.subscription})
       : super._() {
     if (fetchCount == null) {
@@ -138,17 +121,14 @@ class _$SubscriptionState extends SubscriptionState {
         consumerSubscription == other.consumerSubscription &&
         error == other.error &&
         fetchCount == other.fetchCount &&
-        packages == other.packages &&
         subscription == other.subscription;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, consumerSubscription.hashCode), error.hashCode),
-                fetchCount.hashCode),
-            packages.hashCode),
+        $jc($jc($jc(0, consumerSubscription.hashCode), error.hashCode),
+            fetchCount.hashCode),
         subscription.hashCode));
   }
 
@@ -158,7 +138,6 @@ class _$SubscriptionState extends SubscriptionState {
           ..add('consumerSubscription', consumerSubscription)
           ..add('error', error)
           ..add('fetchCount', fetchCount)
-          ..add('packages', packages)
           ..add('subscription', subscription))
         .toString();
   }
@@ -182,12 +161,6 @@ class SubscriptionStateBuilder
   int get fetchCount => _$this._fetchCount;
   set fetchCount(int fetchCount) => _$this._fetchCount = fetchCount;
 
-  MapBuilder<int, Package> _packages;
-  MapBuilder<int, Package> get packages =>
-      _$this._packages ??= new MapBuilder<int, Package>();
-  set packages(MapBuilder<int, Package> packages) =>
-      _$this._packages = packages;
-
   SubscriptionBuilder _subscription;
   SubscriptionBuilder get subscription =>
       _$this._subscription ??= new SubscriptionBuilder();
@@ -201,7 +174,6 @@ class SubscriptionStateBuilder
       _consumerSubscription = _$v.consumerSubscription?.toBuilder();
       _error = _$v.error;
       _fetchCount = _$v.fetchCount;
-      _packages = _$v.packages?.toBuilder();
       _subscription = _$v.subscription?.toBuilder();
       _$v = null;
     }
@@ -230,7 +202,6 @@ class SubscriptionStateBuilder
               consumerSubscription: _consumerSubscription?.build(),
               error: error,
               fetchCount: fetchCount,
-              packages: _packages?.build(),
               subscription: _subscription?.build());
     } catch (_) {
       String _$failedField;
@@ -238,8 +209,6 @@ class SubscriptionStateBuilder
         _$failedField = 'consumerSubscription';
         _consumerSubscription?.build();
 
-        _$failedField = 'packages';
-        _packages?.build();
         _$failedField = 'subscription';
         _subscription?.build();
       } catch (e) {

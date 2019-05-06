@@ -61,5 +61,4 @@ class WebClient {
       throw Exception(response.body);
     }
   }
-
 }

@@ -95,7 +95,6 @@ class StartDateFormState extends State<StartDateForm> {
     );
   }
 
-
   void _onTap({DateTime selectedStartDate}) {
     if (selectedStartDate != widget.viewModel.selectedStartDate) {
       widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b

@@ -18,15 +18,22 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
   Iterable serialize(Serializers serializers, DataState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
+      'fetchCount',
+      serializers.serialize(object.fetchCount,
+          specifiedType: const FullType(int)),
     ];
     if (object.error != null) {
       result
         ..add('error')
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(String)));
+    }
+    if (object.packages != null) {
+      result
+        ..add('packages')
+        ..add(serializers.serialize(object.packages,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(int), const FullType(Package)])));
     }
     if (object.postcodes != null) {
       result
@@ -54,9 +61,16 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
           result.error = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'fetchCount':
+          result.fetchCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'packages':
+          result.packages.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(Package)
+              ])) as BuiltMap);
           break;
         case 'postcodes':
           result.postcodes.replace(serializers.deserialize(value,
@@ -76,16 +90,19 @@ class _$DataState extends DataState {
   @override
   final String error;
   @override
-  final bool isLoading;
+  final int fetchCount;
+  @override
+  final BuiltMap<int, Package> packages;
   @override
   final BuiltMap<int, Postcode> postcodes;
 
   factory _$DataState([void Function(DataStateBuilder) updates]) =>
       (new DataStateBuilder()..update(updates)).build();
 
-  _$DataState._({this.error, this.isLoading, this.postcodes}) : super._() {
-    if (isLoading == null) {
-      throw new BuiltValueNullFieldError('DataState', 'isLoading');
+  _$DataState._({this.error, this.fetchCount, this.packages, this.postcodes})
+      : super._() {
+    if (fetchCount == null) {
+      throw new BuiltValueNullFieldError('DataState', 'fetchCount');
     }
   }
 
@@ -101,21 +118,25 @@ class _$DataState extends DataState {
     if (identical(other, this)) return true;
     return other is DataState &&
         error == other.error &&
-        isLoading == other.isLoading &&
+        fetchCount == other.fetchCount &&
+        packages == other.packages &&
         postcodes == other.postcodes;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, error.hashCode), isLoading.hashCode), postcodes.hashCode));
+        $jc($jc($jc(0, error.hashCode), fetchCount.hashCode),
+            packages.hashCode),
+        postcodes.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DataState')
           ..add('error', error)
-          ..add('isLoading', isLoading)
+          ..add('fetchCount', fetchCount)
+          ..add('packages', packages)
           ..add('postcodes', postcodes))
         .toString();
   }
@@ -128,9 +149,15 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
+  int _fetchCount;
+  int get fetchCount => _$this._fetchCount;
+  set fetchCount(int fetchCount) => _$this._fetchCount = fetchCount;
+
+  MapBuilder<int, Package> _packages;
+  MapBuilder<int, Package> get packages =>
+      _$this._packages ??= new MapBuilder<int, Package>();
+  set packages(MapBuilder<int, Package> packages) =>
+      _$this._packages = packages;
 
   MapBuilder<int, Postcode> _postcodes;
   MapBuilder<int, Postcode> get postcodes =>
@@ -143,7 +170,8 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
   DataStateBuilder get _$this {
     if (_$v != null) {
       _error = _$v.error;
-      _isLoading = _$v.isLoading;
+      _fetchCount = _$v.fetchCount;
+      _packages = _$v.packages?.toBuilder();
       _postcodes = _$v.postcodes?.toBuilder();
       _$v = null;
     }
@@ -170,11 +198,14 @@ class DataStateBuilder implements Builder<DataState, DataStateBuilder> {
       _$result = _$v ??
           new _$DataState._(
               error: error,
-              isLoading: isLoading,
+              fetchCount: fetchCount,
+              packages: _packages?.build(),
               postcodes: _postcodes?.build());
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'packages';
+        _packages?.build();
         _$failedField = 'postcodes';
         _postcodes?.build();
       } catch (e) {

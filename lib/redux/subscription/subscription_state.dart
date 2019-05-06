@@ -1,11 +1,9 @@
 library SubscriptionState;
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import '../../data/models/consumer_subscription.dart';
-import '../../data/models/package.dart';
 import '../../data/models/serializers.dart';
 import '../../data/models/subscription.dart';
 
@@ -26,9 +24,6 @@ abstract class SubscriptionState implements Built<SubscriptionState, Subscriptio
   String get error;
 
   int get fetchCount;
-
-  @nullable
-  BuiltMap<int, Package> get packages;
 
   @nullable
   Subscription get subscription;

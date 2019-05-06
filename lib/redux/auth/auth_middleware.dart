@@ -40,6 +40,7 @@ class AuthMiddleware {
     // Let app load 2 seconds and load this after as this is low priority
     await Future<void>.delayed(const Duration(seconds: 2), () {
       store.dispatch(LoadPostcodesRequest());
+      store.dispatch(LoadPackagesRequest());
     });
   }
 
@@ -77,7 +78,6 @@ class AuthMiddleware {
     next(action);
 
     store.dispatch(LoadCustomerRequest(user: action.user));
-    store.dispatch(LoadPackagesRequest());
   }
 
 
