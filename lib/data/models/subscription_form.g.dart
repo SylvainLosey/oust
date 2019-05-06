@@ -60,6 +60,12 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
+    if (object.password != null) {
+      result
+        ..add('password')
+        ..add(serializers.serialize(object.password,
+            specifiedType: const FullType(String)));
+    }
     if (object.firstName != null) {
       result
         ..add('firstName')
@@ -182,6 +188,10 @@ class _$SubscriptionFormSerializer
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'password':
+          result.password = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'firstName':
           result.firstName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -258,6 +268,8 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String email;
   @override
+  final String password;
+  @override
   final String firstName;
   @override
   final String lastName;
@@ -296,6 +308,7 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.registrationMethod,
       this.paymentMethod,
       this.email,
+      this.password,
       this.firstName,
       this.lastName,
       this.leadStatus,
@@ -334,6 +347,7 @@ class _$SubscriptionForm extends SubscriptionForm {
         registrationMethod == other.registrationMethod &&
         paymentMethod == other.paymentMethod &&
         email == other.email &&
+        password == other.password &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         leadStatus == other.leadStatus &&
@@ -369,22 +383,13 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    currentStep
-                                                                                        .hashCode),
-                                                                                frequency
-                                                                                    .hashCode),
-                                                                            address
-                                                                                .hashCode),
-                                                                        contactMethod
-                                                                            .hashCode),
-                                                                    registrationMethod
-                                                                        .hashCode),
-                                                                paymentMethod
-                                                                    .hashCode),
-                                                            email.hashCode),
+                                                                            $jc($jc($jc(0, currentStep.hashCode), frequency.hashCode),
+                                                                                address.hashCode),
+                                                                            contactMethod.hashCode),
+                                                                        registrationMethod.hashCode),
+                                                                    paymentMethod.hashCode),
+                                                                email.hashCode),
+                                                            password.hashCode),
                                                         firstName.hashCode),
                                                     lastName.hashCode),
                                                 leadStatus.hashCode),
@@ -410,6 +415,7 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('registrationMethod', registrationMethod)
           ..add('paymentMethod', paymentMethod)
           ..add('email', email)
+          ..add('password', password)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('leadStatus', leadStatus)
@@ -461,6 +467,10 @@ class SubscriptionFormBuilder
   String _email;
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
+
+  String _password;
+  String get password => _$this._password;
+  set password(String password) => _$this._password = password;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -533,6 +543,7 @@ class SubscriptionFormBuilder
       _registrationMethod = _$v.registrationMethod;
       _paymentMethod = _$v.paymentMethod;
       _email = _$v.email;
+      _password = _$v.password;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _leadStatus = _$v.leadStatus;
@@ -577,6 +588,7 @@ class SubscriptionFormBuilder
               registrationMethod: registrationMethod,
               paymentMethod: paymentMethod,
               email: email,
+              password: password,
               firstName: firstName,
               lastName: lastName,
               leadStatus: leadStatus,

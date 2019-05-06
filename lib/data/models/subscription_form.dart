@@ -42,6 +42,9 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   String get email;
 
   @nullable
+  String get password;
+
+  @nullable
   String get firstName;
 
   @nullable

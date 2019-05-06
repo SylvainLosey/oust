@@ -24,5 +24,17 @@ String phoneValidator(String value) {
   return 'Ce numéro de téléphone n\'est pas valide';
 }
 
-
 bool isNumeric(String string) => num.tryParse(string) != null;
+
+
+String passwordValidator(String value) {
+  if (isNumeric(value)) {
+    return 'Votre mot de passe ne peut pas contenir que des chiffres.';
+  }
+
+  if (value.length < 8) {
+    return 'Votre mot de passe doit contenir au minimum 8 charactères';
+  }
+
+  return null;
+}
