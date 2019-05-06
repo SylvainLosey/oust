@@ -12,8 +12,8 @@ import '../../../presentation/title_widget.dart';
 import '../../../presentation/selectable.dart';
 
 
-class SubscriptionFormContainersYesNo extends StatelessWidget {
-  static int step = 7;
+class SubscriptionFormPaymentMethod extends StatelessWidget {
+  static int step = 12;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SubscriptionFormContainersYesNo extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: DoYouWantContainers(viewModel),
+            body: PaymentMethodForm(viewModel),
           )
         );
       },
@@ -37,60 +37,62 @@ class SubscriptionFormContainersYesNo extends StatelessWidget {
 }
 
 
-class DoYouWantContainers extends StatefulWidget {
+class PaymentMethodForm extends StatefulWidget {
   final _ViewModel viewModel;
 
-  DoYouWantContainers(this.viewModel);
+ PaymentMethodForm(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => DoYouWantContainersState();
+  State<StatefulWidget> createState() => PaymentMethodFormState();
 }
 
-class DoYouWantContainersState extends State<DoYouWantContainers> {
+class PaymentMethodFormState extends State<PaymentMethodForm> {
+
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Conteneurs',
-        subtitle: 'Tu peux utiliser tes propres conteneurs si tu en as déjà. Sinon, nous pouvons t\'en fournir.'
+        title: 'Méthode de paiement',
+        subtitle: 'Comment souhaites-tu payer ton abonnement?'
       ),
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SelectableItem(
-            onTap: () => _onTap(choice: true),
-            title: 'J\'aimerais des caisses de tri',
-            text: 'Nous te les livrons avec le premier passage dès 15.00 CHF pièce.',
-            selected: widget.viewModel.wantsContainers ?? false ? true : false,
+            onTap: () => _onTap(paymentMethod: 'emainInvoice'),
+            title: 'Facture email',
+            text: 'Sans frais et pratique',
+            selected: widget.viewModel.paymentMethod == 'emainInvoice'
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(
-            onTap: () => _onTap(choice: false),
-            title: 'J\'ai tout ce qu\'il me faut',
-            text: 'Tant que tes déchets sont triés, tu peux utiliser tout type de conteneurs.',
-            selected: widget.viewModel.wantsContainers ?? true ? false : true,
+            onTap: () => _onTap(paymentMethod: 'paperInvoice'),
+            title: 'Facture papier',
+            text: '2.00 CHF par facture',
+            selected: widget.viewModel.paymentMethod == 'paperInvoice'
           ),
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.wantsContainers != null ? () => widget.viewModel.nextStep(widget.viewModel.wantsContainers) : null
+        onPressed: widget.viewModel.paymentMethod != null ? () => widget.viewModel.nextStep() : null
       )
     );
   }
 
-  void _onTap({bool choice}) {
-    if (choice != widget.viewModel.wantsContainers) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = choice));
+  void _onTap({String paymentMethod}) {
+    if (paymentMethod != widget.viewModel.paymentMethod) {
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
     } else {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = null));
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = null));
     }
   }
 }
 
+
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
-  final bool wantsContainers;
+  final String paymentMethod;
   final Function nextStep;
   final Function previousStep;
   final Function exit;
@@ -98,7 +100,7 @@ class _ViewModel {
 
   _ViewModel({
     this.subscriptionForm,
-    this.wantsContainers,
+    this.paymentMethod,
     this.nextStep,
     this.previousStep,
     this.exit,
@@ -108,14 +110,8 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      wantsContainers: store.state.subscriptionFormState.subscriptionForm.wantsContainers,
-      nextStep: (bool _wantsContainers) {
-        if (_wantsContainers) {
-          store.dispatch(SubscriptionFormNextStep());
-        } else {
-          store.dispatch(SubscriptionFormNextStep(doesNotWantContainers: true));
-        }
-      },
+      paymentMethod: store.state.subscriptionFormState.subscriptionForm.paymentMethod,
+      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))

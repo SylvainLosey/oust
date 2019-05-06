@@ -4,16 +4,15 @@ import 'package:redux/redux.dart';
 
 import '../../../../redux/app/app_state.dart';
 import '../../../../data/models/subscription_form.dart';
-import '../../../../utils/colors.dart';
 import '../../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-import '../../../presentation/base_card.dart';
+import '../../../presentation/selectable.dart';
 
 
-class SubscriptionFormMethod extends StatelessWidget {
+class SubscriptionFormRegistrationMethod extends StatelessWidget {
   static int step = 6;
 
   @override
@@ -29,7 +28,7 @@ class SubscriptionFormMethod extends StatelessWidget {
           },
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
-            body: MethodForm(viewModel),
+            body: RegistrationMethodForm(viewModel),
           )
         );
       },
@@ -38,18 +37,16 @@ class SubscriptionFormMethod extends StatelessWidget {
 }
 
 
-
-class MethodForm extends StatefulWidget {
+class RegistrationMethodForm extends StatefulWidget {
   final _ViewModel viewModel;
 
-  MethodForm(this.viewModel);
+  RegistrationMethodForm(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => MethodFormState();
+  State<StatefulWidget> createState() => RegistrationMethodFormState();
 }
 
-class MethodFormState extends State<MethodForm> {
-  String _selectedMethod;
+class RegistrationMethodFormState extends State<RegistrationMethodForm> {
 
   @override
   Widget build(BuildContext context) {
@@ -61,61 +58,41 @@ class MethodFormState extends State<MethodForm> {
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          GestureDetector(
+          SelectableItem(
             onTap: () => _onTap(method: 'app'),
-            child: BaseCard(
-              child: CardText(
-                title: 'M\'inscrire tout de suite',
-                text: 'Terminer l\'inscription depuis l\'application en quelques minutes.',
-                color: _selectedMethod == 'app' ? Colors.white : null
-              ),
-              color: _selectedMethod == 'app' ? primaryColor : null
-            ),
+            title: 'M\'inscrire tout de suite',
+            text: 'Terminer l\'inscription depuis l\'application en quelques minutes.',
+            selected: widget.viewModel.registrationMethod == 'app'
           ),
           Container(height: Layout.of(context).gridUnit(1)),
-          GestureDetector(
+          SelectableItem(
             onTap: () => _onTap(method: 'rdv'),
-            child: BaseCard(
-              child: CardText(
-                title: 'Fixer un rendez-vous', 
-                text: 'Convenir d\'un rendez-vous à ton domicile. Idéal si tu as des demandes spéciales.',
-                color: _selectedMethod == 'rdv' ? Colors.white : null
-              ),
-              color: _selectedMethod == 'rdv' ? primaryColor : null
-            ),
-          )
+            title: 'Fixer un rendez-vous',
+            text: 'Convenir d\'un rendez-vous à ton domicile. Idéal si tu as des demandes spéciales.',
+            selected: widget.viewModel.registrationMethod == 'rdv'
+          ),
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _selectedMethod != null ? () => widget.viewModel.nextStep(_selectedMethod) : null
+        onPressed: widget.viewModel.registrationMethod != null ? () => widget.viewModel.nextStep(widget.viewModel.registrationMethod) : null
       )
     );
   }
 
-  @override
-  void initState() {
-    _selectedMethod = widget.viewModel.subscriptionForm.registrationMethod;
-    super.initState();
-  }
-
   void _onTap({String method}) {
-    setState(() {
-      if(_selectedMethod == method) {
-        _selectedMethod = null;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod= null));
-      } else {
-        _selectedMethod = method;
-        widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = method));  
-      }
-    });
+    if (method != widget.viewModel.registrationMethod) {
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = method));
+    } else {
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = null));
+    }
   }
 }
 
 
-
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
+  final String registrationMethod;
   final Function nextStep;
   final Function previousStep;
   final Function exit;
@@ -123,6 +100,7 @@ class _ViewModel {
 
   _ViewModel({
     this.subscriptionForm,
+    this.registrationMethod,
     this.nextStep,
     this.previousStep,
     this.exit,
@@ -132,6 +110,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+      registrationMethod: store.state.subscriptionFormState.subscriptionForm.registrationMethod,
       nextStep: (String selectedMethod) {
         if (selectedMethod == 'app') {
           store.dispatch(SubscriptionFormNextStep());

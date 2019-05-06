@@ -9,7 +9,7 @@ import '../../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-import '../../../presentation/selectable_item.dart';
+import '../../../presentation/selectable.dart';
 
 
 class SubscriptionFormLocation extends StatelessWidget {
@@ -86,21 +86,21 @@ class LocationFormState extends State<LocationForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ...List.generate(_locationChoices.length, (int index) {
-            return SelectableItem(
+            return SelectableCheckbox(
               onTap: () => _onTap(selectedItem: index),
               text: _locationChoices[index],
               selected: widget.viewModel.selectedLocationIndex == index,
             );
           },
         ),
-        SelectableItem(
+        SelectableCheckbox(
             selected: widget.viewModel.selectedLocationIndex == 5,
             onTap: () => _onTap(selectedItem: 5),
             child: Flexible(
               child: Form(
                 key: _formKey,
                 // We use IgnorePointer to disable the interception of the tap by TextField
-                // Therefore SelectableItem (GestureDetector) gets it (via _onTap), from which we request focus subsequently
+                // Therefore SelectableCheckbox (GestureDetector) gets it (via _onTap), from which we request focus subsequently
                 child: IgnorePointer(
                   child: TextFormField(
                     validator: (String value) {

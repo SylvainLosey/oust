@@ -11,7 +11,7 @@ import '../../../../utils/datetime.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-import '../../../presentation/selectable_item.dart';
+import '../../../presentation/selectable.dart';
 
 
 class SubscriptionFormStartDate extends StatelessWidget {
@@ -77,7 +77,7 @@ class StartDateFormState extends State<StartDateForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ...List.generate(widget.viewModel.startDates.length, (int index) {
-            return SelectableItem(
+            return SelectableCheckbox(
               onTap: () => _onTap(selectedStartDate: widget.viewModel.startDates[index]),
               text: dateToStringFrench(widget.viewModel.startDates[index]),
               selected: widget.viewModel.selectedStartDate == widget.viewModel.startDates[index],

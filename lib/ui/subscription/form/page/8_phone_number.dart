@@ -63,7 +63,7 @@ class PhoneFormState extends State<PhoneForm> {
           children: <Widget>[
             TextFormField(
               controller: _phoneController,
-              validator: phoneValidator,
+              // validator: phoneValidator,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Téléphone',

@@ -7,6 +7,8 @@ export '6_containers.dart';
 export '7_location.dart';
 export '8_phone_number.dart';
 export '9_start_date.dart';
+export '10_payment_method.dart';
+export '11_payment_interval.dart';
 
 export '100_postcode_unavailable.dart';
 export '101_postcode_unavailable_success.dart';

@@ -42,6 +42,18 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.contactMethod,
             specifiedType: const FullType(String)));
     }
+    if (object.registrationMethod != null) {
+      result
+        ..add('registrationMethod')
+        ..add(serializers.serialize(object.registrationMethod,
+            specifiedType: const FullType(String)));
+    }
+    if (object.paymentMethod != null) {
+      result
+        ..add('paymentMethod')
+        ..add(serializers.serialize(object.paymentMethod,
+            specifiedType: const FullType(String)));
+    }
     if (object.email != null) {
       result
         ..add('email')
@@ -84,16 +96,16 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.postcode,
             specifiedType: const FullType(int)));
     }
-    if (object.registrationMethod != null) {
-      result
-        ..add('registrationMethod')
-        ..add(serializers.serialize(object.registrationMethod,
-            specifiedType: const FullType(String)));
-    }
     if (object.selectedLocationIndex != null) {
       result
         ..add('selectedLocationIndex')
         ..add(serializers.serialize(object.selectedLocationIndex,
+            specifiedType: const FullType(int)));
+    }
+    if (object.selectedPackage != null) {
+      result
+        ..add('selectedPackage')
+        ..add(serializers.serialize(object.selectedPackage,
             specifiedType: const FullType(int)));
     }
     if (object.smallContainerQuantity != null) {
@@ -158,6 +170,14 @@ class _$SubscriptionFormSerializer
           result.contactMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'registrationMethod':
+          result.registrationMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'paymentMethod':
+          result.paymentMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'email':
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -186,12 +206,12 @@ class _$SubscriptionFormSerializer
           result.postcode = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'registrationMethod':
-          result.registrationMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'selectedLocationIndex':
           result.selectedLocationIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'selectedPackage':
+          result.selectedPackage = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'smallContainerQuantity':
@@ -232,6 +252,10 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final String contactMethod;
   @override
+  final String registrationMethod;
+  @override
+  final String paymentMethod;
+  @override
   final String email;
   @override
   final String firstName;
@@ -246,9 +270,9 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final int postcode;
   @override
-  final String registrationMethod;
-  @override
   final int selectedLocationIndex;
+  @override
+  final int selectedPackage;
   @override
   final int smallContainerQuantity;
   @override
@@ -269,6 +293,8 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.frequency,
       this.address,
       this.contactMethod,
+      this.registrationMethod,
+      this.paymentMethod,
       this.email,
       this.firstName,
       this.lastName,
@@ -276,8 +302,8 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.location,
       this.phoneNumber,
       this.postcode,
-      this.registrationMethod,
       this.selectedLocationIndex,
+      this.selectedPackage,
       this.smallContainerQuantity,
       this.bigContainerQuantity,
       this.wantsContainers,
@@ -305,6 +331,8 @@ class _$SubscriptionForm extends SubscriptionForm {
         frequency == other.frequency &&
         address == other.address &&
         contactMethod == other.contactMethod &&
+        registrationMethod == other.registrationMethod &&
+        paymentMethod == other.paymentMethod &&
         email == other.email &&
         firstName == other.firstName &&
         lastName == other.lastName &&
@@ -312,8 +340,8 @@ class _$SubscriptionForm extends SubscriptionForm {
         location == other.location &&
         phoneNumber == other.phoneNumber &&
         postcode == other.postcode &&
-        registrationMethod == other.registrationMethod &&
         selectedLocationIndex == other.selectedLocationIndex &&
+        selectedPackage == other.selectedPackage &&
         smallContainerQuantity == other.smallContainerQuantity &&
         bigContainerQuantity == other.bigContainerQuantity &&
         wantsContainers == other.wantsContainers &&
@@ -341,14 +369,20 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            currentStep
+                                                                            $jc(
+                                                                                $jc(
+                                                                                    0,
+                                                                                    currentStep
+                                                                                        .hashCode),
+                                                                                frequency
+                                                                                    .hashCode),
+                                                                            address
                                                                                 .hashCode),
-                                                                        frequency
+                                                                        contactMethod
                                                                             .hashCode),
-                                                                    address
+                                                                    registrationMethod
                                                                         .hashCode),
-                                                                contactMethod
+                                                                paymentMethod
                                                                     .hashCode),
                                                             email.hashCode),
                                                         firstName.hashCode),
@@ -357,8 +391,8 @@ class _$SubscriptionForm extends SubscriptionForm {
                                             location.hashCode),
                                         phoneNumber.hashCode),
                                     postcode.hashCode),
-                                registrationMethod.hashCode),
-                            selectedLocationIndex.hashCode),
+                                selectedLocationIndex.hashCode),
+                            selectedPackage.hashCode),
                         smallContainerQuantity.hashCode),
                     bigContainerQuantity.hashCode),
                 wantsContainers.hashCode),
@@ -373,6 +407,8 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('frequency', frequency)
           ..add('address', address)
           ..add('contactMethod', contactMethod)
+          ..add('registrationMethod', registrationMethod)
+          ..add('paymentMethod', paymentMethod)
           ..add('email', email)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
@@ -380,8 +416,8 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('location', location)
           ..add('phoneNumber', phoneNumber)
           ..add('postcode', postcode)
-          ..add('registrationMethod', registrationMethod)
           ..add('selectedLocationIndex', selectedLocationIndex)
+          ..add('selectedPackage', selectedPackage)
           ..add('smallContainerQuantity', smallContainerQuantity)
           ..add('bigContainerQuantity', bigContainerQuantity)
           ..add('wantsContainers', wantsContainers)
@@ -412,6 +448,16 @@ class SubscriptionFormBuilder
   set contactMethod(String contactMethod) =>
       _$this._contactMethod = contactMethod;
 
+  String _registrationMethod;
+  String get registrationMethod => _$this._registrationMethod;
+  set registrationMethod(String registrationMethod) =>
+      _$this._registrationMethod = registrationMethod;
+
+  String _paymentMethod;
+  String get paymentMethod => _$this._paymentMethod;
+  set paymentMethod(String paymentMethod) =>
+      _$this._paymentMethod = paymentMethod;
+
   String _email;
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
@@ -440,15 +486,15 @@ class SubscriptionFormBuilder
   int get postcode => _$this._postcode;
   set postcode(int postcode) => _$this._postcode = postcode;
 
-  String _registrationMethod;
-  String get registrationMethod => _$this._registrationMethod;
-  set registrationMethod(String registrationMethod) =>
-      _$this._registrationMethod = registrationMethod;
-
   int _selectedLocationIndex;
   int get selectedLocationIndex => _$this._selectedLocationIndex;
   set selectedLocationIndex(int selectedLocationIndex) =>
       _$this._selectedLocationIndex = selectedLocationIndex;
+
+  int _selectedPackage;
+  int get selectedPackage => _$this._selectedPackage;
+  set selectedPackage(int selectedPackage) =>
+      _$this._selectedPackage = selectedPackage;
 
   int _smallContainerQuantity;
   int get smallContainerQuantity => _$this._smallContainerQuantity;
@@ -484,6 +530,8 @@ class SubscriptionFormBuilder
       _frequency = _$v.frequency;
       _address = _$v.address;
       _contactMethod = _$v.contactMethod;
+      _registrationMethod = _$v.registrationMethod;
+      _paymentMethod = _$v.paymentMethod;
       _email = _$v.email;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
@@ -491,8 +539,8 @@ class SubscriptionFormBuilder
       _location = _$v.location;
       _phoneNumber = _$v.phoneNumber;
       _postcode = _$v.postcode;
-      _registrationMethod = _$v.registrationMethod;
       _selectedLocationIndex = _$v.selectedLocationIndex;
+      _selectedPackage = _$v.selectedPackage;
       _smallContainerQuantity = _$v.smallContainerQuantity;
       _bigContainerQuantity = _$v.bigContainerQuantity;
       _wantsContainers = _$v.wantsContainers;
@@ -526,6 +574,8 @@ class SubscriptionFormBuilder
               frequency: frequency,
               address: address,
               contactMethod: contactMethod,
+              registrationMethod: registrationMethod,
+              paymentMethod: paymentMethod,
               email: email,
               firstName: firstName,
               lastName: lastName,
@@ -533,8 +583,8 @@ class SubscriptionFormBuilder
               location: location,
               phoneNumber: phoneNumber,
               postcode: postcode,
-              registrationMethod: registrationMethod,
               selectedLocationIndex: selectedLocationIndex,
+              selectedPackage: selectedPackage,
               smallContainerQuantity: smallContainerQuantity,
               bigContainerQuantity: bigContainerQuantity,
               wantsContainers: wantsContainers,

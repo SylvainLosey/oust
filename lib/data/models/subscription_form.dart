@@ -33,6 +33,12 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   String get contactMethod;
 
   @nullable
+  String get registrationMethod;
+
+  @nullable
+  String get paymentMethod;
+
+  @nullable
   String get email;
 
   @nullable
@@ -54,11 +60,11 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
   int get postcode;
 
   @nullable
-  String get registrationMethod;
-
-  @nullable
   int get selectedLocationIndex;
 
+  @nullable
+  int get selectedPackage;
+  
   @nullable
   int get smallContainerQuantity;
 

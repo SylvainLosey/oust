@@ -4,13 +4,13 @@ import 'base_card.dart';
 import '../../utils/layout.dart';
 import '../../utils/colors.dart';
 
-class SelectableItem extends StatelessWidget {
+class SelectableCheckbox extends StatelessWidget {
   final Widget child;
   final String text;
   final Function onTap;
   final bool selected;
 
-  SelectableItem({this.child, this.text, this.onTap, this.selected});
+  SelectableCheckbox({this.child, this.text, this.onTap, this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,32 @@ class SelectableItem extends StatelessWidget {
           ],
         )
       ),
+    );
+  }
+}
+
+class SelectableItem extends StatelessWidget {
+  final Widget child;
+  final String title;
+  final String text;
+  final Function onTap;
+  final bool selected;
+
+  SelectableItem({this.child, this.title, this.text, this.onTap, this.selected});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: BaseCard(
+        color: selected ?? false ? primaryColor : null,
+        child: child != null ? child :
+          CardText(
+            title: title,
+            text: text,
+            color: selected ?? false ? Colors.white : null
+          ),
+      )
     );
   }
 }

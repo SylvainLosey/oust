@@ -36,7 +36,7 @@ class NavMiddleware {
       // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
       if (pushCounter == SubscriptionFormAddress.step && currentStep >= SubscriptionFormLead.step  && currentStep < SubscriptionFormAppointment.step) {
         pushCounter = SubscriptionFormLead.step;
-      } else if (pushCounter == SubscriptionFormMethod.step && currentStep >= SubscriptionFormAppointment.step) {
+      } else if (pushCounter == SubscriptionFormRegistrationMethod.step && currentStep >= SubscriptionFormAppointment.step) {
         pushCounter = SubscriptionFormAppointment.step;
       } else if (pushCounter == SubscriptionFormContainersYesNo.step && !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
         pushCounter = SubscriptionFormLocation.step;

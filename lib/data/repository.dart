@@ -57,7 +57,7 @@ class Repository {
     return await client.post('/leads/', body, auth: false);
   }
 
-  Future<Map<String, dynamic>> fetchStartDates({String address, int postcode, int frequency}) async {
+  Future<dynamic> fetchStartDates({String address, int postcode, int frequency}) async {
     final Map<String, dynamic> body = <String, dynamic>{
       'address': address,
       'postcode_id': postcode,

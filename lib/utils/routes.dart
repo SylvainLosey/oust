@@ -16,12 +16,14 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     '/subscription/form/${SubscriptionFormFrequency.step}': (BuildContext context) => SubscriptionFormFrequency(), // 3
     '/subscription/form/${SubscriptionFormName.step}': (BuildContext context) => SubscriptionFormName(), // 4
     '/subscription/form/${SubscriptionFormAddress.step}': (BuildContext context) => SubscriptionFormAddress(), //5
-    '/subscription/form/${SubscriptionFormMethod.step}': (BuildContext context) => SubscriptionFormMethod(), // 6
+    '/subscription/form/${SubscriptionFormRegistrationMethod.step}': (BuildContext context) => SubscriptionFormRegistrationMethod(), // 6
     '/subscription/form/${SubscriptionFormContainersYesNo.step}': (BuildContext context) => SubscriptionFormContainersYesNo(), // 7
     '/subscription/form/${SubscriptionFormContainers.step}': (BuildContext context) => SubscriptionFormContainers(), // 8
     '/subscription/form/${SubscriptionFormLocation.step}': (BuildContext context) => SubscriptionFormLocation(), // 9
     '/subscription/form/${SubscriptionFormPhone.step}': (BuildContext context) => SubscriptionFormPhone(), // 10
     '/subscription/form/${SubscriptionFormStartDate.step}': (BuildContext context) => SubscriptionFormStartDate(), // 10
+    '/subscription/form/${SubscriptionFormPaymentMethod.step}': (BuildContext context) => SubscriptionFormPaymentMethod(), // 10
+    '/subscription/form/${SubscriptionFormPaymentInterval.step}': (BuildContext context) => SubscriptionFormPaymentInterval(), // 10
 
     // Subscription unabailable - Lead track
     '/subscription/form/${SubscriptionFormLead.step}': (BuildContext context) => SubscriptionFormLead(), // 100

@@ -62,7 +62,7 @@ SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFor
     );
   } else if (state.subscriptionForm.currentStep == SubscriptionFormAppointment.step) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormMethod.step))
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormRegistrationMethod.step))
     ); 
   } else if (state.subscriptionForm.currentStep == SubscriptionFormLocation.step && !state.subscriptionForm.wantsContainers) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
