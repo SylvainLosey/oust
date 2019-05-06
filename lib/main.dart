@@ -9,6 +9,11 @@ import 'redux/app/app_state.dart';
 import 'redux/auth/auth_actions.dart';
 import 'redux/auth/auth_middleware.dart';
 import 'redux/nav/nav_middleware.dart';
+import 'redux/customer/customer_middleware.dart';
+import 'redux/subscription/subscription_middleware.dart';
+import 'redux/subscription/form/subscription_form_middleware.dart';
+import 'redux/pickup/pickup_middleware.dart';
+import 'redux/data/data_middleware.dart';
 
 void main() async {
   // debugPaintSizeEnabled=true;
@@ -23,6 +28,11 @@ void main() async {
         ...AuthMiddleware().createAuthMiddleware(),
         ...AppMiddleware().createAppMiddleware(),
         ...NavMiddleware(navigatorKey).createNavMiddleware(),
+        ...CustomerMiddleware().createCustomerMiddleware(),
+        ...SubscriptionMiddleware().createSubscriptionMiddleware(),
+        ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),
+        ...PickupMiddleware().createPickupMiddleware(),
+        ...DataMiddleware().createDataMiddleware(),
         remoteDevtools
     ]
   );

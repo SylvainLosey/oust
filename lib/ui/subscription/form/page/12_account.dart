@@ -47,10 +47,10 @@ class AccountForm extends StatefulWidget {
 }
 
 class AccountFormState extends State<AccountForm> {
-  bool _obscureText = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true;
   List<TextEditingController> _controllers = [];
 
   @override
