@@ -25,9 +25,9 @@ void main() async {
     appReducer,
     initialState: AppState(),
     middleware: [
+        ...NavMiddleware(navigatorKey).createNavMiddleware(),
         ...AuthMiddleware().createAuthMiddleware(),
         ...AppMiddleware().createAppMiddleware(),
-        ...NavMiddleware(navigatorKey).createNavMiddleware(),
         ...CustomerMiddleware().createCustomerMiddleware(),
         ...SubscriptionMiddleware().createSubscriptionMiddleware(),
         ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),

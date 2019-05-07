@@ -59,10 +59,10 @@ class PaymentMethodFormState extends State<PaymentMethodForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SelectableItem(
-            onTap: () => _onTap(paymentMethod: 'emainInvoice'),
+            onTap: () => _onTap(paymentMethod: 'emailInvoice'),
             title: 'Facture email',
             text: 'Sans frais et pratique',
-            selected: widget.viewModel.paymentMethod == 'emainInvoice'
+            selected: widget.viewModel.paymentMethod == 'emailInvoice'
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(

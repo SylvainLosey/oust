@@ -9,6 +9,7 @@ import '../presentation/loading.dart';
 import '../presentation/pickup_card.dart';
 import '../presentation/buttons.dart';
 import '../../redux/app/app_state.dart';
+import '../../redux/subscription/form/subscription_form_state.dart';
 import '../../data/models/pickup.dart';
 import '../../data/models/subscription.dart';
 import '../../data/models/customer.dart';
@@ -25,7 +26,7 @@ class SubscriptionHome extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
 
-        if (viewModel.fetchCount > 0) {
+        if (viewModel.fetchCount > 0 || viewModel.subscriptionFormState.isLoading) {
           return Loading();
         }
 
@@ -139,6 +140,7 @@ class _ViewModel {
   final BuiltMap<int, Package> packages;
   final Customer customer;
   final BuiltMap<int, Pickup> pickups;
+  final SubscriptionFormState subscriptionFormState;
 
   _ViewModel({
     this.fetchCount,
@@ -148,6 +150,7 @@ class _ViewModel {
     this.packages,
     this.customer,
     this.pickups,
+    this.subscriptionFormState
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -159,6 +162,7 @@ class _ViewModel {
       packages: store.state.dataState.packages,
       customer: store.state.customerState.customer,
       pickups: store.state.pickupState.pickups,
+      subscriptionFormState: store.state.subscriptionFormState,
      );
   }
 }

@@ -17,35 +17,49 @@ abstract class Subscription implements Built<Subscription, SubscriptionBuilder> 
   
   @nullable
   String get address;
+
   @nullable
   @BuiltValueField(wireName: 'average_quantity')
   int get averageQuantity;
+
   @BuiltValueField(wireName: 'base_date')
   @nullable
-  String get baseDate;
+  DateTime get baseDate;
+
   @nullable
   String get city;
+
   @nullable
   int get customer;
+
+  @nullable
   int get id;
+
   @nullable
   String get name;
+
   @nullable
   String get note;
+
   @nullable
   @BuiltValueField(wireName: 'pickup_day')
   int get pickupDay;
+
   @nullable
   BuiltList<double> get position;
+
   @nullable
   int get postcode;
+
   @nullable
   int get remainingPickups;
+
+  @nullable
   String get representation;
+
   @nullable
   String get status;
 
-  @nullable
   @BuiltValueField(wireName: 'subscription_type')
   @nullable
   String get subscriptionType;

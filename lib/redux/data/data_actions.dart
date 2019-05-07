@@ -18,6 +18,7 @@ class LoadPostcodesSuccess {
   final List<Postcode> postcodes;
 
   LoadPostcodesSuccess({@required this.postcodes});
+  Map<String, dynamic> toJson() => null;
 }
 
 @JsonSerializable()
@@ -36,13 +37,11 @@ class LoadPackagesRequest {
   Map<String, dynamic> toJson() => _$LoadPackagesRequestToJson(this);
 }
 
-// @JsonSerializable()
 class LoadPackagesSuccess {
-  // @JsonKey(fromJson: Packages.fromJson)
   final BuiltList<Package> packages;
 
   LoadPackagesSuccess({@required this.packages});
-  // Map<String, dynamic> toJson() => _$LoadPackagesSuccessToJson(this);
+  Map<String, dynamic> toJson() => null;
 }
 
 @JsonSerializable()

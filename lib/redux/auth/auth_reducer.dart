@@ -10,6 +10,9 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLoaded>(_userLoaded),
   TypedReducer<AuthState, UserLoginFailure>(_userLoginRequestFailure),
   TypedReducer<AuthState, UserLogout>(_userLogout),
+  TypedReducer<AuthState, CreateUserRequest>(_createUserRequest),
+  TypedReducer<AuthState, CreateUserSuccess>(_createUserSuccess),
+  TypedReducer<AuthState, CreateUserFailure>(_createUserFailure),
 ]);
 
 AuthState _userLoginRequest(AuthState state, UserLoginRequest action) {
@@ -44,5 +47,23 @@ AuthState _userLogout(AuthState state, UserLogout action) {
     ..isLoading = false
     ..isAuthenticated = false
     ..user = null
+  );
+}
+
+AuthState _createUserRequest(AuthState state, CreateUserRequest action) {
+  return state.rebuild((AuthStateBuilder b) => b
+    ..isLoading = true
+  );
+}
+
+AuthState _createUserSuccess(AuthState state, CreateUserSuccess action) {
+  return state.rebuild((AuthStateBuilder b) => b
+    ..isLoading = false
+  );
+}
+AuthState _createUserFailure(AuthState state, CreateUserFailure action) {
+  return state.rebuild((AuthStateBuilder b) => b
+    ..isLoading = false
+    ..error = action.error
   );
 }

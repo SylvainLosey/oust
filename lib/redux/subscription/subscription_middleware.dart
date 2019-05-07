@@ -14,7 +14,10 @@ class SubscriptionMiddleware {
   List<Middleware<AppState>> createSubscriptionMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, LoadSubscriptionRequest>(_loadSubscription),
-      TypedMiddleware<AppState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscription),    ];
+      TypedMiddleware<AppState, CreateSubscriptionRequest>(_createSubscriptionRequest),
+      TypedMiddleware<AppState, LoadConsumerSubscriptionRequest>(_loadConsumerSubscription),    
+      TypedMiddleware<AppState, CreateConsumerSubscriptionRequest>(_createConsumerSubscriptionRequest),    
+    ];
   }
 
   void _loadSubscription(Store<AppState> store, LoadSubscriptionRequest action, NextDispatcher next) async{
@@ -30,6 +33,25 @@ class SubscriptionMiddleware {
     }
   }
 
+  void _createSubscriptionRequest(Store<AppState> store, CreateSubscriptionRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final Subscription subscription = Subscription((SubscriptionBuilder b) => b
+        ..baseDate = action.baseDate
+        ..note = action.note
+        ..customer = action.customerId
+        ..subscriptionType = 'P'
+      );
+
+      final Map<String, dynamic> data = await repository.createSubscription(subscription);
+      action.completer.complete(data['id']);
+      store.dispatch(CreateSubscriptionSuccess());
+    } catch (e) {
+      store.dispatch(CreateSubscriptionFailure());
+    }
+  }
+
   void _loadConsumerSubscription(Store<AppState> store, LoadConsumerSubscriptionRequest action, NextDispatcher next) async{
     next(action);
 
@@ -39,6 +61,23 @@ class SubscriptionMiddleware {
       store.dispatch(LoadConsumerSubscriptionSuccess(consumerSubscription: consumerSubscription));
     } catch (e) {
       store.dispatch(LoadConsumerSubscriptionFailure(error: e.toString()));
+    }
+  }
+
+  void _createConsumerSubscriptionRequest(Store<AppState> store, CreateConsumerSubscriptionRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final ConsumerSubscription consumerSubscription = ConsumerSubscription((ConsumerSubscriptionBuilder b) => b
+        ..package = action.packageId
+        ..subscription = action.subscriptionId 
+      );
+
+      final Map<String, dynamic> data = await repository.createConsumerSubscription(consumerSubscription);
+      action.completer.complete();
+      store.dispatch(CreateConsumerSubscriptionSuccess());
+    } catch (e) {
+      store.dispatch(CreateConsumerSubscriptionFailure(error: e.toString()));
     }
   }
 }

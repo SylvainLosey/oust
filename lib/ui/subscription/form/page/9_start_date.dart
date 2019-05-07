@@ -76,12 +76,15 @@ class StartDateFormState extends State<StartDateForm> {
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          ...List.generate(widget.viewModel.startDates.length, (int index) {
-            return SelectableCheckbox(
-              onTap: () => _onTap(selectedStartDate: widget.viewModel.startDates[index]),
-              text: dateToStringFrench(widget.viewModel.startDates[index]),
-              selected: widget.viewModel.selectedStartDate == widget.viewModel.startDates[index],
-            );
+          if (widget.viewModel.startDates == null)
+            Center(child: Text('Bug'))
+          else
+            ...List.generate(widget.viewModel.startDates.length, (int index) {
+              return SelectableCheckbox(
+                onTap: () => _onTap(selectedStartDate: widget.viewModel.startDates[index]),
+                text: dateToStringFrench(widget.viewModel.startDates[index]),
+                selected: widget.viewModel.selectedStartDate == widget.viewModel.startDates[index],
+              );
           },
         ),
         ],

@@ -141,3 +141,12 @@ DecrementProductQuantity _$DecrementProductQuantityFromJson(
 Map<String, dynamic> _$DecrementProductQuantityToJson(
         DecrementProductQuantity instance) =>
     <String, dynamic>{'product': instance.product};
+
+SubmitSubscriptionFormRequest _$SubmitSubscriptionFormRequestFromJson(
+    Map<String, dynamic> json) {
+  return SubmitSubscriptionFormRequest();
+}
+
+Map<String, dynamic> _$SubmitSubscriptionFormRequestToJson(
+        SubmitSubscriptionFormRequest instance) =>
+    <String, dynamic>{};

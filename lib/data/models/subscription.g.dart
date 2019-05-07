@@ -18,13 +18,7 @@ class _$SubscriptionSerializer implements StructuredSerializer<Subscription> {
   @override
   Iterable serialize(Serializers serializers, Subscription object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'representation',
-      serializers.serialize(object.representation,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
     if (object.address != null) {
       result
         ..add('address')
@@ -41,7 +35,7 @@ class _$SubscriptionSerializer implements StructuredSerializer<Subscription> {
       result
         ..add('base_date')
         ..add(serializers.serialize(object.baseDate,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(DateTime)));
     }
     if (object.city != null) {
       result
@@ -53,6 +47,12 @@ class _$SubscriptionSerializer implements StructuredSerializer<Subscription> {
       result
         ..add('customer')
         ..add(serializers.serialize(object.customer,
+            specifiedType: const FullType(int)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
     if (object.name != null) {
@@ -92,6 +92,12 @@ class _$SubscriptionSerializer implements StructuredSerializer<Subscription> {
         ..add(serializers.serialize(object.remainingPickups,
             specifiedType: const FullType(int)));
     }
+    if (object.representation != null) {
+      result
+        ..add('representation')
+        ..add(serializers.serialize(object.representation,
+            specifiedType: const FullType(String)));
+    }
     if (object.status != null) {
       result
         ..add('status')
@@ -129,7 +135,7 @@ class _$SubscriptionSerializer implements StructuredSerializer<Subscription> {
           break;
         case 'base_date':
           result.baseDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
         case 'city':
           result.city = serializers.deserialize(value,
@@ -194,7 +200,7 @@ class _$Subscription extends Subscription {
   @override
   final int averageQuantity;
   @override
-  final String baseDate;
+  final DateTime baseDate;
   @override
   final String city;
   @override
@@ -239,14 +245,7 @@ class _$Subscription extends Subscription {
       this.representation,
       this.status,
       this.subscriptionType})
-      : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Subscription', 'id');
-    }
-    if (representation == null) {
-      throw new BuiltValueNullFieldError('Subscription', 'representation');
-    }
-  }
+      : super._();
 
   @override
   Subscription rebuild(void Function(SubscriptionBuilder) updates) =>
@@ -348,9 +347,9 @@ class SubscriptionBuilder
   set averageQuantity(int averageQuantity) =>
       _$this._averageQuantity = averageQuantity;
 
-  String _baseDate;
-  String get baseDate => _$this._baseDate;
-  set baseDate(String baseDate) => _$this._baseDate = baseDate;
+  DateTime _baseDate;
+  DateTime get baseDate => _$this._baseDate;
+  set baseDate(DateTime baseDate) => _$this._baseDate = baseDate;
 
   String _city;
   String get city => _$this._city;

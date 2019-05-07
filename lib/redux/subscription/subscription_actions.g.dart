@@ -73,3 +73,71 @@ LoadConsumerSubscriptionFailure _$LoadConsumerSubscriptionFailureFromJson(
 Map<String, dynamic> _$LoadConsumerSubscriptionFailureToJson(
         LoadConsumerSubscriptionFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
+    Map<String, dynamic> json) {
+  return CreateSubscriptionRequest(
+      baseDate: json['baseDate'] == null
+          ? null
+          : DateTime.parse(json['baseDate'] as String),
+      note: json['note'] as String,
+      customerId: json['customerId'] as int);
+}
+
+Map<String, dynamic> _$CreateSubscriptionRequestToJson(
+        CreateSubscriptionRequest instance) =>
+    <String, dynamic>{
+      'baseDate': instance.baseDate?.toIso8601String(),
+      'note': instance.note,
+      'customerId': instance.customerId
+    };
+
+CreateSubscriptionSuccess _$CreateSubscriptionSuccessFromJson(
+    Map<String, dynamic> json) {
+  return CreateSubscriptionSuccess();
+}
+
+Map<String, dynamic> _$CreateSubscriptionSuccessToJson(
+        CreateSubscriptionSuccess instance) =>
+    <String, dynamic>{};
+
+CreateSubscriptionFailure _$CreateSubscriptionFailureFromJson(
+    Map<String, dynamic> json) {
+  return CreateSubscriptionFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreateSubscriptionFailureToJson(
+        CreateSubscriptionFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+CreateConsumerSubscriptionRequest _$CreateConsumerSubscriptionRequestFromJson(
+    Map<String, dynamic> json) {
+  return CreateConsumerSubscriptionRequest(
+      packageId: json['packageId'] as int,
+      subscriptionId: json['subscriptionId'] as int);
+}
+
+Map<String, dynamic> _$CreateConsumerSubscriptionRequestToJson(
+        CreateConsumerSubscriptionRequest instance) =>
+    <String, dynamic>{
+      'packageId': instance.packageId,
+      'subscriptionId': instance.subscriptionId
+    };
+
+CreateConsumerSubscriptionSuccess _$CreateConsumerSubscriptionSuccessFromJson(
+    Map<String, dynamic> json) {
+  return CreateConsumerSubscriptionSuccess();
+}
+
+Map<String, dynamic> _$CreateConsumerSubscriptionSuccessToJson(
+        CreateConsumerSubscriptionSuccess instance) =>
+    <String, dynamic>{};
+
+CreateConsumerSubscriptionFailure _$CreateConsumerSubscriptionFailureFromJson(
+    Map<String, dynamic> json) {
+  return CreateConsumerSubscriptionFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreateConsumerSubscriptionFailureToJson(
+        CreateConsumerSubscriptionFailure instance) =>
+    <String, dynamic>{'error': instance.error};

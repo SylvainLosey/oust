@@ -108,3 +108,8 @@ class DecrementProductQuantity {
 }
 
 
+// SUBMIT FORM
+@JsonSerializable()
+class SubmitSubscriptionFormRequest {
+  Map<String, dynamic> toJson() => _$SubmitSubscriptionFormRequestToJson(this);
+}

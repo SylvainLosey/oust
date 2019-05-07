@@ -21,6 +21,7 @@ class AuthMiddleware {
       TypedMiddleware<AppState, UserLoginSuccess>(_userLoginSuccess),
       TypedMiddleware<AppState, UserLogout>(_userLogout),
       TypedMiddleware<AppState, UserLoaded>(_userLoaded),
+      TypedMiddleware<AppState, CreateUserRequest>(_createUserRequest),
     ];
   }
 
@@ -30,6 +31,7 @@ class AuthMiddleware {
     if (await _hasAuthData()) {
       final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
+        shoudlLoadCustomer: true,
         user: User((UserBuilder b) => b
           ..key = authData['key']
           ..id = authData['id']
@@ -65,7 +67,9 @@ class AuthMiddleware {
   void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UserLoaded(user: User((UserBuilder b) => b
+    store.dispatch(UserLoaded(
+      shoudlLoadCustomer: true,
+      user: User((UserBuilder b) => b
           ..key = action.key
           ..id = action.id
         )
@@ -76,8 +80,10 @@ class AuthMiddleware {
 
   void _userLoaded(Store<AppState> store, UserLoaded action, NextDispatcher next) async {
     next(action);
-
-    store.dispatch(LoadCustomerRequest(user: action.user));
+    
+    if (action.shoudlLoadCustomer) {
+      store.dispatch(LoadCustomerRequest(user: action.user));
+    }
   }
 
 
@@ -87,6 +93,30 @@ class AuthMiddleware {
     next(action);
   }
 
+
+  void _createUserRequest(Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final Map<String, dynamic> data = await repository.createUser(action.email, action.password);
+      _persistAuthData(data['key'], data['user']);
+
+      store.dispatch(CreateUserSuccess());
+      store.dispatch(UserLoaded(
+        shoudlLoadCustomer: false,
+        user: User((UserBuilder b) => b
+            ..key = data['key']
+            ..id = data['user']
+          )
+        )
+      );
+      print(data['user']);
+      action.completer.complete(data['user']);
+    } catch (e) {
+      store.dispatch(CreateUserFailure(error: e.toString()));
+      action.completer.completeError(e.toString());
+    }
+  }
 
   /// HELPER FUNCTIONS
   

@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Container(height: 200),
-                CustomerDetails(),
+                // CustomerDetails(),
                 LogoutButton(),
               ],)
             );

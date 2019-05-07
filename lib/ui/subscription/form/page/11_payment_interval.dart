@@ -106,7 +106,6 @@ class PaymentIntervalFormState extends State<PaymentIntervalForm> {
   void initState() {
     packages = widget.viewModel.packages.values.toList();
     packages.removeWhere((Package package) => !package.basePackage || package.frequencyWeeks != widget.viewModel.subscriptionForm.frequency);
-    print(packages);
     super.initState();
   }
 }

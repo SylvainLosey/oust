@@ -25,15 +25,41 @@ UserLoaded _$UserLoadedFromJson(Map<String, dynamic> json) {
   return UserLoaded(
       user: json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>));
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      shoudlLoadCustomer: json['shoudlLoadCustomer'] as bool);
 }
 
 Map<String, dynamic> _$UserLoadedToJson(UserLoaded instance) =>
-    <String, dynamic>{'user': instance.user};
+    <String, dynamic>{
+      'user': instance.user,
+      'shoudlLoadCustomer': instance.shoudlLoadCustomer
+    };
 
 UserLoginFailure _$UserLoginFailureFromJson(Map<String, dynamic> json) {
   return UserLoginFailure(error: json['error'] as String);
 }
 
 Map<String, dynamic> _$UserLoginFailureToJson(UserLoginFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+CreateUserRequest _$CreateUserRequestFromJson(Map<String, dynamic> json) {
+  return CreateUserRequest(
+      email: json['email'] as String, password: json['password'] as String);
+}
+
+Map<String, dynamic> _$CreateUserRequestToJson(CreateUserRequest instance) =>
+    <String, dynamic>{'email': instance.email, 'password': instance.password};
+
+CreateUserSuccess _$CreateUserSuccessFromJson(Map<String, dynamic> json) {
+  return CreateUserSuccess();
+}
+
+Map<String, dynamic> _$CreateUserSuccessToJson(CreateUserSuccess instance) =>
+    <String, dynamic>{};
+
+CreateUserFailure _$CreateUserFailureFromJson(Map<String, dynamic> json) {
+  return CreateUserFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreateUserFailureToJson(CreateUserFailure instance) =>
     <String, dynamic>{'error': instance.error};

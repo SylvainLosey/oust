@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:built_collection/built_collection.dart';
@@ -64,5 +66,58 @@ class LoadConsumerSubscriptionFailure {
 
   LoadConsumerSubscriptionFailure({@required this.error});
   Map<String, dynamic> toJson() => _$LoadConsumerSubscriptionFailureToJson(this);
+}
+
+
+// Reducer not yet created - Not sure if nexessary
+
+@JsonSerializable()
+class CreateSubscriptionRequest {
+  final DateTime baseDate;
+  final String note;
+  final int customerId;
+  @JsonKey(ignore: true)
+  final Completer completer;
+
+  CreateSubscriptionRequest({this.baseDate, this.note, this.customerId, this.completer});
+  Map<String, dynamic> toJson() => _$CreateSubscriptionRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreateSubscriptionSuccess {
+    Map<String, dynamic> toJson() => _$CreateSubscriptionSuccessToJson(this);
+}
+
+@JsonSerializable()
+class CreateSubscriptionFailure {
+  final String error;
+
+  CreateSubscriptionFailure({this.error});
+  Map<String, dynamic> toJson() => _$CreateSubscriptionFailureToJson(this);
+}
+
+
+@JsonSerializable()
+class CreateConsumerSubscriptionRequest {
+  final int packageId;
+  final int subscriptionId;
+  @JsonKey(ignore: true)
+  final Completer completer;
+
+  CreateConsumerSubscriptionRequest({this.packageId, this.subscriptionId, this.completer});
+  Map<String, dynamic> toJson() => _$CreateConsumerSubscriptionRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreateConsumerSubscriptionSuccess {
+    Map<String, dynamic> toJson() => _$CreateConsumerSubscriptionSuccessToJson(this);
+}
+
+@JsonSerializable()
+class CreateConsumerSubscriptionFailure {
+  final String error;
+
+  CreateConsumerSubscriptionFailure({this.error});
+  Map<String, dynamic> toJson() => _$CreateConsumerSubscriptionFailureToJson(this);
 }
 

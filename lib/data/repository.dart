@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:core';
 
 import 'web_client.dart';
+import 'models/customer.dart';
+import 'models/subscription.dart';
+import 'models/consumer_subscription.dart';
 
 class Repository {
   final WebClient client;
@@ -17,17 +20,42 @@ class Repository {
     return await client.post('/auth/login/', credentials, auth: false);
   }
 
+  Future<Map<String, dynamic>> createUser(String email, String password) async {
+    final Map<String, String> data = <String, String>{
+      'email': email,
+      'password1': password,
+      'password2': password,
+    };
+
+    return await client.post('/auth/registration/', data, auth: false);
+  }
+
   Future<List<dynamic>> fetchCustomer(int id) async {
     return await client.get('/customers/?user=$id/');
   }
+
+  Future<Map<String, dynamic>> createCustomer(Customer customer) async {
+    return await client.post('/customers/', customer.toJson());
+  }
+
 
   Future<List<dynamic>> fetchSubscription(int id) async {
     return await client.get('/subscriptions/?customer=$id/');
   }
 
+  Future<Map<String, dynamic>> createSubscription(Subscription subscription) async {
+    return await client.post('/subscriptions/', subscription.toJson());
+  }
+
+
   Future<List<dynamic>> fetchConsumerSubscription(int id) async {
     return await client.get('/consumersubscriptions/?customer=$id/');
   }
+
+  Future<Map<String, dynamic>> createConsumerSubscription(ConsumerSubscription consumerSubscription) async {
+    return await client.post('/consumersubscriptions/', consumerSubscription.toJson());
+  }
+
 
   Future<List<dynamic>> fetchPackages() async {
     return await client.get('/packages/', auth: false);

@@ -13,21 +13,42 @@ abstract class Customer implements Built<Customer, CustomerBuilder> {
   factory Customer([void Function (CustomerBuilder) updates]) = _$Customer;
 
   Customer._();
-  String get address;
-  String get city;
+
   @nullable
-  String get company;
-  @BuiltValueField(wireName: 'customer_status')
-  String get customerStatus;
+  int get id;
+
+  @nullable
+  String get gender;
+
+  @nullable
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
-  String get gender;
-  int get id;
+
+  @nullable
   @BuiltValueField(wireName: 'last_name')
   String get lastName;
+
+  @nullable
+  String get address;
+
+  @nullable
+  String get city;
+
+  @nullable
   int get postcode;
+
+  @nullable
+  String get company;
+
+  @nullable
+  @BuiltValueField(wireName: 'customer_status')
+  String get customerStatus;
+
+  @nullable
   @BuiltValueField(wireName: 'prefered_communication')
   String get preferedCommunication;
+
+  @nullable
   @BuiltValueField(wireName: 'prefered_payment_method')
   String get preferedPaymentMethod;
 

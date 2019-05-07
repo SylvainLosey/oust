@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:redux/redux.dart';
 
 import 'subscription_form_actions.dart';
+import '../../auth/auth_actions.dart';
 import '../../app/app_state.dart';
+import '../../customer/customer_actions.dart';
+import '../../subscription/subscription_actions.dart';
+import '../../../data/models/subscription_form.dart';
 import '../../../data/repository.dart';
 
 class SubscriptionFormMiddleware {
@@ -12,6 +18,7 @@ class SubscriptionFormMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, PostLeadRequest>(_postLead),
       TypedMiddleware<AppState, LoadStartDatesRequest>(_loadStartDates),
+      TypedMiddleware<AppState, SubmitSubscriptionFormRequest>(_submitForm),
     ];
   }
 
@@ -52,5 +59,49 @@ class SubscriptionFormMiddleware {
     } catch (e) {
       store.dispatch(LoadStartDatesFailure(error: e.toString()));
     }
+  }
+
+  void _submitForm(Store<AppState> store, SubmitSubscriptionFormRequest action, NextDispatcher next) async {
+    next(action);
+
+    final SubscriptionForm form = store.state.subscriptionFormState.subscriptionForm;
+
+    Completer _createUserCompleter = Completer();
+    store.dispatch(CreateUserRequest(
+      email: form.email,
+      password: form.password,
+      completer: _createUserCompleter
+    ));
+    _createUserCompleter.future.then((userId) {
+      Completer _createCustomerCompleter = Completer();
+      store.dispatch(CreateCustomerRequest(
+        firstName: form.firstName,
+        lastName: form.lastName,
+        address: form.address,
+        postcode: form.postcode,
+        preferedCommunication: form.paymentMethod == 'emailInvoice' ? 'E' : 'C',
+        userId: userId,
+        completer: _createCustomerCompleter,
+      ));
+      _createCustomerCompleter.future.then((customerId) {
+        Completer _createSubscriptionCompleter = Completer();
+        store.dispatch(CreateSubscriptionRequest(
+          baseDate: form.selectedStartDate,
+          note: form.location,
+          customerId: customerId,
+          completer: _createSubscriptionCompleter
+        ));
+        _createSubscriptionCompleter.future.then((subscriptionId) {
+          Completer _createConsumerSubscriptionCompleter = Completer();
+          store.dispatch(CreateConsumerSubscriptionRequest(
+            packageId: form.selectedPackage,
+            subscriptionId: subscriptionId,
+            completer: _createConsumerSubscriptionCompleter
+          ));
+          // _createConsumerSubscriptionCompleter.future.then(() {});
+        });
+
+      });
+    });
   }
 }

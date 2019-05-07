@@ -50,8 +50,8 @@ class AccountFormState extends State<AccountForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  List<TextEditingController> _controllers;
   bool _obscureText = true;
-  List<TextEditingController> _controllers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class AccountFormState extends State<AccountForm> {
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: _emailController.text.isEmpty || _passwordController.text.isEmpty
           ? null
-          : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep(); }
+          : () { if (_formKey.currentState.validate()) widget.viewModel.submit(); }
       ),
     );
   }
@@ -136,7 +136,7 @@ class AccountFormState extends State<AccountForm> {
 
   void _onChanged() {
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-      ..phoneNumber = _emailController.text == '' ? null : _emailController.text.trim()
+      ..email = _emailController.text == '' ? null : _emailController.text.trim()
       ..password = _passwordController.text == '' ? null : _passwordController.text.trim()
     );
 
@@ -153,14 +153,14 @@ class _ViewModel {
   final Function previousStep;
   final Function exit;
   final Function onChanged;
-  final Function nextStep;
+  final Function submit;
 
   _ViewModel({
     this.subscriptionForm,
     this.previousStep,
     this.exit,
     this.onChanged,
-    this.nextStep
+    this.submit
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -169,7 +169,10 @@ class _ViewModel {
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+      submit: () {
+        store.dispatch(SubmitSubscriptionFormRequest());
+        store.dispatch(SubscriptionFormNextStep());
+      }
     );
   }
 }
