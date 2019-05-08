@@ -64,7 +64,7 @@ class _$InvoiceItemSerializer implements StructuredSerializer<InvoiceItem> {
       result
         ..add('amount')
         ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(int)));
     }
     if (object.unitId != null) {
       result
@@ -195,7 +195,7 @@ class _$InvoiceItemSerializer implements StructuredSerializer<InvoiceItem> {
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'unit_id':
           result.unitId = serializers.deserialize(value,
@@ -276,7 +276,7 @@ class _$InvoiceItem extends InvoiceItem {
   @override
   final String unitPrice;
   @override
-  final String amount;
+  final int amount;
   @override
   final int unitId;
   @override
@@ -472,9 +472,9 @@ class InvoiceItemBuilder implements Builder<InvoiceItem, InvoiceItemBuilder> {
   String get unitPrice => _$this._unitPrice;
   set unitPrice(String unitPrice) => _$this._unitPrice = unitPrice;
 
-  String _amount;
-  String get amount => _$this._amount;
-  set amount(String amount) => _$this._amount = amount;
+  int _amount;
+  int get amount => _$this._amount;
+  set amount(int amount) => _$this._amount = amount;
 
   int _unitId;
   int get unitId => _$this._unitId;

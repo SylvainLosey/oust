@@ -7,6 +7,7 @@ import 'models/subscription.dart';
 import 'models/consumer_subscription.dart';
 import 'models/phone_number.dart';
 import 'models/email.dart';
+import 'models/invoice_item.dart';
 
 class Repository {
   final WebClient client;
@@ -92,6 +93,10 @@ class Repository {
   // INVOICE ITEMS
   Future<List<dynamic>> fetchInvoiceItems(int customerId) async {
     return await client.get('/invoiceitems/?customer=$customerId');
+  }
+
+  Future<Map<String, dynamic>> createInvoiceItem(InvoiceItem invoiceItem) async {
+    return await client.post('/invoiceitems/', invoiceItem.toJson());
   }
 
 

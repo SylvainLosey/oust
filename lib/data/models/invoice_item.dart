@@ -39,7 +39,7 @@ abstract class InvoiceItem implements Built<InvoiceItem, InvoiceItemBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'amount')
-  String get amount;
+  int get amount;
 
   @nullable
   @BuiltValueField(wireName: 'unit_id')

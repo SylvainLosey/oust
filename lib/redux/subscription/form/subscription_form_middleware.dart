@@ -7,6 +7,7 @@ import '../../auth/auth_actions.dart';
 import '../../app/app_state.dart';
 import '../../customer/customer_actions.dart';
 import '../../subscription/subscription_actions.dart';
+import '../../invoice/invoice_actions.dart';
 import '../../../data/models/subscription_form.dart';
 import '../../../data/repository.dart';
 
@@ -109,15 +110,43 @@ class SubscriptionFormMiddleware {
           customerId: customerId
         ));
 
-        _createSubscriptionCompleter.future.then((subscriptionId) {
+        Completer _smallContainerCompleter = Completer();
+        if (form.smallContainerQuantity > 0) {
+          store.dispatch(CreateInvoiceItemRequest(
+            productId: 6,
+            amount: form.smallContainerQuantity,
+            customerId: customerId,
+            completer: _smallContainerCompleter
+          ));
+        } else {
+          _smallContainerCompleter.complete();
+        }
+
+        Completer _bigContainerCompleter = Completer();
+        if (form.bigContainerQuantity > 0) {
+          store.dispatch(CreateInvoiceItemRequest(
+            productId: 7,
+            amount: form.bigContainerQuantity,
+            customerId: customerId,
+            completer: _bigContainerCompleter
+          ));
+        } else {
+          _bigContainerCompleter.complete();
+        }
+
+        // We wait on subscription and all bins to be created before creating Consumber Subscription and therefore the invoice
+        Future.wait([
+          _createSubscriptionCompleter.future,
+          _smallContainerCompleter.future,
+          _bigContainerCompleter.future
+        ]).then((returnValue) {
           Completer _createConsumerSubscriptionCompleter = Completer();
 
           store.dispatch(CreateConsumerSubscriptionRequest(
             packageId: form.selectedPackage,
-            subscriptionId: subscriptionId,
+            subscriptionId: returnValue[0],
             completer: _createConsumerSubscriptionCompleter
           ));
-          // _createConsumerSubscriptionCompleter.future.then(() {});
         });
       });
     });

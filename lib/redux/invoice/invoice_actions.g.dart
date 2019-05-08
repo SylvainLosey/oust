@@ -45,3 +45,37 @@ LoadInvoiceItemsFailure _$LoadInvoiceItemsFailureFromJson(
 Map<String, dynamic> _$LoadInvoiceItemsFailureToJson(
         LoadInvoiceItemsFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
+    Map<String, dynamic> json) {
+  return CreateInvoiceItemRequest(
+      productId: json['productId'] as int,
+      amount: json['amount'] as int,
+      customerId: json['customerId'] as int);
+}
+
+Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
+        CreateInvoiceItemRequest instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+      'amount': instance.amount,
+      'customerId': instance.customerId
+    };
+
+CreateInvoiceItemSuccess _$CreateInvoiceItemSuccessFromJson(
+    Map<String, dynamic> json) {
+  return CreateInvoiceItemSuccess();
+}
+
+Map<String, dynamic> _$CreateInvoiceItemSuccessToJson(
+        CreateInvoiceItemSuccess instance) =>
+    <String, dynamic>{};
+
+CreateInvoiceItemFailure _$CreateInvoiceItemFailureFromJson(
+    Map<String, dynamic> json) {
+  return CreateInvoiceItemFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreateInvoiceItemFailureToJson(
+        CreateInvoiceItemFailure instance) =>
+    <String, dynamic>{'error': instance.error};

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -55,4 +57,30 @@ class LoadInvoiceItemsFailure {
 
   LoadInvoiceItemsFailure({this.error});
   Map<String, dynamic> toJson() => _$LoadInvoiceItemsFailureToJson(this);
+}
+
+
+@JsonSerializable()
+class CreateInvoiceItemRequest {
+  final int productId;
+  final int amount;
+  final int customerId;
+  @JsonKey(ignore: true)
+  final Completer completer;
+
+  CreateInvoiceItemRequest({this.productId, this.amount, this.customerId, this.completer});
+  Map<String, dynamic> toJson() => _$CreateInvoiceItemRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreateInvoiceItemSuccess {
+    Map<String, dynamic> toJson() => _$CreateInvoiceItemSuccessToJson(this);
+}
+
+@JsonSerializable()
+class CreateInvoiceItemFailure {
+  final String error;
+
+  CreateInvoiceItemFailure({this.error});
+  Map<String, dynamic> toJson() => _$CreateInvoiceItemFailureToJson(this);
 }

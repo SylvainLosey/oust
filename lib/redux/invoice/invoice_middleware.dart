@@ -14,6 +14,7 @@ class InvoiceMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, LoadInvoicesRequest>(_loadInvoicesRequest),
       TypedMiddleware<AppState, LoadInvoiceItemsRequest>(_loadInvoiceItemsRequest),
+      TypedMiddleware<AppState, CreateInvoiceItemRequest>(_createInvoiceItemRequest),
     ];
   }
 
@@ -38,6 +39,24 @@ class InvoiceMiddleware {
       store.dispatch(LoadInvoiceItemsSuccess(invoiceItems: invoiceItems));
     } catch (e) {
       store.dispatch(LoadInvoiceItemsFailure(error: e.toString()));
+    }
+  }
+
+  void _createInvoiceItemRequest(Store<AppState> store, CreateInvoiceItemRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final InvoiceItem invoiceItem = InvoiceItem((InvoiceItemBuilder b) => b
+        ..product = action.productId
+        ..amount = action.amount
+        ..customer = action.customerId
+      );
+
+      await repository.createInvoiceItem(invoiceItem);
+      action.completer.complete();
+      store.dispatch(CreateInvoiceItemSuccess());
+    } catch (e) {
+      store.dispatch(CreateInvoiceItemFailure(error: e.toString()));
     }
   }
 }
