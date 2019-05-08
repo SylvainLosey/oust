@@ -103,6 +103,31 @@ class LoadPhoneNumbersFailure{
 }
 
 
+@JsonSerializable()
+class CreatePhoneNumberRequest {
+  final String phoneNumber;
+  final String numberType;
+  final bool reminder;
+  final int customerId;
+
+  CreatePhoneNumberRequest({this.phoneNumber, this.numberType, this.reminder, this.customerId});
+  Map<String, dynamic> toJson() => _$CreatePhoneNumberRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreatePhoneNumberSuccess {
+    Map<String, dynamic> toJson() => _$CreatePhoneNumberSuccessToJson(this);
+}
+
+@JsonSerializable()
+class CreatePhoneNumberFailure {
+  final String error;
+
+  CreatePhoneNumberFailure({this.error});
+  Map<String, dynamic> toJson() => _$CreatePhoneNumberFailureToJson(this);
+}
+
+
 // EMAIL
 @JsonSerializable()
 class LoadEmailsRequest{
@@ -126,4 +151,28 @@ class LoadEmailsFailure{
 
   LoadEmailsFailure({this.error});
   Map<String, dynamic> toJson() => _$LoadEmailsFailureToJson(this);
+}
+
+
+@JsonSerializable()
+class CreateEmailRequest {
+  final String email;
+  final bool usedForInvoices;
+  final int customerId;
+
+  CreateEmailRequest({this.email, this.usedForInvoices, this.customerId});
+  Map<String, dynamic> toJson() => _$CreateEmailRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreateEmailSuccess {
+    Map<String, dynamic> toJson() => _$CreateEmailSuccessToJson(this);
+}
+
+@JsonSerializable()
+class CreateEmailFailure {
+  final String error;
+
+  CreateEmailFailure({this.error});
+  Map<String, dynamic> toJson() => _$CreateEmailFailureToJson(this);
 }

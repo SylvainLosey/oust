@@ -52,7 +52,6 @@ class EmailForm extends StatefulWidget {
 
 class EmailFormState extends State<EmailForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   
   final TextEditingController _emailController = TextEditingController();
 
   // On load set controllers to value stored in redux and add onChanged listeners
@@ -118,7 +117,6 @@ class EmailFormState extends State<EmailForm> {
   }
 
   void _onChanged() {
-    // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
     );

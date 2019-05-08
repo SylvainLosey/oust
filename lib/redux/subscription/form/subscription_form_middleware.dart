@@ -67,6 +67,7 @@ class SubscriptionFormMiddleware {
     final SubscriptionForm form = store.state.subscriptionFormState.subscriptionForm;
 
     Completer _createUserCompleter = Completer();
+    
     store.dispatch(CreateUserRequest(
       email: form.email,
       password: form.password,
@@ -74,6 +75,7 @@ class SubscriptionFormMiddleware {
     ));
     _createUserCompleter.future.then((userId) {
       Completer _createCustomerCompleter = Completer();
+
       store.dispatch(CreateCustomerRequest(
         firstName: form.firstName,
         lastName: form.lastName,
@@ -85,14 +87,31 @@ class SubscriptionFormMiddleware {
       ));
       _createCustomerCompleter.future.then((customerId) {
         Completer _createSubscriptionCompleter = Completer();
+
         store.dispatch(CreateSubscriptionRequest(
           baseDate: form.selectedStartDate,
           note: form.location,
           customerId: customerId,
           completer: _createSubscriptionCompleter
         ));
+
+        store.dispatch(CreatePhoneNumberRequest(
+          phoneNumber: form.phoneNumber,
+          reminder: form.wantsReminder,
+          // TODO Determine or ask number type
+          numberType: 'M',
+          customerId: customerId
+        ));
+
+        store.dispatch(CreateEmailRequest(
+          email: form.email,
+          usedForInvoices: true,
+          customerId: customerId
+        ));
+
         _createSubscriptionCompleter.future.then((subscriptionId) {
           Completer _createConsumerSubscriptionCompleter = Completer();
+
           store.dispatch(CreateConsumerSubscriptionRequest(
             packageId: form.selectedPackage,
             subscriptionId: subscriptionId,

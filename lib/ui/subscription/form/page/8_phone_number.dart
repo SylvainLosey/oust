@@ -6,6 +6,7 @@ import '../../../../data/models/subscription_form.dart';
 import '../../../../redux/app/app_state.dart';
 import '../../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../../utils/validators.dart';
+import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
@@ -70,6 +71,24 @@ class PhoneFormState extends State<PhoneForm> {
                 hintText: '079 987 65 43',
               ),
             ),
+            Container(height: Layout.of(context).gridUnit(4)),
+            Row(
+              children: <Widget>[
+                Flexible(
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Notification', style: Theme.of(context).textTheme.subhead),
+                    Text('Recevoir un SMS de rappel un jour avant le passage')
+                    ],
+                  ),
+                ),
+                Switch(
+                  onChanged: _onReminderToggle,
+                  value: widget.viewModel.wantsReminder
+                )
+              ],
+            )
           ]
         )
       ),
@@ -86,7 +105,7 @@ class PhoneFormState extends State<PhoneForm> {
   @override
   void didChangeDependencies() {
     _phoneController.removeListener(_onChanged);
-    _phoneController.text = widget.viewModel.subscriptionForm.phoneNumber;
+    _phoneController.text = widget.viewModel.subscriptionForm.email;
     _phoneController.addListener(_onChanged);
 
     super.didChangeDependencies();
@@ -110,12 +129,19 @@ class PhoneFormState extends State<PhoneForm> {
       widget.viewModel.onChanged(subscriptionForm);
     }
   }
+
+  void _onReminderToggle(bool newValue) {
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
+        ..wantsReminder = newValue
+      ));
+  }
 }
 
 
 @immutable
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
+  final bool wantsReminder;
   final Function previousStep;
   final Function exit;
   final Function onChanged;
@@ -123,6 +149,7 @@ class _ViewModel {
 
   _ViewModel({
     this.subscriptionForm,
+    this.wantsReminder,
     this.previousStep,
     this.exit,
     this.onChanged,
@@ -132,6 +159,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+      wantsReminder: store.state.subscriptionFormState.subscriptionForm.wantsReminder,
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),

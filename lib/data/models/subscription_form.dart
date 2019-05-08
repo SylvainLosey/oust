@@ -17,6 +17,7 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
     ..smallContainerQuantity = 0
     ..bigContainerQuantity = 0
     ..frequency = 2
+    ..wantsReminder = true
   );
 
   SubscriptionForm._();
@@ -76,6 +77,9 @@ abstract class SubscriptionForm implements Built<SubscriptionForm, SubscriptionF
 
   @nullable
   bool get wantsContainers;
+
+  @nullable
+  bool get wantsReminder;
 
   @nullable
   DateTime get selectedStartDate;

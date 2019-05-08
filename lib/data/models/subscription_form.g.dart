@@ -132,6 +132,12 @@ class _$SubscriptionFormSerializer
         ..add(serializers.serialize(object.wantsContainers,
             specifiedType: const FullType(bool)));
     }
+    if (object.wantsReminder != null) {
+      result
+        ..add('wantsReminder')
+        ..add(serializers.serialize(object.wantsReminder,
+            specifiedType: const FullType(bool)));
+    }
     if (object.selectedStartDate != null) {
       result
         ..add('selectedStartDate')
@@ -236,6 +242,10 @@ class _$SubscriptionFormSerializer
           result.wantsContainers = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'wantsReminder':
+          result.wantsReminder = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'selectedStartDate':
           result.selectedStartDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
@@ -292,6 +302,8 @@ class _$SubscriptionForm extends SubscriptionForm {
   @override
   final bool wantsContainers;
   @override
+  final bool wantsReminder;
+  @override
   final DateTime selectedStartDate;
   @override
   final BuiltList<DateTime> startDates;
@@ -320,6 +332,7 @@ class _$SubscriptionForm extends SubscriptionForm {
       this.smallContainerQuantity,
       this.bigContainerQuantity,
       this.wantsContainers,
+      this.wantsReminder,
       this.selectedStartDate,
       this.startDates})
       : super._() {
@@ -359,6 +372,7 @@ class _$SubscriptionForm extends SubscriptionForm {
         smallContainerQuantity == other.smallContainerQuantity &&
         bigContainerQuantity == other.bigContainerQuantity &&
         wantsContainers == other.wantsContainers &&
+        wantsReminder == other.wantsReminder &&
         selectedStartDate == other.selectedStartDate &&
         startDates == other.startDates;
   }
@@ -383,24 +397,24 @@ class _$SubscriptionForm extends SubscriptionForm {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, currentStep.hashCode), frequency.hashCode),
-                                                                                address.hashCode),
-                                                                            contactMethod.hashCode),
-                                                                        registrationMethod.hashCode),
-                                                                    paymentMethod.hashCode),
-                                                                email.hashCode),
-                                                            password.hashCode),
-                                                        firstName.hashCode),
-                                                    lastName.hashCode),
-                                                leadStatus.hashCode),
-                                            location.hashCode),
-                                        phoneNumber.hashCode),
-                                    postcode.hashCode),
-                                selectedLocationIndex.hashCode),
-                            selectedPackage.hashCode),
-                        smallContainerQuantity.hashCode),
-                    bigContainerQuantity.hashCode),
-                wantsContainers.hashCode),
+                                                                            $jc($jc($jc($jc(0, currentStep.hashCode), frequency.hashCode), address.hashCode),
+                                                                                contactMethod.hashCode),
+                                                                            registrationMethod.hashCode),
+                                                                        paymentMethod.hashCode),
+                                                                    email.hashCode),
+                                                                password.hashCode),
+                                                            firstName.hashCode),
+                                                        lastName.hashCode),
+                                                    leadStatus.hashCode),
+                                                location.hashCode),
+                                            phoneNumber.hashCode),
+                                        postcode.hashCode),
+                                    selectedLocationIndex.hashCode),
+                                selectedPackage.hashCode),
+                            smallContainerQuantity.hashCode),
+                        bigContainerQuantity.hashCode),
+                    wantsContainers.hashCode),
+                wantsReminder.hashCode),
             selectedStartDate.hashCode),
         startDates.hashCode));
   }
@@ -427,6 +441,7 @@ class _$SubscriptionForm extends SubscriptionForm {
           ..add('smallContainerQuantity', smallContainerQuantity)
           ..add('bigContainerQuantity', bigContainerQuantity)
           ..add('wantsContainers', wantsContainers)
+          ..add('wantsReminder', wantsReminder)
           ..add('selectedStartDate', selectedStartDate)
           ..add('startDates', startDates))
         .toString();
@@ -521,6 +536,11 @@ class SubscriptionFormBuilder
   set wantsContainers(bool wantsContainers) =>
       _$this._wantsContainers = wantsContainers;
 
+  bool _wantsReminder;
+  bool get wantsReminder => _$this._wantsReminder;
+  set wantsReminder(bool wantsReminder) =>
+      _$this._wantsReminder = wantsReminder;
+
   DateTime _selectedStartDate;
   DateTime get selectedStartDate => _$this._selectedStartDate;
   set selectedStartDate(DateTime selectedStartDate) =>
@@ -555,6 +575,7 @@ class SubscriptionFormBuilder
       _smallContainerQuantity = _$v.smallContainerQuantity;
       _bigContainerQuantity = _$v.bigContainerQuantity;
       _wantsContainers = _$v.wantsContainers;
+      _wantsReminder = _$v.wantsReminder;
       _selectedStartDate = _$v.selectedStartDate;
       _startDates = _$v.startDates?.toBuilder();
       _$v = null;
@@ -600,6 +621,7 @@ class SubscriptionFormBuilder
               smallContainerQuantity: smallContainerQuantity,
               bigContainerQuantity: bigContainerQuantity,
               wantsContainers: wantsContainers,
+              wantsReminder: wantsReminder,
               selectedStartDate: selectedStartDate,
               startDates: _startDates?.build());
     } catch (_) {

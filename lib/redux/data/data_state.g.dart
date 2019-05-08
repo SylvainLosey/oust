@@ -35,13 +35,6 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(int), const FullType(Package)])));
     }
-    if (object.postcodes != null) {
-      result
-        ..add('postcodes')
-        ..add(serializers.serialize(object.postcodes,
-            specifiedType: const FullType(BuiltMap,
-                const [const FullType(int), const FullType(Postcode)])));
-    }
 
     return result;
   }
@@ -70,13 +63,6 @@ class _$DataStateSerializer implements StructuredSerializer<DataState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(Package)
-              ])) as BuiltMap);
-          break;
-        case 'postcodes':
-          result.postcodes.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
-                const FullType(Postcode)
               ])) as BuiltMap);
           break;
       }

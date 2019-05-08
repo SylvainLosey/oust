@@ -18,7 +18,9 @@ class CustomerMiddleware {
       TypedMiddleware<AppState, LoadCustomerRequest>(_loadCustomer),
       TypedMiddleware<AppState, CreateCustomerRequest>(_createCustomerRequest),
       TypedMiddleware<AppState, LoadPhoneNumbersRequest>(_loadPhoneNumbersRequest),
+      TypedMiddleware<AppState, CreatePhoneNumberRequest>(_createPhoneNumberRequest),
       TypedMiddleware<AppState, LoadEmailsRequest>(_loadEmailsRequest),
+      TypedMiddleware<AppState, CreateEmailRequest>(_createEmailRequest),
     ];
   }
 
@@ -66,7 +68,7 @@ class CustomerMiddleware {
 
 
   // PHONENUMBERS
-    void _loadPhoneNumbersRequest(Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async{
+  void _loadPhoneNumbersRequest(Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async{
     next(action);
 
     try {
@@ -75,6 +77,24 @@ class CustomerMiddleware {
       store.dispatch(LoadPhoneNumbersSuccess(phoneNumbers: phoneNumbers));
     } catch (e) {
       store.dispatch(LoadPhoneNumbersFailure(error: e.toString()));
+    }
+  }
+
+  void _createPhoneNumberRequest(Store<AppState> store, CreatePhoneNumberRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final PhoneNumber phoneNumber = PhoneNumber((PhoneNumberBuilder b) => b
+        ..phoneNumber = action.phoneNumber
+        ..numberType = action.numberType
+        ..reminder = action.reminder
+        ..customer = action.customerId
+      );
+
+      await repository.createPhoneNumber(phoneNumber);
+      store.dispatch(CreatePhoneNumberSuccess());
+    } catch (e) {
+      store.dispatch(CreatePhoneNumberFailure(error: e.toString()));
     }
   }
 
@@ -88,6 +108,23 @@ class CustomerMiddleware {
       store.dispatch(LoadEmailsSuccess(emails: emails));
     } catch (e) {
       store.dispatch(LoadEmailsFailure(error: e.toString()));
+    }
+  }
+
+  void _createEmailRequest(Store<AppState> store, CreateEmailRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final Email email = Email((EmailBuilder b) => b
+        ..email = action.email
+        ..usedForInvoices = action.usedForInvoices
+        ..customer = action.customerId
+      );
+
+      await repository.createEmail(email);
+      store.dispatch(CreateEmailSuccess());
+    } catch (e) {
+      store.dispatch(CreateEmailFailure(error: e.toString()));
     }
   }
 }

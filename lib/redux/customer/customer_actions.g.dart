@@ -97,6 +97,42 @@ Map<String, dynamic> _$LoadPhoneNumbersFailureToJson(
         LoadPhoneNumbersFailure instance) =>
     <String, dynamic>{'error': instance.error};
 
+CreatePhoneNumberRequest _$CreatePhoneNumberRequestFromJson(
+    Map<String, dynamic> json) {
+  return CreatePhoneNumberRequest(
+      phoneNumber: json['phoneNumber'] as String,
+      numberType: json['numberType'] as String,
+      reminder: json['reminder'] as bool,
+      customerId: json['customerId'] as int);
+}
+
+Map<String, dynamic> _$CreatePhoneNumberRequestToJson(
+        CreatePhoneNumberRequest instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+      'numberType': instance.numberType,
+      'reminder': instance.reminder,
+      'customerId': instance.customerId
+    };
+
+CreatePhoneNumberSuccess _$CreatePhoneNumberSuccessFromJson(
+    Map<String, dynamic> json) {
+  return CreatePhoneNumberSuccess();
+}
+
+Map<String, dynamic> _$CreatePhoneNumberSuccessToJson(
+        CreatePhoneNumberSuccess instance) =>
+    <String, dynamic>{};
+
+CreatePhoneNumberFailure _$CreatePhoneNumberFailureFromJson(
+    Map<String, dynamic> json) {
+  return CreatePhoneNumberFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreatePhoneNumberFailureToJson(
+        CreatePhoneNumberFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
 LoadEmailsRequest _$LoadEmailsRequestFromJson(Map<String, dynamic> json) {
   return LoadEmailsRequest(
       customer: json['customer'] == null
@@ -112,4 +148,32 @@ LoadEmailsFailure _$LoadEmailsFailureFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$LoadEmailsFailureToJson(LoadEmailsFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+CreateEmailRequest _$CreateEmailRequestFromJson(Map<String, dynamic> json) {
+  return CreateEmailRequest(
+      email: json['email'] as String,
+      usedForInvoices: json['usedForInvoices'] as bool,
+      customerId: json['customerId'] as int);
+}
+
+Map<String, dynamic> _$CreateEmailRequestToJson(CreateEmailRequest instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'usedForInvoices': instance.usedForInvoices,
+      'customerId': instance.customerId
+    };
+
+CreateEmailSuccess _$CreateEmailSuccessFromJson(Map<String, dynamic> json) {
+  return CreateEmailSuccess();
+}
+
+Map<String, dynamic> _$CreateEmailSuccessToJson(CreateEmailSuccess instance) =>
+    <String, dynamic>{};
+
+CreateEmailFailure _$CreateEmailFailureFromJson(Map<String, dynamic> json) {
+  return CreateEmailFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$CreateEmailFailureToJson(CreateEmailFailure instance) =>
     <String, dynamic>{'error': instance.error};

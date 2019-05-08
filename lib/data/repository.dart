@@ -5,6 +5,8 @@ import 'web_client.dart';
 import 'models/customer.dart';
 import 'models/subscription.dart';
 import 'models/consumer_subscription.dart';
+import 'models/phone_number.dart';
+import 'models/email.dart';
 
 class Repository {
   final WebClient client;
@@ -46,10 +48,18 @@ class Repository {
     return await client.get('/phonenumbers/?customer=$id/');
   }
 
+  Future<Map<String, dynamic>> createPhoneNumber(PhoneNumber phoneNumber) async {
+    return await client.post('/phonenumbers/', phoneNumber.toJson());
+  }
+
 
   // EMAILS
   Future<List<dynamic>> fetchEmails(int id) async {
     return await client.get('/emails/?customer=$id/');
+  }
+
+  Future<Map<String, dynamic>> createEmail(Email email) async {
+    return await client.post('/emails/', email.toJson());
   }
 
 

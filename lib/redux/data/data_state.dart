@@ -27,6 +27,7 @@ abstract class DataState implements Built<DataState, DataStateBuilder> {
   BuiltMap<int, Package> get packages;
 
   @nullable
+  @BuiltValueField(serialize: false)
   BuiltMap<int, Postcode> get postcodes;
 
   Map<String, dynamic> toJson() {

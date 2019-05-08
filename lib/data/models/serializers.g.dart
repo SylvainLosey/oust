@@ -39,10 +39,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(int), const FullType(Package)]),
           () => new MapBuilder<int, Package>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltMap, const [const FullType(int), const FullType(Postcode)]),
-          () => new MapBuilder<int, Postcode>())
-      ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(PhoneNumber)]),
           () => new MapBuilder<int, PhoneNumber>())
