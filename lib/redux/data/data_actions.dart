@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
-import 'package:built_collection/built_collection.dart';
 
 import '../../data/models/postcode.dart';
 import '../../data/models/package.dart';

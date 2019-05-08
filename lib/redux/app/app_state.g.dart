@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of AppState;
+part of app_state;
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -30,6 +30,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'navState',
       serializers.serialize(object.navState,
           specifiedType: const FullType(NavState)),
+      'invoiceState',
+      serializers.serialize(object.invoiceState,
+          specifiedType: const FullType(InvoiceState)),
       'pickupState',
       serializers.serialize(object.pickupState,
           specifiedType: const FullType(PickupState)),
@@ -71,6 +74,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.navState.replace(serializers.deserialize(value,
               specifiedType: const FullType(NavState)) as NavState);
           break;
+        case 'invoiceState':
+          result.invoiceState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(InvoiceState)) as InvoiceState);
+          break;
         case 'pickupState':
           result.pickupState.replace(serializers.deserialize(value,
               specifiedType: const FullType(PickupState)) as PickupState);
@@ -102,6 +109,8 @@ class _$AppState extends AppState {
   @override
   final NavState navState;
   @override
+  final InvoiceState invoiceState;
+  @override
   final PickupState pickupState;
   @override
   final SubscriptionFormState subscriptionFormState;
@@ -116,6 +125,7 @@ class _$AppState extends AppState {
       this.customerState,
       this.dataState,
       this.navState,
+      this.invoiceState,
       this.pickupState,
       this.subscriptionFormState,
       this.subscriptionState})
@@ -131,6 +141,9 @@ class _$AppState extends AppState {
     }
     if (navState == null) {
       throw new BuiltValueNullFieldError('AppState', 'navState');
+    }
+    if (invoiceState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'invoiceState');
     }
     if (pickupState == null) {
       throw new BuiltValueNullFieldError('AppState', 'pickupState');
@@ -158,6 +171,7 @@ class _$AppState extends AppState {
         customerState == other.customerState &&
         dataState == other.dataState &&
         navState == other.navState &&
+        invoiceState == other.invoiceState &&
         pickupState == other.pickupState &&
         subscriptionFormState == other.subscriptionFormState &&
         subscriptionState == other.subscriptionState;
@@ -169,9 +183,13 @@ class _$AppState extends AppState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, authState.hashCode), customerState.hashCode),
-                        dataState.hashCode),
-                    navState.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, authState.hashCode),
+                                customerState.hashCode),
+                            dataState.hashCode),
+                        navState.hashCode),
+                    invoiceState.hashCode),
                 pickupState.hashCode),
             subscriptionFormState.hashCode),
         subscriptionState.hashCode));
@@ -184,6 +202,7 @@ class _$AppState extends AppState {
           ..add('customerState', customerState)
           ..add('dataState', dataState)
           ..add('navState', navState)
+          ..add('invoiceState', invoiceState)
           ..add('pickupState', pickupState)
           ..add('subscriptionFormState', subscriptionFormState)
           ..add('subscriptionState', subscriptionState))
@@ -214,6 +233,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   NavStateBuilder get navState => _$this._navState ??= new NavStateBuilder();
   set navState(NavStateBuilder navState) => _$this._navState = navState;
 
+  InvoiceStateBuilder _invoiceState;
+  InvoiceStateBuilder get invoiceState =>
+      _$this._invoiceState ??= new InvoiceStateBuilder();
+  set invoiceState(InvoiceStateBuilder invoiceState) =>
+      _$this._invoiceState = invoiceState;
+
   PickupStateBuilder _pickupState;
   PickupStateBuilder get pickupState =>
       _$this._pickupState ??= new PickupStateBuilder();
@@ -241,6 +266,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _customerState = _$v.customerState?.toBuilder();
       _dataState = _$v.dataState?.toBuilder();
       _navState = _$v.navState?.toBuilder();
+      _invoiceState = _$v.invoiceState?.toBuilder();
       _pickupState = _$v.pickupState?.toBuilder();
       _subscriptionFormState = _$v.subscriptionFormState?.toBuilder();
       _subscriptionState = _$v.subscriptionState?.toBuilder();
@@ -272,6 +298,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               customerState: customerState.build(),
               dataState: dataState.build(),
               navState: navState.build(),
+              invoiceState: invoiceState.build(),
               pickupState: pickupState.build(),
               subscriptionFormState: subscriptionFormState.build(),
               subscriptionState: subscriptionState.build());
@@ -286,6 +313,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         dataState.build();
         _$failedField = 'navState';
         navState.build();
+        _$failedField = 'invoiceState';
+        invoiceState.build();
         _$failedField = 'pickupState';
         pickupState.build();
         _$failedField = 'subscriptionFormState';

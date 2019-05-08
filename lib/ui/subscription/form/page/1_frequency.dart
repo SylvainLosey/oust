@@ -123,6 +123,7 @@ class FrequencyFormState extends State<FrequencyForm> {
       case 4: return 'Abonnement Basique';
       case 2: return 'Abonnement Standard';
       case 1: return 'Abonnement Premium';
+      default: return '';
     }
   }
 
@@ -131,6 +132,7 @@ class FrequencyFormState extends State<FrequencyForm> {
       case 4: return '20.- /mois';
       case 2: return '35.- /mois';
       case 1: return '55.- /mois';
+      default: return '';
     }
   }
   

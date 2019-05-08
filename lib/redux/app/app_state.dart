@@ -1,4 +1,4 @@
-library AppState;
+library app_state;
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -11,6 +11,7 @@ import '../nav/nav_state.dart';
 import '../pickup/pickup_state.dart';
 import '../subscription/form/subscription_form_state.dart';
 import '../subscription/subscription_state.dart';
+import '../invoice/invoice_state.dart';
 
 part 'app_state.g.dart';
 
@@ -25,6 +26,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       subscriptionFormState: SubscriptionFormState(),
       pickupState: PickupState(),
       dataState: DataState(),
+      invoiceState: InvoiceState(),
     );
   }
   AppState._();
@@ -32,11 +34,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   CustomerState get customerState;
   DataState get dataState;
   NavState get navState;
-
+  InvoiceState get invoiceState;
   PickupState get pickupState;
-
   SubscriptionFormState get subscriptionFormState;
-
   SubscriptionState get subscriptionState;
 
   Map<String, dynamic> toJson() {

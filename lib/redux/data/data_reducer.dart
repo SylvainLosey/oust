@@ -15,6 +15,7 @@ Reducer<DataState> dataReducer = combineReducers([
 ]);
 
 
+// POSTCODES
 DataState _loadPostcodesRequest(DataState state, LoadPostcodesRequest action) {
   return state.rebuild((DataStateBuilder b) => b
     ..fetchCount = state.fetchCount + 1

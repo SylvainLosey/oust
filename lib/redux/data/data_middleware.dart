@@ -17,7 +17,7 @@ class DataMiddleware {
     ];
   }
 
-  void _loadPackages(Store<AppState> store, LoadPackagesRequest action, NextDispatcher next) async{
+  void _loadPackages(Store<AppState> store, LoadPackagesRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -29,7 +29,7 @@ class DataMiddleware {
     }
   }
 
-  void _loadPostcodes(Store<AppState> store, LoadPostcodesRequest action, NextDispatcher next) async{
+  void _loadPostcodes(Store<AppState> store, LoadPostcodesRequest action, NextDispatcher next) async {
     next(action);
 
     try {

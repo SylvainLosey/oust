@@ -83,6 +83,18 @@ class Repository {
   }
 
 
+  // INVOICES
+  Future<List<dynamic>> fetchInvoices(int customerId) async {
+    return await client.get('/invoices/?customer=$customerId');
+  }
+
+
+  // INVOICE ITEMS
+  Future<List<dynamic>> fetchInvoiceItems(int customerId) async {
+    return await client.get('/invoiceitems/?customer=$customerId');
+  }
+
+
   // PICKUPS
   Future<List<dynamic>> fetchPickups(int id) async {
     return await client.get('/pickups/?subscription=$id/');

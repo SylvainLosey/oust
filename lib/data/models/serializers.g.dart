@@ -14,6 +14,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CustomerState.serializer)
       ..add(DataState.serializer)
       ..add(Email.serializer)
+      ..add(Invoice.serializer)
+      ..add(InvoiceItem.serializer)
+      ..add(InvoiceState.serializer)
       ..add(NavState.serializer)
       ..add(Package.serializer)
       ..add(PhoneNumber.serializer)
@@ -34,6 +37,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(double)]),
           () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(int), const FullType(Invoice)]),
+          () => new MapBuilder<int, Invoice>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(InvoiceItem)]),
+          () => new MapBuilder<int, InvoiceItem>())
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(Package)]),

@@ -14,6 +14,7 @@ import 'redux/subscription/subscription_middleware.dart';
 import 'redux/subscription/form/subscription_form_middleware.dart';
 import 'redux/pickup/pickup_middleware.dart';
 import 'redux/data/data_middleware.dart';
+import 'redux/invoice/invoice_middleware.dart';
 
 void main() async {
   // debugPaintSizeEnabled=true;
@@ -33,6 +34,7 @@ void main() async {
         ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),
         ...PickupMiddleware().createPickupMiddleware(),
         ...DataMiddleware().createDataMiddleware(),
+        ...InvoiceMiddleware().createInvoiceMiddleware(),
         remoteDevtools
     ]
   );

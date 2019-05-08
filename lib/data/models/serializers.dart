@@ -9,6 +9,7 @@ import 'package:oust/redux/nav/nav_state.dart';
 import 'package:oust/redux/pickup/pickup_state.dart';
 import 'package:oust/redux/subscription/form/subscription_form_state.dart';
 import 'package:oust/redux/subscription/subscription_state.dart';
+import 'package:oust/redux/invoice/invoice_state.dart';
 
 import 'consumer_subscription.dart';
 import 'customer.dart';
@@ -21,6 +22,8 @@ import 'phone_number.dart';
 import 'subscription.dart';
 import 'subscription_form.dart';
 import 'user.dart';
+import 'invoice.dart';
+import 'invoice_item.dart';
 
 part 'serializers.g.dart';
 
@@ -35,6 +38,8 @@ part 'serializers.g.dart';
   PhoneNumber,
   SubscriptionForm,
   Postcode,
+  Invoice,
+  InvoiceItem,
   AuthState,
   CustomerState,
   SubscriptionState,

@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import '../app/app_state.dart';
 import '../customer/customer_actions.dart';
 import '../subscription/subscription_actions.dart';
+import '../invoice/invoice_actions.dart';
 import '../../data/models/customer.dart';
 import '../../data/models/phone_number.dart';
 import '../../data/models/email.dart';
@@ -38,6 +39,8 @@ class CustomerMiddleware {
       store.dispatch(LoadEmailsRequest(customer: customer));
       store.dispatch(LoadSubscriptionRequest(customer: customer));
       store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
+      store.dispatch(LoadInvoicesRequest(customer: customer));
+      store.dispatch(LoadInvoiceItemsRequest(customer: customer));
 
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));
