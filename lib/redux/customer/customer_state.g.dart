@@ -19,15 +19,29 @@ class _$CustomerStateSerializer implements StructuredSerializer<CustomerState> {
   Iterable serialize(Serializers serializers, CustomerState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
+      'fetchCount',
+      serializers.serialize(object.fetchCount,
+          specifiedType: const FullType(int)),
     ];
     if (object.customer != null) {
       result
         ..add('customer')
         ..add(serializers.serialize(object.customer,
             specifiedType: const FullType(Customer)));
+    }
+    if (object.phoneNumbers != null) {
+      result
+        ..add('phoneNumbers')
+        ..add(serializers.serialize(object.phoneNumbers,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(int), const FullType(PhoneNumber)])));
+    }
+    if (object.emails != null) {
+      result
+        ..add('emails')
+        ..add(serializers.serialize(object.emails,
+            specifiedType: const FullType(
+                BuiltMap, const [const FullType(int), const FullType(Email)])));
     }
     if (object.error != null) {
       result
@@ -54,13 +68,27 @@ class _$CustomerStateSerializer implements StructuredSerializer<CustomerState> {
           result.customer.replace(serializers.deserialize(value,
               specifiedType: const FullType(Customer)) as Customer);
           break;
+        case 'phoneNumbers':
+          result.phoneNumbers.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(PhoneNumber)
+              ])) as BuiltMap);
+          break;
+        case 'emails':
+          result.emails.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(Email)
+              ])) as BuiltMap);
+          break;
         case 'error':
           result.error = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'fetchCount':
+          result.fetchCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -73,16 +101,26 @@ class _$CustomerState extends CustomerState {
   @override
   final Customer customer;
   @override
+  final BuiltMap<int, PhoneNumber> phoneNumbers;
+  @override
+  final BuiltMap<int, Email> emails;
+  @override
   final String error;
   @override
-  final bool isLoading;
+  final int fetchCount;
 
   factory _$CustomerState([void Function(CustomerStateBuilder) updates]) =>
       (new CustomerStateBuilder()..update(updates)).build();
 
-  _$CustomerState._({this.customer, this.error, this.isLoading}) : super._() {
-    if (isLoading == null) {
-      throw new BuiltValueNullFieldError('CustomerState', 'isLoading');
+  _$CustomerState._(
+      {this.customer,
+      this.phoneNumbers,
+      this.emails,
+      this.error,
+      this.fetchCount})
+      : super._() {
+    if (fetchCount == null) {
+      throw new BuiltValueNullFieldError('CustomerState', 'fetchCount');
     }
   }
 
@@ -98,22 +136,30 @@ class _$CustomerState extends CustomerState {
     if (identical(other, this)) return true;
     return other is CustomerState &&
         customer == other.customer &&
+        phoneNumbers == other.phoneNumbers &&
+        emails == other.emails &&
         error == other.error &&
-        isLoading == other.isLoading;
+        fetchCount == other.fetchCount;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, customer.hashCode), error.hashCode), isLoading.hashCode));
+        $jc(
+            $jc($jc($jc(0, customer.hashCode), phoneNumbers.hashCode),
+                emails.hashCode),
+            error.hashCode),
+        fetchCount.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CustomerState')
           ..add('customer', customer)
+          ..add('phoneNumbers', phoneNumbers)
+          ..add('emails', emails)
           ..add('error', error)
-          ..add('isLoading', isLoading))
+          ..add('fetchCount', fetchCount))
         .toString();
   }
 }
@@ -126,21 +172,34 @@ class CustomerStateBuilder
   CustomerBuilder get customer => _$this._customer ??= new CustomerBuilder();
   set customer(CustomerBuilder customer) => _$this._customer = customer;
 
+  MapBuilder<int, PhoneNumber> _phoneNumbers;
+  MapBuilder<int, PhoneNumber> get phoneNumbers =>
+      _$this._phoneNumbers ??= new MapBuilder<int, PhoneNumber>();
+  set phoneNumbers(MapBuilder<int, PhoneNumber> phoneNumbers) =>
+      _$this._phoneNumbers = phoneNumbers;
+
+  MapBuilder<int, Email> _emails;
+  MapBuilder<int, Email> get emails =>
+      _$this._emails ??= new MapBuilder<int, Email>();
+  set emails(MapBuilder<int, Email> emails) => _$this._emails = emails;
+
   String _error;
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
+  int _fetchCount;
+  int get fetchCount => _$this._fetchCount;
+  set fetchCount(int fetchCount) => _$this._fetchCount = fetchCount;
 
   CustomerStateBuilder();
 
   CustomerStateBuilder get _$this {
     if (_$v != null) {
       _customer = _$v.customer?.toBuilder();
+      _phoneNumbers = _$v.phoneNumbers?.toBuilder();
+      _emails = _$v.emails?.toBuilder();
       _error = _$v.error;
-      _isLoading = _$v.isLoading;
+      _fetchCount = _$v.fetchCount;
       _$v = null;
     }
     return this;
@@ -165,12 +224,20 @@ class CustomerStateBuilder
     try {
       _$result = _$v ??
           new _$CustomerState._(
-              customer: _customer?.build(), error: error, isLoading: isLoading);
+              customer: _customer?.build(),
+              phoneNumbers: _phoneNumbers?.build(),
+              emails: _emails?.build(),
+              error: error,
+              fetchCount: fetchCount);
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'customer';
         _customer?.build();
+        _$failedField = 'phoneNumbers';
+        _phoneNumbers?.build();
+        _$failedField = 'emails';
+        _emails?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CustomerState', _$failedField, e.toString());

@@ -38,7 +38,7 @@ class LoadPackagesRequest {
 }
 
 class LoadPackagesSuccess {
-  final BuiltList<Package> packages;
+  final List<Package> packages;
 
   LoadPackagesSuccess({@required this.packages});
   Map<String, dynamic> toJson() => null;

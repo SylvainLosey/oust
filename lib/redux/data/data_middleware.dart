@@ -1,11 +1,9 @@
 import 'package:redux/redux.dart';
-import 'package:built_collection/built_collection.dart';
 
 import 'data_actions.dart';
 import '../app/app_state.dart';
 import '../../data/models/package.dart';
 import '../../data/models/postcode.dart';
-import '../../data/models/serializers.dart';
 import '../../data/repository.dart';
 
 class DataMiddleware {
@@ -23,8 +21,8 @@ class DataMiddleware {
     next(action);
 
     try {
-      final List<dynamic> packagesData = await repository.fetchPackages();
-      final BuiltList<Package> packages = BuiltList<Package>.from(packagesData.map((dynamic e) => serializers.deserializeWith(Package.serializer, e)));
+      final List<dynamic> data = await repository.fetchPackages();
+      final List<Package> packages = List<Package>.from(data.map<dynamic>((dynamic x) => Package.fromJson(x)));
       store.dispatch(LoadPackagesSuccess(packages: packages));
     } catch (e) {
       store.dispatch(LoadPackagesFailure(error: e.toString()));

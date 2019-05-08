@@ -1,12 +1,18 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../../data/models/customer.dart';
+import '../../data/models/phone_number.dart';
+import '../../data/models/email.dart';
 import '../../data/models/user.dart';
 
 part 'customer_actions.g.dart';
+
+
+// CUSTOMER
 
 @JsonSerializable()
 class LoadCustomerRequest {
@@ -36,9 +42,7 @@ class LoadCustomerFailure {
   LoadCustomerFailure({@required this.error});
 
   Map<String, dynamic> toJson() => _$LoadCustomerFailureToJson(this);
-
 }
-
 
 // Reducer not yet created - Not sure if nexessary
 
@@ -70,3 +74,56 @@ class CreateCustomerFailure {
   Map<String, dynamic> toJson() => _$CreateCustomerFailureToJson(this);
 }
 
+
+
+
+// PHONE NUMBER
+@JsonSerializable()
+class LoadPhoneNumbersRequest{
+  @JsonKey(fromJson: Customer.fromJson) 
+  final Customer customer;
+
+  LoadPhoneNumbersRequest({this.customer});
+  Map<String, dynamic> toJson() => _$LoadPhoneNumbersRequestToJson(this);
+}
+
+class LoadPhoneNumbersSuccess{
+  final List<PhoneNumber> phoneNumbers;
+
+  LoadPhoneNumbersSuccess({this.phoneNumbers});
+  Map<String, dynamic> toJson() => null;
+}
+
+@JsonSerializable()
+class LoadPhoneNumbersFailure{
+  final String error;
+
+  LoadPhoneNumbersFailure({this.error});
+  Map<String, dynamic> toJson() => _$LoadPhoneNumbersFailureToJson(this);
+}
+
+
+// EMAIL
+@JsonSerializable()
+class LoadEmailsRequest{
+  @JsonKey(fromJson: Customer.fromJson) 
+  final Customer customer;
+
+  LoadEmailsRequest({this.customer});
+  Map<String, dynamic> toJson() => _$LoadEmailsRequestToJson(this);
+}
+
+class LoadEmailsSuccess{
+  final List<Email> emails;
+
+  LoadEmailsSuccess({this.emails});
+  Map<String, dynamic> toJson() => null;
+}
+
+@JsonSerializable()
+class LoadEmailsFailure{
+  final String error;
+
+  LoadEmailsFailure({this.error});
+  Map<String, dynamic> toJson() => _$LoadEmailsFailureToJson(this);
+}

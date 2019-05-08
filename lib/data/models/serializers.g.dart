@@ -13,8 +13,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Customer.serializer)
       ..add(CustomerState.serializer)
       ..add(DataState.serializer)
+      ..add(Email.serializer)
       ..add(NavState.serializer)
       ..add(Package.serializer)
+      ..add(PhoneNumber.serializer)
       ..add(Pickup.serializer)
       ..add(PickupState.serializer)
       ..add(Postcode.serializer)
@@ -40,6 +42,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(Postcode)]),
           () => new MapBuilder<int, Postcode>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(PhoneNumber)]),
+          () => new MapBuilder<int, PhoneNumber>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(int), const FullType(Email)]),
+          () => new MapBuilder<int, Email>())
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(Pickup)]),

@@ -11,6 +11,7 @@ class Repository {
 
   const Repository({this.client = const WebClient()});
 
+  // AUTH
   Future<Map<String, dynamic>> login(String email, String password) async {
     final Map<String, String> credentials = <String, String>{
       'email': email,
@@ -30,6 +31,7 @@ class Repository {
     return await client.post('/auth/registration/', data, auth: false);
   }
 
+  // CUSTOMER
   Future<List<dynamic>> fetchCustomer(int id) async {
     return await client.get('/customers/?user=$id/');
   }
@@ -39,6 +41,19 @@ class Repository {
   }
 
 
+  // PHONE NUMBERS
+  Future<List<dynamic>> fetchPhoneNumbers(int id) async {
+    return await client.get('/phonenumbers/?customer=$id/');
+  }
+
+
+  // EMAILS
+  Future<List<dynamic>> fetchEmails(int id) async {
+    return await client.get('/emails/?customer=$id/');
+  }
+
+
+  // SUBSCRIPTION
   Future<List<dynamic>> fetchSubscription(int id) async {
     return await client.get('/subscriptions/?customer=$id/');
   }
@@ -48,6 +63,7 @@ class Repository {
   }
 
 
+  // CONSUMERSUBSCRIPTION
   Future<List<dynamic>> fetchConsumerSubscription(int id) async {
     return await client.get('/consumersubscriptions/?customer=$id/');
   }
@@ -57,18 +73,25 @@ class Repository {
   }
 
 
-  Future<List<dynamic>> fetchPackages() async {
-    return await client.get('/packages/', auth: false);
-  }
-
+  // PICKUPS
   Future<List<dynamic>> fetchPickups(int id) async {
     return await client.get('/pickups/?subscription=$id/');
   }
 
+  // POSTCODES
   Future<List<dynamic>> fetchPostcodes() async {
     return await client.get('/postcodes/', auth: false);
   }
 
+
+  // PACKAGES
+  Future<List<dynamic>> fetchPackages() async {
+    return await client.get('/packages/', auth: false);
+  }
+
+
+
+  // GENERAL
   Future<Map<String, dynamic>> postLead({String firstName, String lastName, String address, int postcode, String email, String phoneNumber, String contactMethod, String status}) async {
     final Map<String, dynamic> body = <String, dynamic>{
       'first_name': firstName,

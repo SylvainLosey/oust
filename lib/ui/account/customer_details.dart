@@ -13,7 +13,7 @@ class CustomerDetails extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        if (viewModel.customerState.isLoading) {
+        if (viewModel.customerState.fetchCount > 0) {
           return Loading();
         }
 

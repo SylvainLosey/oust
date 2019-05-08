@@ -4,6 +4,8 @@ import '../app/app_state.dart';
 import '../customer/customer_actions.dart';
 import '../subscription/subscription_actions.dart';
 import '../../data/models/customer.dart';
+import '../../data/models/phone_number.dart';
+import '../../data/models/email.dart';
 import '../../data/models/serializers.dart';
 import '../../data/repository.dart';
 
@@ -15,9 +17,12 @@ class CustomerMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, LoadCustomerRequest>(_loadCustomer),
       TypedMiddleware<AppState, CreateCustomerRequest>(_createCustomerRequest),
+      TypedMiddleware<AppState, LoadPhoneNumbersRequest>(_loadPhoneNumbersRequest),
+      TypedMiddleware<AppState, LoadEmailsRequest>(_loadEmailsRequest),
     ];
   }
 
+  // CUSTOMER
   void _loadCustomer(Store<AppState> store, LoadCustomerRequest action, NextDispatcher next) async{
     next(action);
 
@@ -26,6 +31,9 @@ class CustomerMiddleware {
       final Customer customer = serializers.deserializeWith(Customer.serializer, customerData[0]);
 
       store.dispatch(LoadCustomerSuccess(customer: customer));
+
+      store.dispatch(LoadPhoneNumbersRequest(customer: customer));
+      store.dispatch(LoadEmailsRequest(customer: customer));
       store.dispatch(LoadSubscriptionRequest(customer: customer));
       store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
 
@@ -53,6 +61,33 @@ class CustomerMiddleware {
       store.dispatch(CreateCustomerSuccess());
     } catch (e) {
       store.dispatch(CreateCustomerFailure(error: e.toString()));
+    }
+  }
+
+
+  // PHONENUMBERS
+    void _loadPhoneNumbersRequest(Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> data = await repository.fetchPhoneNumbers(action.customer.id);
+      final List<PhoneNumber> phoneNumbers = List<PhoneNumber>.from(data.map<dynamic>((dynamic x) => PhoneNumber.fromJson(x)));
+      store.dispatch(LoadPhoneNumbersSuccess(phoneNumbers: phoneNumbers));
+    } catch (e) {
+      store.dispatch(LoadPhoneNumbersFailure(error: e.toString()));
+    }
+  }
+
+  // EMAILS
+  void _loadEmailsRequest(Store<AppState> store, LoadEmailsRequest action, NextDispatcher next) async{
+    next(action);
+
+    try {
+      final List<dynamic> data = await repository.fetchEmails(action.customer.id);
+      final List<Email> emails = List<Email>.from(data.map<dynamic>((dynamic x) => Email.fromJson(x)));
+      store.dispatch(LoadEmailsSuccess(emails: emails));
+    } catch (e) {
+      store.dispatch(LoadEmailsFailure(error: e.toString()));
     }
   }
 }

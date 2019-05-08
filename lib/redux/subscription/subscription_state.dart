@@ -20,6 +20,7 @@ abstract class SubscriptionState implements Built<SubscriptionState, Subscriptio
   
   @nullable
   ConsumerSubscription get consumerSubscription;
+  
   @nullable
   String get error;
 

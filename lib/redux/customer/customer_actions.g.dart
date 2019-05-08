@@ -75,3 +75,41 @@ CreateCustomerFailure _$CreateCustomerFailureFromJson(
 Map<String, dynamic> _$CreateCustomerFailureToJson(
         CreateCustomerFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+LoadPhoneNumbersRequest _$LoadPhoneNumbersRequestFromJson(
+    Map<String, dynamic> json) {
+  return LoadPhoneNumbersRequest(
+      customer: json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$LoadPhoneNumbersRequestToJson(
+        LoadPhoneNumbersRequest instance) =>
+    <String, dynamic>{'customer': instance.customer};
+
+LoadPhoneNumbersFailure _$LoadPhoneNumbersFailureFromJson(
+    Map<String, dynamic> json) {
+  return LoadPhoneNumbersFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadPhoneNumbersFailureToJson(
+        LoadPhoneNumbersFailure instance) =>
+    <String, dynamic>{'error': instance.error};
+
+LoadEmailsRequest _$LoadEmailsRequestFromJson(Map<String, dynamic> json) {
+  return LoadEmailsRequest(
+      customer: json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$LoadEmailsRequestToJson(LoadEmailsRequest instance) =>
+    <String, dynamic>{'customer': instance.customer};
+
+LoadEmailsFailure _$LoadEmailsFailureFromJson(Map<String, dynamic> json) {
+  return LoadEmailsFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadEmailsFailureToJson(LoadEmailsFailure instance) =>
+    <String, dynamic>{'error': instance.error};

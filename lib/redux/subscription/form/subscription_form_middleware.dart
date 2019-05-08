@@ -100,7 +100,6 @@ class SubscriptionFormMiddleware {
           ));
           // _createConsumerSubscriptionCompleter.future.then(() {});
         });
-
       });
     });
   }

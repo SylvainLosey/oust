@@ -24,7 +24,7 @@ DataState _loadPostcodesRequest(DataState state, LoadPostcodesRequest action) {
 DataState _loadPostcodesSuccess(DataState state, LoadPostcodesSuccess action) {
   return state.rebuild((DataStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
-    ..postcodes.addAll(Map<int, Postcode>.fromIterable(
+    ..postcodes.replace(Map<int, Postcode>.fromIterable(
       action.postcodes,
       key: (dynamic pickup) => pickup.id,
       value: (dynamic pickup) => pickup,
@@ -50,7 +50,7 @@ DataState _loadPackagesRequest(DataState state, LoadPackagesRequest action) {
 DataState _loadPackagesSuccess(DataState state, LoadPackagesSuccess action) {
   return state.rebuild((DataStateBuilder b) => b
     ..fetchCount = state.fetchCount -1
-    ..packages.addAll(Map<int, Package>.fromIterable(
+    ..packages.replace(Map<int, Package>.fromIterable(
       action.packages,
       key: (dynamic package) => package.id,
       value: (dynamic package) => package,

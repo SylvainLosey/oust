@@ -12,10 +12,12 @@ import 'package:oust/redux/subscription/subscription_state.dart';
 
 import 'consumer_subscription.dart';
 import 'customer.dart';
+import 'email.dart';
 import 'date_serializer.dart';
 import 'package.dart';
 import 'pickup.dart';
 import 'postcode.dart';
+import 'phone_number.dart';
 import 'subscription.dart';
 import 'subscription_form.dart';
 import 'user.dart';
@@ -29,6 +31,8 @@ part 'serializers.g.dart';
   ConsumerSubscription,
   Package,
   Pickup,
+  Email,
+  PhoneNumber,
   SubscriptionForm,
   Postcode,
   AuthState,
