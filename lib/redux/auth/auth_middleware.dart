@@ -38,11 +38,11 @@ class AuthMiddleware {
         )
       ));
     }
+    store.dispatch(LoadPackagesRequest());
 
     // Let app load 2 seconds and load this after as this is low priority
     await Future<void>.delayed(const Duration(seconds: 2), () {
       store.dispatch(LoadPostcodesRequest());
-      store.dispatch(LoadPackagesRequest());
     });
   }
 
@@ -89,6 +89,7 @@ class AuthMiddleware {
 
   void _userLogout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
     await _deleteAuthData();
+    store.dispatch(AppStarted());
 
     next(action);
   }

@@ -14,7 +14,7 @@ import 'package:oust/redux/invoice/invoice_state.dart';
 import 'consumer_subscription.dart';
 import 'customer.dart';
 import 'email.dart';
-import 'date_serializer.dart';
+import 'custom_serializers.dart';
 import 'package.dart';
 import 'pickup.dart';
 import 'postcode.dart';
@@ -50,4 +50,4 @@ part 'serializers.g.dart';
   AppState,
 ])
 
-final Serializers serializers = (_$serializers.toBuilder()..add(DateSerializer())..addPlugin(StandardJsonPlugin())).build();
+final Serializers serializers = (_$serializers.toBuilder()..add(DateSerializer())..add(DecimalSerializer())..addPlugin(StandardJsonPlugin())).build();

@@ -17,6 +17,7 @@ part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   static Serializer<AppState> get serializer => _$appStateSerializer;
+
   factory AppState() {
     return _$AppState._(
       authState: AuthState(),
@@ -29,7 +30,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       invoiceState: InvoiceState(),
     );
   }
+
   AppState._();
+  
   AuthState get authState;
   CustomerState get customerState;
   DataState get dataState;

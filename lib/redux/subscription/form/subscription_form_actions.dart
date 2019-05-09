@@ -113,3 +113,16 @@ class DecrementProductQuantity {
 class SubmitSubscriptionFormRequest {
   Map<String, dynamic> toJson() => _$SubmitSubscriptionFormRequestToJson(this);
 }
+
+@JsonSerializable()
+class SubmitSubscriptionFormSuccess {
+  Map<String, dynamic> toJson() => _$SubmitSubscriptionFormSuccessToJson(this);
+}
+
+@JsonSerializable()
+class SubmitSubscriptionFormFailure {
+  final String error;
+
+  SubmitSubscriptionFormFailure({this.error});
+  Map<String, dynamic> toJson() => _$SubmitSubscriptionFormFailureToJson(this);
+}

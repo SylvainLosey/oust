@@ -5,6 +5,7 @@ import '../app/app_state.dart';
 import '../../data/models/invoice.dart';
 import '../../data/models/invoice_item.dart';
 import '../../data/repository.dart';
+import 'package:decimal/decimal.dart';
 
 class InvoiceMiddleware {
   final Repository repository;
@@ -48,7 +49,7 @@ class InvoiceMiddleware {
     try {
       final InvoiceItem invoiceItem = InvoiceItem((InvoiceItemBuilder b) => b
         ..product = action.productId
-        ..amount = action.amount
+        ..amount = Decimal.fromInt(action.amount)
         ..customer = action.customerId
       );
 

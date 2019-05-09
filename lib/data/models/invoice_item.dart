@@ -2,6 +2,7 @@ library invoice_item;
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:decimal/decimal.dart';
 
 import 'serializers.dart';
 
@@ -35,11 +36,11 @@ abstract class InvoiceItem implements Built<InvoiceItem, InvoiceItemBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'unit_price')
-  String get unitPrice;
+  Decimal get unitPrice;
 
   @nullable
   @BuiltValueField(wireName: 'amount')
-  int get amount;
+  Decimal get amount;
 
   @nullable
   @BuiltValueField(wireName: 'unit_id')

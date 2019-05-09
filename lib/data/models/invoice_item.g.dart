@@ -58,13 +58,13 @@ class _$InvoiceItemSerializer implements StructuredSerializer<InvoiceItem> {
       result
         ..add('unit_price')
         ..add(serializers.serialize(object.unitPrice,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(Decimal)));
     }
     if (object.amount != null) {
       result
         ..add('amount')
         ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(Decimal)));
     }
     if (object.unitId != null) {
       result
@@ -191,11 +191,11 @@ class _$InvoiceItemSerializer implements StructuredSerializer<InvoiceItem> {
           break;
         case 'unit_price':
           result.unitPrice = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(Decimal)) as Decimal;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(Decimal)) as Decimal;
           break;
         case 'unit_id':
           result.unitId = serializers.deserialize(value,
@@ -274,9 +274,9 @@ class _$InvoiceItem extends InvoiceItem {
   @override
   final String duration;
   @override
-  final String unitPrice;
+  final Decimal unitPrice;
   @override
-  final int amount;
+  final Decimal amount;
   @override
   final int unitId;
   @override
@@ -468,13 +468,13 @@ class InvoiceItemBuilder implements Builder<InvoiceItem, InvoiceItemBuilder> {
   String get duration => _$this._duration;
   set duration(String duration) => _$this._duration = duration;
 
-  String _unitPrice;
-  String get unitPrice => _$this._unitPrice;
-  set unitPrice(String unitPrice) => _$this._unitPrice = unitPrice;
+  Decimal _unitPrice;
+  Decimal get unitPrice => _$this._unitPrice;
+  set unitPrice(Decimal unitPrice) => _$this._unitPrice = unitPrice;
 
-  int _amount;
-  int get amount => _$this._amount;
-  set amount(int amount) => _$this._amount = amount;
+  Decimal _amount;
+  Decimal get amount => _$this._amount;
+  set amount(Decimal amount) => _$this._amount = amount;
 
   int _unitId;
   int get unitId => _$this._unitId;

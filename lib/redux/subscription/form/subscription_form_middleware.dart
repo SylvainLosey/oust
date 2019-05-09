@@ -147,6 +147,11 @@ class SubscriptionFormMiddleware {
             subscriptionId: returnValue[0],
             completer: _createConsumerSubscriptionCompleter
           ));
+          _createConsumerSubscriptionCompleter.future.then((_) {
+              store.dispatch(SubmitSubscriptionFormSuccess());
+              store.dispatch(AppStarted());
+            }
+          );
         });
       });
     });

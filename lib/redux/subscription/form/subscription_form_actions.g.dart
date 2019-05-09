@@ -150,3 +150,21 @@ SubmitSubscriptionFormRequest _$SubmitSubscriptionFormRequestFromJson(
 Map<String, dynamic> _$SubmitSubscriptionFormRequestToJson(
         SubmitSubscriptionFormRequest instance) =>
     <String, dynamic>{};
+
+SubmitSubscriptionFormSuccess _$SubmitSubscriptionFormSuccessFromJson(
+    Map<String, dynamic> json) {
+  return SubmitSubscriptionFormSuccess();
+}
+
+Map<String, dynamic> _$SubmitSubscriptionFormSuccessToJson(
+        SubmitSubscriptionFormSuccess instance) =>
+    <String, dynamic>{};
+
+SubmitSubscriptionFormFailure _$SubmitSubscriptionFormFailureFromJson(
+    Map<String, dynamic> json) {
+  return SubmitSubscriptionFormFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$SubmitSubscriptionFormFailureToJson(
+        SubmitSubscriptionFormFailure instance) =>
+    <String, dynamic>{'error': instance.error};
