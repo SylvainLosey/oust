@@ -49,6 +49,7 @@ class PhoneForm extends StatefulWidget {
 class PhoneFormState extends State<PhoneForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
+  List<TextEditingController> _controllers = <TextEditingController>[];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class PhoneFormState extends State<PhoneForm> {
           children: <Widget>[
             TextFormField(
               controller: _phoneController,
-              // validator: phoneValidator,
+              validator: phoneValidator,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Téléphone',
@@ -96,7 +97,11 @@ class PhoneFormState extends State<PhoneForm> {
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
         onPressed: _phoneController.text.length < 3 
           ? null
-          : () { if (_formKey.currentState.validate()) widget.viewModel.nextStep(); }
+          : () { 
+            if (_formKey.currentState.validate()) {
+              widget.viewModel.nextStep(); 
+            }
+          }
       ),
     );
   }
@@ -104,17 +109,27 @@ class PhoneFormState extends State<PhoneForm> {
 
   @override
   void didChangeDependencies() {
-    _phoneController.removeListener(_onChanged);
-    _phoneController.text = widget.viewModel.subscriptionForm.email;
-    _phoneController.addListener(_onChanged);
+    // Use this to avoid THE bug.
+    if (_controllers.isNotEmpty) {
+      return;
+    }
+    _phoneController.text = widget.viewModel.subscriptionForm.phoneNumber;
+
+    _controllers = [
+      _phoneController
+    ];
+
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _phoneController.removeListener(_onChanged);
-    _phoneController.dispose();
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
 
     super.dispose();
   }

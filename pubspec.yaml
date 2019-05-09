@@ -24,18 +24,13 @@ dependencies:
   shared_preferences: ^0.5.0
   json_annotation: ^2.0.0
   timeline_list: ^0.0.3
-  google_maps_flutter: ^0.5.2
+  google_maps_flutter: ^0.5.13
   built_value: ^6.5.0
   built_collection: ^4.2.1
   flutter_typeahead: ^1.4.0
   flutter_spinkit: "^3.1.0"
   decimal: ^0.3.0
-
-  # flare_flutter:
-  #   git: 
-  #     url: git://github.com/2d-inc/Flare-Flutter.git
-  #     ref: dev
-  #     path: flare_flutter
+  flare_flutter: ^1.5.0
 
 
    # Redux

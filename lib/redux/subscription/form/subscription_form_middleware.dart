@@ -148,8 +148,8 @@ class SubscriptionFormMiddleware {
             completer: _createConsumerSubscriptionCompleter
           ));
           _createConsumerSubscriptionCompleter.future.then((_) {
-              store.dispatch(SubmitSubscriptionFormSuccess());
               store.dispatch(AppStarted());
+              store.dispatch(SubmitSubscriptionFormSuccess());
             }
           );
         });

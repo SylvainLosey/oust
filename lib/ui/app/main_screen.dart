@@ -30,6 +30,14 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+// Widget _getScreen(int selectedScreen) {
+//   switch (selectedScreen) {
+//     case 0: return LiftsScreen();
+//     case 1: return SubscriptionScreen();
+//     case 3: return ProfileScreen();
+//   }
+// }
+
 class _ViewModel {
   final int selectedBottomNav;
 

@@ -26,7 +26,7 @@ class SubscriptionHome extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
 
-        if (viewModel.fetchCount > 0 || viewModel.subscriptionFormState.isLoading) {
+        if (viewModel.fetchCount > 0 || viewModel.subscriptionFormState.isLoading || viewModel.subscription == null || viewModel.pickups == null) {
           return Loading();
         }
 

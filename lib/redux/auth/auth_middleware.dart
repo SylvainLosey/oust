@@ -111,7 +111,6 @@ class AuthMiddleware {
           )
         )
       );
-      print(data['user']);
       action.completer.complete(data['user']);
     } catch (e) {
       store.dispatch(CreateUserFailure(error: e.toString()));
