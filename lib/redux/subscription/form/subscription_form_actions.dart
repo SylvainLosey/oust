@@ -126,3 +126,8 @@ class SubmitSubscriptionFormFailure {
   SubmitSubscriptionFormFailure({this.error});
   Map<String, dynamic> toJson() => _$SubmitSubscriptionFormFailureToJson(this);
 }
+
+@JsonSerializable()
+class SubscriptionFormReset {
+  Map<String, dynamic> toJson() => _$SubscriptionFormResetToJson(this);
+}

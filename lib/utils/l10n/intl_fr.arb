@@ -1,0 +1,14 @@
+{
+  "subscriptionHomeTitle": "Abonnement",
+  "@subscriptionHomeTitle": {
+    "description": "Title for the App application",
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscriptionHomeDescription": "Nos abos wesh",
+  "@subscriptionHomeDescription": {
+    "description": "Title for the App apasdfsplication",
+    "type": "text",
+    "placeholders": {}
+  }
+}

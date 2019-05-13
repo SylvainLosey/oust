@@ -44,11 +44,8 @@ class LoginFormState extends State<LoginForm> {
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
         decoration: InputDecoration(
-            hintText: 'Email',
-            icon: Icon(
-              Icons.mail,
-              color: Colors.grey,
-            )),
+          hintText: 'Email',
+        ),
         validator: (String value) => value.isEmpty ? 'Email can\'t be empty' : null,
         controller: _emailController
       ),
@@ -63,11 +60,8 @@ class LoginFormState extends State<LoginForm> {
         obscureText: true,
         autofocus: false,
         decoration: InputDecoration(
-            hintText: 'Password',
-            icon: Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
+          hintText: 'Password',
+        ),
         validator: (String value) => value.isEmpty ? 'Password can\'t be empty' : null,
         controller: _passwordController,
       ),

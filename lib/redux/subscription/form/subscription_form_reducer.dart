@@ -23,6 +23,8 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, DecrementProductQuantity>(_decrement),
   TypedReducer<SubscriptionFormState, SubmitSubscriptionFormRequest>(_submitFormRequest),
   TypedReducer<SubscriptionFormState, SubmitSubscriptionFormSuccess>(_submitFormSuccess),
+  TypedReducer<SubscriptionFormState, SubmitSubscriptionFormFailure>(_submitFormFailure),
+  TypedReducer<SubscriptionFormState, SubscriptionFormReset>(_subscriptionFormReset),
 ]);
 
 SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart action) {
@@ -164,4 +166,15 @@ SubscriptionFormState _submitFormRequest(SubscriptionFormState state, SubmitSubs
 
 SubscriptionFormState _submitFormSuccess(SubscriptionFormState state, SubmitSubscriptionFormSuccess action) {
   return SubscriptionFormState();
+}
+
+SubscriptionFormState _subscriptionFormReset(SubscriptionFormState state, SubscriptionFormReset action) {
+  return SubscriptionFormState();
+}
+
+SubscriptionFormState _submitFormFailure(SubscriptionFormState state, SubmitSubscriptionFormFailure action) {
+  return state.rebuild((SubscriptionFormStateBuilder b) => b
+    ..isLoading = false
+    ..error = action.error
+  );
 }

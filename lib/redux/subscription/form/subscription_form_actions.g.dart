@@ -168,3 +168,12 @@ SubmitSubscriptionFormFailure _$SubmitSubscriptionFormFailureFromJson(
 Map<String, dynamic> _$SubmitSubscriptionFormFailureToJson(
         SubmitSubscriptionFormFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+SubscriptionFormReset _$SubscriptionFormResetFromJson(
+    Map<String, dynamic> json) {
+  return SubscriptionFormReset();
+}
+
+Map<String, dynamic> _$SubscriptionFormResetToJson(
+        SubscriptionFormReset instance) =>
+    <String, dynamic>{};

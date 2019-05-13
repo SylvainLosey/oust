@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../utils/layout.dart';
 import '../presentation/safe_widget.dart';
+import '../../utils/layout.dart';
+import '../../utils/localizations.dart';
 import '../../redux/app/app_state.dart';
 import '../../redux/subscription/form/subscription_form_actions.dart';
 import '../../data/models/subscription_form.dart';
@@ -20,13 +21,13 @@ class SubscriptionEmpty extends StatelessWidget {
           children: <Widget>[
             Container(height: Layout.of(context).gridUnit(50)),
             Text(
-              'Abonnement', 
+              AppLocalizations.of(context).subscriptionHomeTitle, 
               style: Theme.of(context).textTheme.title,
               textAlign: TextAlign.center,
             ),
             Container(height: Layout.of(context).gridUnit(1)),
             Text(
-              'Gagne 1 jour entier par année en nous laissant aller à la déchetterie pour toi!', 
+              AppLocalizations.of(context).subscriptionHomeDescription, 
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),

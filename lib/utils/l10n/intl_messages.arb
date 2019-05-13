@@ -1,0 +1,13 @@
+{
+  "@@last_modified": "2019-05-13T18:44:03.505938",
+  "subscriptionHomeTitle": "Subscription",
+  "@subscriptionHomeTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscriptionHomeDescription": "Our packages",
+  "@subscriptionHomeDescription": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

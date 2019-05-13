@@ -152,14 +152,9 @@ class SubscriptionFormMiddleware {
               store.dispatch(AppStarted());
               store.dispatch(SubmitSubscriptionFormSuccess());
             }
-          );
-        });
-        _createSubscriptionCompleter.future.catchError(_handleError(store));
-      });
-      _createCustomerCompleter.future.catchError(_handleError(store));
-    });
-    _createUserCompleter.future.catchError(() => store.dispatch(SubmitSubscriptionFormFailure()));
+          ).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+        }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+      }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+    }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
   }
-
-  _handleError(Store<AppState> store) => store.dispatch(SubmitSubscriptionFormFailure());
 }

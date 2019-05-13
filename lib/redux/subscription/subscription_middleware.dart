@@ -49,6 +49,7 @@ class SubscriptionMiddleware {
       store.dispatch(CreateSubscriptionSuccess());
     } catch (e) {
       store.dispatch(CreateSubscriptionFailure());
+      action.completer.completeError(e.toString());
     }
   }
 
@@ -78,6 +79,7 @@ class SubscriptionMiddleware {
       store.dispatch(CreateConsumerSubscriptionSuccess());
     } catch (e) {
       store.dispatch(CreateConsumerSubscriptionFailure(error: e.toString()));
+      action.completer.completeError(e.toString());
     }
   }
 }

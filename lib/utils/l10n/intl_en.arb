@@ -1,0 +1,15 @@
+{
+  "@@last_modified": "2019-05-13T18:17:05.078945",
+  "subscriptionHomeTitle": "Subscription",
+  "@subscriptionHomeTitle": {
+    "description": "Title for the App application",
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscriptionHomeDescription": "Our packages",
+  "@subscriptionHomeDescription": {
+    "description": "Title for the App apasdfsplication",
+    "type": "text",
+    "placeholders": {}
+  }
+}
