@@ -23,6 +23,7 @@ class SubscriptionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
+      distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
 
@@ -78,16 +79,16 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
           boxShadow: <BoxShadow>[BoxShadow(spreadRadius: 10, blurRadius: 10, color: Colors.grey.withOpacity(0.2))]
         )
       ),
-      if (viewModel.subscription.position != null) 
-        Container(
-          height: Layout.of(context).gridUnit(40),
-          child: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(viewModel.subscription.position[0], viewModel.subscription.position[1]),
-              zoom: 14.0,
-            ),
-          )
-        ),
+      // if (viewModel.subscription.position != null) 
+      //   Container(
+      //     height: Layout.of(context).gridUnit(40),
+      //     child: GoogleMap(
+      //       initialCameraPosition: CameraPosition(
+      //         target: LatLng(viewModel.subscription.position[0], viewModel.subscription.position[1]),
+      //         zoom: 14.0,
+      //       ),
+      //     )
+      //   ),
       Container(
         height:  Layout.of(context).gridUnit(40),
         decoration: BoxDecoration(

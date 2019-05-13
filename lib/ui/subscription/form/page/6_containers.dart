@@ -38,16 +38,10 @@ class SubscriptionFormContainers extends StatelessWidget {
 
 
 
-class WhatContainers extends StatefulWidget {
+class WhatContainers extends StatelessWidget {
   final _ViewModel viewModel;
 
   WhatContainers(this.viewModel);
-
-  @override
-  State<StatefulWidget> createState() => WhatContainersState();
-}
-
-class WhatContainersState extends State<WhatContainers> {
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +57,18 @@ class WhatContainersState extends State<WhatContainers> {
             image: 'assets/images/container37l.png',
             title: 'Caisse 35 litres',
             subtitle: '15.00 CHF',
-            quantity: widget.viewModel.smallContainerQuantity.toString(),
-            increment: () => widget.viewModel.decrement(product: 'smallContainer'),
-            decrement: () => widget.viewModel.increment(product: 'smallContainer'),
+            quantity: viewModel.smallContainerQuantity.toString(),
+            increment: () => viewModel.decrement(product: 'smallContainer'),
+            decrement: () => viewModel.increment(product: 'smallContainer'),
           ),
           Container(height: Layout.of(context).gridUnit(2)),
           ProductCard(
             image: 'assets/images/container60l.png',
             title: 'Caisse 60 litres',
             subtitle: '20.00 CHF',
-            quantity: widget.viewModel.bigContainerQuantity.toString(),
-            increment: () => widget.viewModel.decrement(product: 'bigContainer'),
-            decrement: () => widget.viewModel.increment(product: 'bigContainer'),
+            quantity: viewModel.bigContainerQuantity.toString(),
+            increment: () => viewModel.decrement(product: 'bigContainer'),
+            decrement: () => viewModel.increment(product: 'bigContainer'),
           ),
           Container(height: Layout.of(context).gridUnit(4)),
           Container(
@@ -91,13 +85,13 @@ class WhatContainersState extends State<WhatContainers> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.nextStep
+        onPressed: viewModel.nextStep
       )
     );
   } 
 
   String _getTotal() {
-    final int total = widget.viewModel.smallContainerQuantity * 15 + widget.viewModel.bigContainerQuantity * 20;
+    final int total = viewModel.smallContainerQuantity * 15 + viewModel.bigContainerQuantity * 20;
     return '$total.00 CHF';
   }
 }

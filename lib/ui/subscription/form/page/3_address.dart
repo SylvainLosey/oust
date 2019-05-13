@@ -51,15 +51,13 @@ class AddressForm extends StatefulWidget {
 
 class AddressFormState extends State<AddressForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _isButtonEnabled = false;
-  Postcode _selectedPostcode;
    
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _postcodeController = TextEditingController();
   List<TextEditingController> _controllers = <TextEditingController>[];
 
-  FocusNode _addressNode;
-  FocusNode _postcodeNode;
+  final FocusNode _addressNode = FocusNode();
+  final FocusNode _postcodeNode = FocusNode();
   List<FocusNode> _focusNodes;
 
   // On load set controllers to value stored in redux and add onChanged listeners
@@ -84,6 +82,7 @@ class AddressFormState extends State<AddressForm> {
             ),
             textInputAction: TextInputAction.next,
             inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(80)],
+            textCapitalization: TextCapitalization.sentences,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_postcodeNode);
             },
@@ -93,21 +92,19 @@ class AddressFormState extends State<AddressForm> {
             suggestionsBoxVerticalOffset: 24,
             textFieldConfiguration: TextFieldConfiguration(
               controller: _postcodeController,
+              focusNode: _postcodeNode,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Code postal et localité',
-                hintText: 'Ex:  1470 Estavayer-le-Lac',
                 suffixIcon: _postcodeController.text.isEmpty ? null : IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {
-                    setState(() {
-                      _selectedPostcode = null;
-                      _postcodeController.clear();
-                    });
-                  },
+                    widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = null));
+                    _postcodeController.text = '';
+                  }
                 )
               )
             ),
-            validator: _validator,
             suggestionsCallback: _suggestionCallback,
             onSuggestionSelected: _onSuggestionSelected,
             itemBuilder: _itemBuilder,
@@ -118,20 +115,11 @@ class AddressFormState extends State<AddressForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _isButtonEnabled 
-        ? () {if (_formKey.currentState.validate()) widget.viewModel.nextStep(_selectedPostcode);}
+        onPressed: _addressController.text.isNotEmpty && widget.viewModel.selectedPostcode != null 
+        ? () {if (_formKey.currentState.validate()) widget.viewModel.nextStep(widget.viewModel.postcodes[widget.viewModel.selectedPostcode]);}
         : null
       ),
     );
-  }
-
-  // Typeahead field helpers
-  String _validator(String value) {
-    if (_selectedPostcode == null) {
-      return 'Choisissez une valeur dans la liste déroulante';
-    } else {
-      return null;
-    }
   }
 
   List<Postcode> _suggestionCallback(String pattern) {
@@ -139,9 +127,8 @@ class AddressFormState extends State<AddressForm> {
   }
 
   void _onSuggestionSelected(Postcode postcode) {
-    _selectedPostcode = postcode;
-    _postcodeController.text = '${_selectedPostcode.postcode} ${_selectedPostcode.name}';
-    _formKey.currentState.validate();
+     widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = postcode.id));
+    _postcodeController.text = '${postcode.postcode} ${postcode.name}';
   }
 
   ListTile _itemBuilder(BuildContext context, Postcode postcode) {
@@ -153,7 +140,6 @@ class AddressFormState extends State<AddressForm> {
   }
 
 
-  // Redux 
   @override
   void didChangeDependencies() {
     _controllers = <TextEditingController>[
@@ -161,24 +147,17 @@ class AddressFormState extends State<AddressForm> {
       _postcodeController,
     ];
 
-    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
-
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm;
-    _addressController.text = widget.viewModel.subscriptionForm.address;
-    if (subscriptionForm.postcode != null) {
-      final Postcode postcode = widget.viewModel.postcodes[subscriptionForm.postcode];
-      _selectedPostcode = widget.viewModel.postcodes[subscriptionForm.postcode];
-      _postcodeController.text = '${postcode.postcode} ${postcode.name}';
-    }
-    
-    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
-
-    _addressNode = FocusNode();
-    _postcodeNode = FocusNode();
     _focusNodes = <FocusNode>[
       _addressNode,
       _postcodeNode
     ];
+
+    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+
+    _addressController.text = widget.viewModel.subscriptionForm.address;
+    _postcodeController.text = widget.viewModel.selectedPostcode != null ? '${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].postcode} ${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].name}' : '';
+    
+    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -190,45 +169,18 @@ class AddressFormState extends State<AddressForm> {
       controller.dispose();
     });
 
-    _focusNodes.forEach((dynamic node) {
-      node.dispose();
-    });
+    _focusNodes.forEach((FocusNode node) => node.dispose());
 
     super.dispose();
   }
 
   void _onChanged() {
-    // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..address = _addressController.text == '' ? null : _addressController.text.trim()
-      ..postcode = _postcodeController.text == '' ? null : _selectedPostcode?.id
     );
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
-    }
-
-    // Disable/enable button if conditions are met
-    if (_addressController.text.isNotEmpty && _postcodeController.text.length > 4) {
-      if (_isButtonEnabled != true) setState(() {_isButtonEnabled = true;});
-    } else {
-      if (_isButtonEnabled != false) setState(() {_isButtonEnabled = false;}); 
-    }
-
-    // This handles the case where the user selects a postcode, but then modifies the field manually
-    // 1. If the selected postcode doesn't match the first result of getSuggestion from text value, delete selected postcode
-    // 2. If there is no match at all with current text value, delete selected postcode (catch statement)
-    if (_selectedPostcode != null) {
-      try {
-        final Postcode closestMatch = Postcode.getSuggestions(_postcodeController.text, widget.viewModel.postcodes.toMap())[0];
-        if (_selectedPostcode != null && closestMatch != null){
-          if (_selectedPostcode.id != closestMatch.id) {
-            _selectedPostcode = null;
-          }
-        }
-      } catch(e) {
-        _selectedPostcode = null;
-      }
     }
   }
 }
@@ -236,6 +188,7 @@ class AddressFormState extends State<AddressForm> {
 @immutable
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
+  final int selectedPostcode;
   final Function nextStep;
   final Function previousStep;
   final Function exit;
@@ -245,6 +198,7 @@ class _ViewModel {
 
   _ViewModel({
     this.subscriptionForm,
+    this.selectedPostcode,
     this.nextStep,
     this.previousStep,
     this.exit,
@@ -255,6 +209,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+      selectedPostcode: store.state.subscriptionFormState.subscriptionForm.postcode,
       nextStep: (Postcode selectedPostcode) {
         if (selectedPostcode.subscriptionAvailable) {
           store.dispatch(SubscriptionFormNextStep());

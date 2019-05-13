@@ -69,7 +69,6 @@ class PhoneFormState extends State<PhoneForm> {
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Téléphone',
-                hintText: '079 987 65 43',
               ),
             ),
             Container(height: Layout.of(context).gridUnit(4)),
@@ -95,7 +94,7 @@ class PhoneFormState extends State<PhoneForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _phoneController.text.length < 3 
+        onPressed: _phoneController.text.length < 10
           ? null
           : () { 
             if (_formKey.currentState.validate()) {

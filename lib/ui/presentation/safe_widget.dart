@@ -21,15 +21,22 @@ class SafePadding extends StatelessWidget {
 
 
 class SafeColumn extends StatelessWidget {
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
   final List<Widget> children;
 
-  SafeColumn({@required this.children});
+  SafeColumn({
+    @required this.children, 
+    this.crossAxisAlignment = CrossAxisAlignment.stretch, 
+    this.mainAxisAlignment = MainAxisAlignment.start
+  });
 
   @override
   Widget build(BuildContext context) {
     return SafePadding(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
         children: children,
       )
     );

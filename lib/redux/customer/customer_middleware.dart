@@ -62,10 +62,11 @@ class CustomerMiddleware {
       );
 
       final Map<String, dynamic> data = await repository.createCustomer(customer);
-      action.completer.complete(data['id']);
       store.dispatch(CreateCustomerSuccess());
+      action.completer.complete(data['id']);
     } catch (e) {
       store.dispatch(CreateCustomerFailure(error: e.toString()));
+      action.completer.completeError(e.toString());
     }
   }
 

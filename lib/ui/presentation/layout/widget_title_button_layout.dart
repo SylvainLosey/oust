@@ -14,10 +14,11 @@ class WidgetTitleButtonLayout extends StatelessWidget {
     return SafeColumn(
        children: <Widget>[
         Spacer(flex: 1),
-        Expanded(
-          flex: 10,
-          child: widget,
-        ),
+        if (widget != null)
+          Expanded(
+            flex: 10,
+            child: widget,
+          ),
         Spacer(flex: 1),
         title,
         Spacer(flex: 14),

@@ -37,16 +37,10 @@ class SubscriptionFormPaymentMethod extends StatelessWidget {
 }
 
 
-class PaymentMethodForm extends StatefulWidget {
+class PaymentMethodForm extends StatelessWidget {
   final _ViewModel viewModel;
 
  PaymentMethodForm(this.viewModel);
-
-  @override
-  State<StatefulWidget> createState() => PaymentMethodFormState();
-}
-
-class PaymentMethodFormState extends State<PaymentMethodForm> {
 
   @override
   Widget build(BuildContext context) {
@@ -62,29 +56,29 @@ class PaymentMethodFormState extends State<PaymentMethodForm> {
             onTap: () => _onTap(paymentMethod: 'emailInvoice'),
             title: 'Facture email',
             text: 'Sans frais et pratique',
-            selected: widget.viewModel.paymentMethod == 'emailInvoice'
+            selected: viewModel.paymentMethod == 'emailInvoice'
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(
             onTap: () => _onTap(paymentMethod: 'paperInvoice'),
             title: 'Facture papier',
             text: '2.00 CHF par facture',
-            selected: widget.viewModel.paymentMethod == 'paperInvoice'
+            selected: viewModel.paymentMethod == 'paperInvoice'
           ),
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.paymentMethod != null ? () => widget.viewModel.nextStep() : null
+        onPressed: viewModel.paymentMethod != null ? () => viewModel.nextStep() : null
       )
     );
   }
 
   void _onTap({String paymentMethod}) {
-    if (paymentMethod != widget.viewModel.paymentMethod) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
+    if (paymentMethod != viewModel.paymentMethod) {
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
     } else {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = null));
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = null));
     }
   }
 }

@@ -37,16 +37,10 @@ class SubscriptionFormRegistrationMethod extends StatelessWidget {
 }
 
 
-class RegistrationMethodForm extends StatefulWidget {
+class RegistrationMethodForm extends StatelessWidget {
   final _ViewModel viewModel;
 
   RegistrationMethodForm(this.viewModel);
-
-  @override
-  State<StatefulWidget> createState() => RegistrationMethodFormState();
-}
-
-class RegistrationMethodFormState extends State<RegistrationMethodForm> {
 
   @override
   Widget build(BuildContext context) {
@@ -62,29 +56,29 @@ class RegistrationMethodFormState extends State<RegistrationMethodForm> {
             onTap: () => _onTap(method: 'app'),
             title: 'M\'inscrire tout de suite',
             text: 'Terminer l\'inscription depuis l\'application en quelques minutes.',
-            selected: widget.viewModel.registrationMethod == 'app'
+            selected: viewModel.registrationMethod == 'app'
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(
             onTap: () => _onTap(method: 'rdv'),
             title: 'Fixer un rendez-vous',
             text: 'Convenir d\'un rendez-vous à ton domicile. Idéal si tu as des demandes spéciales.',
-            selected: widget.viewModel.registrationMethod == 'rdv'
+            selected: viewModel.registrationMethod == 'rdv'
           ),
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.registrationMethod != null ? () => widget.viewModel.nextStep(widget.viewModel.registrationMethod) : null
+        onPressed: viewModel.registrationMethod != null ? () => viewModel.nextStep(viewModel.registrationMethod) : null
       )
     );
   }
 
   void _onTap({String method}) {
-    if (method != widget.viewModel.registrationMethod) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = method));
+    if (method != viewModel.registrationMethod) {
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = method));
     } else {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = null));
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..registrationMethod = null));
     }
   }
 }

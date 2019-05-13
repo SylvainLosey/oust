@@ -51,14 +51,13 @@ class NameForm extends StatefulWidget {
 
 class NameFormState extends State<NameForm> {
   final GlobalKey<FormState>_formKey = GlobalKey<FormState>();
-  bool _isButtonEnabled = false;
    
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   List<TextEditingController> _controllers = <TextEditingController>[];
 
-  FocusNode _firstNameNode;
-  FocusNode _lastNameNode;
+  final FocusNode _firstNameNode = FocusNode();
+  final FocusNode _lastNameNode = FocusNode();
   List<FocusNode> _focusNodes;
 
   // On load set controllers to value stored in redux and add onChanged listeners
@@ -80,9 +79,8 @@ class NameFormState extends State<NameForm> {
               decoration: InputDecoration(labelText: 'Prénom'),
               inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
               textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_){
-                FocusScope.of(context).requestFocus(_lastNameNode);
-              },
+              textCapitalization: TextCapitalization.words,
+              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameNode)
             ),
             Container(height: Layout.of(context).gridUnit(2)),
             TextFormField(
@@ -91,6 +89,7 @@ class NameFormState extends State<NameForm> {
               decoration: InputDecoration(labelText: 'Nom'),
               textInputAction: TextInputAction.done,
               inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
+              textCapitalization: TextCapitalization.words,
               onFieldSubmitted: (_) => widget.viewModel.nextStep(),
             ),
           ],
@@ -98,7 +97,7 @@ class NameFormState extends State<NameForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _isButtonEnabled ? widget.viewModel.nextStep : null
+        onPressed: _firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty ? widget.viewModel.nextStep : null
       ),
     );
   }
@@ -110,18 +109,15 @@ class NameFormState extends State<NameForm> {
       _lastNameController,
     ];
 
-    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
-    _firstNameController.text = widget.viewModel.subscriptionForm.firstName;
-    _lastNameController.text = widget.viewModel.subscriptionForm.lastName;
-    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
-
-
-    _firstNameNode = FocusNode();
-    _lastNameNode = FocusNode();
     _focusNodes = <FocusNode>[
       _firstNameNode,
       _lastNameNode
     ];
+
+    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+    _firstNameController.text = widget.viewModel.subscriptionForm.firstName;
+    _lastNameController.text = widget.viewModel.subscriptionForm.lastName;
+    _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -134,9 +130,7 @@ class NameFormState extends State<NameForm> {
       controller.dispose();
     });
 
-    _focusNodes.forEach((dynamic node) {
-      node.dispose();
-    });
+    _focusNodes.forEach((FocusNode node) => node.dispose());
 
     super.dispose();
   }
@@ -151,13 +145,6 @@ class NameFormState extends State<NameForm> {
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
-    }
-
-    // Disable/enable button if conditions are met
-    if (_firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty) {
-      if (_isButtonEnabled != true) setState(() {_isButtonEnabled = true;});
-    } else {
-      if (_isButtonEnabled != false) setState(() {_isButtonEnabled = false;}); 
     }
   }
 }

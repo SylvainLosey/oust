@@ -19,6 +19,7 @@ class MainScreen extends StatelessWidget {
     ];
 
     return StoreConnector<AppState, _ViewModel>(
+      distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         return Scaffold(

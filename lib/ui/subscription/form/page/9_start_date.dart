@@ -55,16 +55,10 @@ class SubscriptionFormStartDate extends StatelessWidget {
 }
 
 
-class StartDateForm extends StatefulWidget {
+class StartDateForm extends StatelessWidget {
   final _ViewModel viewModel;
 
   StartDateForm(this.viewModel);
-
-  @override
-  State<StatefulWidget> createState() => StartDateFormState();
-}
-
-class StartDateFormState extends State<StartDateForm> {
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +70,14 @@ class StartDateFormState extends State<StartDateForm> {
       form: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          if (widget.viewModel.startDates == null)
+          if (viewModel.startDates == null)
             Center(child: Text('Bug'))
           else
-            ...List.generate(widget.viewModel.startDates.length, (int index) {
+            ...List.generate(viewModel.startDates.length, (int index) {
               return SelectableCheckbox(
-                onTap: () => _onTap(selectedStartDate: widget.viewModel.startDates[index]),
-                text: dateToStringFrench(widget.viewModel.startDates[index]),
-                selected: widget.viewModel.selectedStartDate == widget.viewModel.startDates[index],
+                onTap: () => _onTap(selectedStartDate: viewModel.startDates[index]),
+                text: dateToStringFrench(viewModel.startDates[index]),
+                selected: viewModel.selectedStartDate == viewModel.startDates[index],
               );
           },
         ),
@@ -91,16 +85,16 @@ class StartDateFormState extends State<StartDateForm> {
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.selectedStartDate == null 
+        onPressed: viewModel.selectedStartDate == null 
           ? null
-          : widget.viewModel.nextStep
+          : viewModel.nextStep
       )
     );
   }
 
   void _onTap({DateTime selectedStartDate}) {
-    if (selectedStartDate != widget.viewModel.selectedStartDate) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
+    if (selectedStartDate != viewModel.selectedStartDate) {
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
         ..selectedStartDate = selectedStartDate
       ));
     }

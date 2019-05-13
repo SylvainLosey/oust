@@ -51,6 +51,9 @@ class AccountFormState extends State<AccountForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   List<TextEditingController> _controllers;
+  final FocusNode _emailNode = FocusNode();
+  final FocusNode _passwordNode = FocusNode();
+  List<FocusNode> _focusNodes;
   bool _obscureText = true;
 
   @override
@@ -68,17 +71,26 @@ class AccountFormState extends State<AccountForm> {
             TextFormField(
               controller: _emailController,
               validator: emailValidator,
+              focusNode: _emailNode,
               keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordNode),
               decoration: InputDecoration(
                 labelText: 'Email',
-                hintText: 'oust@example.com',
               ),
             ),
             Container(height: Layout.of(context).gridUnit(2)),
             TextFormField(
               controller: _passwordController,
               validator: passwordValidator,
+              focusNode: _passwordNode,
               obscureText: _obscureText,
+              // onFieldSubmitted: (_) {
+              //   if (_formKey.currentState.validate()) {
+              //     widget.viewModel.submit();
+              //   }
+              // },
+              onFieldSubmitted: (_) => widget.viewModel.submit(),
               decoration: InputDecoration(
                 labelText: 'Mot de passe',
                 suffixIcon: IconButton(
@@ -113,6 +125,11 @@ class AccountFormState extends State<AccountForm> {
       _emailController,
       _passwordController
     ];
+    
+     _focusNodes = <FocusNode>[
+      _emailNode,
+      _passwordNode
+    ];
 
     _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
 
@@ -120,6 +137,7 @@ class AccountFormState extends State<AccountForm> {
     _passwordController.text = widget.viewModel.subscriptionForm.password;
 
     _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
+
 
     super.didChangeDependencies();
   }
@@ -130,6 +148,8 @@ class AccountFormState extends State<AccountForm> {
       controller.removeListener(_onChanged);
       controller.dispose();
     });
+
+    _focusNodes.forEach((FocusNode node) => node.dispose());
 
     super.dispose();
   }

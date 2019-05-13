@@ -11,8 +11,8 @@ ThemeData appTheme() {
     accentColor: accentColor,
     scaffoldBackgroundColor: backgroundColor,
     inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.white,
+      // filled: true,
+      // fillColor: Colors.white,
       border: OutlineInputBorder(),
     ),
     buttonTheme: ButtonThemeData(

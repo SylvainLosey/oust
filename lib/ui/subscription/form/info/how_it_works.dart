@@ -26,7 +26,7 @@ class SubscriptionFormHowItWorks extends StatelessWidget {
           child: Scaffold(
             appBar: MainAppBar(),
             body: WidgetTitleButtonLayout(
-              widget: Image.asset('assets/images/logo.png'),
+              // widget: Image.asset('assets/images/logo.png'),
               title: TitleWidget(
                 title:'Fonctionnement',
                 subtitle: 'Nous passons collecter à ton domicile tous tes déchets triés, à la fréquence qui te convient.',

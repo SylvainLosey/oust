@@ -27,7 +27,7 @@ class SubscriptionFormQuantity extends StatelessWidget {
           child: Scaffold(
             appBar: MainAppBar(onExit: viewModel.exit),
             body: WidgetTitleButtonLayout(
-              widget: Image.asset('assets/images/logo.png'),
+              // widget: Image.asset('assets/images/logo.png'),
               title: TitleWidget(
                 title:'Quantités',
                 subtitle: 'Par passage, nous collectons jusqu’à environ 200l. Tes déchets peuvent être dans tout type de conteneurs tant qu’ils sont triés.',

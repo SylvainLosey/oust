@@ -103,6 +103,7 @@ class LoginFormState extends State<LoginForm> {
 
   Widget _showErrorMessage() {
     return StoreConnector<AppState, String>(
+      distinct: true,
       converter: (Store<AppState> store) => store.state.authState.error,
       builder: (BuildContext context, String error) {
         if (error != null) {

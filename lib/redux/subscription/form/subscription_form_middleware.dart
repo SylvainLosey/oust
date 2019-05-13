@@ -74,6 +74,7 @@ class SubscriptionFormMiddleware {
       password: form.password,
       completer: _createUserCompleter
     ));
+
     _createUserCompleter.future.then((userId) {
       Completer _createCustomerCompleter = Completer();
 
@@ -153,7 +154,12 @@ class SubscriptionFormMiddleware {
             }
           );
         });
+        _createSubscriptionCompleter.future.catchError(_handleError(store));
       });
+      _createCustomerCompleter.future.catchError(_handleError(store));
     });
+    _createUserCompleter.future.catchError(() => store.dispatch(SubmitSubscriptionFormFailure()));
   }
+
+  _handleError(Store<AppState> store) => store.dispatch(SubmitSubscriptionFormFailure());
 }

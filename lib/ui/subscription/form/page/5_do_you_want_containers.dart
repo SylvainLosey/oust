@@ -37,16 +37,11 @@ class SubscriptionFormContainersYesNo extends StatelessWidget {
 }
 
 
-class DoYouWantContainers extends StatefulWidget {
+class DoYouWantContainers extends StatelessWidget {
   final _ViewModel viewModel;
 
   DoYouWantContainers(this.viewModel);
 
-  @override
-  State<StatefulWidget> createState() => DoYouWantContainersState();
-}
-
-class DoYouWantContainersState extends State<DoYouWantContainers> {
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
@@ -61,29 +56,29 @@ class DoYouWantContainersState extends State<DoYouWantContainers> {
             onTap: () => _onTap(choice: true),
             title: 'J\'aimerais des caisses de tri',
             text: 'Nous te les livrons avec le premier passage dès 15.00 CHF pièce.',
-            selected: widget.viewModel.wantsContainers ?? false ? true : false,
+            selected: viewModel.wantsContainers ?? false ? true : false,
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(
             onTap: () => _onTap(choice: false),
             title: 'J\'ai tout ce qu\'il me faut',
             text: 'Tant que tes déchets sont triés, tu peux utiliser tout type de conteneurs.',
-            selected: widget.viewModel.wantsContainers ?? true ? false : true,
+            selected: viewModel.wantsContainers ?? true ? false : true,
           ),
         ],
       ),
       button: RaisedButton(
         child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.wantsContainers != null ? () => widget.viewModel.nextStep(widget.viewModel.wantsContainers) : null
+        onPressed: viewModel.wantsContainers != null ? () => viewModel.nextStep(viewModel.wantsContainers) : null
       )
     );
   }
 
   void _onTap({bool choice}) {
-    if (choice != widget.viewModel.wantsContainers) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = choice));
+    if (choice != viewModel.wantsContainers) {
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = choice));
     } else {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = null));
+      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsContainers = null));
     }
   }
 }

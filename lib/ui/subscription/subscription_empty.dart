@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../utils/layout.dart';
+import '../presentation/safe_widget.dart';
 import '../../redux/app/app_state.dart';
 import '../../redux/subscription/form/subscription_form_actions.dart';
 import '../../data/models/subscription_form.dart';
@@ -15,11 +16,14 @@ class SubscriptionEmpty extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        return SafeColumn(
           children: <Widget>[
             Container(height: Layout.of(context).gridUnit(50)),
-            Text('Abonnement', style: Theme.of(context).textTheme.title),
+            Text(
+              'Abonnement', 
+              style: Theme.of(context).textTheme.title,
+              textAlign: TextAlign.center,
+            ),
             Container(height: Layout.of(context).gridUnit(1)),
             Text(
               'Gagne 1 jour entier par année en nous laissant aller à la déchetterie pour toi!', 
@@ -27,9 +31,12 @@ class SubscriptionEmpty extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Container(height: Layout.of(context).gridUnit(15)),
-            RaisedButton(
-              onPressed: viewModel.start,
-              child: Text('Découvrir', style: TextStyle(color: Colors.white))
+            SizedBox(
+              width: 250,
+              child: RaisedButton(
+                onPressed: viewModel.start,
+                child: _getButtonText(viewModel)
+              ),
             ),
             FlatButton(
               onPressed: () {},
@@ -40,7 +47,16 @@ class SubscriptionEmpty extends StatelessWidget {
       },
     );
   }
+
+  Text _getButtonText(_ViewModel viewModel) {
+    if (viewModel.subscriptionForm.currentStep > 0) {
+      return Text('Continuer l\'inscription', style: TextStyle(color: Colors.white));
+    } else {
+      return Text('Découvrir', style: TextStyle(color: Colors.white));
+    }
+  }
 }
+
 
 @immutable
 class _ViewModel {
