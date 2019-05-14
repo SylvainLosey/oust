@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/colors.dart';
+
 
 class GradientButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -34,6 +36,30 @@ class GradientButton extends StatelessWidget {
               ),
             )
           ),
+      ),
+    );
+  }
+}
+
+class OutlinedButton extends StatelessWidget {
+  final Widget child;
+  final Function onPressed;
+
+  OutlinedButton({this.child, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: primaryColor, width: 0.8)
+      ),
+      child: InkWell(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+          child: child
+        )
       ),
     );
   }

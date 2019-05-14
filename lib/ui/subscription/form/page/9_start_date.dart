@@ -76,7 +76,7 @@ class StartDateForm extends StatelessWidget {
             ...List.generate(viewModel.startDates.length, (int index) {
               return SelectableCheckbox(
                 onTap: () => _onTap(selectedStartDate: viewModel.startDates[index]),
-                text: dateToStringFrench(viewModel.startDates[index]),
+                text: weekdayAndDate(context, viewModel.startDates[index]),
                 selected: viewModel.selectedStartDate == viewModel.startDates[index],
               );
           },

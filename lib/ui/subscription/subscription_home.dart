@@ -51,7 +51,7 @@ class SubscriptionHome extends StatelessWidget {
             Container(height: Layout.of(context).gridUnit(2)),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(2)),
-              child: PickupCard(date: Pickup.getNextPickup(viewModel.pickups).pickupDate  , hour: '08:00 - 10:00')
+              child: PickupCard(date: Pickup.getNextPickup(viewModel.pickups).pickupDate)
             ),
             Container(height: Layout.of(context).gridUnit(4)),
             FlatButton(

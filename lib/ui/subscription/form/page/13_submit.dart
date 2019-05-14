@@ -39,7 +39,7 @@ class SubscriptionFormSubmit extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Spacer(flex: 4),
-                  if (viewModel.error.isNotEmpty)
+                  if (viewModel.error != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -105,7 +105,7 @@ class _ViewModel {
         // If subscription creation failed we reset everyting and logout the user potentially created
         // Otherwise we get an incomplete subscription messing everyting up.
         // This should never happen and cause of it must be fixed imediately
-        if (store.state.subscriptionFormState.error.isNotEmpty) {
+        if (store.state.subscriptionFormState.error != null) {
           store.dispatch(UserLogout());
         }
         store.dispatch(SubscriptionFormExit());

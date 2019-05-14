@@ -46,7 +46,6 @@ class PickupList extends StatelessWidget {
     return TimelineModel(
       PickupCard(
         date: pickup.pickupDate,
-        hour: '08:00-10:100'
       ),
       position: TimelineItemPosition.left,
       //iconBackground: darkAccentColor,
