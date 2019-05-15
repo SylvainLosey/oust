@@ -4,6 +4,7 @@ import 'dart:core';
 import 'web_client.dart';
 import 'models/customer.dart';
 import 'models/subscription.dart';
+import 'models/pickup.dart';
 import 'models/consumer_subscription.dart';
 import 'models/phone_number.dart';
 import 'models/email.dart';
@@ -21,7 +22,7 @@ class Repository {
       'password': password,
     };
 
-    return await client.post('/auth/login/', credentials, auth: false);
+    return await client.post('/auth/login/', body: credentials, auth: false);
   }
 
   Future<Map<String, dynamic>> createUser(String email, String password) async {
@@ -31,7 +32,7 @@ class Repository {
       'password2': password,
     };
 
-    return await client.post('/auth/registration/', data, auth: false);
+    return await client.post('/auth/registration/', body: data, auth: false);
   }
 
   // CUSTOMER
@@ -40,7 +41,7 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createCustomer(Customer customer) async {
-    return await client.post('/customers/', customer.toJson());
+    return await client.post('/customers/', body: customer.toJson());
   }
 
 
@@ -50,7 +51,7 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createPhoneNumber(PhoneNumber phoneNumber) async {
-    return await client.post('/phonenumbers/', phoneNumber.toJson());
+    return await client.post('/phonenumbers/', body: phoneNumber.toJson());
   }
 
 
@@ -60,7 +61,7 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createEmail(Email email) async {
-    return await client.post('/emails/', email.toJson());
+    return await client.post('/emails/', body: email.toJson());
   }
 
 
@@ -70,7 +71,7 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createSubscription(Subscription subscription) async {
-    return await client.post('/subscriptions/', subscription.toJson());
+    return await client.post('/subscriptions/', body: subscription.toJson());
   }
 
 
@@ -80,7 +81,7 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createConsumerSubscription(ConsumerSubscription consumerSubscription) async {
-    return await client.post('/consumersubscriptions/', consumerSubscription.toJson());
+    return await client.post('/consumersubscriptions/', body: consumerSubscription.toJson());
   }
 
 
@@ -96,13 +97,31 @@ class Repository {
   }
 
   Future<Map<String, dynamic>> createInvoiceItem(InvoiceItem invoiceItem) async {
-    return await client.post('/invoiceitems/', invoiceItem.toJson());
+    return await client.post('/invoiceitems/', body: invoiceItem.toJson());
   }
 
 
   // PICKUPS
   Future<List<dynamic>> fetchPickups(int id) async {
     return await client.get('/pickups/?subscription=$id/');
+  }
+
+  Future<dynamic> updatePickup(Pickup pickup) async {
+    return await client.patch('/pickups/${pickup.id}/', body: pickup.toJson());
+  }
+
+  Future<dynamic> deletePickup(int pickupId) async {
+    return await client.delete('/pickups/$pickupId/');
+  }
+
+
+
+  Future<String> fetchPushBackDate(int pickupId) async {
+    return await client.get('/pickups/$pickupId/push_back_date/');
+  }
+
+  Future<String> pushBackDate(int pickupId) async {
+    return await client.post('/pickups/$pickupId/push_back/');
   }
 
   // POSTCODES
@@ -132,7 +151,7 @@ class Repository {
       'origin': 'app',
     };
 
-    return await client.post('/leads/', body, auth: false);
+    return await client.post('/leads/', body: body, auth: false);
   }
 
   Future<dynamic> fetchStartDates({String address, int postcode, int frequency}) async {
@@ -142,6 +161,6 @@ class Repository {
       'frequency': frequency
     };
 
-    return await client.post('/subscriptions/available_start_dates/', body, auth: false);
+    return await client.post('/subscriptions/available_start_dates/', body: body, auth: false);
   }
 }

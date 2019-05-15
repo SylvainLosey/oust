@@ -28,7 +28,7 @@ class App extends StatelessWidget {
           routes: getRoutes(context),
           supportedLocales: [
             const Locale('fr', ''),
-            const Locale('en', ''),
+            // const Locale('en', ''),
           ],
           localizationsDelegates: [
             AppLocalizationsDelegate(),

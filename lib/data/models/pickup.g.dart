@@ -85,6 +85,18 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
         ..add(serializers.serialize(object.representation,
             specifiedType: const FullType(String)));
     }
+    if (object.customerNote != null) {
+      result
+        ..add('customer_note')
+        ..add(serializers.serialize(object.customerNote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isInvoiced != null) {
+      result
+        ..add('is_invoiced')
+        ..add(serializers.serialize(object.isInvoiced,
+            specifiedType: const FullType(bool)));
+    }
 
     return result;
   }
@@ -150,6 +162,14 @@ class _$PickupSerializer implements StructuredSerializer<Pickup> {
           result.subscription = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'customer_note':
+          result.customerNote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_invoiced':
+          result.isInvoiced = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -182,6 +202,10 @@ class _$Pickup extends Pickup {
   final String representation;
   @override
   final int subscription;
+  @override
+  final String customerNote;
+  @override
+  final bool isInvoiced;
 
   factory _$Pickup([void Function(PickupBuilder) updates]) =>
       (new PickupBuilder()..update(updates)).build();
@@ -198,7 +222,9 @@ class _$Pickup extends Pickup {
       this.pickupDate,
       this.position,
       this.representation,
-      this.subscription})
+      this.subscription,
+      this.customerNote,
+      this.isInvoiced})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('Pickup', 'id');
@@ -230,7 +256,9 @@ class _$Pickup extends Pickup {
         pickupDate == other.pickupDate &&
         position == other.position &&
         representation == other.representation &&
-        subscription == other.subscription;
+        subscription == other.subscription &&
+        customerNote == other.customerNote &&
+        isInvoiced == other.isInvoiced;
   }
 
   @override
@@ -246,19 +274,26 @@ class _$Pickup extends Pickup {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(0,
-                                                    averageDuration.hashCode),
-                                                averageQuantity.hashCode),
-                                            city.hashCode),
-                                        completed.hashCode),
-                                    customerUnavailable.hashCode),
-                                duration.hashCode),
-                            id.hashCode),
-                        note.hashCode),
-                    pickupDate.hashCode),
-                position.hashCode),
-            representation.hashCode),
-        subscription.hashCode));
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            averageDuration
+                                                                .hashCode),
+                                                        averageQuantity
+                                                            .hashCode),
+                                                    city.hashCode),
+                                                completed.hashCode),
+                                            customerUnavailable.hashCode),
+                                        duration.hashCode),
+                                    id.hashCode),
+                                note.hashCode),
+                            pickupDate.hashCode),
+                        position.hashCode),
+                    representation.hashCode),
+                subscription.hashCode),
+            customerNote.hashCode),
+        isInvoiced.hashCode));
   }
 
   @override
@@ -275,7 +310,9 @@ class _$Pickup extends Pickup {
           ..add('pickupDate', pickupDate)
           ..add('position', position)
           ..add('representation', representation)
-          ..add('subscription', subscription))
+          ..add('subscription', subscription)
+          ..add('customerNote', customerNote)
+          ..add('isInvoiced', isInvoiced))
         .toString();
   }
 }
@@ -336,6 +373,14 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
   int get subscription => _$this._subscription;
   set subscription(int subscription) => _$this._subscription = subscription;
 
+  String _customerNote;
+  String get customerNote => _$this._customerNote;
+  set customerNote(String customerNote) => _$this._customerNote = customerNote;
+
+  bool _isInvoiced;
+  bool get isInvoiced => _$this._isInvoiced;
+  set isInvoiced(bool isInvoiced) => _$this._isInvoiced = isInvoiced;
+
   PickupBuilder();
 
   PickupBuilder get _$this {
@@ -352,6 +397,8 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
       _position = _$v.position?.toBuilder();
       _representation = _$v.representation;
       _subscription = _$v.subscription;
+      _customerNote = _$v.customerNote;
+      _isInvoiced = _$v.isInvoiced;
       _$v = null;
     }
     return this;
@@ -387,7 +434,9 @@ class PickupBuilder implements Builder<Pickup, PickupBuilder> {
               pickupDate: pickupDate,
               position: _position?.build(),
               representation: representation,
-              subscription: subscription);
+              subscription: subscription,
+              customerNote: customerNote,
+              isInvoiced: isInvoiced);
     } catch (_) {
       String _$failedField;
       try {

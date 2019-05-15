@@ -9,7 +9,11 @@ import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
 import '../presentation/pickup_card.dart';
 import '../../redux/app/app_state.dart';
+import '../../redux/pickup/pickup_actions.dart';
 import '../../data/models/pickup.dart';
+import '../../utils/layout.dart';
+import 'pickup_dialogs.dart';
+import 'edit_pickup_note.dart';
 
 class PickupList extends StatelessWidget {
   @override
@@ -28,54 +32,57 @@ class PickupList extends StatelessWidget {
 
         final List<TimelineModel> items = <TimelineModel>[];
         final BuiltMap<int, Pickup> pickupFromToday = Pickup.getFuturePickups(viewModel.pickups);
-        pickupFromToday.forEach((int index, Pickup pickup) => items.add(_buildTimelineModel(pickup)));
+        pickupFromToday.forEach((int index, Pickup pickup) =>
+            items.add(_buildTimelineModel(context: context, pickup: pickup, viewModel: viewModel)));
 
         return Scaffold(
-          body:  Timeline(
-            children: items, 
-            position: TimelinePosition.Left, 
-            iconSize: 16,
-          )
-        );
-        // return Container();
+            body: Timeline(
+          lineColor: Colors.grey[400],
+          lineWidth: 2,
+          children: items,
+          position: TimelinePosition.Left,
+        ));
       },
     );
   }
 
-  TimelineModel _buildTimelineModel(Pickup pickup) {
+  TimelineModel _buildTimelineModel({BuildContext context, Pickup pickup, _ViewModel viewModel}) {
     return TimelineModel(
-      PickupCard(
-        date: pickup.pickupDate,
-      ),
-      position: TimelineItemPosition.left,
-      //iconBackground: darkAccentColor,
-    );
+        Container(
+          padding: EdgeInsets.symmetric(vertical: Layout.of(context).gridUnit(1)),
+          child: PickupCard(
+              pickup: pickup,
+              isExpandable: true,
+              onPushBack: () => pushBackPickupDialog(
+                  context: context, onPushBackPickup: viewModel.onPushBackPickup, pickup: pickup),
+              onDelete: () => deletePickupDialog(
+                  context: context, onDeletePickup: viewModel.onDeletePickup, pickup: pickup),
+              onAddNote: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => EditPickupNote(pickup: pickup)))),
+        ),
+        iconBackground: pickup.isInvoiced ? Colors.teal[300] : Colors.grey[400]);
   }
 }
-
-
 
 @immutable
 class _ViewModel {
   final bool isLoading;
   final String error;
   final BuiltMap<int, Pickup> pickups;
+  final Function onPushBackPickup;
+  final Function onDeletePickup;
 
-  _ViewModel({
-    @required this.isLoading,
-    @required this.error,
-    @required this.pickups,
-
-  });
+  _ViewModel(
+      {this.isLoading, this.error, this.pickups, this.onPushBackPickup, this.onDeletePickup});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isLoading: store.state.pickupState.isLoading,
-      error: store.state.pickupState.error,
-      pickups: store.state.pickupState.pickups,
-    );
+        isLoading: store.state.pickupState.isLoading,
+        error: store.state.pickupState.error,
+        pickups: store.state.pickupState.pickups,
+        onPushBackPickup: (Pickup pickup) => store.dispatch(PushBackPickupRequest(pickup: pickup)),
+        onDeletePickup: (Pickup pickup) => store.dispatch(DeletePickupRequest(pickup: pickup)));
   }
 }
-
-
-
