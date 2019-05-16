@@ -23,7 +23,7 @@ class PickupList extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         if (viewModel.isLoading) {
-          return Loading();
+          return Scaffold(body: Center(child: Loading()));
         }
 
         if (viewModel.error != null) {

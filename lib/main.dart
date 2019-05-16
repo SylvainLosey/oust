@@ -19,29 +19,25 @@ import 'redux/invoice/invoice_middleware.dart';
 void main() async {
   // debugPaintSizeEnabled=true;
 
-  final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
+  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  final Store<AppState> store = Store<AppState>(
-    appReducer,
-    initialState: AppState(),
-    middleware: [
-        ...NavMiddleware(navigatorKey).createNavMiddleware(),
-        ...AuthMiddleware().createAuthMiddleware(),
-        ...AppMiddleware().createAppMiddleware(),
-        ...CustomerMiddleware().createCustomerMiddleware(),
-        ...SubscriptionMiddleware().createSubscriptionMiddleware(),
-        ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),
-        ...PickupMiddleware().createPickupMiddleware(),
-        ...DataMiddleware().createDataMiddleware(),
-        ...InvoiceMiddleware().createInvoiceMiddleware(),
-        remoteDevtools
-    ]
-  );
+  final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState(), middleware: [
+    ...NavMiddleware(navigatorKey).createNavMiddleware(),
+    ...AuthMiddleware().createAuthMiddleware(),
+    ...AppMiddleware().createAppMiddleware(),
+    ...CustomerMiddleware().createCustomerMiddleware(),
+    ...SubscriptionMiddleware().createSubscriptionMiddleware(),
+    ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),
+    ...PickupMiddleware().createPickupMiddleware(),
+    ...DataMiddleware().createDataMiddleware(),
+    ...InvoiceMiddleware().createInvoiceMiddleware(),
+    // remoteDevtools
+  ]);
 
-  remoteDevtools.store = store;
-  await remoteDevtools.connect();
-  
+  // remoteDevtools.store = store;
+  // await remoteDevtools.connect();
+
   runApp(App(store, navigatorKey));
   store.dispatch(AppStarted());
 }
