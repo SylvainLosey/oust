@@ -14,7 +14,7 @@ import 'utils/localizations.dart';
 class App extends StatelessWidget {
   final Store<AppState> store;
   final GlobalKey<NavigatorState> navigatorKey;
-  final FirebaseAnalytics analytics = FirebaseAnalytics();
+  FirebaseAnalytics analytics = FirebaseAnalytics();
 
   App(this.store, this.navigatorKey);
 
