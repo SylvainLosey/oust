@@ -12,7 +12,7 @@ import '../../data/repository.dart';
 class AuthMiddleware {
   final Repository repository;
 
-  const AuthMiddleware({this.repository = const Repository()});
+  const AuthMiddleware(this.repository);
 
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
@@ -31,12 +31,10 @@ class AuthMiddleware {
     if (await _hasAuthData()) {
       final Map<String, dynamic> authData = await _getAuthData();
       store.dispatch(UserLoaded(
-        shoudlLoadCustomer: true,
-        user: User((UserBuilder b) => b
-          ..key = authData['key']
-          ..id = authData['id']
-        )
-      ));
+          shoudlLoadCustomer: true,
+          user: User((UserBuilder b) => b
+            ..key = authData['key']
+            ..id = authData['id'])));
     }
     store.dispatch(LoadPackagesRequest());
 
@@ -46,7 +44,8 @@ class AuthMiddleware {
     });
   }
 
-  void _userLoginRequest(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
+  void _userLoginRequest(
+      Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -63,29 +62,24 @@ class AuthMiddleware {
     }
   }
 
-
-  void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
+  void _userLoginSuccess(
+      Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UserLoaded(
-      shoudlLoadCustomer: true,
-      user: User((UserBuilder b) => b
+        shoudlLoadCustomer: true,
+        user: User((UserBuilder b) => b
           ..key = action.key
-          ..id = action.id
-        )
-      )
-    );
+          ..id = action.id)));
   }
-
 
   void _userLoaded(Store<AppState> store, UserLoaded action, NextDispatcher next) async {
     next(action);
-    
+
     if (action.shoudlLoadCustomer) {
       store.dispatch(LoadCustomerRequest(user: action.user));
     }
   }
-
 
   void _userLogout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
     await _deleteAuthData();
@@ -94,8 +88,8 @@ class AuthMiddleware {
     next(action);
   }
 
-
-  void _createUserRequest(Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
+  void _createUserRequest(
+      Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -104,13 +98,10 @@ class AuthMiddleware {
 
       store.dispatch(CreateUserSuccess());
       store.dispatch(UserLoaded(
-        shoudlLoadCustomer: false,
-        user: User((UserBuilder b) => b
+          shoudlLoadCustomer: false,
+          user: User((UserBuilder b) => b
             ..key = data['key']
-            ..id = data['user']
-          )
-        )
-      );
+            ..id = data['user'])));
       action.completer.complete(data['user']);
     } catch (e) {
       store.dispatch(CreateUserFailure(error: e.toString()));
@@ -119,7 +110,7 @@ class AuthMiddleware {
   }
 
   /// HELPER FUNCTIONS
-  
+
   Future<Map<String, dynamic>> _getAuthData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final Map<String, dynamic> authData = <String, dynamic>{
@@ -149,7 +140,7 @@ class AuthMiddleware {
     if (key != '') {
       return true;
     } else {
-    return false;
+      return false;
     }
   }
 }

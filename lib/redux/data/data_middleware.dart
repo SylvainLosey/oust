@@ -8,7 +8,7 @@ import '../../data/repository.dart';
 
 class DataMiddleware {
   final Repository repository;
-  const DataMiddleware({this.repository = const Repository()});
+  const DataMiddleware(this.repository);
 
   List<Middleware<AppState>> createDataMiddleware() {
     return <Middleware<AppState>>[
@@ -22,19 +22,22 @@ class DataMiddleware {
 
     try {
       final List<dynamic> data = await repository.fetchPackages();
-      final List<Package> packages = List<Package>.from(data.map<dynamic>((dynamic x) => Package.fromJson(x)));
+      final List<Package> packages =
+          List<Package>.from(data.map<dynamic>((dynamic x) => Package.fromJson(x)));
       store.dispatch(LoadPackagesSuccess(packages: packages));
     } catch (e) {
       store.dispatch(LoadPackagesFailure(error: e.toString()));
     }
   }
 
-  void _loadPostcodes(Store<AppState> store, LoadPostcodesRequest action, NextDispatcher next) async {
+  void _loadPostcodes(
+      Store<AppState> store, LoadPostcodesRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final List<dynamic> data = await repository.fetchPostcodes();
-      final List<Postcode> postcodes = List<Postcode>.from(data.map<dynamic>((dynamic x) => Postcode.fromJson(x)));
+      final List<Postcode> postcodes =
+          List<Postcode>.from(data.map<dynamic>((dynamic x) => Postcode.fromJson(x)));
       store.dispatch(LoadPostcodesSuccess(postcodes: postcodes));
     } catch (e) {
       store.dispatch(LoadPostcodesFailure(error: e.toString()));

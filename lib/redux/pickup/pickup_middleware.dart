@@ -7,7 +7,7 @@ import '../../data/repository.dart';
 
 class PickupMiddleware {
   final Repository repository;
-  const PickupMiddleware({this.repository = const Repository()});
+  const PickupMiddleware(this.repository);
 
   List<Middleware<AppState>> createPickupMiddleware() {
     return <Middleware<AppState>>[
@@ -23,13 +23,15 @@ class PickupMiddleware {
 
     try {
       final List<dynamic> pickupsData = await repository.fetchPickups(action.subscription.id);
-      store.dispatch(LoadPickupsSuccess(pickups: List<Pickup>.from(pickupsData.map<dynamic>((dynamic x) => Pickup.fromJson(x)))));
+      store.dispatch(LoadPickupsSuccess(
+          pickups: List<Pickup>.from(pickupsData.map<dynamic>((dynamic x) => Pickup.fromJson(x)))));
     } catch (e) {
       store.dispatch(LoadPickupsFailure(error: e.toString()));
     }
   }
 
-  void _updatePickupRequest(Store<AppState> store, UpdatePickupRequest action , NextDispatcher next) async {
+  void _updatePickupRequest(
+      Store<AppState> store, UpdatePickupRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -39,9 +41,9 @@ class PickupMiddleware {
       store.dispatch(UpdatePickupFailure(error: e.toString()));
     }
   }
-  
 
-  void _deletePickupRequest(Store<AppState> store, DeletePickupRequest action, NextDispatcher next) async {
+  void _deletePickupRequest(
+      Store<AppState> store, DeletePickupRequest action, NextDispatcher next) async {
     try {
       await repository.deletePickup(action.pickup.id);
       store.dispatch(DeletePickupSuccess());
@@ -51,7 +53,8 @@ class PickupMiddleware {
     }
   }
 
-  void _pushBackPickupRequest(Store<AppState> store, PushBackPickupRequest action, NextDispatcher next) async {
+  void _pushBackPickupRequest(
+      Store<AppState> store, PushBackPickupRequest action, NextDispatcher next) async {
     next(action);
 
     try {

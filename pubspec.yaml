@@ -32,16 +32,20 @@ dependencies:
   flutter_typeahead: ^1.5.0
   flutter_spinkit: "^3.1.0"
   decimal: ^0.3.3
+  uuid: ^2.0.1
+
   # flare_flutter: ^1.5.0
+
+
+  # Firebase
   firebase_core: ^0.4.0+1
   firebase_analytics: ^3.0.1
+  firebase_storage: ^3.0.0
 
 
    # Redux
   redux: ^3.0.0
   flutter_redux: ^0.5.2
-  redux_text_field: ^1.1.0
-
 
 
 dev_dependencies:

@@ -12,6 +12,7 @@ import '../pickup/pickup_state.dart';
 import '../subscription/form/subscription_form_state.dart';
 import '../subscription/subscription_state.dart';
 import '../invoice/invoice_state.dart';
+import '../lift/lift_state.dart';
 
 part 'app_state.g.dart';
 
@@ -22,17 +23,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return _$AppState._(
       authState: AuthState(),
       navState: NavState(),
-      customerState:  CustomerState(),
+      customerState: CustomerState(),
       subscriptionState: SubscriptionState(),
       subscriptionFormState: SubscriptionFormState(),
       pickupState: PickupState(),
       dataState: DataState(),
       invoiceState: InvoiceState(),
+      liftState: LiftState(),
     );
   }
 
   AppState._();
-  
+
   AuthState get authState;
   CustomerState get customerState;
   DataState get dataState;
@@ -41,6 +43,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   PickupState get pickupState;
   SubscriptionFormState get subscriptionFormState;
   SubscriptionState get subscriptionState;
+  LiftState get liftState;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(AppState.serializer, this);

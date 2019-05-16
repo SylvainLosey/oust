@@ -15,28 +15,32 @@ import 'redux/subscription/form/subscription_form_middleware.dart';
 import 'redux/pickup/pickup_middleware.dart';
 import 'redux/data/data_middleware.dart';
 import 'redux/invoice/invoice_middleware.dart';
+import 'redux/lift/quote_form/lift_quote_middleware.dart';
+import 'data/repository.dart';
 
 void main() async {
   // debugPaintSizeEnabled=true;
 
-  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
+  final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  const Repository repository = Repository();
 
   final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState(), middleware: [
     ...NavMiddleware(navigatorKey).createNavMiddleware(),
-    ...AuthMiddleware().createAuthMiddleware(),
-    ...AppMiddleware().createAppMiddleware(),
-    ...CustomerMiddleware().createCustomerMiddleware(),
-    ...SubscriptionMiddleware().createSubscriptionMiddleware(),
-    ...SubscriptionFormMiddleware().createSubscriptionFormMiddleware(),
-    ...PickupMiddleware().createPickupMiddleware(),
-    ...DataMiddleware().createDataMiddleware(),
-    ...InvoiceMiddleware().createInvoiceMiddleware(),
-    // remoteDevtools
+    ...AuthMiddleware(repository).createAuthMiddleware(),
+    ...AppMiddleware(repository).createAppMiddleware(),
+    ...CustomerMiddleware(repository).createCustomerMiddleware(),
+    ...SubscriptionMiddleware(repository).createSubscriptionMiddleware(),
+    ...SubscriptionFormMiddleware(repository).createSubscriptionFormMiddleware(),
+    ...PickupMiddleware(repository).createPickupMiddleware(),
+    ...DataMiddleware(repository).createDataMiddleware(),
+    ...InvoiceMiddleware(repository).createInvoiceMiddleware(),
+    ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
+    remoteDevtools
   ]);
 
-  // remoteDevtools.store = store;
-  // await remoteDevtools.connect();
+  remoteDevtools.store = store;
+  await remoteDevtools.connect();
 
   runApp(App(store, navigatorKey));
   store.dispatch(AppStarted());

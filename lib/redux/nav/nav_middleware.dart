@@ -19,8 +19,8 @@ class NavMiddleware {
     ];
   }
 
-
-  void _subscriptionFormStart(Store<AppState> store, SubscriptionFormStart action, NextDispatcher next) async{
+  void _subscriptionFormStart(
+      Store<AppState> store, SubscriptionFormStart action, NextDispatcher next) async {
     next(action);
 
     // We want to navigate the user to the current step if he has started the form already
@@ -34,35 +34,40 @@ class NavMiddleware {
       navigatorKey.currentState.pushNamed(route);
 
       // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
-      if (pushCounter == SubscriptionFormAddress.step && currentStep >= SubscriptionFormLead.step  && currentStep < SubscriptionFormAppointment.step) {
+      if (pushCounter == SubscriptionFormAddress.step &&
+          currentStep >= SubscriptionFormLead.step &&
+          currentStep < SubscriptionFormAppointment.step) {
         pushCounter = SubscriptionFormLead.step;
-      } else if (pushCounter == SubscriptionFormRegistrationMethod.step && currentStep >= SubscriptionFormAppointment.step) {
+      } else if (pushCounter == SubscriptionFormRegistrationMethod.step &&
+          currentStep >= SubscriptionFormAppointment.step) {
         pushCounter = SubscriptionFormAppointment.step;
-      } else if (pushCounter == SubscriptionFormContainersYesNo.step && !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
+      } else if (pushCounter == SubscriptionFormContainersYesNo.step &&
+          !store.state.subscriptionFormState.subscriptionForm.wantsContainers) {
         pushCounter = SubscriptionFormLocation.step;
       } else {
-      pushCounter++;
+        pushCounter++;
       }
     }
   }
 
-
-  void _subscriptionFormNextStep(Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async{
+  void _subscriptionFormNextStep(
+      Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async {
     next(action);
 
-    final String route = '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep}';
+    final String route =
+        '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep}';
     navigatorKey.currentState.pushNamed(route);
   }
 
+  void _subscriptionFormPreviousStep(
+      Store<AppState> store, SubscriptionFormPreviousStep action, NextDispatcher next) async {
+    next(action);
 
-  void _subscriptionFormPreviousStep(Store<AppState> store, SubscriptionFormPreviousStep action, NextDispatcher next) async{    
-      next(action);
-        
-      navigatorKey.currentState.pop();
+    navigatorKey.currentState.pop();
   }
 
-
-  void _subscriptionFormExit(Store<AppState> store, SubscriptionFormExit action, NextDispatcher next) async{
+  void _subscriptionFormExit(
+      Store<AppState> store, SubscriptionFormExit action, NextDispatcher next) async {
     next(action);
 
     navigatorKey.currentState.popUntil(ModalRoute.withName('/'));

@@ -10,6 +10,8 @@ import 'package:oust/redux/pickup/pickup_state.dart';
 import 'package:oust/redux/subscription/form/subscription_form_state.dart';
 import 'package:oust/redux/subscription/subscription_state.dart';
 import 'package:oust/redux/invoice/invoice_state.dart';
+import 'package:oust/redux/lift/lift_state.dart';
+import 'package:oust/redux/lift/quote_form/lift_quote_form_state.dart';
 
 import 'consumer_subscription.dart';
 import 'customer.dart';
@@ -24,6 +26,8 @@ import 'subscription_form.dart';
 import 'user.dart';
 import 'invoice.dart';
 import 'invoice_item.dart';
+import 'lift_image.dart';
+import 'lift_quote_form.dart';
 
 part 'serializers.g.dart';
 
@@ -40,6 +44,8 @@ part 'serializers.g.dart';
   Postcode,
   Invoice,
   InvoiceItem,
+  LiftImage,
+  LiftQuoteForm,
   AuthState,
   CustomerState,
   SubscriptionState,
@@ -48,6 +54,11 @@ part 'serializers.g.dart';
   NavState,
   DataState,
   AppState,
+  LiftState,
+  LiftQuoteFormState,
 ])
-
-final Serializers serializers = (_$serializers.toBuilder()..add(DateSerializer())..add(DecimalSerializer())..addPlugin(StandardJsonPlugin())).build();
+final Serializers serializers = (_$serializers.toBuilder()
+      ..add(DateSerializer())
+      ..add(DecimalSerializer())
+      ..addPlugin(StandardJsonPlugin()))
+    .build();

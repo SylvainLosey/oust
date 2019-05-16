@@ -42,6 +42,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'subscriptionState',
       serializers.serialize(object.subscriptionState,
           specifiedType: const FullType(SubscriptionState)),
+      'liftState',
+      serializers.serialize(object.liftState,
+          specifiedType: const FullType(LiftState)),
     ];
 
     return result;
@@ -92,6 +95,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
                   specifiedType: const FullType(SubscriptionState))
               as SubscriptionState);
           break;
+        case 'liftState':
+          result.liftState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(LiftState)) as LiftState);
+          break;
       }
     }
 
@@ -116,6 +123,8 @@ class _$AppState extends AppState {
   final SubscriptionFormState subscriptionFormState;
   @override
   final SubscriptionState subscriptionState;
+  @override
+  final LiftState liftState;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -128,7 +137,8 @@ class _$AppState extends AppState {
       this.invoiceState,
       this.pickupState,
       this.subscriptionFormState,
-      this.subscriptionState})
+      this.subscriptionState,
+      this.liftState})
       : super._() {
     if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
@@ -154,6 +164,9 @@ class _$AppState extends AppState {
     if (subscriptionState == null) {
       throw new BuiltValueNullFieldError('AppState', 'subscriptionState');
     }
+    if (liftState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'liftState');
+    }
   }
 
   @override
@@ -174,7 +187,8 @@ class _$AppState extends AppState {
         invoiceState == other.invoiceState &&
         pickupState == other.pickupState &&
         subscriptionFormState == other.subscriptionFormState &&
-        subscriptionState == other.subscriptionState;
+        subscriptionState == other.subscriptionState &&
+        liftState == other.liftState;
   }
 
   @override
@@ -185,14 +199,16 @@ class _$AppState extends AppState {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, authState.hashCode),
-                                customerState.hashCode),
-                            dataState.hashCode),
-                        navState.hashCode),
-                    invoiceState.hashCode),
-                pickupState.hashCode),
-            subscriptionFormState.hashCode),
-        subscriptionState.hashCode));
+                            $jc(
+                                $jc($jc(0, authState.hashCode),
+                                    customerState.hashCode),
+                                dataState.hashCode),
+                            navState.hashCode),
+                        invoiceState.hashCode),
+                    pickupState.hashCode),
+                subscriptionFormState.hashCode),
+            subscriptionState.hashCode),
+        liftState.hashCode));
   }
 
   @override
@@ -205,7 +221,8 @@ class _$AppState extends AppState {
           ..add('invoiceState', invoiceState)
           ..add('pickupState', pickupState)
           ..add('subscriptionFormState', subscriptionFormState)
-          ..add('subscriptionState', subscriptionState))
+          ..add('subscriptionState', subscriptionState)
+          ..add('liftState', liftState))
         .toString();
   }
 }
@@ -258,6 +275,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set subscriptionState(SubscriptionStateBuilder subscriptionState) =>
       _$this._subscriptionState = subscriptionState;
 
+  LiftStateBuilder _liftState;
+  LiftStateBuilder get liftState =>
+      _$this._liftState ??= new LiftStateBuilder();
+  set liftState(LiftStateBuilder liftState) => _$this._liftState = liftState;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -270,6 +292,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _pickupState = _$v.pickupState?.toBuilder();
       _subscriptionFormState = _$v.subscriptionFormState?.toBuilder();
       _subscriptionState = _$v.subscriptionState?.toBuilder();
+      _liftState = _$v.liftState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -301,7 +324,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               invoiceState: invoiceState.build(),
               pickupState: pickupState.build(),
               subscriptionFormState: subscriptionFormState.build(),
-              subscriptionState: subscriptionState.build());
+              subscriptionState: subscriptionState.build(),
+              liftState: liftState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -321,6 +345,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         subscriptionFormState.build();
         _$failedField = 'subscriptionState';
         subscriptionState.build();
+        _$failedField = 'liftState';
+        liftState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

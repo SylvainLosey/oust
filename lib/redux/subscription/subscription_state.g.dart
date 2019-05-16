@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of SubscriptionState;
+part of subscription_state;
 
 // **************************************************************************
 // BuiltValueGenerator

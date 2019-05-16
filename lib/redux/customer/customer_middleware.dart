@@ -12,7 +12,7 @@ import '../../data/repository.dart';
 
 class CustomerMiddleware {
   final Repository repository;
-  const CustomerMiddleware({this.repository = const Repository()});
+  const CustomerMiddleware(this.repository);
 
   List<Middleware<AppState>> createCustomerMiddleware() {
     return <Middleware<AppState>>[
@@ -26,7 +26,7 @@ class CustomerMiddleware {
   }
 
   // CUSTOMER
-  void _loadCustomer(Store<AppState> store, LoadCustomerRequest action, NextDispatcher next) async{
+  void _loadCustomer(Store<AppState> store, LoadCustomerRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -41,13 +41,13 @@ class CustomerMiddleware {
       store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
       store.dispatch(LoadInvoicesRequest(customer: customer));
       store.dispatch(LoadInvoiceItemsRequest(customer: customer));
-
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));
     }
   }
 
-  void _createCustomerRequest(Store<AppState> store, CreateCustomerRequest action, NextDispatcher next) async {
+  void _createCustomerRequest(
+      Store<AppState> store, CreateCustomerRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -58,8 +58,7 @@ class CustomerMiddleware {
         ..postcode = action.postcode
         ..preferedCommunication = action.preferedCommunication
         ..preferedPaymentMethod = 'I'
-        ..user = action.userId
-      );
+        ..user = action.userId);
 
       final Map<String, dynamic> data = await repository.createCustomer(customer);
       store.dispatch(CreateCustomerSuccess());
@@ -70,21 +69,23 @@ class CustomerMiddleware {
     }
   }
 
-
   // PHONENUMBERS
-  void _loadPhoneNumbersRequest(Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async{
+  void _loadPhoneNumbersRequest(
+      Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final List<dynamic> data = await repository.fetchPhoneNumbers(action.customer.id);
-      final List<PhoneNumber> phoneNumbers = List<PhoneNumber>.from(data.map<dynamic>((dynamic x) => PhoneNumber.fromJson(x)));
+      final List<PhoneNumber> phoneNumbers =
+          List<PhoneNumber>.from(data.map<dynamic>((dynamic x) => PhoneNumber.fromJson(x)));
       store.dispatch(LoadPhoneNumbersSuccess(phoneNumbers: phoneNumbers));
     } catch (e) {
       store.dispatch(LoadPhoneNumbersFailure(error: e.toString()));
     }
   }
 
-  void _createPhoneNumberRequest(Store<AppState> store, CreatePhoneNumberRequest action, NextDispatcher next) async {
+  void _createPhoneNumberRequest(
+      Store<AppState> store, CreatePhoneNumberRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -92,8 +93,7 @@ class CustomerMiddleware {
         ..phoneNumber = action.phoneNumber
         ..numberType = action.numberType
         ..reminder = action.reminder
-        ..customer = action.customerId
-      );
+        ..customer = action.customerId);
 
       await repository.createPhoneNumber(phoneNumber);
       store.dispatch(CreatePhoneNumberSuccess());
@@ -103,27 +103,29 @@ class CustomerMiddleware {
   }
 
   // EMAILS
-  void _loadEmailsRequest(Store<AppState> store, LoadEmailsRequest action, NextDispatcher next) async{
+  void _loadEmailsRequest(
+      Store<AppState> store, LoadEmailsRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final List<dynamic> data = await repository.fetchEmails(action.customer.id);
-      final List<Email> emails = List<Email>.from(data.map<dynamic>((dynamic x) => Email.fromJson(x)));
+      final List<Email> emails =
+          List<Email>.from(data.map<dynamic>((dynamic x) => Email.fromJson(x)));
       store.dispatch(LoadEmailsSuccess(emails: emails));
     } catch (e) {
       store.dispatch(LoadEmailsFailure(error: e.toString()));
     }
   }
 
-  void _createEmailRequest(Store<AppState> store, CreateEmailRequest action, NextDispatcher next) async {
+  void _createEmailRequest(
+      Store<AppState> store, CreateEmailRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final Email email = Email((EmailBuilder b) => b
         ..email = action.email
         ..usedForInvoices = action.usedForInvoices
-        ..customer = action.customerId
-      );
+        ..customer = action.customerId);
 
       await repository.createEmail(email);
       store.dispatch(CreateEmailSuccess());
