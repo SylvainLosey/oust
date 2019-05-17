@@ -10,7 +10,7 @@ import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 import '../../../presentation/product_card.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormContainers extends StatelessWidget {
   static int step = 8;
@@ -21,22 +21,12 @@ class SubscriptionFormContainers extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: WhatContainers(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: WhatContainers(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
-
 
 class WhatContainers extends StatelessWidget {
   final _ViewModel viewModel;
@@ -46,13 +36,9 @@ class WhatContainers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-      title: TitleWidget(
-        title: 'Conteneurs',
-        subtitle: 'La combinaison idéale dépend de ta consommation personelle.'
-      ),
-      form: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+        title:
+            TitleWidget(title: 'Conteneurs', subtitle: 'La combinaison idéale dépend de ta consommation personelle.'),
+        form: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
           ProductCard(
             image: 'assets/images/container37l.png',
             title: 'Caisse 35 litres',
@@ -72,23 +58,19 @@ class WhatContainers extends StatelessWidget {
           ),
           Container(height: Layout.of(context).gridUnit(4)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(3)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Total', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600)),
-                Text(_getTotal(), style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600))
-              ],
-            )
-          )
-        ]
-      ),
-      button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: viewModel.nextStep
-      )
-    );
-  } 
+              padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(3)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Total', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600)),
+                  Text(_getTotal(), style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600))
+                ],
+              ))
+        ]),
+        button: RaisedButton(
+            child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+            onPressed: viewModel.nextStep));
+  }
 
   String _getTotal() {
     final int total = viewModel.smallContainerQuantity * 15 + viewModel.bigContainerQuantity * 20;
@@ -106,16 +88,15 @@ class _ViewModel {
   final int smallContainerQuantity;
   final int bigContainerQuantity;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.increment,
-    this.decrement,
-    this.smallContainerQuantity,
-    this.bigContainerQuantity
-  });
+  _ViewModel(
+      {this.subscriptionForm,
+      this.nextStep,
+      this.previousStep,
+      this.exit,
+      this.increment,
+      this.decrement,
+      this.smallContainerQuantity,
+      this.bigContainerQuantity});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(

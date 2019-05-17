@@ -13,7 +13,7 @@ import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormAddress extends StatelessWidget {
   static int step = 5;
@@ -24,21 +24,12 @@ class SubscriptionFormAddress extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: AddressForm(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: AddressForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
 
 class AddressForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -51,7 +42,7 @@ class AddressForm extends StatefulWidget {
 
 class AddressFormState extends State<AddressForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   
+
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _postcodeController = TextEditingController();
   List<TextEditingController> _controllers = <TextEditingController>[];
@@ -64,61 +55,59 @@ class AddressFormState extends State<AddressForm> {
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-      title: TitleWidget(
-        title: 'Où habites-tu ?',
-        subtitle: 'Complète les champs ci-dessous'
-      ),
+      title: TitleWidget(title: 'Où habites-tu ?', subtitle: 'Complète les champs ci-dessous'),
       form: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            TextFormField(
-            controller: _addressController,
-            focusNode: _addressNode,
-            decoration: InputDecoration(
-              labelText: 'Adresse',
-              hintText: 'Rue et numéro',
-            ),
-            textInputAction: TextInputAction.next,
-            inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(80)],
-            textCapitalization: TextCapitalization.sentences,
-            onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(_postcodeNode);
-            },
-          ),
-          Container(height: Layout.of(context).gridUnit(2)),
-          TypeAheadFormField(
-            suggestionsBoxVerticalOffset: 24,
-            textFieldConfiguration: TextFieldConfiguration(
-              controller: _postcodeController,
-              focusNode: _postcodeNode,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Code postal et localité',
-                suffixIcon: _postcodeController.text.isEmpty ? null : IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = null));
-                    _postcodeController.text = '';
-                  }
-                )
-              )
-            ),
-            suggestionsCallback: _suggestionCallback,
-            onSuggestionSelected: _onSuggestionSelected,
-            itemBuilder: _itemBuilder,
-            noItemsFoundBuilder: _noItemsFoundBuilder,
-          ),
-          ],
-        )
-      ),
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextFormField(
+                controller: _addressController,
+                focusNode: _addressNode,
+                decoration: InputDecoration(
+                  labelText: 'Adresse',
+                  hintText: 'Rue et numéro',
+                ),
+                textInputAction: TextInputAction.next,
+                inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(80)],
+                textCapitalization: TextCapitalization.sentences,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_postcodeNode);
+                },
+              ),
+              Container(height: Layout.of(context).gridUnit(2)),
+              TypeAheadFormField(
+                suggestionsBoxVerticalOffset: 24,
+                textFieldConfiguration: TextFieldConfiguration(
+                    controller: _postcodeController,
+                    focusNode: _postcodeNode,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Code postal et localité',
+                        suffixIcon: _postcodeController.text.isEmpty
+                            ? null
+                            : IconButton(
+                                icon: Icon(Icons.clear),
+                                onPressed: () {
+                                  widget.viewModel
+                                      .onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = null));
+                                  _postcodeController.text = '';
+                                }))),
+                suggestionsCallback: _suggestionCallback,
+                onSuggestionSelected: _onSuggestionSelected,
+                itemBuilder: _itemBuilder,
+                noItemsFoundBuilder: _noItemsFoundBuilder,
+              ),
+            ],
+          )),
       button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _addressController.text.isNotEmpty && widget.viewModel.selectedPostcode != null 
-        ? () {if (_formKey.currentState.validate()) widget.viewModel.nextStep(widget.viewModel.postcodes[widget.viewModel.selectedPostcode]);}
-        : null
-      ),
+          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: _addressController.text.isNotEmpty && widget.viewModel.selectedPostcode != null
+              ? () {
+                  if (_formKey.currentState.validate())
+                    widget.viewModel.nextStep(widget.viewModel.postcodes[widget.viewModel.selectedPostcode]);
+                }
+              : null),
     );
   }
 
@@ -127,7 +116,7 @@ class AddressFormState extends State<AddressForm> {
   }
 
   void _onSuggestionSelected(Postcode postcode) {
-     widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = postcode.id));
+    widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((b) => b..postcode = postcode.id));
     _postcodeController.text = '${postcode.postcode} ${postcode.name}';
   }
 
@@ -136,9 +125,8 @@ class AddressFormState extends State<AddressForm> {
   }
 
   Widget _noItemsFoundBuilder(BuildContext context) {
-    return Padding(padding: EdgeInsets.all(16), child:Text('Aucun code postal ou localité trouvé'));
+    return Padding(padding: EdgeInsets.all(16), child: Text('Aucun code postal ou localité trouvé'));
   }
-
 
   @override
   void didChangeDependencies() {
@@ -147,16 +135,15 @@ class AddressFormState extends State<AddressForm> {
       _postcodeController,
     ];
 
-    _focusNodes = <FocusNode>[
-      _addressNode,
-      _postcodeNode
-    ];
+    _focusNodes = <FocusNode>[_addressNode, _postcodeNode];
 
     _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
 
     _addressController.text = widget.viewModel.subscriptionForm.address;
-    _postcodeController.text = widget.viewModel.selectedPostcode != null ? '${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].postcode} ${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].name}' : '';
-    
+    _postcodeController.text = widget.viewModel.selectedPostcode != null
+        ? '${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].postcode} ${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].name}'
+        : '';
+
     _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -175,9 +162,8 @@ class AddressFormState extends State<AddressForm> {
   }
 
   void _onChanged() {
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-      ..address = _addressController.text == '' ? null : _addressController.text.trim()
-    );
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) =>
+        b..address = _addressController.text == '' ? null : _addressController.text.trim());
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
@@ -195,16 +181,14 @@ class _ViewModel {
   final Function onChanged;
   final BuiltMap<int, Postcode> postcodes;
 
-
-  _ViewModel({
-    this.subscriptionForm,
-    this.selectedPostcode,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.onChanged,
-    this.postcodes
-  });
+  _ViewModel(
+      {this.subscriptionForm,
+      this.selectedPostcode,
+      this.nextStep,
+      this.previousStep,
+      this.exit,
+      this.onChanged,
+      this.postcodes});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
@@ -221,6 +205,6 @@ class _ViewModel {
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),
       postcodes: store.state.dataState.postcodes,
-     );
+    );
   }
 }

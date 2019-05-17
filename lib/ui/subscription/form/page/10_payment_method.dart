@@ -10,7 +10,7 @@ import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 import '../../../presentation/selectable.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormPaymentMethod extends StatelessWidget {
   static int step = 12;
@@ -21,68 +21,52 @@ class SubscriptionFormPaymentMethod extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: PaymentMethodForm(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: PaymentMethodForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
 
-
 class PaymentMethodForm extends StatelessWidget {
   final _ViewModel viewModel;
 
- PaymentMethodForm(this.viewModel);
+  PaymentMethodForm(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-      title: TitleWidget(
-        title: 'Méthode de paiement',
-        subtitle: 'Comment souhaites-tu payer ton abonnement?'
-      ),
-      form: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          SelectableItem(
-            onTap: () => _onTap(paymentMethod: 'emailInvoice'),
-            title: 'Facture email',
-            text: 'Sans frais et pratique',
-            selected: viewModel.paymentMethod == 'emailInvoice'
-          ),
-          Container(height: Layout.of(context).gridUnit(1)),
-          SelectableItem(
-            onTap: () => _onTap(paymentMethod: 'paperInvoice'),
-            title: 'Facture papier',
-            text: '2.00 CHF par facture',
-            selected: viewModel.paymentMethod == 'paperInvoice'
-          ),
-        ],
-      ),
-      button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: viewModel.paymentMethod != null ? () => viewModel.nextStep() : null
-      )
-    );
+        title: TitleWidget(title: 'Méthode de paiement', subtitle: 'Comment souhaites-tu payer ton abonnement?'),
+        form: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SelectableItem(
+                onTap: () => _onTap(paymentMethod: 'emailInvoice'),
+                title: 'Facture email',
+                text: 'Sans frais et pratique',
+                selected: viewModel.paymentMethod == 'emailInvoice'),
+            Container(height: Layout.of(context).gridUnit(1)),
+            SelectableItem(
+                onTap: () => _onTap(paymentMethod: 'paperInvoice'),
+                title: 'Facture papier',
+                text: '2.00 CHF par facture',
+                selected: viewModel.paymentMethod == 'paperInvoice'),
+          ],
+        ),
+        button: RaisedButton(
+            child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+            onPressed: viewModel.paymentMethod != null ? () => viewModel.nextStep() : null));
   }
 
   void _onTap({String paymentMethod}) {
     if (paymentMethod != viewModel.paymentMethod) {
-      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
+      viewModel.onChanged(
+          viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
     } else {
       viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = null));
     }
   }
 }
-
 
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
@@ -92,23 +76,15 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.paymentMethod,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.onChanged
-  });
+  _ViewModel({this.subscriptionForm, this.paymentMethod, this.nextStep, this.previousStep, this.exit, this.onChanged});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      paymentMethod: store.state.subscriptionFormState.subscriptionForm.paymentMethod,
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
-      previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
-      exit: () => store.dispatch(SubscriptionFormExit()),
-      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
-    );
+        subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+        paymentMethod: store.state.subscriptionFormState.subscriptionForm.paymentMethod,
+        nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+        previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
+        exit: () => store.dispatch(SubscriptionFormExit()),
+        onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)));
   }
 }

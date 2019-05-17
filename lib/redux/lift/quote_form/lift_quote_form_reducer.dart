@@ -13,6 +13,7 @@ LiftQuoteFormState liftQuoteFormStateReducer(LiftQuoteFormState state, dynamic a
 Reducer<LiftQuoteForm> liftQuoteFormReducer = combineReducers([
   TypedReducer<LiftQuoteForm, AddLiftImage>(_addLiftImage),
   TypedReducer<LiftQuoteForm, AddLiftImageSuccess>(_addLiftImageSuccess),
+  TypedReducer<LiftQuoteForm, DeleteLiftImage>(_deleteLiftImage),
 ]);
 
 LiftQuoteForm _addLiftImage(LiftQuoteForm state, AddLiftImage action) {
@@ -28,4 +29,8 @@ LiftQuoteForm _addLiftImageSuccess(LiftQuoteForm state, AddLiftImageSuccess acti
   // WARNING for some reason you can't just call rebuild on b..images[action.uuid], you have to do the = ...
   return state.rebuild((b) =>
       b..images[action.uuid] = state.images[action.uuid].rebuild((b) => b..url = action.url));
+}
+
+LiftQuoteForm _deleteLiftImage(LiftQuoteForm state, DeleteLiftImage action) {
+  return state.rebuild((b) => b..images.remove(action.image.uuid));
 }

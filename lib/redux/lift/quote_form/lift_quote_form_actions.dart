@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import '../../../data/models/lift_quote_form.dart';
+import '../../../data/models/lift_image.dart';
 
 part 'lift_quote_form_actions.g.dart';
 
@@ -31,4 +32,26 @@ class AddLiftImageFailure {
 
   AddLiftImageFailure({@required this.error});
   Map<String, dynamic> toJson() => _$AddLiftImageFailureToJson(this);
+}
+
+@JsonSerializable()
+class DeleteLiftImage {
+  @JsonKey(fromJson: LiftImage.fromJson)
+  LiftImage image;
+
+  DeleteLiftImage({@required this.image});
+  Map<String, dynamic> toJson() => _$DeleteLiftImageToJson(this);
+}
+
+@JsonSerializable()
+class DeleteLiftImageSuccess {
+  Map<String, dynamic> toJson() => _$DeleteLiftImageSuccessToJson(this);
+}
+
+@JsonSerializable()
+class DeleteLiftImageFailure {
+  String error;
+
+  DeleteLiftImageFailure({@required this.error});
+  Map<String, dynamic> toJson() => _$DeleteLiftImageFailureToJson(this);
 }

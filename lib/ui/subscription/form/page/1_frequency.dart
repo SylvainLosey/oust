@@ -10,7 +10,7 @@ import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 import '../../../presentation/base_card.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormFrequency extends StatelessWidget {
   static int step = 3;
@@ -21,22 +21,12 @@ class SubscriptionFormFrequency extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: FrequencyForm(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: FrequencyForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
-
 
 class FrequencyForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -49,24 +39,19 @@ class FrequencyForm extends StatefulWidget {
 
 class FrequencyFormState extends State<FrequencyForm> {
   double _value = 1.0;
-  
+
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-      title: TitleWidget(
-        title: 'Abonnement',
-        subtitle: 'A quelle fréquence souhaite-tu que l\'on passe chez toi ?'
-      ),
-      form: BaseCard(
-        child: Column(
+        title: TitleWidget(title: 'Abonnement', subtitle: 'A quelle fréquence souhaite-tu que l\'on passe chez toi ?'),
+        form: BaseCard(
+            child: Column(
           children: <Widget>[
             Text(
               _getName(),
               style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w500),
             ),
-            Text(
-              _getPrice()
-            ),
+            Text(_getPrice()),
             Container(height: Layout.of(context).gridUnit(15)),
             FractionallySizedBox(
               widthFactor: 0.85,
@@ -89,78 +74,87 @@ class FrequencyFormState extends State<FrequencyForm> {
                           Text('1', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600))
                         else
                           Text('1'),
-                          
                         if (widget.viewModel.frequency == 2)
                           Text('2', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600))
                         else
                           Text('2'),
-
                         if (widget.viewModel.frequency == 1)
                           Text('4', style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w600))
                         else
                           Text('4'),
                       ],
                     ),
-                   ),
+                  ),
                 ],
               ),
             ),
             Container(height: Layout.of(context).gridUnit(1)),
             Text('passages par mois')
           ],
-        )
-      ),
-      button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.nextStep
-      )
-    );
+        )),
+        button: RaisedButton(
+            child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+            onPressed: widget.viewModel.nextStep));
   }
 
   String _getName() {
-    switch(widget.viewModel.frequency) {
-      case 4: return 'Abonnement Basique';
-      case 2: return 'Abonnement Standard';
-      case 1: return 'Abonnement Premium';
-      default: return '';
+    switch (widget.viewModel.frequency) {
+      case 4:
+        return 'Abonnement Basique';
+      case 2:
+        return 'Abonnement Standard';
+      case 1:
+        return 'Abonnement Premium';
+      default:
+        return '';
     }
   }
 
   String _getPrice() {
-    switch(widget.viewModel.frequency) {
-      case 4: return '20.- /mois';
-      case 2: return '35.- /mois';
-      case 1: return '55.- /mois';
-      default: return '';
+    switch (widget.viewModel.frequency) {
+      case 4:
+        return '20.- /mois';
+      case 2:
+        return '35.- /mois';
+      case 1:
+        return '55.- /mois';
+      default:
+        return '';
     }
   }
-  
+
   void _setValue(double value) => setState(() => _value = value);
 
   void _saveToRedux(double value) {
     if (value == 0.0) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 4));
+      widget.viewModel
+          .onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 4));
     }
 
     if (value == 1.0) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 2));
+      widget.viewModel
+          .onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 2));
     }
 
     if (value == 2.0) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 1));
+      widget.viewModel
+          .onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..frequency = 1));
     }
   }
 
   double _getValue() {
-    switch(widget.viewModel.frequency) {
-      case 4: return 0.0;
-      case 2: return 1.0;
-      case 1: return 2.0;
-      default: return 1.0;
+    switch (widget.viewModel.frequency) {
+      case 4:
+        return 0.0;
+      case 2:
+        return 1.0;
+      case 1:
+        return 2.0;
+      default:
+        return 1.0;
     }
   }
 }
-
 
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
@@ -170,24 +164,15 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
 
-
-  _ViewModel({
-    this.subscriptionForm,
-    this.frequency,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.onChanged
-  });
+  _ViewModel({this.subscriptionForm, this.frequency, this.nextStep, this.previousStep, this.exit, this.onChanged});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      frequency: store.state.subscriptionFormState.subscriptionForm.frequency,
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
-      previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
-      exit: () => store.dispatch(SubscriptionFormExit()),
-      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
-    );
+        subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+        frequency: store.state.subscriptionFormState.subscriptionForm.frequency,
+        nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+        previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
+        exit: () => store.dispatch(SubscriptionFormExit()),
+        onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)));
   }
 }

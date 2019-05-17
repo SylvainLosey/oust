@@ -4,40 +4,30 @@ import 'package:redux/redux.dart';
 
 import '../../redux/app/app_state.dart';
 import '../account/profile_screen.dart';
-import '../lift/lifts_screen.dart';
+import '../lift/lift_screen.dart';
 import '../subscription/subscription_screen.dart';
 import 'bottom_nav.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final List<Widget> _views = <Widget>[
-      LiftsScreen(),
+    final List<Widget> _tabs = <Widget>[
+      LiftScreen(),
       SubscriptionScreen(),
       ProfileScreen(),
     ];
 
     return StoreConnector<AppState, _ViewModel>(
-      distinct: true,
-      converter: (Store<AppState> store) => _ViewModel.fromStore(store),
-      builder: (BuildContext context, _ViewModel viewModel) {
-        return Scaffold(
-          body: _views[viewModel.selectedBottomNav],
-          bottomNavigationBar: BottomNav(),
-        );
-      }
-    );
+        distinct: true,
+        converter: (Store<AppState> store) => _ViewModel.fromStore(store),
+        builder: (BuildContext context, _ViewModel viewModel) {
+          return Scaffold(
+            body: _tabs[viewModel.selectedBottomNav],
+            bottomNavigationBar: BottomNav(),
+          );
+        });
   }
 }
-
-// Widget _getScreen(int selectedScreen) {
-//   switch (selectedScreen) {
-//     case 0: return LiftsScreen();
-//     case 1: return SubscriptionScreen();
-//     case 3: return ProfileScreen();
-//   }
-// }
 
 class _ViewModel {
   final int selectedBottomNav;
@@ -52,4 +42,3 @@ class _ViewModel {
     );
   }
 }
-

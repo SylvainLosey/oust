@@ -10,7 +10,7 @@ import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormPhone extends StatelessWidget {
   static int step = 10;
@@ -21,21 +21,11 @@ class SubscriptionFormPhone extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: PhoneForm(viewModel),
-          )
-        );
+        return FormWrapper(child: PhoneForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
 
 class PhoneForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -55,14 +45,12 @@ class PhoneFormState extends State<PhoneForm> {
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Téléphone',
-        subtitle: 'Si malgré ces infos nous ne parvenons pas à trouver tes conteneurs au premier passage, nous te contacterons à ce numéro.'
-      ),
+          title: 'Téléphone',
+          subtitle:
+              'Si malgré ces infos nous ne parvenons pas à trouver tes conteneurs au premier passage, nous te contacterons à ce numéro.'),
       form: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          key: _formKey,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
             TextFormField(
               controller: _phoneController,
               validator: phoneValidator,
@@ -76,35 +64,28 @@ class PhoneFormState extends State<PhoneForm> {
               children: <Widget>[
                 Flexible(
                   child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Notification', style: Theme.of(context).textTheme.subhead),
-                    Text('Recevoir un SMS de rappel un jour avant le passage')
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Notification', style: Theme.of(context).textTheme.subhead),
+                      Text('Recevoir un SMS de rappel un jour avant le passage')
                     ],
                   ),
                 ),
-                Switch(
-                  onChanged: _onReminderToggle,
-                  value: widget.viewModel.wantsReminder
-                )
+                Switch(onChanged: _onReminderToggle, value: widget.viewModel.wantsReminder)
               ],
             )
-          ]
-        )
-      ),
+          ])),
       button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _phoneController.text.length < 10
-          ? null
-          : () { 
-            if (_formKey.currentState.validate()) {
-              widget.viewModel.nextStep(); 
-            }
-          }
-      ),
+          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: _phoneController.text.length < 10
+              ? null
+              : () {
+                  if (_formKey.currentState.validate()) {
+                    widget.viewModel.nextStep();
+                  }
+                }),
     );
   }
-
 
   @override
   void didChangeDependencies() {
@@ -114,9 +95,7 @@ class PhoneFormState extends State<PhoneForm> {
     }
     _phoneController.text = widget.viewModel.subscriptionForm.phoneNumber;
 
-    _controllers = [
-      _phoneController
-    ];
+    _controllers = [_phoneController];
 
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -135,9 +114,8 @@ class PhoneFormState extends State<PhoneForm> {
 
   void _onChanged() {
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-       // Keep only digits and + characters. Validator check that there is no letter in it
-      ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), '')
-    );
+      // Keep only digits and + characters. Validator check that there is no letter in it
+      ..phoneNumber = _phoneController.text == '' ? null : _phoneController.text.replaceAll(RegExp(r'[^0-9+]'), ''));
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
@@ -145,12 +123,10 @@ class PhoneFormState extends State<PhoneForm> {
   }
 
   void _onReminderToggle(bool newValue) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-        ..wantsReminder = newValue
-      ));
+    widget.viewModel.onChanged(
+        widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..wantsReminder = newValue));
   }
 }
-
 
 @immutable
 class _ViewModel {
@@ -161,14 +137,7 @@ class _ViewModel {
   final Function onChanged;
   final Function nextStep;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.wantsReminder,
-    this.previousStep,
-    this.exit,
-    this.onChanged,
-    this.nextStep
-  });
+  _ViewModel({this.subscriptionForm, this.wantsReminder, this.previousStep, this.exit, this.onChanged, this.nextStep});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(

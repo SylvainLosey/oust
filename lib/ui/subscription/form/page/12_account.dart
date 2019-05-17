@@ -10,7 +10,7 @@ import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormAccount extends StatelessWidget {
   static int step = 14;
@@ -21,21 +21,12 @@ class SubscriptionFormAccount extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: AccountForm(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: AccountForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
 
 class AccountForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -60,14 +51,11 @@ class AccountFormState extends State<AccountForm> {
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Compte',
-        subtitle: 'Dernière étape, merci d\'entrer ton email et un mot de passe pour créer ton compte.'
-      ),
+          title: 'Compte',
+          subtitle: 'Dernière étape, merci d\'entrer ton email et un mot de passe pour créer ton compte.'),
       form: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          key: _formKey,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
             TextFormField(
               controller: _emailController,
               validator: emailValidator,
@@ -92,26 +80,23 @@ class AccountFormState extends State<AccountForm> {
               // },
               onFieldSubmitted: (_) => widget.viewModel.submit(),
               decoration: InputDecoration(
-                labelText: 'Mot de passe',
-                suffixIcon: IconButton(
-                  padding: EdgeInsetsDirectional.only(end: 18),
-                  icon: _obscureText ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                  onPressed: _togglePasswordVisibility,
-                )
-              ),
+                  labelText: 'Mot de passe',
+                  suffixIcon: IconButton(
+                    padding: EdgeInsetsDirectional.only(end: 18),
+                    icon: _obscureText ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                    onPressed: _togglePasswordVisibility,
+                  )),
             )
-          ]
-        )
-      ),
+          ])),
       button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _emailController.text.isEmpty || _passwordController.text.isEmpty
-          ? null
-          : () { if (_formKey.currentState.validate()) widget.viewModel.submit(); }
-      ),
+          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: _emailController.text.isEmpty || _passwordController.text.isEmpty
+              ? null
+              : () {
+                  if (_formKey.currentState.validate()) widget.viewModel.submit();
+                }),
     );
   }
-
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -121,15 +106,9 @@ class AccountFormState extends State<AccountForm> {
 
   @override
   void didChangeDependencies() {
-    _controllers = <TextEditingController>[
-      _emailController,
-      _passwordController
-    ];
-    
-     _focusNodes = <FocusNode>[
-      _emailNode,
-      _passwordNode
-    ];
+    _controllers = <TextEditingController>[_emailController, _passwordController];
+
+    _focusNodes = <FocusNode>[_emailNode, _passwordNode];
 
     _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
 
@@ -137,7 +116,6 @@ class AccountFormState extends State<AccountForm> {
     _passwordController.text = widget.viewModel.subscriptionForm.password;
 
     _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
-
 
     super.didChangeDependencies();
   }
@@ -157,15 +135,13 @@ class AccountFormState extends State<AccountForm> {
   void _onChanged() {
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..email = _emailController.text == '' ? null : _emailController.text.trim()
-      ..password = _passwordController.text == '' ? null : _passwordController.text.trim()
-    );
+      ..password = _passwordController.text == '' ? null : _passwordController.text.trim());
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
     }
   }
 }
-
 
 @immutable
 class _ViewModel {
@@ -175,24 +151,17 @@ class _ViewModel {
   final Function onChanged;
   final Function submit;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.previousStep,
-    this.exit,
-    this.onChanged,
-    this.submit
-  });
+  _ViewModel({this.subscriptionForm, this.previousStep, this.exit, this.onChanged, this.submit});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
-      exit: () => store.dispatch(SubscriptionFormExit()),
-      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),
-      submit: () {
-        store.dispatch(SubmitSubscriptionFormRequest());
-        store.dispatch(SubscriptionFormNextStep());
-      }
-    );
+        subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+        previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
+        exit: () => store.dispatch(SubscriptionFormExit()),
+        onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),
+        submit: () {
+          store.dispatch(SubmitSubscriptionFormRequest());
+          store.dispatch(SubscriptionFormNextStep());
+        });
   }
 }

@@ -67,13 +67,13 @@ class SubscriptionFormMiddleware {
 
     final SubscriptionForm form = store.state.subscriptionFormState.subscriptionForm;
 
-    Completer _createUserCompleter = Completer();
+    final Completer _createUserCompleter = Completer();
 
     store.dispatch(CreateUserRequest(
         email: form.email, password: form.password, completer: _createUserCompleter));
 
     _createUserCompleter.future.then((userId) {
-      Completer _createCustomerCompleter = Completer();
+      final Completer _createCustomerCompleter = Completer();
 
       store.dispatch(CreateCustomerRequest(
         firstName: form.firstName,
@@ -85,7 +85,7 @@ class SubscriptionFormMiddleware {
         completer: _createCustomerCompleter,
       ));
       _createCustomerCompleter.future.then((customerId) {
-        Completer _createSubscriptionCompleter = Completer();
+        final Completer _createSubscriptionCompleter = Completer();
 
         store.dispatch(CreateSubscriptionRequest(
             baseDate: form.selectedStartDate,
@@ -103,7 +103,7 @@ class SubscriptionFormMiddleware {
         store.dispatch(
             CreateEmailRequest(email: form.email, usedForInvoices: true, customerId: customerId));
 
-        Completer _smallContainerCompleter = Completer();
+        final Completer _smallContainerCompleter = Completer();
         if (form.smallContainerQuantity > 0) {
           store.dispatch(CreateInvoiceItemRequest(
               productId: 6,
@@ -114,7 +114,7 @@ class SubscriptionFormMiddleware {
           _smallContainerCompleter.complete();
         }
 
-        Completer _bigContainerCompleter = Completer();
+        final Completer _bigContainerCompleter = Completer();
         if (form.bigContainerQuantity > 0) {
           store.dispatch(CreateInvoiceItemRequest(
               productId: 7,
@@ -131,7 +131,7 @@ class SubscriptionFormMiddleware {
           _smallContainerCompleter.future,
           _bigContainerCompleter.future
         ]).then((returnValue) {
-          Completer _createConsumerSubscriptionCompleter = Completer();
+          final Completer _createConsumerSubscriptionCompleter = Completer();
 
           store.dispatch(CreateConsumerSubscriptionRequest(
               packageId: form.selectedPackage,

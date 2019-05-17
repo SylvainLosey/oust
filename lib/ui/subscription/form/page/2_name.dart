@@ -10,6 +10,7 @@ import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
+import '../../../presentation/form_wrapper.dart';
 
 // Notes on the stucture of form pages
 // It is best to keep the form and button in the same Stateful widget to avoid having to pass State up/down
@@ -24,21 +25,11 @@ class SubscriptionFormName extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: NameForm(viewModel),
-          )
-        );
+        return FormWrapper(child: NameForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
 
 class NameForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -50,8 +41,8 @@ class NameForm extends StatefulWidget {
 }
 
 class NameFormState extends State<NameForm> {
-  final GlobalKey<FormState>_formKey = GlobalKey<FormState>();
-   
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   List<TextEditingController> _controllers = <TextEditingController>[];
@@ -74,14 +65,13 @@ class NameFormState extends State<NameForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
-              controller: _firstNameController,
-              focusNode: _firstNameNode,
-              decoration: InputDecoration(labelText: 'Prénom'),
-              inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
-              textInputAction: TextInputAction.next,
-              textCapitalization: TextCapitalization.words,
-              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameNode)
-            ),
+                controller: _firstNameController,
+                focusNode: _firstNameNode,
+                decoration: InputDecoration(labelText: 'Prénom'),
+                inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(50)],
+                textInputAction: TextInputAction.next,
+                textCapitalization: TextCapitalization.words,
+                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameNode)),
             Container(height: Layout.of(context).gridUnit(2)),
             TextFormField(
               controller: _lastNameController,
@@ -96,9 +86,10 @@ class NameFormState extends State<NameForm> {
         ),
       ),
       button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: _firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty ? widget.viewModel.nextStep : null
-      ),
+          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: _firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty
+              ? widget.viewModel.nextStep
+              : null),
     );
   }
 
@@ -109,10 +100,7 @@ class NameFormState extends State<NameForm> {
       _lastNameController,
     ];
 
-    _focusNodes = <FocusNode>[
-      _firstNameNode,
-      _lastNameNode
-    ];
+    _focusNodes = <FocusNode>[_firstNameNode, _lastNameNode];
 
     _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
     _firstNameController.text = widget.viewModel.subscriptionForm.firstName;
@@ -121,7 +109,6 @@ class NameFormState extends State<NameForm> {
 
     super.didChangeDependencies();
   }
-
 
   @override
   void dispose() {
@@ -135,20 +122,17 @@ class NameFormState extends State<NameForm> {
     super.dispose();
   }
 
-
   void _onChanged() {
     // At each field change send value to redux store
     final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
       ..firstName = _firstNameController.text == '' ? null : _firstNameController.text.trim()
-      ..lastName = _lastNameController.text == '' ? null : _lastNameController.text.trim()
-    );
+      ..lastName = _lastNameController.text == '' ? null : _lastNameController.text.trim());
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
     }
   }
 }
-
 
 @immutable
 class _ViewModel {
@@ -158,21 +142,14 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.onChanged
-  });
+  _ViewModel({this.subscriptionForm, this.nextStep, this.previousStep, this.exit, this.onChanged});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
-      previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
-      exit: () => store.dispatch(SubscriptionFormExit()),
-      onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm))
-     );
+        subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+        nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+        previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
+        exit: () => store.dispatch(SubscriptionFormExit()),
+        onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)));
   }
 }

@@ -13,7 +13,7 @@ import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 import '../../../presentation/selectable.dart';
 import '../../../presentation/base_card.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormPaymentInterval extends StatelessWidget {
   static int step = 13;
@@ -24,26 +24,17 @@ class SubscriptionFormPaymentInterval extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: PaymentIntervalForm(viewModel),
-          )
-        );
+        return FormWrapper(
+            child: PaymentIntervalForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
 
-
 class PaymentIntervalForm extends StatefulWidget {
   final _ViewModel viewModel;
 
- PaymentIntervalForm(this.viewModel);
+  PaymentIntervalForm(this.viewModel);
 
   @override
   State<StatefulWidget> createState() => PaymentIntervalFormState();
@@ -55,61 +46,57 @@ class PaymentIntervalFormState extends State<PaymentIntervalForm> {
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-      title: TitleWidget(
-        title: 'Intervalle de paiement',
-        subtitle: 'A quelles intervalles souhaites-tu recevoir une facture ?'
-      ),
-      form: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: List.generate(packages.length, (int index) {
-            bool selected = widget.viewModel.selectedPackage == packages[index].id;
-            return SelectableItem(
-              onTap: () => _onTap(selectedPackage: packages[index].id),
-              title: 'Tous les ${packages[index].length}',
-              text: '${packages[index].pickups.toString()} passages',
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CardText(
-                    title: 'Tous les ${packages[index].length}',
-                    text: '${packages[index].pickups.toString()} passages',
-                    color: selected ?? false ? Colors.white : null
-                  ),
-                  if (selected)
-                    Text('${packages[index].unitPrice} CHF', style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white))
-                  else
-                    Text('${packages[index].unitPrice} CHF', style: Theme.of(context).textTheme.subtitle)
-                ],
-              ),
-              selected: selected,
-            );
-          }
-        )
-      ),
-      button: RaisedButton(
-        child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.selectedPackage != null ? () => widget.viewModel.nextStep() : null
-      )
-    );
+        title: TitleWidget(
+            title: 'Intervalle de paiement', subtitle: 'A quelles intervalles souhaites-tu recevoir une facture ?'),
+        form: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: List.generate(packages.length, (int index) {
+              bool selected = widget.viewModel.selectedPackage == packages[index].id;
+              return SelectableItem(
+                onTap: () => _onTap(selectedPackage: packages[index].id),
+                title: 'Tous les ${packages[index].length}',
+                text: '${packages[index].pickups.toString()} passages',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CardText(
+                        title: 'Tous les ${packages[index].length}',
+                        text: '${packages[index].pickups.toString()} passages',
+                        color: selected ?? false ? Colors.white : null),
+                    if (selected)
+                      Text('${packages[index].unitPrice} CHF',
+                          style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white))
+                    else
+                      Text('${packages[index].unitPrice} CHF', style: Theme.of(context).textTheme.subtitle)
+                  ],
+                ),
+                selected: selected,
+              );
+            })),
+        button: RaisedButton(
+            child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+            onPressed: widget.viewModel.selectedPackage != null ? () => widget.viewModel.nextStep() : null));
   }
 
   void _onTap({int selectedPackage}) {
     if (selectedPackage != widget.viewModel.selectedPackage) {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..selectedPackage = selectedPackage));
+      widget.viewModel.onChanged(widget.viewModel.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..selectedPackage = selectedPackage));
     } else {
-      widget.viewModel.onChanged(widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..selectedPackage = null));
+      widget.viewModel.onChanged(
+          widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..selectedPackage = null));
     }
   }
 
   @override
   void initState() {
     packages = widget.viewModel.packages.values.toList();
-    packages.removeWhere((Package package) => !package.basePackage || package.frequencyWeeks != widget.viewModel.subscriptionForm.frequency);
+    packages.removeWhere((Package package) =>
+        !package.basePackage || package.frequencyWeeks != widget.viewModel.subscriptionForm.frequency);
     super.initState();
   }
 }
-
 
 class _ViewModel {
   final SubscriptionForm subscriptionForm;
@@ -121,16 +108,15 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
 
-  _ViewModel({
-    this.subscriptionForm,
-    this.packages,
-    this.selectedPackage,
-    this.paymentMethod,
-    this.nextStep,
-    this.previousStep,
-    this.exit,
-    this.onChanged
-  });
+  _ViewModel(
+      {this.subscriptionForm,
+      this.packages,
+      this.selectedPackage,
+      this.paymentMethod,
+      this.nextStep,
+      this.previousStep,
+      this.exit,
+      this.onChanged});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(

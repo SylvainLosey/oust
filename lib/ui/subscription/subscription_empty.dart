@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../presentation/safe_widget.dart';
-import '../../utils/layout.dart';
-import '../../utils/localizations.dart';
+import '../../data/models/subscription_form.dart';
 import '../../redux/app/app_state.dart';
 import '../../redux/subscription/form/subscription_form_actions.dart';
-import '../../data/models/subscription_form.dart';
+import '../presentation/layout/empty_home_layout.dart';
+import '../presentation/title_widget.dart';
 
 class SubscriptionEmpty extends StatelessWidget {
   @override
@@ -16,33 +15,19 @@ class SubscriptionEmpty extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return SafeColumn(children: <Widget>[
-          Spacer(flex: 2),
-          Text(
-            AppLocalizations.of(context).subscriptionHomeTitle,
-            style: Theme.of(context).textTheme.title,
-            textAlign: TextAlign.center,
-          ),
-          Container(height: Layout.of(context).gridUnit(1)),
-          Text(
-            AppLocalizations.of(context).subscriptionHomeDescription,
-            style: Theme.of(context).textTheme.body1,
-            textAlign: TextAlign.center,
-          ),
-          Spacer(flex: 2),
-          SizedBox(
-            width: 250,
-            child: RaisedButton(onPressed: viewModel.start, child: _getButtonText(viewModel)),
-          ),
-          FlatButton(onPressed: () {}, child: Text('J\'ai déjà un abonnement')),
-          Spacer(flex: 1)
-        ]);
+        return EmptyHomeLayout(
+          title: TitleWidget(
+              title: 'Abonnement', subtitle: 'Oust! collecte à ton domicile tous tes déchets pour la déchetterie'),
+          button:
+              RaisedButton(onPressed: viewModel.start, child: _getButtonText(viewModel.subscriptionForm.currentStep)),
+          secondaryButton: FlatButton(onPressed: null, child: Text('J\'ai déjà un abonnement')),
+        );
       },
     );
   }
 
-  Text _getButtonText(_ViewModel viewModel) {
-    if (viewModel.subscriptionForm.currentStep > 0) {
+  Text _getButtonText(int currentStep) {
+    if (currentStep > 0) {
       return Text('Continuer l\'inscription', style: TextStyle(color: Colors.white));
     } else {
       return Text('Découvrir', style: TextStyle(color: Colors.white));

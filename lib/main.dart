@@ -15,7 +15,7 @@ import 'redux/subscription/form/subscription_form_middleware.dart';
 import 'redux/pickup/pickup_middleware.dart';
 import 'redux/data/data_middleware.dart';
 import 'redux/invoice/invoice_middleware.dart';
-import 'redux/lift/quote_form/lift_quote_middleware.dart';
+import 'redux/lift/quote_form/lift_quote_form_middleware.dart';
 import 'data/repository.dart';
 
 void main() async {

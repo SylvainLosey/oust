@@ -13,7 +13,7 @@ import '../../../presentation/error_text.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
-
+import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormLead extends StatelessWidget {
   static int step = 100;
@@ -24,22 +24,11 @@ class SubscriptionFormLead extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(onExit: viewModel.exit),
-            body: EmailForm(viewModel),
-          )
-        );
+        return FormWrapper(child: EmailForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
-
-
 
 class EmailForm extends StatefulWidget {
   final _ViewModel viewModel;
@@ -59,14 +48,12 @@ class EmailFormState extends State<EmailForm> {
   Widget build(BuildContext context) {
     return TitleFormButton(
       title: TitleWidget(
-        title: 'Oh non !',
-        subtitle: 'Malheureusement nous n\'allons pas encore jusque chez toi. Tu peux entrer ton email ci-dessous pour recevoir une notification et un crédit de 20.- dès que nous y seront disponibles'
-      ),
+          title: 'Oh non !',
+          subtitle:
+              'Malheureusement nous n\'allons pas encore jusque chez toi. Tu peux entrer ton email ci-dessous pour recevoir une notification et un crédit de 20.- dès que nous y seront disponibles'),
       form: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          key: _formKey,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
             TextFormField(
               controller: _emailController,
               validator: emailValidator,
@@ -76,28 +63,23 @@ class EmailFormState extends State<EmailForm> {
                 hintText: 'example@gmail.com',
               ),
             ),
-            if (widget.viewModel.error != null)
-              ErrorText(error: widget.viewModel.error)
-          ]
-        )
-      ),
+            if (widget.viewModel.error != null) ErrorText(error: widget.viewModel.error)
+          ])),
       button: RaisedButton(
-        child: widget.viewModel.isLoading 
-          ? SpinKitThreeBounce(color: Colors.white, size: 18)
-          : Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-        onPressed: widget.viewModel.isLoading
-          ? null
-          : _emailController.text.length < 3 
-            ? null
-            : () {
-              if (_formKey.currentState.validate()) {
-                widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
-              }
-            }
-      ),
+          child: widget.viewModel.isLoading
+              ? SpinKitThreeBounce(color: Colors.white, size: 18)
+              : Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: widget.viewModel.isLoading
+              ? null
+              : _emailController.text.length < 3
+                  ? null
+                  : () {
+                      if (_formKey.currentState.validate()) {
+                        widget.viewModel.postLeadRequest(widget.viewModel.subscriptionForm);
+                      }
+                    }),
     );
   }
-
 
   @override
   void didChangeDependencies() {
@@ -117,16 +99,14 @@ class EmailFormState extends State<EmailForm> {
   }
 
   void _onChanged() {
-    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
-      ..email = _emailController.text == '' ? null : _emailController.text.trim()
-    );
+    final SubscriptionForm subscriptionForm = widget.viewModel.subscriptionForm.rebuild(
+        (SubscriptionFormBuilder b) => b..email = _emailController.text == '' ? null : _emailController.text.trim());
 
     if (subscriptionForm != widget.viewModel.subscriptionForm) {
       widget.viewModel.onChanged(subscriptionForm);
     }
   }
 }
-
 
 @immutable
 class _ViewModel {
@@ -139,17 +119,15 @@ class _ViewModel {
   final Function onChanged;
   final BuiltMap<int, Postcode> postcodes;
 
-
-  _ViewModel({
-    this.subscriptionForm,
-    this.isLoading,
-    this.error,
-    this.postLeadRequest,
-    this.previousStep,
-    this.exit,
-    this.onChanged,
-    this.postcodes
-  });
+  _ViewModel(
+      {this.subscriptionForm,
+      this.isLoading,
+      this.error,
+      this.postLeadRequest,
+      this.previousStep,
+      this.exit,
+      this.onChanged,
+      this.postcodes});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
@@ -157,12 +135,13 @@ class _ViewModel {
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
       postLeadRequest: (SubscriptionForm subscriptionForm) {
-        store.dispatch(PostLeadRequest(subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'postcode_not_covered')));
+        store.dispatch(PostLeadRequest(
+            subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'postcode_not_covered')));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),
       exit: () => store.dispatch(SubscriptionFormExit()),
       onChanged: (SubscriptionForm subscriptionForm) => store.dispatch(UpdateSubscriptionForm(subscriptionForm)),
       postcodes: store.state.dataState.postcodes,
-     );
+    );
   }
 }

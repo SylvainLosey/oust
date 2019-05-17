@@ -8,7 +8,6 @@ import '../../../presentation/layout/widget_title_button_layout.dart';
 import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 
-
 class SubscriptionFormHowItWorks extends StatelessWidget {
   static int step = 1;
 
@@ -19,30 +18,27 @@ class SubscriptionFormHowItWorks extends StatelessWidget {
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
         return WillPopScope(
-          onWillPop: () async {
-            viewModel.previousStep();
-            return false;
-          },
-          child: Scaffold(
-            appBar: MainAppBar(),
-            body: WidgetTitleButtonLayout(
-              // widget: Image.asset('assets/images/logo.png'),
-              title: TitleWidget(
-                title:'Fonctionnement',
-                subtitle: 'Nous passons collecter à ton domicile tous tes déchets triés, à la fréquence qui te convient.',
-              ),
-              button: RaisedButton(
-                child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-                onPressed: viewModel.nextStep
-              ),
-            )
-          )
-        );
+            onWillPop: () async {
+              viewModel.previousStep();
+              return false;
+            },
+            child: Scaffold(
+                appBar: MainAppBar(),
+                body: WidgetTitleButtonLayout(
+                  // widget: Image.asset('assets/images/logo.png'),
+                  title: TitleWidget(
+                    title: 'Fonctionnement',
+                    subtitle:
+                        'Nous passons collecter à ton domicile tous tes déchets triés, à la fréquence qui te convient.',
+                  ),
+                  button: RaisedButton(
+                      child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+                      onPressed: viewModel.nextStep),
+                )));
       },
     );
   }
 }
-
 
 @immutable
 class _ViewModel {
@@ -56,8 +52,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      nextStep: () => store.dispatch(SubscriptionFormNextStep()),
-      previousStep: () => store.dispatch(SubscriptionFormPreviousStep())
-     );
+        nextStep: () => store.dispatch(SubscriptionFormNextStep()),
+        previousStep: () => store.dispatch(SubscriptionFormPreviousStep()));
   }
 }

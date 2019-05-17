@@ -18,6 +18,7 @@ class LiftQuoteFormMiddleware {
   List<Middleware<AppState>> createLiftQuoteFormMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, AddLiftImage>(_addLiftImage),
+      TypedMiddleware<AppState, DeleteLiftImage>(_deleteLiftImage),
     ];
   }
 
@@ -32,9 +33,22 @@ class LiftQuoteFormMiddleware {
       final StorageUploadTask uploadTask = ref.putData(imageData, metadata);
 
       final String url = await (await uploadTask.onComplete).ref.getDownloadURL();
+
       store.dispatch(AddLiftImageSuccess(uuid: action.uuid, url: url));
     } catch (e) {
       store.dispatch(AddLiftImageFailure(error: e.toString()));
+    }
+  }
+
+  void _deleteLiftImage(Store<AppState> store, DeleteLiftImage action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final StorageReference ref = await FirebaseStorage.instance.getReferenceFromUrl(action.image.url);
+      await ref.delete();
+      store.dispatch(DeleteLiftImageSuccess());
+    } catch (e) {
+      store.dispatch(DeleteLiftImageFailure(error: e.toString()));
     }
   }
 }

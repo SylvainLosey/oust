@@ -7,22 +7,20 @@ class TitleFormButton extends StatelessWidget {
   final Widget title;
   final Widget form;
   final Widget button;
-  final bool expanded;
 
-  TitleFormButton({this.title, this.form, this.button, this.expanded = true});
+  TitleFormButton({this.title, this.form, this.button});
 
   @override
   Widget build(BuildContext context) {
     return SafeColumn(
       children: <Widget>[
-        Container(height: Layout.of(context).gridUnit(3)),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         title,
-        Container(height: Layout.of(context).gridUnit(7)),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
         form,
-        if (expanded) 
-          Spacer(),
+        Spacer(),
         button,
-        Container(height:Layout.of(context).gridUnit(1))
+        SizedBox(height: MediaQuery.of(context).size.height * 0.03),
       ],
     );
   }

@@ -12,17 +12,17 @@ class WidgetTitleButtonLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeColumn(
-       children: <Widget>[
-        Spacer(flex: 1),
+      children: <Widget>[
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         if (widget != null)
           Expanded(
             flex: 10,
             child: widget,
           ),
-        Spacer(flex: 1),
         title,
         Spacer(flex: 14),
         button,
+        SizedBox(height: MediaQuery.of(context).size.height * 0.03),
       ],
     );
   }
