@@ -50,7 +50,7 @@ class LiftImageForm extends StatelessWidget {
 
     return TitleFormButton(
       title: TitleWidget(
-          title: 'Que veut-tu débarasser ?',
+          title: 'Que veux-tu débarasser ?',
           subtitle:
               'Ajoute une photo de tout ce que tu souhaites que l\'on prenne afin qu\'on puisse te donner le prix.'),
       form: BaseCard(
@@ -70,7 +70,7 @@ class LiftImageForm extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.photo_camera, size: 40, color: Colors.grey[500]),
+                    Icon(Icons.photo_camera, size: 36, color: Colors.grey[500]),
                     if (isEmpty) ...[
                       Container(width: Layout.of(context).gridUnit(3)),
                       Text('Ajouter une image',
@@ -122,6 +122,7 @@ class LiftImageForm extends StatelessWidget {
       ),
       button: RaisedButton(
           child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          // onPressed: isEmpty ? null : viewModel.nextStep),
           onPressed: viewModel.nextStep),
     );
   }

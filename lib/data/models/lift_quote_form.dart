@@ -10,7 +10,10 @@ import 'serializers.dart';
 part 'lift_quote_form.g.dart';
 
 abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilder> {
-  factory LiftQuoteForm() => _$LiftQuoteForm((LiftQuoteFormBuilder b) => b..currentStep = 0);
+  factory LiftQuoteForm() => _$LiftQuoteForm((LiftQuoteFormBuilder b) => b
+    ..currentStep = 0
+    ..floor = 0
+    ..elevator = false);
 
   @nullable
   int get currentStep;
@@ -40,7 +43,7 @@ abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilde
   bool get elevator;
 
   @nullable
-  bool get note;
+  String get note;
 
   LiftQuoteForm._();
 

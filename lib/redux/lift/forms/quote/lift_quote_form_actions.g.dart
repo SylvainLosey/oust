@@ -99,3 +99,30 @@ DeleteLiftImageFailure _$DeleteLiftImageFailureFromJson(
 Map<String, dynamic> _$DeleteLiftImageFailureToJson(
         DeleteLiftImageFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+LiftQuoteFormIncrementFloor _$LiftQuoteFormIncrementFloorFromJson(
+    Map<String, dynamic> json) {
+  return LiftQuoteFormIncrementFloor();
+}
+
+Map<String, dynamic> _$LiftQuoteFormIncrementFloorToJson(
+        LiftQuoteFormIncrementFloor instance) =>
+    <String, dynamic>{};
+
+LiftQuoteFormDecrementFloor _$LiftQuoteFormDecrementFloorFromJson(
+    Map<String, dynamic> json) {
+  return LiftQuoteFormDecrementFloor();
+}
+
+Map<String, dynamic> _$LiftQuoteFormDecrementFloorToJson(
+        LiftQuoteFormDecrementFloor instance) =>
+    <String, dynamic>{};
+
+LiftQuoteFormToggleElevator _$LiftQuoteFormToggleElevatorFromJson(
+    Map<String, dynamic> json) {
+  return LiftQuoteFormToggleElevator();
+}
+
+Map<String, dynamic> _$LiftQuoteFormToggleElevatorToJson(
+        LiftQuoteFormToggleElevator instance) =>
+    <String, dynamic>{};

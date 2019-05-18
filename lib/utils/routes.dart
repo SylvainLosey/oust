@@ -61,4 +61,6 @@ List subscriptionFormAppointment = [
 // LIFT - QUOTE
 List liftQuoteFormPages = [
   LiftQuoteFormImage(),
+  LiftQuoteFormAccess(),
+  LiftQuoteFormFloor(),
 ];

@@ -13,6 +13,9 @@ Reducer<LiftQuoteFormState> liftQuoteFormReducer = combineReducers([
   TypedReducer<LiftQuoteFormState, AddLiftImage>(_addLiftImage),
   TypedReducer<LiftQuoteFormState, AddLiftImageSuccess>(_addLiftImageSuccess),
   TypedReducer<LiftQuoteFormState, DeleteLiftImage>(_deleteLiftImage),
+  TypedReducer<LiftQuoteFormState, LiftQuoteFormIncrementFloor>(_incrementFloor),
+  TypedReducer<LiftQuoteFormState, LiftQuoteFormDecrementFloor>(_decrementFloor),
+  TypedReducer<LiftQuoteFormState, LiftQuoteFormToggleElevator>(_toggleElevator),
 ]);
 
 LiftQuoteFormState _start(LiftQuoteFormState state, LiftQuoteFormStart action) {
@@ -58,4 +61,23 @@ LiftQuoteFormState _addLiftImageSuccess(LiftQuoteFormState state, AddLiftImageSu
 LiftQuoteFormState _deleteLiftImage(LiftQuoteFormState state, DeleteLiftImage action) {
   return state.rebuild(
       (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..images.remove(action.image.uuid))));
+}
+
+LiftQuoteFormState _incrementFloor(LiftQuoteFormState state, LiftQuoteFormIncrementFloor action) {
+  return state.rebuild(
+      (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..floor = state.liftQuoteForm.floor + 1)));
+}
+
+LiftQuoteFormState _decrementFloor(LiftQuoteFormState state, LiftQuoteFormDecrementFloor action) {
+  if (state.liftQuoteForm.floor > 0) {
+    return state.rebuild(
+        (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..floor = state.liftQuoteForm.floor - 1)));
+  } else {
+    return state;
+  }
+}
+
+LiftQuoteFormState _toggleElevator(LiftQuoteFormState state, LiftQuoteFormToggleElevator action) {
+  return state.rebuild(
+      (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..elevator = !state.liftQuoteForm.elevator)));
 }

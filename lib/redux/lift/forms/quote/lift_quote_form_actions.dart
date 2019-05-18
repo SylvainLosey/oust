@@ -85,3 +85,18 @@ class DeleteLiftImageFailure {
   DeleteLiftImageFailure({@required this.error});
   Map<String, dynamic> toJson() => _$DeleteLiftImageFailureToJson(this);
 }
+
+@JsonSerializable()
+class LiftQuoteFormIncrementFloor {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormIncrementFloorToJson(this);
+}
+
+@JsonSerializable()
+class LiftQuoteFormDecrementFloor {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormDecrementFloorToJson(this);
+}
+
+@JsonSerializable()
+class LiftQuoteFormToggleElevator {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormToggleElevatorToJson(this);
+}

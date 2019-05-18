@@ -7,7 +7,6 @@ import '../../../../data/models/subscription_form.dart';
 import '../../../../redux/subscription/form/subscription_form_actions.dart';
 import '../../../../utils/layout.dart';
 import '../../../presentation/layout/title_form_button_layout.dart';
-import '../../../presentation/main_app_bar.dart';
 import '../../../presentation/title_widget.dart';
 import '../../../presentation/selectable.dart';
 import '../../../presentation/form_wrapper.dart';

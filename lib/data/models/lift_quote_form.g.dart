@@ -78,7 +78,7 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
       result
         ..add('note')
         ..add(serializers.serialize(object.note,
-            specifiedType: const FullType(bool)));
+            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -136,7 +136,7 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
           break;
         case 'note':
           result.note = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -165,7 +165,7 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   @override
   final bool elevator;
   @override
-  final bool note;
+  final String note;
 
   factory _$LiftQuoteForm([void Function(LiftQuoteFormBuilder) updates]) =>
       (new LiftQuoteFormBuilder()..update(updates)).build();
@@ -287,9 +287,9 @@ class LiftQuoteFormBuilder
   bool get elevator => _$this._elevator;
   set elevator(bool elevator) => _$this._elevator = elevator;
 
-  bool _note;
-  bool get note => _$this._note;
-  set note(bool note) => _$this._note = note;
+  String _note;
+  String get note => _$this._note;
+  set note(String note) => _$this._note = note;
 
   LiftQuoteFormBuilder();
 
