@@ -11,7 +11,7 @@ import 'package:oust/redux/subscription/form/subscription_form_state.dart';
 import 'package:oust/redux/subscription/subscription_state.dart';
 import 'package:oust/redux/invoice/invoice_state.dart';
 import 'package:oust/redux/lift/lift_state.dart';
-import 'package:oust/redux/lift/quote_form/lift_quote_form_state.dart';
+import 'package:oust/redux/lift/forms/quote/lift_quote_form_state.dart';
 
 import 'consumer_subscription.dart';
 import 'customer.dart';

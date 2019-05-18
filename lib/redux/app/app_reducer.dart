@@ -9,7 +9,7 @@ import '../auth/auth_actions.dart';
 import '../data/data_reducer.dart';
 import '../invoice/invoice_reducer.dart';
 import '../lift/lift_reducer.dart';
-import '../lift/quote_form/lift_quote_form_reducer.dart';
+import '../lift/forms/quote/lift_quote_form_reducer.dart';
 
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {

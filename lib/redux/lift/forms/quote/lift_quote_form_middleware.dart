@@ -6,10 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'lift_quote_form_actions.dart';
-import '../../auth/auth_actions.dart';
-import '../../app/app_state.dart';
-import '../../../data/models/lift_quote_form.dart';
-import '../../../data/repository.dart';
+import '../../../auth/auth_actions.dart';
+import '../../../app/app_state.dart';
+import '../../../../data/models/lift_quote_form.dart';
+import '../../../../data/repository.dart';
 
 class LiftQuoteFormMiddleware {
   final Repository repository;

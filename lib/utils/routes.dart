@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../ui/app/main_screen.dart';
-import '../ui/subscription/subscription_screen.dart';
-
 import '../ui/subscription/form/info/subscription_form_infos.dart';
 import '../ui/subscription/form/page/subscription_form_pages.dart';
+import '../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
 
 // Se store steps inside a static int of the class to be able to reorder steps and not lose conditional navigation
 Map<String, WidgetBuilder> getRoutes(BuildContext context) {
@@ -22,11 +21,15 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     // Appointment requested
     for (var i = 0; i < subscriptionFormAppointment.length; i++)
       '/subscription/form/${i + 200}': (context) => subscriptionFormAppointment[i],
+
+    // LIFT QUOTE FORM
+    for (var i = 0; i < liftQuoteFormPages.length; i++) '/lift/form/quote/${i + 1}': (context) => liftQuoteFormPages[i],
   };
 
   return routes;
 }
 
+// SUBSSCRIPTION
 List subscriptionFormPages = [
   SubscriptionFormHowItWorks(),
   SubscriptionFormQuantity(),
@@ -53,4 +56,9 @@ List subscriptionFormUnavailable = [
 List subscriptionFormAppointment = [
   SubscriptionFormAppointment(),
   SubscriptionFormAppointmentSuccess(),
+];
+
+// LIFT - QUOTE
+List liftQuoteFormPages = [
+  LiftQuoteFormImage(),
 ];

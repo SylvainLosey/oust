@@ -7,7 +7,7 @@ class FormWrapper extends StatelessWidget {
   final Function onPreviousStep;
   final Widget child;
 
-  FormWrapper({this.child, this.onExit, this.onPreviousStep});
+  FormWrapper({@required this.child, @required this.onExit, @required this.onPreviousStep});
 
   @override
   Widget build(BuildContext context) {

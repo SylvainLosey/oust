@@ -11,7 +11,10 @@ class SubscriptionFormNextStep {
   bool customerRequestsAppointment;
   bool doesNotWantContainers;
 
-  SubscriptionFormNextStep({this.subscriptionIsUnavailable = false, this.customerRequestsAppointment = false, this.doesNotWantContainers = false});
+  SubscriptionFormNextStep(
+      {this.subscriptionIsUnavailable = false,
+      this.customerRequestsAppointment = false,
+      this.doesNotWantContainers = false});
   Map<String, dynamic> toJson() => _$SubscriptionFormNextStepToJson(this);
 }
 
@@ -30,9 +33,19 @@ class SubscriptionFormExit {
   Map<String, dynamic> toJson() => _$SubscriptionFormExitToJson(this);
 }
 
+// Used for simple data entry - rebuild of model is done directly in the viewmodel
+@JsonSerializable()
+class UpdateSubscriptionForm {
+  @JsonKey(fromJson: SubscriptionForm.fromJson)
+  SubscriptionForm subscriptionForm;
+
+  UpdateSubscriptionForm(this.subscriptionForm);
+  Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
+}
+
 @JsonSerializable()
 class PostLeadRequest {
-  @JsonKey(fromJson: SubscriptionForm.fromJson) 
+  @JsonKey(fromJson: SubscriptionForm.fromJson)
   SubscriptionForm subscriptionForm;
 
   PostLeadRequest(this.subscriptionForm);
@@ -52,7 +65,6 @@ class PostLeadFailure {
   PostLeadFailure({@required this.error});
   Map<String, dynamic> toJson() => _$PostLeadFailureToJson(this);
 }
-
 
 @JsonSerializable()
 class LoadStartDatesRequest {
@@ -80,17 +92,6 @@ class LoadStartDatesFailure {
   Map<String, dynamic> toJson() => _$LoadStartDatesFailureToJson(this);
 }
 
-
-// Used for simple data entry - rebuild of model is done directly in the viewmodel
-@JsonSerializable()
-class UpdateSubscriptionForm {
-  @JsonKey(fromJson: SubscriptionForm.fromJson) 
-  SubscriptionForm subscriptionForm;
-
-  UpdateSubscriptionForm(this.subscriptionForm);
-  Map<String, dynamic> toJson() => _$UpdateSubscriptionFormToJson(this);
-}
-
 @JsonSerializable()
 class IncrementProductQuantity {
   String product;
@@ -106,7 +107,6 @@ class DecrementProductQuantity {
   DecrementProductQuantity({this.product});
   Map<String, dynamic> toJson() => _$DecrementProductQuantityToJson(this);
 }
-
 
 // SUBMIT FORM
 @JsonSerializable()

@@ -6,6 +6,48 @@ part of 'lift_quote_form_actions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+LiftQuoteFormNextStep _$LiftQuoteFormNextStepFromJson(
+    Map<String, dynamic> json) {
+  return LiftQuoteFormNextStep();
+}
+
+Map<String, dynamic> _$LiftQuoteFormNextStepToJson(
+        LiftQuoteFormNextStep instance) =>
+    <String, dynamic>{};
+
+LiftQuoteFormPreviousStep _$LiftQuoteFormPreviousStepFromJson(
+    Map<String, dynamic> json) {
+  return LiftQuoteFormPreviousStep();
+}
+
+Map<String, dynamic> _$LiftQuoteFormPreviousStepToJson(
+        LiftQuoteFormPreviousStep instance) =>
+    <String, dynamic>{};
+
+LiftQuoteFormStart _$LiftQuoteFormStartFromJson(Map<String, dynamic> json) {
+  return LiftQuoteFormStart();
+}
+
+Map<String, dynamic> _$LiftQuoteFormStartToJson(LiftQuoteFormStart instance) =>
+    <String, dynamic>{};
+
+LiftQuoteFormExit _$LiftQuoteFormExitFromJson(Map<String, dynamic> json) {
+  return LiftQuoteFormExit();
+}
+
+Map<String, dynamic> _$LiftQuoteFormExitToJson(LiftQuoteFormExit instance) =>
+    <String, dynamic>{};
+
+UpdateLiftQuoteForm _$UpdateLiftQuoteFormFromJson(Map<String, dynamic> json) {
+  return UpdateLiftQuoteForm(json['liftQuoteForm'] == null
+      ? null
+      : LiftQuoteForm.fromJson(json['liftQuoteForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$UpdateLiftQuoteFormToJson(
+        UpdateLiftQuoteForm instance) =>
+    <String, dynamic>{'liftQuoteForm': instance.liftQuoteForm};
+
 AddLiftImage _$AddLiftImageFromJson(Map<String, dynamic> json) {
   return AddLiftImage(uuid: json['uuid'] as String);
 }

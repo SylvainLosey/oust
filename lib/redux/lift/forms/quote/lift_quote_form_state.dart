@@ -3,8 +3,8 @@ library lift_quote_form_state;
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-import '../../../data/models/serializers.dart';
-import '../../../data/models/lift_quote_form.dart';
+import '../../../../data/models/serializers.dart';
+import '../../../../data/models/lift_quote_form.dart';
 
 part 'lift_quote_form_state.g.dart';
 

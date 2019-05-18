@@ -2,10 +2,40 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-import '../../../data/models/lift_quote_form.dart';
-import '../../../data/models/lift_image.dart';
+import '../../../../data/models/lift_quote_form.dart';
+import '../../../../data/models/lift_image.dart';
 
 part 'lift_quote_form_actions.g.dart';
+
+@JsonSerializable()
+class LiftQuoteFormNextStep {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormNextStepToJson(this);
+}
+
+@JsonSerializable()
+class LiftQuoteFormPreviousStep {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormPreviousStepToJson(this);
+}
+
+@JsonSerializable()
+class LiftQuoteFormStart {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormStartToJson(this);
+}
+
+@JsonSerializable()
+class LiftQuoteFormExit {
+  Map<String, dynamic> toJson() => _$LiftQuoteFormExitToJson(this);
+}
+
+// Used for simple data entry - rebuild of model is done directly in the viewmodel
+@JsonSerializable()
+class UpdateLiftQuoteForm {
+  @JsonKey(fromJson: LiftQuoteForm.fromJson)
+  LiftQuoteForm liftQuoteForm;
+
+  UpdateLiftQuoteForm(this.liftQuoteForm);
+  Map<String, dynamic> toJson() => _$UpdateLiftQuoteFormToJson(this);
+}
 
 @JsonSerializable()
 class AddLiftImage {

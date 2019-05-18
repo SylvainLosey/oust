@@ -19,6 +19,12 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
   Iterable serialize(Serializers serializers, LiftQuoteForm object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
+    if (object.currentStep != null) {
+      result
+        ..add('currentStep')
+        ..add(serializers.serialize(object.currentStep,
+            specifiedType: const FullType(int)));
+    }
     if (object.images != null) {
       result
         ..add('images')
@@ -89,6 +95,10 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'currentStep':
+          result.currentStep = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'images':
           result.images.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -137,6 +147,8 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
 
 class _$LiftQuoteForm extends LiftQuoteForm {
   @override
+  final int currentStep;
+  @override
   final BuiltMap<String, LiftImage> images;
   @override
   final bool noCustomerRequired;
@@ -159,7 +171,8 @@ class _$LiftQuoteForm extends LiftQuoteForm {
       (new LiftQuoteFormBuilder()..update(updates)).build();
 
   _$LiftQuoteForm._(
-      {this.images,
+      {this.currentStep,
+      this.images,
       this.noCustomerRequired,
       this.firstName,
       this.lastName,
@@ -181,6 +194,7 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is LiftQuoteForm &&
+        currentStep == other.currentStep &&
         images == other.images &&
         noCustomerRequired == other.noCustomerRequired &&
         firstName == other.firstName &&
@@ -201,7 +215,9 @@ class _$LiftQuoteForm extends LiftQuoteForm {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, images.hashCode),
+                                $jc(
+                                    $jc($jc(0, currentStep.hashCode),
+                                        images.hashCode),
                                     noCustomerRequired.hashCode),
                                 firstName.hashCode),
                             lastName.hashCode),
@@ -215,6 +231,7 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LiftQuoteForm')
+          ..add('currentStep', currentStep)
           ..add('images', images)
           ..add('noCustomerRequired', noCustomerRequired)
           ..add('firstName', firstName)
@@ -231,6 +248,10 @@ class _$LiftQuoteForm extends LiftQuoteForm {
 class LiftQuoteFormBuilder
     implements Builder<LiftQuoteForm, LiftQuoteFormBuilder> {
   _$LiftQuoteForm _$v;
+
+  int _currentStep;
+  int get currentStep => _$this._currentStep;
+  set currentStep(int currentStep) => _$this._currentStep = currentStep;
 
   MapBuilder<String, LiftImage> _images;
   MapBuilder<String, LiftImage> get images =>
@@ -274,6 +295,7 @@ class LiftQuoteFormBuilder
 
   LiftQuoteFormBuilder get _$this {
     if (_$v != null) {
+      _currentStep = _$v.currentStep;
       _images = _$v.images?.toBuilder();
       _noCustomerRequired = _$v.noCustomerRequired;
       _firstName = _$v.firstName;
@@ -307,6 +329,7 @@ class LiftQuoteFormBuilder
     try {
       _$result = _$v ??
           new _$LiftQuoteForm._(
+              currentStep: currentStep,
               images: _images?.build(),
               noCustomerRequired: noCustomerRequired,
               firstName: firstName,

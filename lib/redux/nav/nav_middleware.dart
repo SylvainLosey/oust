@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 import '../subscription/form/subscription_form_actions.dart';
+import '../lift/forms/quote/lift_quote_form_actions.dart';
 import '../app/app_state.dart';
 import '../../ui/subscription/form/page/subscription_form_pages.dart';
 
@@ -14,13 +15,17 @@ class NavMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, SubscriptionFormStart>(_subscriptionFormStart),
       TypedMiddleware<AppState, SubscriptionFormNextStep>(_subscriptionFormNextStep),
-      TypedMiddleware<AppState, SubscriptionFormPreviousStep>(_subscriptionFormPreviousStep),
-      TypedMiddleware<AppState, SubscriptionFormExit>(_subscriptionFormExit),
+      TypedMiddleware<AppState, SubscriptionFormPreviousStep>(formPreviousStep),
+      TypedMiddleware<AppState, SubscriptionFormExit>(_formExit),
+      TypedMiddleware<AppState, LiftQuoteFormStart>(_liftQuoteFormStart),
+      TypedMiddleware<AppState, LiftQuoteFormNextStep>(_liftQuoteFormNextStep),
+      TypedMiddleware<AppState, LiftQuoteFormPreviousStep>(formPreviousStep),
+      TypedMiddleware<AppState, LiftQuoteFormExit>(_formExit),
     ];
   }
 
-  void _subscriptionFormStart(
-      Store<AppState> store, SubscriptionFormStart action, NextDispatcher next) async {
+  // START FORMS
+  void _subscriptionFormStart(Store<AppState> store, SubscriptionFormStart action, NextDispatcher next) async {
     next(action);
 
     // We want to navigate the user to the current step if he has started the form already
@@ -50,24 +55,44 @@ class NavMiddleware {
     }
   }
 
-  void _subscriptionFormNextStep(
-      Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async {
+  void _liftQuoteFormStart(Store<AppState> store, LiftQuoteFormStart action, NextDispatcher next) async {
     next(action);
 
-    final String route =
-        '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep}';
+    final int currentStep = store.state.liftState.liftQuoteFormState.liftQuoteForm.currentStep;
+    int pushCounter = 1;
+
+    while (pushCounter <= currentStep) {
+      final String route = '/lift/form/quote/$pushCounter';
+      navigatorKey.currentState.pushNamed(route);
+
+      pushCounter++;
+    }
+  }
+
+  // NEXT STEP
+  void _subscriptionFormNextStep(Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async {
+    next(action);
+
+    final String route = '/subscription/form/${store.state.subscriptionFormState.subscriptionForm.currentStep}';
     navigatorKey.currentState.pushNamed(route);
   }
 
-  void _subscriptionFormPreviousStep(
-      Store<AppState> store, SubscriptionFormPreviousStep action, NextDispatcher next) async {
+  void _liftQuoteFormNextStep(Store<AppState> store, LiftQuoteFormNextStep action, NextDispatcher next) async {
+    next(action);
+
+    final String route = '/lift/form/quote/${store.state.liftState.liftQuoteFormState.liftQuoteForm.currentStep}';
+    navigatorKey.currentState.pushNamed(route);
+  }
+
+  // PREVIOUS STEP - Shared between forms
+  void formPreviousStep(Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     navigatorKey.currentState.pop();
   }
 
-  void _subscriptionFormExit(
-      Store<AppState> store, SubscriptionFormExit action, NextDispatcher next) async {
+  // EXIT - Shared between forms
+  void _formExit(Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     navigatorKey.currentState.popUntil(ModalRoute.withName('/'));

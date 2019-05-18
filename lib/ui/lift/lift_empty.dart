@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:oust/redux/lift/forms/quote/lift_quote_form_actions.dart';
 import 'package:oust/ui/presentation/layout/empty_home_layout.dart';
 import 'package:redux/redux.dart';
 
@@ -18,9 +19,18 @@ class LiftEmpty extends StatelessWidget {
         builder: (BuildContext context, _ViewModel viewModel) {
           return EmptyHomeLayout(
             title: TitleWidget(title: 'Passage unique', subtitle: 'Débarasse toi de n\'importe quoi en une photo'),
-            button: RaisedButton(onPressed: null, child: Text('Decouvrir')),
+            button:
+                RaisedButton(onPressed: viewModel.start, child: _getButtonText(viewModel.liftQuoteForm.currentStep)),
           );
         });
+  }
+
+  Text _getButtonText(int currentStep) {
+    if (currentStep > 0) {
+      return Text('Continuer l\'inscription', style: TextStyle(color: Colors.white));
+    } else {
+      return Text('Découvrir', style: TextStyle(color: Colors.white));
+    }
   }
 }
 
@@ -34,6 +44,6 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         liftQuoteForm: store.state.liftState.liftQuoteFormState.liftQuoteForm,
-        start: () => store.dispatch(SubscriptionFormStart()));
+        start: () => store.dispatch(LiftQuoteFormStart()));
   }
 }

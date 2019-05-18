@@ -4,7 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import '../../data/models/serializers.dart';
-import 'quote_form/lift_quote_form_state.dart';
+import 'forms/quote/lift_quote_form_state.dart';
 
 part 'lift_state.g.dart';
 

@@ -10,6 +10,11 @@ import 'serializers.dart';
 part 'lift_quote_form.g.dart';
 
 abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilder> {
+  factory LiftQuoteForm() => _$LiftQuoteForm((LiftQuoteFormBuilder b) => b..currentStep = 0);
+
+  @nullable
+  int get currentStep;
+
   @nullable
   BuiltMap<String, LiftImage> get images;
 
@@ -38,8 +43,6 @@ abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilde
   bool get note;
 
   LiftQuoteForm._();
-
-  factory LiftQuoteForm([void Function(LiftQuoteFormBuilder) updates]) = _$LiftQuoteForm;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(LiftQuoteForm.serializer, this);

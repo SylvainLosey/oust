@@ -48,6 +48,18 @@ Map<String, dynamic> _$SubscriptionFormExitToJson(
         SubscriptionFormExit instance) =>
     <String, dynamic>{};
 
+UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
+    Map<String, dynamic> json) {
+  return UpdateSubscriptionForm(json['subscriptionForm'] == null
+      ? null
+      : SubscriptionForm.fromJson(
+          json['subscriptionForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$UpdateSubscriptionFormToJson(
+        UpdateSubscriptionForm instance) =>
+    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
+
 PostLeadRequest _$PostLeadRequestFromJson(Map<String, dynamic> json) {
   return PostLeadRequest(json['subscriptionForm'] == null
       ? null
@@ -111,18 +123,6 @@ LoadStartDatesFailure _$LoadStartDatesFailureFromJson(
 Map<String, dynamic> _$LoadStartDatesFailureToJson(
         LoadStartDatesFailure instance) =>
     <String, dynamic>{'error': instance.error};
-
-UpdateSubscriptionForm _$UpdateSubscriptionFormFromJson(
-    Map<String, dynamic> json) {
-  return UpdateSubscriptionForm(json['subscriptionForm'] == null
-      ? null
-      : SubscriptionForm.fromJson(
-          json['subscriptionForm'] as Map<String, dynamic>));
-}
-
-Map<String, dynamic> _$UpdateSubscriptionFormToJson(
-        UpdateSubscriptionForm instance) =>
-    <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
 
 IncrementProductQuantity _$IncrementProductQuantityFromJson(
     Map<String, dynamic> json) {

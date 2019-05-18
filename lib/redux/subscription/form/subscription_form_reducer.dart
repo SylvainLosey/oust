@@ -30,9 +30,8 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
 SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart action) {
   // If user has never started the form (step 0), increment to page 1, otherwise leave him to current step
   if (state.subscriptionForm.currentStep == 0) {
-    return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
-          (SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1)));
+    return state.rebuild((SubscriptionFormStateBuilder b) =>
+        b..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = 1)));
   } else {
     return state;
   }
@@ -41,48 +40,46 @@ SubscriptionFormState _start(SubscriptionFormState state, SubscriptionFormStart 
 SubscriptionFormState _nextStep(SubscriptionFormState state, SubscriptionFormNextStep action) {
   if (action.subscriptionIsUnavailable) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm
-          .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormLead.step)));
+      ..subscriptionForm.replace(
+          state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormLead.step)));
   } else if (action.customerRequestsAppointment) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
-          (SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormAppointment.step)));
+      ..subscriptionForm.replace(state.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormAppointment.step)));
   } else if (action.doesNotWantContainers) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
       ..subscriptionForm.replace(state.subscriptionForm
           .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormLocation.step)));
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
-          (SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1)));
+      ..subscriptionForm.replace(state.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep + 1)));
   }
 }
 
-SubscriptionFormState _previousStep(
-    SubscriptionFormState state, SubscriptionFormPreviousStep action) {
+SubscriptionFormState _previousStep(SubscriptionFormState state, SubscriptionFormPreviousStep action) {
   if (state.subscriptionForm.currentStep == SubscriptionFormLead.step) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
       ..subscriptionForm.replace(state.subscriptionForm
           .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormAddress.step)));
   } else if (state.subscriptionForm.currentStep == SubscriptionFormAppointment.step) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) =>
-          b..currentStep = SubscriptionFormRegistrationMethod.step)));
+      ..subscriptionForm.replace(state.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormRegistrationMethod.step)));
   } else if (state.subscriptionForm.currentStep == SubscriptionFormLocation.step &&
       !state.subscriptionForm.wantsContainers) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
-          (SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormContainersYesNo.step)));
+      ..subscriptionForm.replace(state.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..currentStep = SubscriptionFormContainersYesNo.step)));
   } else {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
-          (SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep - 1)));
+      ..subscriptionForm.replace(state.subscriptionForm
+          .rebuild((SubscriptionFormBuilder b) => b..currentStep = state.subscriptionForm.currentStep - 1)));
   }
 }
 
 SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionForm action) {
-  return state.rebuild(
-      (SubscriptionFormStateBuilder b) => b..subscriptionForm.replace(action.subscriptionForm));
+  return state.rebuild((SubscriptionFormStateBuilder b) => b..subscriptionForm.replace(action.subscriptionForm));
 }
 
 SubscriptionFormState _postLeadRequest(SubscriptionFormState state, PostLeadRequest action) {
@@ -101,13 +98,11 @@ SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFail
     ..error = action.error);
 }
 
-SubscriptionFormState _loadStartDatesRequest(
-    SubscriptionFormState state, LoadStartDatesRequest action) {
+SubscriptionFormState _loadStartDatesRequest(SubscriptionFormState state, LoadStartDatesRequest action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b..isLoading = true);
 }
 
-SubscriptionFormState _loadStartDatesSuccess(
-    SubscriptionFormState state, LoadStartDatesSuccess action) {
+SubscriptionFormState _loadStartDatesSuccess(SubscriptionFormState state, LoadStartDatesSuccess action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b
@@ -115,8 +110,7 @@ SubscriptionFormState _loadStartDatesSuccess(
       ..selectedStartDate = null)));
 }
 
-SubscriptionFormState _loadStartDatesFailure(
-    SubscriptionFormState state, LoadStartDatesFailure action) {
+SubscriptionFormState _loadStartDatesFailure(SubscriptionFormState state, LoadStartDatesFailure action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..error = action.error);
@@ -129,8 +123,8 @@ SubscriptionFormState _increment(SubscriptionFormState state, IncrementProductQu
           b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity + 1)));
   } else if (action.product == 'bigContainer') {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) =>
-          b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity + 1)));
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
+          (SubscriptionFormBuilder b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity + 1)));
   } else {
     return state;
   }
@@ -143,30 +137,26 @@ SubscriptionFormState _decrement(SubscriptionFormState state, DecrementProductQu
           b..smallContainerQuantity = state.subscriptionForm.smallContainerQuantity - 1)));
   } else if (action.product == 'bigContainer' && state.subscriptionForm.bigContainerQuantity > 0) {
     return state.rebuild((SubscriptionFormStateBuilder b) => b
-      ..subscriptionForm.replace(state.subscriptionForm.rebuild((SubscriptionFormBuilder b) =>
-          b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity - 1)));
+      ..subscriptionForm.replace(state.subscriptionForm.rebuild(
+          (SubscriptionFormBuilder b) => b..bigContainerQuantity = state.subscriptionForm.bigContainerQuantity - 1)));
   } else {
     return state;
   }
 }
 
-SubscriptionFormState _submitFormRequest(
-    SubscriptionFormState state, SubmitSubscriptionFormRequest action) {
+SubscriptionFormState _submitFormRequest(SubscriptionFormState state, SubmitSubscriptionFormRequest action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b..isLoading = true);
 }
 
-SubscriptionFormState _submitFormSuccess(
-    SubscriptionFormState state, SubmitSubscriptionFormSuccess action) {
+SubscriptionFormState _submitFormSuccess(SubscriptionFormState state, SubmitSubscriptionFormSuccess action) {
   return SubscriptionFormState();
 }
 
-SubscriptionFormState _subscriptionFormReset(
-    SubscriptionFormState state, SubscriptionFormReset action) {
+SubscriptionFormState _subscriptionFormReset(SubscriptionFormState state, SubscriptionFormReset action) {
   return SubscriptionFormState();
 }
 
-SubscriptionFormState _submitFormFailure(
-    SubscriptionFormState state, SubmitSubscriptionFormFailure action) {
+SubscriptionFormState _submitFormFailure(SubscriptionFormState state, SubmitSubscriptionFormFailure action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..error = action.error);
