@@ -80,6 +80,18 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
         ..add(serializers.serialize(object.note,
             specifiedType: const FullType(String)));
     }
+    if (object.email != null) {
+      result
+        ..add('email')
+        ..add(serializers.serialize(object.email,
+            specifiedType: const FullType(String)));
+    }
+    if (object.password != null) {
+      result
+        ..add('password')
+        ..add(serializers.serialize(object.password,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -138,6 +150,14 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
           result.note = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'email':
+          result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'password':
+          result.password = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -166,6 +186,10 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   final bool elevator;
   @override
   final String note;
+  @override
+  final String email;
+  @override
+  final String password;
 
   factory _$LiftQuoteForm([void Function(LiftQuoteFormBuilder) updates]) =>
       (new LiftQuoteFormBuilder()..update(updates)).build();
@@ -180,7 +204,9 @@ class _$LiftQuoteForm extends LiftQuoteForm {
       this.postcode,
       this.floor,
       this.elevator,
-      this.note})
+      this.note,
+      this.email,
+      this.password})
       : super._();
 
   @override
@@ -203,7 +229,9 @@ class _$LiftQuoteForm extends LiftQuoteForm {
         postcode == other.postcode &&
         floor == other.floor &&
         elevator == other.elevator &&
-        note == other.note;
+        note == other.note &&
+        email == other.email &&
+        password == other.password;
   }
 
   @override
@@ -216,16 +244,20 @@ class _$LiftQuoteForm extends LiftQuoteForm {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, currentStep.hashCode),
-                                        images.hashCode),
-                                    noCustomerRequired.hashCode),
-                                firstName.hashCode),
-                            lastName.hashCode),
-                        address.hashCode),
-                    postcode.hashCode),
-                floor.hashCode),
-            elevator.hashCode),
-        note.hashCode));
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, currentStep.hashCode),
+                                                images.hashCode),
+                                            noCustomerRequired.hashCode),
+                                        firstName.hashCode),
+                                    lastName.hashCode),
+                                address.hashCode),
+                            postcode.hashCode),
+                        floor.hashCode),
+                    elevator.hashCode),
+                note.hashCode),
+            email.hashCode),
+        password.hashCode));
   }
 
   @override
@@ -240,7 +272,9 @@ class _$LiftQuoteForm extends LiftQuoteForm {
           ..add('postcode', postcode)
           ..add('floor', floor)
           ..add('elevator', elevator)
-          ..add('note', note))
+          ..add('note', note)
+          ..add('email', email)
+          ..add('password', password))
         .toString();
   }
 }
@@ -291,6 +325,14 @@ class LiftQuoteFormBuilder
   String get note => _$this._note;
   set note(String note) => _$this._note = note;
 
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
+
+  String _password;
+  String get password => _$this._password;
+  set password(String password) => _$this._password = password;
+
   LiftQuoteFormBuilder();
 
   LiftQuoteFormBuilder get _$this {
@@ -305,6 +347,8 @@ class LiftQuoteFormBuilder
       _floor = _$v.floor;
       _elevator = _$v.elevator;
       _note = _$v.note;
+      _email = _$v.email;
+      _password = _$v.password;
       _$v = null;
     }
     return this;
@@ -338,7 +382,9 @@ class LiftQuoteFormBuilder
               postcode: postcode,
               floor: floor,
               elevator: elevator,
-              note: note);
+              note: note,
+              email: email,
+              password: password);
     } catch (_) {
       String _$failedField;
       try {

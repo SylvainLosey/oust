@@ -45,6 +45,12 @@ abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilde
   @nullable
   String get note;
 
+  @nullable
+  String get email;
+
+  @nullable
+  String get password;
+
   LiftQuoteForm._();
 
   Map<String, dynamic> toJson() {

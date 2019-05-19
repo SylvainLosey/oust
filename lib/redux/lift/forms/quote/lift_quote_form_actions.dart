@@ -9,6 +9,9 @@ part 'lift_quote_form_actions.g.dart';
 
 @JsonSerializable()
 class LiftQuoteFormNextStep {
+  bool subscriptionIsUnavailable;
+
+  LiftQuoteFormNextStep({this.subscriptionIsUnavailable});
   Map<String, dynamic> toJson() => _$LiftQuoteFormNextStepToJson(this);
 }
 
@@ -43,7 +46,7 @@ class AddLiftImage {
   Asset image;
   String uuid;
 
-  AddLiftImage({@required this.image, @required this.uuid});
+  AddLiftImage({this.image, @required this.uuid});
   Map<String, dynamic> toJson() => _$AddLiftImageToJson(this);
 }
 

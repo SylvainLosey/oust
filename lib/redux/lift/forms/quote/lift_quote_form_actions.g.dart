@@ -8,12 +8,15 @@ part of 'lift_quote_form_actions.dart';
 
 LiftQuoteFormNextStep _$LiftQuoteFormNextStepFromJson(
     Map<String, dynamic> json) {
-  return LiftQuoteFormNextStep();
+  return LiftQuoteFormNextStep(
+      subscriptionIsUnavailable: json['subscriptionIsUnavailable'] as bool);
 }
 
 Map<String, dynamic> _$LiftQuoteFormNextStepToJson(
         LiftQuoteFormNextStep instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'subscriptionIsUnavailable': instance.subscriptionIsUnavailable
+    };
 
 LiftQuoteFormPreviousStep _$LiftQuoteFormPreviousStepFromJson(
     Map<String, dynamic> json) {

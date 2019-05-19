@@ -63,4 +63,7 @@ List liftQuoteFormPages = [
   LiftQuoteFormImage(),
   LiftQuoteFormAccess(),
   LiftQuoteFormFloor(),
+  LiftQuoteFormName(),
+  LiftQuoteFormAddress(),
+  LiftQuoteFormAccount(),
 ];
