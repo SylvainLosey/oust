@@ -60,28 +60,34 @@ Map<String, dynamic> _$UpdateSubscriptionFormToJson(
         UpdateSubscriptionForm instance) =>
     <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
 
-PostLeadRequest _$PostLeadRequestFromJson(Map<String, dynamic> json) {
-  return PostLeadRequest(json['subscriptionForm'] == null
+PostSubscriptionLeadRequest _$PostSubscriptionLeadRequestFromJson(
+    Map<String, dynamic> json) {
+  return PostSubscriptionLeadRequest(json['subscriptionForm'] == null
       ? null
       : SubscriptionForm.fromJson(
           json['subscriptionForm'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$PostLeadRequestToJson(PostLeadRequest instance) =>
+Map<String, dynamic> _$PostSubscriptionLeadRequestToJson(
+        PostSubscriptionLeadRequest instance) =>
     <String, dynamic>{'subscriptionForm': instance.subscriptionForm};
 
-PostLeadSuccess _$PostLeadSuccessFromJson(Map<String, dynamic> json) {
-  return PostLeadSuccess();
+PostSubscriptionLeadSuccess _$PostSubscriptionLeadSuccessFromJson(
+    Map<String, dynamic> json) {
+  return PostSubscriptionLeadSuccess();
 }
 
-Map<String, dynamic> _$PostLeadSuccessToJson(PostLeadSuccess instance) =>
+Map<String, dynamic> _$PostSubscriptionLeadSuccessToJson(
+        PostSubscriptionLeadSuccess instance) =>
     <String, dynamic>{};
 
-PostLeadFailure _$PostLeadFailureFromJson(Map<String, dynamic> json) {
-  return PostLeadFailure(error: json['error'] as String);
+PostSubscriptionLeadFailure _$PostSubscriptionLeadFailureFromJson(
+    Map<String, dynamic> json) {
+  return PostSubscriptionLeadFailure(error: json['error'] as String);
 }
 
-Map<String, dynamic> _$PostLeadFailureToJson(PostLeadFailure instance) =>
+Map<String, dynamic> _$PostSubscriptionLeadFailureToJson(
+        PostSubscriptionLeadFailure instance) =>
     <String, dynamic>{'error': instance.error};
 
 LoadStartDatesRequest _$LoadStartDatesRequestFromJson(

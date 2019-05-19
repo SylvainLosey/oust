@@ -17,14 +17,25 @@ class SubscriptionFormMiddleware {
 
   List<Middleware<AppState>> createSubscriptionFormMiddleware() {
     return <Middleware<AppState>>[
-      TypedMiddleware<AppState, PostLeadRequest>(_postLead),
+      TypedMiddleware<AppState, PostSubscriptionLeadRequest>(_postLead),
       TypedMiddleware<AppState, LoadStartDatesRequest>(_loadStartDates),
       TypedMiddleware<AppState, SubmitSubscriptionFormRequest>(_submitForm),
     ];
   }
 
-  void _postLead(Store<AppState> store, PostLeadRequest action, NextDispatcher next) async {
+  void _postLead(Store<AppState> store, PostSubscriptionLeadRequest action, NextDispatcher next) async {
     next(action);
+
+    String _getService(int frequency) {
+      switch (frequency) {
+        case 1:
+          return 'subscription_premium';
+        case 2:
+          return 'subscription_standard';
+        case 4:
+          return 'subscription_basic';
+      }
+    }
 
     try {
       await repository.postLead(
@@ -36,18 +47,18 @@ class SubscriptionFormMiddleware {
         phoneNumber: action.subscriptionForm.phoneNumber,
         contactMethod: action.subscriptionForm.contactMethod,
         status: action.subscriptionForm.leadStatus,
+        service: _getService(action.subscriptionForm.frequency),
       );
 
       // Navifate to succes page then delete form data
       store.dispatch(SubscriptionFormNextStep());
-      store.dispatch(PostLeadSuccess());
+      store.dispatch(PostSubscriptionLeadSuccess());
     } catch (e) {
-      store.dispatch(PostLeadFailure(error: e.toString()));
+      store.dispatch(PostSubscriptionLeadFailure(error: e.toString()));
     }
   }
 
-  void _loadStartDates(
-      Store<AppState> store, LoadStartDatesRequest action, NextDispatcher next) async {
+  void _loadStartDates(Store<AppState> store, LoadStartDatesRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -61,16 +72,14 @@ class SubscriptionFormMiddleware {
     }
   }
 
-  void _submitForm(
-      Store<AppState> store, SubmitSubscriptionFormRequest action, NextDispatcher next) async {
+  void _submitForm(Store<AppState> store, SubmitSubscriptionFormRequest action, NextDispatcher next) async {
     next(action);
 
     final SubscriptionForm form = store.state.subscriptionFormState.subscriptionForm;
 
     final Completer _createUserCompleter = Completer();
 
-    store.dispatch(CreateUserRequest(
-        email: form.email, password: form.password, completer: _createUserCompleter));
+    store.dispatch(CreateUserRequest(email: form.email, password: form.password, completer: _createUserCompleter));
 
     _createUserCompleter.future.then((userId) {
       final Completer _createCustomerCompleter = Completer();
@@ -100,8 +109,7 @@ class SubscriptionFormMiddleware {
             numberType: 'M',
             customerId: customerId));
 
-        store.dispatch(
-            CreateEmailRequest(email: form.email, usedForInvoices: true, customerId: customerId));
+        store.dispatch(CreateEmailRequest(email: form.email, usedForInvoices: true, customerId: customerId));
 
         final Completer _smallContainerCompleter = Completer();
         if (form.smallContainerQuantity > 0) {
@@ -126,11 +134,9 @@ class SubscriptionFormMiddleware {
         }
 
         // We wait on subscription and all bins to be created before creating Consumber Subscription and therefore the invoice
-        Future.wait([
-          _createSubscriptionCompleter.future,
-          _smallContainerCompleter.future,
-          _bigContainerCompleter.future
-        ]).then((returnValue) {
+        Future.wait(
+                [_createSubscriptionCompleter.future, _smallContainerCompleter.future, _bigContainerCompleter.future])
+            .then((returnValue) {
           final Completer _createConsumerSubscriptionCompleter = Completer();
 
           store.dispatch(CreateConsumerSubscriptionRequest(
@@ -140,13 +146,9 @@ class SubscriptionFormMiddleware {
           _createConsumerSubscriptionCompleter.future.then((_) {
             store.dispatch(AppStarted());
             store.dispatch(SubmitSubscriptionFormSuccess());
-          }).catchError(
-              (dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
-        }).catchError(
-            (dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
-      }).catchError(
-          (dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
-    }).catchError(
-        (dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+          }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+        }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+      }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
+    }).catchError((dynamic e) => store.dispatch(SubmitSubscriptionFormFailure(error: e.toString())));
   }
 }

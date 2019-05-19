@@ -9,14 +9,12 @@ part of 'lift_quote_form_actions.dart';
 LiftQuoteFormNextStep _$LiftQuoteFormNextStepFromJson(
     Map<String, dynamic> json) {
   return LiftQuoteFormNextStep(
-      subscriptionIsUnavailable: json['subscriptionIsUnavailable'] as bool);
+      liftIsUnavailable: json['liftIsUnavailable'] as bool);
 }
 
 Map<String, dynamic> _$LiftQuoteFormNextStepToJson(
         LiftQuoteFormNextStep instance) =>
-    <String, dynamic>{
-      'subscriptionIsUnavailable': instance.subscriptionIsUnavailable
-    };
+    <String, dynamic>{'liftIsUnavailable': instance.liftIsUnavailable};
 
 LiftQuoteFormPreviousStep _$LiftQuoteFormPreviousStepFromJson(
     Map<String, dynamic> json) {
@@ -129,3 +127,29 @@ LiftQuoteFormToggleElevator _$LiftQuoteFormToggleElevatorFromJson(
 Map<String, dynamic> _$LiftQuoteFormToggleElevatorToJson(
         LiftQuoteFormToggleElevator instance) =>
     <String, dynamic>{};
+
+PostLiftLeadRequest _$PostLiftLeadRequestFromJson(Map<String, dynamic> json) {
+  return PostLiftLeadRequest(json['liftForm'] == null
+      ? null
+      : LiftQuoteForm.fromJson(json['liftForm'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$PostLiftLeadRequestToJson(
+        PostLiftLeadRequest instance) =>
+    <String, dynamic>{'liftForm': instance.liftForm};
+
+PostLiftLeadSuccess _$PostLiftLeadSuccessFromJson(Map<String, dynamic> json) {
+  return PostLiftLeadSuccess();
+}
+
+Map<String, dynamic> _$PostLiftLeadSuccessToJson(
+        PostLiftLeadSuccess instance) =>
+    <String, dynamic>{};
+
+PostLiftLeadFailure _$PostLiftLeadFailureFromJson(Map<String, dynamic> json) {
+  return PostLiftLeadFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$PostLiftLeadFailureToJson(
+        PostLiftLeadFailure instance) =>
+    <String, dynamic>{'error': instance.error};

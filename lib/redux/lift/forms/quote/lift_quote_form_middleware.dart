@@ -19,6 +19,7 @@ class LiftQuoteFormMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, AddLiftImage>(_addLiftImage),
       TypedMiddleware<AppState, DeleteLiftImage>(_deleteLiftImage),
+      TypedMiddleware<AppState, PostLiftLeadRequest>(_postLead),
     ];
   }
 
@@ -49,6 +50,28 @@ class LiftQuoteFormMiddleware {
       store.dispatch(DeleteLiftImageSuccess());
     } catch (e) {
       store.dispatch(DeleteLiftImageFailure(error: e.toString()));
+    }
+  }
+
+  void _postLead(Store<AppState> store, PostLiftLeadRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      await repository.postLead(
+        firstName: action.liftForm.firstName,
+        lastName: action.liftForm.lastName,
+        address: action.liftForm.address,
+        postcode: action.liftForm.postcode,
+        email: action.liftForm.email,
+        status: 'postcode_not_covered',
+        service: 'lift',
+      );
+
+      // Navifate to succes page then delete form data
+      store.dispatch(LiftQuoteFormNextStep());
+      store.dispatch(PostLiftLeadSuccess());
+    } catch (e) {
+      store.dispatch(PostLiftLeadFailure(error: e.toString()));
     }
   }
 }

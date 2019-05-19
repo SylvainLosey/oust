@@ -44,7 +44,6 @@ class Repository {
     return await client.post('/customers/', body: customer.toJson());
   }
 
-
   // PHONE NUMBERS
   Future<List<dynamic>> fetchPhoneNumbers(int id) async {
     return await client.get('/phonenumbers/?customer=$id/');
@@ -53,7 +52,6 @@ class Repository {
   Future<Map<String, dynamic>> createPhoneNumber(PhoneNumber phoneNumber) async {
     return await client.post('/phonenumbers/', body: phoneNumber.toJson());
   }
-
 
   // EMAILS
   Future<List<dynamic>> fetchEmails(int id) async {
@@ -64,7 +62,6 @@ class Repository {
     return await client.post('/emails/', body: email.toJson());
   }
 
-
   // SUBSCRIPTION
   Future<List<dynamic>> fetchSubscription(int id) async {
     return await client.get('/subscriptions/?customer=$id/');
@@ -73,7 +70,6 @@ class Repository {
   Future<Map<String, dynamic>> createSubscription(Subscription subscription) async {
     return await client.post('/subscriptions/', body: subscription.toJson());
   }
-
 
   // CONSUMERSUBSCRIPTION
   Future<List<dynamic>> fetchConsumerSubscription(int id) async {
@@ -84,12 +80,10 @@ class Repository {
     return await client.post('/consumersubscriptions/', body: consumerSubscription.toJson());
   }
 
-
   // INVOICES
   Future<List<dynamic>> fetchInvoices(int customerId) async {
     return await client.get('/invoices/?customer=$customerId');
   }
-
 
   // INVOICE ITEMS
   Future<List<dynamic>> fetchInvoiceItems(int customerId) async {
@@ -99,7 +93,6 @@ class Repository {
   Future<Map<String, dynamic>> createInvoiceItem(InvoiceItem invoiceItem) async {
     return await client.post('/invoiceitems/', body: invoiceItem.toJson());
   }
-
 
   // PICKUPS
   Future<List<dynamic>> fetchPickups(int id) async {
@@ -114,8 +107,6 @@ class Repository {
     return await client.delete('/pickups/$pickupId/');
   }
 
-
-
   Future<String> fetchPushBackDate(int pickupId) async {
     return await client.get('/pickups/$pickupId/push_back_date/');
   }
@@ -129,16 +120,22 @@ class Repository {
     return await client.get('/postcodes/', auth: false);
   }
 
-
   // PACKAGES
   Future<List<dynamic>> fetchPackages() async {
     return await client.get('/packages/', auth: false);
   }
 
-
-
   // GENERAL
-  Future<Map<String, dynamic>> postLead({String firstName, String lastName, String address, int postcode, String email, String phoneNumber, String contactMethod, String status}) async {
+  Future<Map<String, dynamic>> postLead(
+      {String firstName,
+      String lastName,
+      String address,
+      int postcode,
+      String email,
+      String phoneNumber,
+      String contactMethod,
+      String status,
+      String service}) async {
     final Map<String, dynamic> body = <String, dynamic>{
       'first_name': firstName,
       'last_name': lastName,
@@ -149,6 +146,7 @@ class Repository {
       'contact_method': contactMethod,
       'status': status,
       'origin': 'app',
+      'service': service
     };
 
     return await client.post('/leads/', body: body, auth: false);

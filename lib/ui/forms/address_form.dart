@@ -106,21 +106,23 @@ class AddressFormState extends State<AddressForm> {
 
   @override
   void didChangeDependencies() {
-    _controllers = <TextEditingController>[
-      _addressController,
-      _postcodeController,
-    ];
-
-    _focusNodes = <FocusNode>[_addressNode, _postcodeNode];
-
-    _controllers.forEach((TextEditingController controller) => controller.removeListener(_onChanged));
+    if (_controllers.isNotEmpty) {
+      return;
+    }
 
     _addressController.text = widget.viewModel.form.address;
     _postcodeController.text = widget.viewModel.selectedPostcode != null
         ? '${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].postcode} ${widget.viewModel.postcodes[widget.viewModel.selectedPostcode].name}'
         : '';
 
+    _controllers = <TextEditingController>[
+      _addressController,
+      _postcodeController,
+    ];
+
     _controllers.forEach((TextEditingController controller) => controller.addListener(_onChanged));
+
+    _focusNodes = <FocusNode>[_addressNode, _postcodeNode];
 
     super.didChangeDependencies();
   }

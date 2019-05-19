@@ -24,6 +24,10 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
 
     // LIFT QUOTE FORM
     for (var i = 0; i < liftQuoteFormPages.length; i++) '/lift/form/quote/${i + 1}': (context) => liftQuoteFormPages[i],
+
+    // Unavailable in this postcode
+    for (var i = 0; i < liftFormUnavailable.length; i++)
+      '/lift/form/quote/${i + 100}': (context) => liftFormUnavailable[i],
   };
 
   return routes;
@@ -66,4 +70,9 @@ List liftQuoteFormPages = [
   LiftQuoteFormName(),
   LiftQuoteFormAddress(),
   LiftQuoteFormAccount(),
+];
+
+List liftFormUnavailable = [
+  LiftQuoteFormLead(),
+  LiftQuoteFormLeadSuccess(),
 ];

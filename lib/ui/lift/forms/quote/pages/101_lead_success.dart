@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 
-import '../../../presentation/succes_page.dart';
+import '../../../../presentation/succes_page.dart';
 
-class SubscriptionFormLeadSuccess extends StatelessWidget {
+class LiftQuoteFormLeadSuccess extends StatelessWidget {
   static int step = 101;
 
   @override

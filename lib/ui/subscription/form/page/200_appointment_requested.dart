@@ -187,7 +187,7 @@ class _ViewModel {
       isLoading: store.state.subscriptionFormState.isLoading,
       error: store.state.subscriptionFormState.error,
       postLeadRequest: (SubscriptionForm subscriptionForm) {
-        store.dispatch(PostLeadRequest(
+        store.dispatch(PostSubscriptionLeadRequest(
             subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..leadStatus = 'requested_appointment')));
       },
       previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),

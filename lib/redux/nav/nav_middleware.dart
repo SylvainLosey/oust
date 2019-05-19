@@ -5,6 +5,7 @@ import '../subscription/form/subscription_form_actions.dart';
 import '../lift/forms/quote/lift_quote_form_actions.dart';
 import '../app/app_state.dart';
 import '../../ui/subscription/form/page/subscription_form_pages.dart';
+import '../../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
 
 class NavMiddleware {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -65,7 +66,12 @@ class NavMiddleware {
       final String route = '/lift/form/quote/$pushCounter';
       navigatorKey.currentState.pushNamed(route);
 
-      pushCounter++;
+      // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
+      if (pushCounter == LiftQuoteFormAddress.step && currentStep >= LiftQuoteFormLead.step) {
+        pushCounter = LiftQuoteFormLead.step;
+      } else {
+        pushCounter++;
+      }
     }
   }
 

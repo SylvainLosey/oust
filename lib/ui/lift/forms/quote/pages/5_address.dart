@@ -46,7 +46,7 @@ class LiftQuoteFormAddressVM extends AddressFormVM {
 
   static LiftQuoteFormAddressVM fromStore(Store<AppState> store) => LiftQuoteFormAddressVM(
       nextStep: (Postcode selectedPostcode) =>
-          store.dispatch(LiftQuoteFormNextStep(subscriptionIsUnavailable: !selectedPostcode.subscriptionAvailable)),
+          store.dispatch(LiftQuoteFormNextStep(liftIsUnavailable: !selectedPostcode.subscriptionAvailable)),
       previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
       exit: () => store.dispatch(LiftQuoteFormExit()),
       onChanged: (LiftQuoteForm liftQuoteForm) => store.dispatch(UpdateLiftQuoteForm(liftQuoteForm)),

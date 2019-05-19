@@ -13,9 +13,9 @@ Reducer<SubscriptionFormState> subscriptionFormReducer = combineReducers([
   TypedReducer<SubscriptionFormState, SubscriptionFormNextStep>(_nextStep),
   TypedReducer<SubscriptionFormState, SubscriptionFormPreviousStep>(_previousStep),
   TypedReducer<SubscriptionFormState, UpdateSubscriptionForm>(_update),
-  TypedReducer<SubscriptionFormState, PostLeadRequest>(_postLeadRequest),
-  TypedReducer<SubscriptionFormState, PostLeadSuccess>(_postLeadSuccess),
-  TypedReducer<SubscriptionFormState, PostLeadFailure>(_postLeadFailure),
+  TypedReducer<SubscriptionFormState, PostSubscriptionLeadRequest>(_postLeadRequest),
+  TypedReducer<SubscriptionFormState, PostSubscriptionLeadSuccess>(_postLeadSuccess),
+  TypedReducer<SubscriptionFormState, PostSubscriptionLeadFailure>(_postLeadFailure),
   TypedReducer<SubscriptionFormState, LoadStartDatesRequest>(_loadStartDatesRequest),
   TypedReducer<SubscriptionFormState, LoadStartDatesSuccess>(_loadStartDatesSuccess),
   TypedReducer<SubscriptionFormState, LoadStartDatesFailure>(_loadStartDatesFailure),
@@ -82,17 +82,17 @@ SubscriptionFormState _update(SubscriptionFormState state, UpdateSubscriptionFor
   return state.rebuild((SubscriptionFormStateBuilder b) => b..subscriptionForm.replace(action.subscriptionForm));
 }
 
-SubscriptionFormState _postLeadRequest(SubscriptionFormState state, PostLeadRequest action) {
+SubscriptionFormState _postLeadRequest(SubscriptionFormState state, PostSubscriptionLeadRequest action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b..isLoading = true);
 }
 
-SubscriptionFormState _postLeadSuccess(SubscriptionFormState state, PostLeadSuccess action) {
+SubscriptionFormState _postLeadSuccess(SubscriptionFormState state, PostSubscriptionLeadSuccess action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..subscriptionForm.replace(SubscriptionForm()));
 }
 
-SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostLeadFailure action) {
+SubscriptionFormState _postLeadFailure(SubscriptionFormState state, PostSubscriptionLeadFailure action) {
   return state.rebuild((SubscriptionFormStateBuilder b) => b
     ..isLoading = false
     ..error = action.error);

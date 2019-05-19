@@ -1,3 +1,4 @@
+import 'package:oust/ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
 import 'package:redux/redux.dart';
 
 import 'lift_quote_form_actions.dart';
@@ -16,6 +17,9 @@ Reducer<LiftQuoteFormState> liftQuoteFormReducer = combineReducers([
   TypedReducer<LiftQuoteFormState, LiftQuoteFormIncrementFloor>(_incrementFloor),
   TypedReducer<LiftQuoteFormState, LiftQuoteFormDecrementFloor>(_decrementFloor),
   TypedReducer<LiftQuoteFormState, LiftQuoteFormToggleElevator>(_toggleElevator),
+  TypedReducer<LiftQuoteFormState, PostLiftLeadRequest>(_postLeadRequest),
+  TypedReducer<LiftQuoteFormState, PostLiftLeadSuccess>(_postLeadSuccess),
+  TypedReducer<LiftQuoteFormState, PostLiftLeadFailure>(_postLeadFailure),
 ]);
 
 LiftQuoteFormState _start(LiftQuoteFormState state, LiftQuoteFormStart action) {
@@ -27,14 +31,25 @@ LiftQuoteFormState _start(LiftQuoteFormState state, LiftQuoteFormStart action) {
 }
 
 LiftQuoteFormState _nextStep(LiftQuoteFormState state, LiftQuoteFormNextStep action) {
-  return state.rebuild((b) => b
-    ..liftQuoteForm
-        .replace((state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep + 1))));
+  if (action.liftIsUnavailable) {
+    return state.rebuild(
+        (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..currentStep = LiftQuoteFormLead.step)));
+  } else {
+    return state.rebuild((b) => b
+      ..liftQuoteForm
+          .replace((state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep + 1))));
+  }
 }
 
 LiftQuoteFormState _previousStep(LiftQuoteFormState state, LiftQuoteFormPreviousStep action) {
-  return state.rebuild((b) => b
-    ..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep - 1)));
+  if (state.liftQuoteForm.currentStep == LiftQuoteFormLead.step) {
+    return state.rebuild((b) =>
+        b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..currentStep = LiftQuoteFormAddress.step)));
+  } else {
+    return state.rebuild((b) => b
+      ..liftQuoteForm
+          .replace(state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep - 1)));
+  }
 }
 
 LiftQuoteFormState _update(LiftQuoteFormState state, UpdateLiftQuoteForm action) {
@@ -80,4 +95,20 @@ LiftQuoteFormState _decrementFloor(LiftQuoteFormState state, LiftQuoteFormDecrem
 LiftQuoteFormState _toggleElevator(LiftQuoteFormState state, LiftQuoteFormToggleElevator action) {
   return state.rebuild(
       (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..elevator = !state.liftQuoteForm.elevator)));
+}
+
+LiftQuoteFormState _postLeadRequest(LiftQuoteFormState state, PostLiftLeadRequest action) {
+  return state.rebuild((b) => b..isLoading = true);
+}
+
+LiftQuoteFormState _postLeadSuccess(LiftQuoteFormState state, PostLiftLeadSuccess action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..liftQuoteForm.replace(LiftQuoteForm()));
+}
+
+LiftQuoteFormState _postLeadFailure(LiftQuoteFormState state, PostLiftLeadFailure action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error);
 }

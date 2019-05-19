@@ -9,9 +9,9 @@ part 'lift_quote_form_actions.g.dart';
 
 @JsonSerializable()
 class LiftQuoteFormNextStep {
-  bool subscriptionIsUnavailable;
+  bool liftIsUnavailable;
 
-  LiftQuoteFormNextStep({this.subscriptionIsUnavailable});
+  LiftQuoteFormNextStep({this.liftIsUnavailable = false});
   Map<String, dynamic> toJson() => _$LiftQuoteFormNextStepToJson(this);
 }
 
@@ -102,4 +102,27 @@ class LiftQuoteFormDecrementFloor {
 @JsonSerializable()
 class LiftQuoteFormToggleElevator {
   Map<String, dynamic> toJson() => _$LiftQuoteFormToggleElevatorToJson(this);
+}
+
+@JsonSerializable()
+class PostLiftLeadRequest {
+  @JsonKey(fromJson: LiftQuoteForm.fromJson)
+  LiftQuoteForm liftForm;
+
+  PostLiftLeadRequest(this.liftForm);
+  Map<String, dynamic> toJson() => _$PostLiftLeadRequestToJson(this);
+}
+
+@JsonSerializable()
+class PostLiftLeadSuccess {
+  PostLiftLeadSuccess();
+  Map<String, dynamic> toJson() => _$PostLiftLeadSuccessToJson(this);
+}
+
+@JsonSerializable()
+class PostLiftLeadFailure {
+  String error;
+
+  PostLiftLeadFailure({@required this.error});
+  Map<String, dynamic> toJson() => _$PostLiftLeadFailureToJson(this);
 }
