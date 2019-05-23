@@ -1,9 +1,12 @@
 library lift_state;
 
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import '../../data/models/serializers.dart';
+import '../../data/models/lift.dart';
+import '../../data/models/lift_image.dart';
 import 'forms/quote/lift_quote_form_state.dart';
 
 part 'lift_state.g.dart';
@@ -16,12 +19,15 @@ abstract class LiftState implements Built<LiftState, LiftStateBuilder> {
   String get error;
 
   @nullable
-  LiftQuoteFormState get liftQuoteFormState;
+  BuiltMap<int, Lift> get lifts;
+
+  @nullable
+  BuiltMap<int, LiftImage> get liftImages;
 
   LiftState._();
 
   factory LiftState() {
-    return _$LiftState._(liftQuoteFormState: LiftQuoteFormState(), fetchCount: 0);
+    return _$LiftState._(fetchCount: 0);
   }
 
   Map<String, dynamic> toJson() {

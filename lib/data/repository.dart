@@ -9,6 +9,8 @@ import 'models/consumer_subscription.dart';
 import 'models/phone_number.dart';
 import 'models/email.dart';
 import 'models/invoice_item.dart';
+import 'models/lift.dart';
+import 'models/lift_image.dart';
 
 class Repository {
   final WebClient client;
@@ -113,6 +115,23 @@ class Repository {
 
   Future<String> pushBackDate(int pickupId) async {
     return await client.post('/pickups/$pickupId/push_back/');
+  }
+
+  // LIFTS
+  Future<List<dynamic>> fetchLifts(int customerId) async {
+    return await client.get('/lifts/?customer=$customerId/');
+  }
+
+  Future<Map<String, dynamic>> createLift(Lift lift) async {
+    return await client.post('/lifts/', body: lift.toJson());
+  }
+
+  Future<List<dynamic>> fetchLiftImages(int customerId) async {
+    return await client.get('/liftimages/?customer=$customerId/');
+  }
+
+  Future<Map<String, dynamic>> createLiftImage(LiftImage liftImage) async {
+    return await client.post('/liftimages/', body: liftImage.toJson());
   }
 
   // POSTCODES

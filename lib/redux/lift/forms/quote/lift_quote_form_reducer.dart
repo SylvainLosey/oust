@@ -20,6 +20,9 @@ Reducer<LiftQuoteFormState> liftQuoteFormReducer = combineReducers([
   TypedReducer<LiftQuoteFormState, PostLiftLeadRequest>(_postLeadRequest),
   TypedReducer<LiftQuoteFormState, PostLiftLeadSuccess>(_postLeadSuccess),
   TypedReducer<LiftQuoteFormState, PostLiftLeadFailure>(_postLeadFailure),
+  TypedReducer<LiftQuoteFormState, SubmitLiftQuoteFormRequest>(_submitFormRequest),
+  TypedReducer<LiftQuoteFormState, SubmitLiftQuoteFormSuccess>(_submitFormSuccess),
+  TypedReducer<LiftQuoteFormState, SubmitLiftQuoteFormFailure>(_submitFormFailure),
 ]);
 
 LiftQuoteFormState _start(LiftQuoteFormState state, LiftQuoteFormStart action) {
@@ -108,6 +111,20 @@ LiftQuoteFormState _postLeadSuccess(LiftQuoteFormState state, PostLiftLeadSucces
 }
 
 LiftQuoteFormState _postLeadFailure(LiftQuoteFormState state, PostLiftLeadFailure action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error);
+}
+
+LiftQuoteFormState _submitFormRequest(LiftQuoteFormState state, SubmitLiftQuoteFormRequest action) {
+  return state.rebuild((b) => b..isLoading = true);
+}
+
+LiftQuoteFormState _submitFormSuccess(LiftQuoteFormState state, SubmitLiftQuoteFormSuccess action) {
+  return LiftQuoteFormState();
+}
+
+LiftQuoteFormState _submitFormFailure(LiftQuoteFormState state, SubmitLiftQuoteFormFailure action) {
   return state.rebuild((b) => b
     ..isLoading = false
     ..error = action.error);

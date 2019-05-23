@@ -126,3 +126,27 @@ class PostLiftLeadFailure {
   PostLiftLeadFailure({@required this.error});
   Map<String, dynamic> toJson() => _$PostLiftLeadFailureToJson(this);
 }
+
+// SUBMIT FORM
+@JsonSerializable()
+class SubmitLiftQuoteFormRequest {
+  Map<String, dynamic> toJson() => _$SubmitLiftQuoteFormRequestToJson(this);
+}
+
+@JsonSerializable()
+class SubmitLiftQuoteFormSuccess {
+  Map<String, dynamic> toJson() => _$SubmitLiftQuoteFormSuccessToJson(this);
+}
+
+@JsonSerializable()
+class SubmitLiftQuoteFormFailure {
+  final String error;
+
+  SubmitLiftQuoteFormFailure({this.error});
+  Map<String, dynamic> toJson() => _$SubmitLiftQuoteFormFailureToJson(this);
+}
+
+// @JsonSerializable()
+// class LiftQuoteFormReset {
+//   Map<String, dynamic> toJson() => _$LiftQuoteFormResetToJson(this);
+// }

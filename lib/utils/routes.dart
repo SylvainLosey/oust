@@ -70,6 +70,7 @@ List liftQuoteFormPages = [
   LiftQuoteFormName(),
   LiftQuoteFormAddress(),
   LiftQuoteFormAccount(),
+  LiftQuoteFormSubmit(),
 ];
 
 List liftFormUnavailable = [

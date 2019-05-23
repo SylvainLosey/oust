@@ -17,10 +17,13 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
   @override
   Iterable serialize(Serializers serializers, Customer object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'user',
-      serializers.serialize(object.user, specifiedType: const FullType(int)),
-    ];
+    final result = <Object>[];
+    if (object.user != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(object.user,
+            specifiedType: const FullType(int)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -87,6 +90,18 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
         ..add(serializers.serialize(object.preferedPaymentMethod,
             specifiedType: const FullType(String)));
     }
+    if (object.hasSubscription != null) {
+      result
+        ..add('has_subscription')
+        ..add(serializers.serialize(object.hasSubscription,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.hasLift != null) {
+      result
+        ..add('has_lift')
+        ..add(serializers.serialize(object.hasLift,
+            specifiedType: const FullType(bool)));
+    }
 
     return result;
   }
@@ -102,6 +117,10 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'user':
+          result.user = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -146,9 +165,13 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
           result.preferedPaymentMethod = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'user':
-          result.user = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'has_subscription':
+          result.hasSubscription = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'has_lift':
+          result.hasLift = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -158,6 +181,8 @@ class _$CustomerSerializer implements StructuredSerializer<Customer> {
 }
 
 class _$Customer extends Customer {
+  @override
+  final int user;
   @override
   final int id;
   @override
@@ -181,13 +206,16 @@ class _$Customer extends Customer {
   @override
   final String preferedPaymentMethod;
   @override
-  final int user;
+  final bool hasSubscription;
+  @override
+  final bool hasLift;
 
   factory _$Customer([void Function(CustomerBuilder) updates]) =>
       (new CustomerBuilder()..update(updates)).build();
 
   _$Customer._(
-      {this.id,
+      {this.user,
+      this.id,
       this.gender,
       this.firstName,
       this.lastName,
@@ -198,12 +226,9 @@ class _$Customer extends Customer {
       this.customerStatus,
       this.preferedCommunication,
       this.preferedPaymentMethod,
-      this.user})
-      : super._() {
-    if (user == null) {
-      throw new BuiltValueNullFieldError('Customer', 'user');
-    }
-  }
+      this.hasSubscription,
+      this.hasLift})
+      : super._();
 
   @override
   Customer rebuild(void Function(CustomerBuilder) updates) =>
@@ -216,6 +241,7 @@ class _$Customer extends Customer {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Customer &&
+        user == other.user &&
         id == other.id &&
         gender == other.gender &&
         firstName == other.firstName &&
@@ -227,7 +253,8 @@ class _$Customer extends Customer {
         customerStatus == other.customerStatus &&
         preferedCommunication == other.preferedCommunication &&
         preferedPaymentMethod == other.preferedPaymentMethod &&
-        user == other.user;
+        hasSubscription == other.hasSubscription &&
+        hasLift == other.hasLift;
   }
 
   @override
@@ -242,23 +269,28 @@ class _$Customer extends Customer {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, id.hashCode),
-                                                gender.hashCode),
-                                            firstName.hashCode),
-                                        lastName.hashCode),
-                                    address.hashCode),
-                                city.hashCode),
-                            postcode.hashCode),
-                        company.hashCode),
-                    customerStatus.hashCode),
-                preferedCommunication.hashCode),
-            preferedPaymentMethod.hashCode),
-        user.hashCode));
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, user.hashCode),
+                                                        id.hashCode),
+                                                    gender.hashCode),
+                                                firstName.hashCode),
+                                            lastName.hashCode),
+                                        address.hashCode),
+                                    city.hashCode),
+                                postcode.hashCode),
+                            company.hashCode),
+                        customerStatus.hashCode),
+                    preferedCommunication.hashCode),
+                preferedPaymentMethod.hashCode),
+            hasSubscription.hashCode),
+        hasLift.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Customer')
+          ..add('user', user)
           ..add('id', id)
           ..add('gender', gender)
           ..add('firstName', firstName)
@@ -270,13 +302,18 @@ class _$Customer extends Customer {
           ..add('customerStatus', customerStatus)
           ..add('preferedCommunication', preferedCommunication)
           ..add('preferedPaymentMethod', preferedPaymentMethod)
-          ..add('user', user))
+          ..add('hasSubscription', hasSubscription)
+          ..add('hasLift', hasLift))
         .toString();
   }
 }
 
 class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   _$Customer _$v;
+
+  int _user;
+  int get user => _$this._user;
+  set user(int user) => _$this._user = user;
 
   int _id;
   int get id => _$this._id;
@@ -325,14 +362,20 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   set preferedPaymentMethod(String preferedPaymentMethod) =>
       _$this._preferedPaymentMethod = preferedPaymentMethod;
 
-  int _user;
-  int get user => _$this._user;
-  set user(int user) => _$this._user = user;
+  bool _hasSubscription;
+  bool get hasSubscription => _$this._hasSubscription;
+  set hasSubscription(bool hasSubscription) =>
+      _$this._hasSubscription = hasSubscription;
+
+  bool _hasLift;
+  bool get hasLift => _$this._hasLift;
+  set hasLift(bool hasLift) => _$this._hasLift = hasLift;
 
   CustomerBuilder();
 
   CustomerBuilder get _$this {
     if (_$v != null) {
+      _user = _$v.user;
       _id = _$v.id;
       _gender = _$v.gender;
       _firstName = _$v.firstName;
@@ -344,7 +387,8 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
       _customerStatus = _$v.customerStatus;
       _preferedCommunication = _$v.preferedCommunication;
       _preferedPaymentMethod = _$v.preferedPaymentMethod;
-      _user = _$v.user;
+      _hasSubscription = _$v.hasSubscription;
+      _hasLift = _$v.hasLift;
       _$v = null;
     }
     return this;
@@ -367,6 +411,7 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
   _$Customer build() {
     final _$result = _$v ??
         new _$Customer._(
+            user: user,
             id: id,
             gender: gender,
             firstName: firstName,
@@ -378,7 +423,8 @@ class CustomerBuilder implements Builder<Customer, CustomerBuilder> {
             customerStatus: customerStatus,
             preferedCommunication: preferedCommunication,
             preferedPaymentMethod: preferedPaymentMethod,
-            user: user);
+            hasSubscription: hasSubscription,
+            hasLift: hasLift);
     replace(_$result);
     return _$result;
   }

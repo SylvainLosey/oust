@@ -26,6 +26,7 @@ import 'subscription_form.dart';
 import 'user.dart';
 import 'invoice.dart';
 import 'invoice_item.dart';
+import 'lift.dart';
 import 'lift_image.dart';
 import 'lift_quote_form.dart';
 
@@ -44,6 +45,7 @@ part 'serializers.g.dart';
   Postcode,
   Invoice,
   InvoiceItem,
+  Lift,
   LiftImage,
   LiftQuoteForm,
   AuthState,

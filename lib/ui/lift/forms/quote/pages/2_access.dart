@@ -88,7 +88,7 @@ class _ViewModel {
         previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm liftQuoteform) => store.dispatch(UpdateLiftQuoteForm(liftQuoteform)),
-        liftQuoteForm: store.state.liftState.liftQuoteFormState.liftQuoteForm,
-        noCustomerRequired: store.state.liftState.liftQuoteFormState.liftQuoteForm.noCustomerRequired);
+        liftQuoteForm: store.state.liftQuoteFormState.liftQuoteForm,
+        noCustomerRequired: store.state.liftQuoteFormState.liftQuoteForm.noCustomerRequired);
   }
 }

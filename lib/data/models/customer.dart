@@ -10,9 +10,12 @@ part 'customer.g.dart';
 abstract class Customer implements Built<Customer, CustomerBuilder> {
   static Serializer<Customer> get serializer => _$customerSerializer;
 
-  factory Customer([void Function (CustomerBuilder) updates]) = _$Customer;
+  factory Customer([void Function(CustomerBuilder) updates]) = _$Customer;
 
   Customer._();
+
+  @nullable
+  int get user;
 
   @nullable
   int get id;
@@ -52,14 +55,19 @@ abstract class Customer implements Built<Customer, CustomerBuilder> {
   @BuiltValueField(wireName: 'prefered_payment_method')
   String get preferedPaymentMethod;
 
-  int get user;
+  @nullable
+  @BuiltValueField(wireName: 'has_subscription')
+  bool get hasSubscription;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_lift')
+  bool get hasLift;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(Customer.serializer, this);
   }
 
   static Customer fromJson(Map<String, dynamic> jsonString) {
-    return serializers.deserializeWith(
-        Customer.serializer, jsonString);
+    return serializers.deserializeWith(Customer.serializer, jsonString);
   }
 }

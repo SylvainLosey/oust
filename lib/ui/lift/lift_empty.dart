@@ -43,7 +43,6 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        liftQuoteForm: store.state.liftState.liftQuoteFormState.liftQuoteForm,
-        start: () => store.dispatch(LiftQuoteFormStart()));
+        liftQuoteForm: store.state.liftQuoteFormState.liftQuoteForm, start: () => store.dispatch(LiftQuoteFormStart()));
   }
 }

@@ -12,7 +12,7 @@ class WebClient {
   // static String baseUrl = 'http://10.0.2.2:5000/api';
 
   // iOS Emulator
-  // static String baseUrl = 'http://localhost:5000/api';
+  // static String baseUrl = 'http://localhost:8000/api';
   // iOS Device
   static String baseUrl = 'http://192.168.1.106:5000/api';
 
@@ -23,12 +23,11 @@ class WebClient {
     final String key = prefs.getString('key');
 
     final Map<String, String> headers = <String, String>{
-      'content-type' : 'application/json',
-      'accept' : 'application/json',
-      if (auth)
-        'Authorization': 'Token $key',
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      if (auth) 'Authorization': 'Token $key',
     };
-    
+
     final http.Response response = await http.Client().get('$baseUrl$path', headers: headers);
 
     if (response.statusCode == 200) {
@@ -43,13 +42,12 @@ class WebClient {
   Future<dynamic> post(String path, {Map<String, dynamic> body = const {}, bool auth = true}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String key = prefs.getString('key');
-    
-    final Map<String, String> headers = <String, String>{      
-        'content-type' : 'application/json',
-        'accept' : 'application/json',
-        if (auth)
-          'Authorization': 'Token $key',
-      };
+
+    final Map<String, String> headers = <String, String>{
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      if (auth) 'Authorization': 'Token $key',
+    };
 
     final http.Response response = await http.post(
       '$baseUrl$path',
@@ -63,17 +61,16 @@ class WebClient {
       throw Exception(response.body);
     }
   }
-  
+
   Future<void> delete(String path, {bool auth = true}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String key = prefs.getString('key');
-    
-    final Map<String, String> headers = <String, String>{      
-        'content-type' : 'application/json',
-        'accept' : 'application/json',
-        if (auth)
-          'Authorization': 'Token $key',
-      };
+
+    final Map<String, String> headers = <String, String>{
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      if (auth) 'Authorization': 'Token $key',
+    };
 
     final http.Response response = await http.delete(
       '$baseUrl$path',
@@ -88,13 +85,12 @@ class WebClient {
   Future<void> patch(String path, {Map<String, dynamic> body = const {}, bool auth = true}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String key = prefs.getString('key');
-    
-    final Map<String, String> headers = <String, String>{      
-        'content-type' : 'application/json',
-        'accept' : 'application/json',
-        if (auth)
-          'Authorization': 'Token $key',
-      };
+
+    final Map<String, String> headers = <String, String>{
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      if (auth) 'Authorization': 'Token $key',
+    };
 
     final http.Response response = await http.patch(
       '$baseUrl$path',

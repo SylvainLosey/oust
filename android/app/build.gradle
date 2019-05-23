@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.oust.app"
+        applicationId "ch.oust.app"
         minSdkVersion 21
         targetSdkVersion 28
         // adding the below line resolved https://github.com/flutter/flutter/issues/21009 for me.

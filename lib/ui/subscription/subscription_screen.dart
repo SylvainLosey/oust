@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -6,6 +5,8 @@ import 'package:redux/redux.dart';
 import 'subscription_home.dart';
 import 'subscription_empty.dart';
 import '../../redux/app/app_state.dart';
+import '../../redux/subscription/subscription_state.dart';
+import '../../data/models/customer.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class SubscriptionScreen extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        if (viewModel.isAuthenticated) {
+        if (viewModel.customer.hasSubscription) {
           return SubscriptionHome();
         } else {
           return SubscriptionEmpty();
@@ -25,15 +26,15 @@ class SubscriptionScreen extends StatelessWidget {
 }
 
 class _ViewModel {
-  final bool isAuthenticated;
+  final Customer customer;
 
   _ViewModel({
-    @required this.isAuthenticated,
+    @required this.customer,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isAuthenticated: store.state.authState.isAuthenticated,
+      customer: store.state.customerState.customer,
     );
   }
 }

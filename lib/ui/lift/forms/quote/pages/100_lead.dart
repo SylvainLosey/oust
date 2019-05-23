@@ -47,9 +47,9 @@ class LiftQuoteFormLeadVM extends LeadVM {
 
   static LiftQuoteFormLeadVM fromStore(Store<AppState> store) {
     return LiftQuoteFormLeadVM(
-      form: store.state.liftState.liftQuoteFormState.liftQuoteForm,
-      isLoading: store.state.liftState.liftQuoteFormState.isLoading,
-      error: store.state.liftState.liftQuoteFormState.error,
+      form: store.state.liftQuoteFormState.liftQuoteForm,
+      isLoading: store.state.liftQuoteFormState.isLoading,
+      error: store.state.liftQuoteFormState.error,
       postLeadRequest: (LiftQuoteForm form) => store.dispatch(PostLiftLeadRequest(form)),
       previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
       exit: () => store.dispatch(LiftQuoteFormExit()),

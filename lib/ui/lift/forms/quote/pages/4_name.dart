@@ -33,6 +33,6 @@ class LiftQuoteFormNameVM extends NameFormVM {
         previousStep: () => store.dispatch(LiftQuoteFormNextStep()),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm liftQuoteForm) => store.dispatch(UpdateLiftQuoteForm(liftQuoteForm)),
-        form: store.state.liftState.liftQuoteFormState.liftQuoteForm);
+        form: store.state.liftQuoteFormState.liftQuoteForm);
   }
 }

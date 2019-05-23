@@ -153,3 +153,30 @@ PostLiftLeadFailure _$PostLiftLeadFailureFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PostLiftLeadFailureToJson(
         PostLiftLeadFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+SubmitLiftQuoteFormRequest _$SubmitLiftQuoteFormRequestFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftQuoteFormRequest();
+}
+
+Map<String, dynamic> _$SubmitLiftQuoteFormRequestToJson(
+        SubmitLiftQuoteFormRequest instance) =>
+    <String, dynamic>{};
+
+SubmitLiftQuoteFormSuccess _$SubmitLiftQuoteFormSuccessFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftQuoteFormSuccess();
+}
+
+Map<String, dynamic> _$SubmitLiftQuoteFormSuccessToJson(
+        SubmitLiftQuoteFormSuccess instance) =>
+    <String, dynamic>{};
+
+SubmitLiftQuoteFormFailure _$SubmitLiftQuoteFormFailureFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftQuoteFormFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$SubmitLiftQuoteFormFailureToJson(
+        SubmitLiftQuoteFormFailure instance) =>
+    <String, dynamic>{'error': instance.error};

@@ -59,7 +59,7 @@ class NavMiddleware {
   void _liftQuoteFormStart(Store<AppState> store, LiftQuoteFormStart action, NextDispatcher next) async {
     next(action);
 
-    final int currentStep = store.state.liftState.liftQuoteFormState.liftQuoteForm.currentStep;
+    final int currentStep = store.state.liftQuoteFormState.liftQuoteForm.currentStep;
     int pushCounter = 1;
 
     while (pushCounter <= currentStep) {
@@ -86,7 +86,7 @@ class NavMiddleware {
   void _liftQuoteFormNextStep(Store<AppState> store, LiftQuoteFormNextStep action, NextDispatcher next) async {
     next(action);
 
-    final String route = '/lift/form/quote/${store.state.liftState.liftQuoteFormState.liftQuoteForm.currentStep}';
+    final String route = '/lift/form/quote/${store.state.liftQuoteFormState.liftQuoteForm.currentStep}';
     navigatorKey.currentState.pushNamed(route);
   }
 

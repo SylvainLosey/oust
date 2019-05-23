@@ -51,6 +51,6 @@ class LiftQuoteFormAddressVM extends AddressFormVM {
       exit: () => store.dispatch(LiftQuoteFormExit()),
       onChanged: (LiftQuoteForm liftQuoteForm) => store.dispatch(UpdateLiftQuoteForm(liftQuoteForm)),
       postcodes: store.state.dataState.postcodes,
-      form: store.state.liftState.liftQuoteFormState.liftQuoteForm,
-      selectedPostcode: store.state.liftState.liftQuoteFormState.liftQuoteForm.postcode);
+      form: store.state.liftQuoteFormState.liftQuoteForm,
+      selectedPostcode: store.state.liftQuoteFormState.liftQuoteForm.postcode);
 }

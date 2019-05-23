@@ -1,3 +1,4 @@
+import 'package:oust/redux/lift/lift_actions.dart';
 import 'package:redux/redux.dart';
 
 import '../app/app_state.dart';
@@ -37,17 +38,24 @@ class CustomerMiddleware {
 
       store.dispatch(LoadPhoneNumbersRequest(customer: customer));
       store.dispatch(LoadEmailsRequest(customer: customer));
-      store.dispatch(LoadSubscriptionRequest(customer: customer));
-      store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
       store.dispatch(LoadInvoicesRequest(customer: customer));
       store.dispatch(LoadInvoiceItemsRequest(customer: customer));
+
+      if (customer.hasSubscription) {
+        store.dispatch(LoadSubscriptionRequest(customer: customer));
+        store.dispatch(LoadConsumerSubscriptionRequest(customer: customer));
+      }
+
+      if (customer.hasLift) {
+        store.dispatch(LoadLiftsRequest(customer: customer));
+        store.dispatch(LoadLiftImagesRequest(customer: customer));
+      }
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));
     }
   }
 
-  void _createCustomerRequest(
-      Store<AppState> store, CreateCustomerRequest action, NextDispatcher next) async {
+  void _createCustomerRequest(Store<AppState> store, CreateCustomerRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -70,8 +78,7 @@ class CustomerMiddleware {
   }
 
   // PHONENUMBERS
-  void _loadPhoneNumbersRequest(
-      Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async {
+  void _loadPhoneNumbersRequest(Store<AppState> store, LoadPhoneNumbersRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -84,8 +91,7 @@ class CustomerMiddleware {
     }
   }
 
-  void _createPhoneNumberRequest(
-      Store<AppState> store, CreatePhoneNumberRequest action, NextDispatcher next) async {
+  void _createPhoneNumberRequest(Store<AppState> store, CreatePhoneNumberRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -103,22 +109,19 @@ class CustomerMiddleware {
   }
 
   // EMAILS
-  void _loadEmailsRequest(
-      Store<AppState> store, LoadEmailsRequest action, NextDispatcher next) async {
+  void _loadEmailsRequest(Store<AppState> store, LoadEmailsRequest action, NextDispatcher next) async {
     next(action);
 
     try {
       final List<dynamic> data = await repository.fetchEmails(action.customer.id);
-      final List<Email> emails =
-          List<Email>.from(data.map<dynamic>((dynamic x) => Email.fromJson(x)));
+      final List<Email> emails = List<Email>.from(data.map<dynamic>((dynamic x) => Email.fromJson(x)));
       store.dispatch(LoadEmailsSuccess(emails: emails));
     } catch (e) {
       store.dispatch(LoadEmailsFailure(error: e.toString()));
     }
   }
 
-  void _createEmailRequest(
-      Store<AppState> store, CreateEmailRequest action, NextDispatcher next) async {
+  void _createEmailRequest(Store<AppState> store, CreateEmailRequest action, NextDispatcher next) async {
     next(action);
 
     try {

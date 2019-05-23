@@ -30,11 +30,19 @@ class _$LiftStateSerializer implements StructuredSerializer<LiftState> {
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(String)));
     }
-    if (object.liftQuoteFormState != null) {
+    if (object.lifts != null) {
       result
-        ..add('liftQuoteFormState')
-        ..add(serializers.serialize(object.liftQuoteFormState,
-            specifiedType: const FullType(LiftQuoteFormState)));
+        ..add('lifts')
+        ..add(serializers.serialize(object.lifts,
+            specifiedType: const FullType(
+                BuiltMap, const [const FullType(int), const FullType(Lift)])));
+    }
+    if (object.liftImages != null) {
+      result
+        ..add('liftImages')
+        ..add(serializers.serialize(object.liftImages,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(int), const FullType(LiftImage)])));
     }
 
     return result;
@@ -59,10 +67,19 @@ class _$LiftStateSerializer implements StructuredSerializer<LiftState> {
           result.error = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'liftQuoteFormState':
-          result.liftQuoteFormState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(LiftQuoteFormState))
-              as LiftQuoteFormState);
+        case 'lifts':
+          result.lifts.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(Lift)
+              ])) as BuiltMap);
+          break;
+        case 'liftImages':
+          result.liftImages.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(LiftImage)
+              ])) as BuiltMap);
           break;
       }
     }
@@ -77,12 +94,14 @@ class _$LiftState extends LiftState {
   @override
   final String error;
   @override
-  final LiftQuoteFormState liftQuoteFormState;
+  final BuiltMap<int, Lift> lifts;
+  @override
+  final BuiltMap<int, LiftImage> liftImages;
 
   factory _$LiftState([void Function(LiftStateBuilder) updates]) =>
       (new LiftStateBuilder()..update(updates)).build();
 
-  _$LiftState._({this.fetchCount, this.error, this.liftQuoteFormState})
+  _$LiftState._({this.fetchCount, this.error, this.lifts, this.liftImages})
       : super._();
 
   @override
@@ -98,13 +117,15 @@ class _$LiftState extends LiftState {
     return other is LiftState &&
         fetchCount == other.fetchCount &&
         error == other.error &&
-        liftQuoteFormState == other.liftQuoteFormState;
+        lifts == other.lifts &&
+        liftImages == other.liftImages;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, fetchCount.hashCode), error.hashCode),
-        liftQuoteFormState.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, fetchCount.hashCode), error.hashCode), lifts.hashCode),
+        liftImages.hashCode));
   }
 
   @override
@@ -112,7 +133,8 @@ class _$LiftState extends LiftState {
     return (newBuiltValueToStringHelper('LiftState')
           ..add('fetchCount', fetchCount)
           ..add('error', error)
-          ..add('liftQuoteFormState', liftQuoteFormState))
+          ..add('lifts', lifts)
+          ..add('liftImages', liftImages))
         .toString();
   }
 }
@@ -128,11 +150,16 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
-  LiftQuoteFormStateBuilder _liftQuoteFormState;
-  LiftQuoteFormStateBuilder get liftQuoteFormState =>
-      _$this._liftQuoteFormState ??= new LiftQuoteFormStateBuilder();
-  set liftQuoteFormState(LiftQuoteFormStateBuilder liftQuoteFormState) =>
-      _$this._liftQuoteFormState = liftQuoteFormState;
+  MapBuilder<int, Lift> _lifts;
+  MapBuilder<int, Lift> get lifts =>
+      _$this._lifts ??= new MapBuilder<int, Lift>();
+  set lifts(MapBuilder<int, Lift> lifts) => _$this._lifts = lifts;
+
+  MapBuilder<int, LiftImage> _liftImages;
+  MapBuilder<int, LiftImage> get liftImages =>
+      _$this._liftImages ??= new MapBuilder<int, LiftImage>();
+  set liftImages(MapBuilder<int, LiftImage> liftImages) =>
+      _$this._liftImages = liftImages;
 
   LiftStateBuilder();
 
@@ -140,7 +167,8 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
     if (_$v != null) {
       _fetchCount = _$v.fetchCount;
       _error = _$v.error;
-      _liftQuoteFormState = _$v.liftQuoteFormState?.toBuilder();
+      _lifts = _$v.lifts?.toBuilder();
+      _liftImages = _$v.liftImages?.toBuilder();
       _$v = null;
     }
     return this;
@@ -167,12 +195,15 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
           new _$LiftState._(
               fetchCount: fetchCount,
               error: error,
-              liftQuoteFormState: _liftQuoteFormState?.build());
+              lifts: _lifts?.build(),
+              liftImages: _liftImages?.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'liftQuoteFormState';
-        _liftQuoteFormState?.build();
+        _$failedField = 'lifts';
+        _lifts?.build();
+        _$failedField = 'liftImages';
+        _liftImages?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'LiftState', _$failedField, e.toString());

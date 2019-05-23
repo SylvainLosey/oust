@@ -41,6 +41,8 @@ dependencies:
   firebase_core: ^0.4.0+1
   firebase_analytics: ^3.0.1
   firebase_storage: ^3.0.0
+  firebase_messaging: ^5.0.1+1
+
 
 
    # Redux

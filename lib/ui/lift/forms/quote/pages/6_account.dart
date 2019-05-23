@@ -30,12 +30,12 @@ class LiftQuoteFormAccountVM extends AccountVM {
 
   static LiftQuoteFormAccountVM fromStore(Store<AppState> store) {
     return LiftQuoteFormAccountVM(
-        form: store.state.liftState.liftQuoteFormState.liftQuoteForm,
+        form: store.state.liftQuoteFormState.liftQuoteForm,
         previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm subscriptionForm) => store.dispatch(UpdateLiftQuoteForm(subscriptionForm)),
         submit: () {
-          // store.dispatch(SubmitLiftQuoteFormRequest());
+          store.dispatch(SubmitLiftQuoteFormRequest());
           store.dispatch(LiftQuoteFormNextStep());
         });
   }

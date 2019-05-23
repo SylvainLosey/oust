@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:oust/redux/lift/lift_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,8 +8,12 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'lift_quote_form_actions.dart';
 import '../../../auth/auth_actions.dart';
+import '../../../customer/customer_actions.dart';
 import '../../../app/app_state.dart';
 import '../../../../data/models/lift_quote_form.dart';
+import '../../../../data/models/lift.dart';
+import '../../../../data/models/lift_image.dart';
+
 import '../../../../data/repository.dart';
 
 class LiftQuoteFormMiddleware {
@@ -20,6 +25,7 @@ class LiftQuoteFormMiddleware {
       TypedMiddleware<AppState, AddLiftImage>(_addLiftImage),
       TypedMiddleware<AppState, DeleteLiftImage>(_deleteLiftImage),
       TypedMiddleware<AppState, PostLiftLeadRequest>(_postLead),
+      TypedMiddleware<AppState, SubmitLiftQuoteFormRequest>(_submitForm),
     ];
   }
 
@@ -73,5 +79,54 @@ class LiftQuoteFormMiddleware {
     } catch (e) {
       store.dispatch(PostLiftLeadFailure(error: e.toString()));
     }
+  }
+
+  void _submitForm(Store<AppState> store, SubmitLiftQuoteFormRequest action, NextDispatcher next) async {
+    next(action);
+
+    final LiftQuoteForm form = store.state.liftQuoteFormState.liftQuoteForm;
+
+    final Completer _createUserCompleter = Completer();
+
+    store.dispatch(CreateUserRequest(email: form.email, password: form.password, completer: _createUserCompleter));
+
+    _createUserCompleter.future.then((userId) {
+      final Completer _createCustomerCompleter = Completer();
+
+      store.dispatch(CreateCustomerRequest(
+        firstName: form.firstName,
+        lastName: form.lastName,
+        address: form.address,
+        postcode: form.postcode,
+        userId: userId,
+        completer: _createCustomerCompleter,
+      ));
+      _createCustomerCompleter.future.then((customerId) {
+        final Completer _createLiftCompleter = Completer();
+
+        store.dispatch(CreateLiftRequest(
+            customerId: customerId,
+            floor: form.floor,
+            elevator: form.elevator,
+            customerNote: form.note,
+            completer: _createLiftCompleter));
+        _createLiftCompleter.future.then((liftId) {
+          List<Completer> _imageCompleters = <Completer>[];
+          form.images.forEach((String uuid, LiftImage image) {
+            final Completer _currentImageCompleter = Completer();
+
+            store.dispatch(CreateLiftImageRequest(
+                liftId: liftId, url: image.url, uuid: image.uuid, completer: _currentImageCompleter));
+
+            _imageCompleters.add(_currentImageCompleter);
+          });
+
+          Future.wait(List.generate(_imageCompleters.length, (int index) => _imageCompleters[index].future)).then((_) {
+            store.dispatch(AppStarted());
+            store.dispatch(SubmitLiftQuoteFormSuccess());
+          }).catchError((dynamic e) => store.dispatch(SubmitLiftQuoteFormFailure(error: e.toString())));
+        }).catchError((dynamic e) => store.dispatch(SubmitLiftQuoteFormFailure(error: e.toString())));
+      }).catchError((dynamic e) => store.dispatch(SubmitLiftQuoteFormFailure(error: e.toString())));
+    }).catchError((dynamic e) => store.dispatch(SubmitLiftQuoteFormFailure(error: e.toString())));
   }
 }

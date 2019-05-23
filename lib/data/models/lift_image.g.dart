@@ -24,10 +24,10 @@ class _$LiftImageSerializer implements StructuredSerializer<LiftImage> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-    if (object.customerId != null) {
+    if (object.lift != null) {
       result
-        ..add('customerId')
-        ..add(serializers.serialize(object.customerId,
+        ..add('lift')
+        ..add(serializers.serialize(object.lift,
             specifiedType: const FullType(int)));
     }
     if (object.uuid != null) {
@@ -61,8 +61,8 @@ class _$LiftImageSerializer implements StructuredSerializer<LiftImage> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'customerId':
-          result.customerId = serializers.deserialize(value,
+        case 'lift':
+          result.lift = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'uuid':
@@ -84,7 +84,7 @@ class _$LiftImage extends LiftImage {
   @override
   final int id;
   @override
-  final int customerId;
+  final int lift;
   @override
   final String uuid;
   @override
@@ -95,7 +95,7 @@ class _$LiftImage extends LiftImage {
   factory _$LiftImage([void Function(LiftImageBuilder) updates]) =>
       (new LiftImageBuilder()..update(updates)).build();
 
-  _$LiftImage._({this.id, this.customerId, this.uuid, this.url, this.image})
+  _$LiftImage._({this.id, this.lift, this.uuid, this.url, this.image})
       : super._();
 
   @override
@@ -110,7 +110,7 @@ class _$LiftImage extends LiftImage {
     if (identical(other, this)) return true;
     return other is LiftImage &&
         id == other.id &&
-        customerId == other.customerId &&
+        lift == other.lift &&
         uuid == other.uuid &&
         url == other.url &&
         image == other.image;
@@ -119,7 +119,7 @@ class _$LiftImage extends LiftImage {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), customerId.hashCode), uuid.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), lift.hashCode), uuid.hashCode),
             url.hashCode),
         image.hashCode));
   }
@@ -128,7 +128,7 @@ class _$LiftImage extends LiftImage {
   String toString() {
     return (newBuiltValueToStringHelper('LiftImage')
           ..add('id', id)
-          ..add('customerId', customerId)
+          ..add('lift', lift)
           ..add('uuid', uuid)
           ..add('url', url)
           ..add('image', image))
@@ -143,9 +143,9 @@ class LiftImageBuilder implements Builder<LiftImage, LiftImageBuilder> {
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
 
-  int _customerId;
-  int get customerId => _$this._customerId;
-  set customerId(int customerId) => _$this._customerId = customerId;
+  int _lift;
+  int get lift => _$this._lift;
+  set lift(int lift) => _$this._lift = lift;
 
   String _uuid;
   String get uuid => _$this._uuid;
@@ -164,7 +164,7 @@ class LiftImageBuilder implements Builder<LiftImage, LiftImageBuilder> {
   LiftImageBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
-      _customerId = _$v.customerId;
+      _lift = _$v.lift;
       _uuid = _$v.uuid;
       _url = _$v.url;
       _image = _$v.image;
@@ -190,7 +190,7 @@ class LiftImageBuilder implements Builder<LiftImage, LiftImageBuilder> {
   _$LiftImage build() {
     final _$result = _$v ??
         new _$LiftImage._(
-            id: id, customerId: customerId, uuid: uuid, url: url, image: image);
+            id: id, lift: lift, uuid: uuid, url: url, image: image);
     replace(_$result);
     return _$result;
   }

@@ -25,5 +25,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..pickupState.replace(pickupReducer(state.pickupState, action))
     ..dataState.replace(dataReducer(state.dataState, action))
     ..invoiceState.replace(invoiceReducer(state.invoiceState, action))
-    ..liftState.replace(liftReducer(state.liftState, action)));
+    ..liftState.replace(liftReducer(state.liftState, action))
+    ..liftQuoteFormState.replace(liftQuoteFormReducer(state.liftQuoteFormState, action)));
 }

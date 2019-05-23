@@ -1,4 +1,4 @@
-package com.oust.app;
+package ch.oust.app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

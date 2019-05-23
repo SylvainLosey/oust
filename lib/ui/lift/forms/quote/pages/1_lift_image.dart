@@ -177,7 +177,7 @@ class _ViewModel {
         nextStep: () => store.dispatch(LiftQuoteFormNextStep()),
         previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
         exit: () => store.dispatch(LiftQuoteFormExit()),
-        images: store.state.liftState.liftQuoteFormState.liftQuoteForm.images,
+        images: store.state.liftQuoteFormState.liftQuoteForm.images,
         addLiftImage: (Asset image) => store.dispatch(AddLiftImage(image: image, uuid: Uuid().v4())),
         deleteLiftImage: (LiftImage image) => store.dispatch(DeleteLiftImage(image: image)));
   }

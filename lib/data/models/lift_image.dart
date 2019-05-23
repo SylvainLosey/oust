@@ -13,7 +13,7 @@ abstract class LiftImage implements Built<LiftImage, LiftImageBuilder> {
   int get id;
 
   @nullable
-  int get customerId;
+  int get lift;
 
   @nullable
   String get uuid;
