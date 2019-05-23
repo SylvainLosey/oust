@@ -28,7 +28,7 @@ class UserLoginSuccess {
 
 @JsonSerializable()
 class UserLoaded {
-  @JsonKey(fromJson: User.fromJson) 
+  @JsonKey(fromJson: User.fromJson)
   final User user;
   final bool shoudlLoadCustomer;
 
@@ -59,13 +59,31 @@ class CreateUserRequest {
 
 @JsonSerializable()
 class CreateUserSuccess {
-  Map<String, dynamic> toJson() => _$CreateUserSuccessToJson(this); 
+  Map<String, dynamic> toJson() => _$CreateUserSuccessToJson(this);
 }
 
 @JsonSerializable()
 class CreateUserFailure {
   final String error;
-  
+
   CreateUserFailure({this.error});
-  Map<String, dynamic> toJson() => _$CreateUserFailureToJson(this); 
+  Map<String, dynamic> toJson() => _$CreateUserFailureToJson(this);
+}
+
+@JsonSerializable()
+class StoreFCMToken {
+  @JsonKey(fromJson: User.fromJson)
+  final User user;
+  final String registrationId;
+  final String type;
+
+  StoreFCMToken({this.registrationId, this.type, this.user});
+  Map<String, dynamic> toJson() => _$StoreFCMTokenToJson(this);
+}
+
+@JsonSerializable()
+class DeleteFCMToken {
+  final String registrationId;
+  DeleteFCMToken({this.registrationId});
+  Map<String, dynamic> toJson() => _$DeleteFCMTokenToJson(this);
 }

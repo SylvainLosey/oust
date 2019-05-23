@@ -1,5 +1,8 @@
+import 'dart:io' show Platform;
+
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'auth_actions.dart';
 import '../customer/customer_actions.dart';
@@ -22,6 +25,8 @@ class AuthMiddleware {
       TypedMiddleware<AppState, UserLogout>(_userLogout),
       TypedMiddleware<AppState, UserLoaded>(_userLoaded),
       TypedMiddleware<AppState, CreateUserRequest>(_createUserRequest),
+      TypedMiddleware<AppState, StoreFCMToken>(_storeFCMToken),
+      TypedMiddleware<AppState, DeleteFCMToken>(_deleteFCMToken),
     ];
   }
 
@@ -44,8 +49,7 @@ class AuthMiddleware {
     });
   }
 
-  void _userLoginRequest(
-      Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
+  void _userLoginRequest(Store<AppState> store, UserLoginRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -62,8 +66,7 @@ class AuthMiddleware {
     }
   }
 
-  void _userLoginSuccess(
-      Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
+  void _userLoginSuccess(Store<AppState> store, UserLoginSuccess action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UserLoaded(
@@ -76,20 +79,27 @@ class AuthMiddleware {
   void _userLoaded(Store<AppState> store, UserLoaded action, NextDispatcher next) async {
     next(action);
 
+    final String token = await FirebaseMessaging().getToken();
+    final String type = Platform.isIOS ? 'ios' : 'android';
+
+    store.dispatch(StoreFCMToken(registrationId: token, type: type, user: action.user));
+
     if (action.shoudlLoadCustomer) {
       store.dispatch(LoadCustomerRequest(user: action.user));
     }
   }
 
   void _userLogout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
+    final String token = await FirebaseMessaging().getToken();
+    store.dispatch(DeleteFCMToken(registrationId: token));
+
     await _deleteAuthData();
     store.dispatch(AppStarted());
 
     next(action);
   }
 
-  void _createUserRequest(
-      Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
+  void _createUserRequest(Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
     next(action);
 
     try {
@@ -107,6 +117,25 @@ class AuthMiddleware {
       store.dispatch(CreateUserFailure(error: e.toString()));
       action.completer.completeError(e.toString());
     }
+  }
+
+  void _storeFCMToken(Store<AppState> store, StoreFCMToken action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final Map<String, dynamic> data = await repository.storeFCMToken(
+          userId: action.user.id, registrationID: action.registrationId, type: action.type);
+      print(data);
+    } catch (e) {
+      print('FCM token already stored');
+    }
+  }
+
+  void _deleteFCMToken(Store<AppState> store, DeleteFCMToken action, NextDispatcher next) async {
+    next(action);
+
+    final dynamic data = await repository.deleteFCMToken(registrationID: action.registrationId);
+    print(data);
   }
 
   /// HELPER FUNCTIONS

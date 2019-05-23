@@ -63,3 +63,26 @@ CreateUserFailure _$CreateUserFailureFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CreateUserFailureToJson(CreateUserFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+StoreFCMToken _$StoreFCMTokenFromJson(Map<String, dynamic> json) {
+  return StoreFCMToken(
+      registrationId: json['registrationId'] as String,
+      type: json['type'] as String,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$StoreFCMTokenToJson(StoreFCMToken instance) =>
+    <String, dynamic>{
+      'user': instance.user,
+      'registrationId': instance.registrationId,
+      'type': instance.type
+    };
+
+DeleteFCMToken _$DeleteFCMTokenFromJson(Map<String, dynamic> json) {
+  return DeleteFCMToken(registrationId: json['registrationId'] as String);
+}
+
+Map<String, dynamic> _$DeleteFCMTokenToJson(DeleteFCMToken instance) =>
+    <String, dynamic>{'registrationId': instance.registrationId};

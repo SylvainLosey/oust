@@ -37,6 +37,15 @@ class Repository {
     return await client.post('/auth/registration/', body: data, auth: false);
   }
 
+  Future<Map<String, dynamic>> storeFCMToken({int userId, String registrationID, String type}) async {
+    final Map<String, dynamic> body = {'user': userId, 'registration_id': registrationID, 'type': type};
+    return await client.post('/devices/', body: body);
+  }
+
+  dynamic deleteFCMToken({String registrationID}) async {
+    return await client.delete('/devices/$registrationID/');
+  }
+
   // CUSTOMER
   Future<List<dynamic>> fetchCustomer(int id) async {
     return await client.get('/customers/?user=$id/');

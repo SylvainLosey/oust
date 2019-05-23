@@ -19,9 +19,12 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   }
 
   bool get isLoading;
+
   bool get isAuthenticated;
+
   @nullable
   User get user;
+
   @nullable
   String get error;
 
@@ -37,4 +40,3 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }
-
