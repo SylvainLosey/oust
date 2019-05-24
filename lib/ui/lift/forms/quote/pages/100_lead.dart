@@ -51,7 +51,8 @@ class LiftQuoteFormLeadVM extends LeadVM {
       isLoading: store.state.liftQuoteFormState.isLoading,
       error: store.state.liftQuoteFormState.error,
       postLeadRequest: (LiftQuoteForm form) => store.dispatch(PostLiftLeadRequest(form)),
-      previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
+      previousStep: () =>
+          store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
       exit: () => store.dispatch(LiftQuoteFormExit()),
       onChanged: (LiftQuoteForm form) => store.dispatch(UpdateLiftQuoteForm(form)),
       postcodes: store.state.dataState.postcodes,

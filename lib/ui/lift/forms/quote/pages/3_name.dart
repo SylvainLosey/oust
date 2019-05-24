@@ -9,7 +9,7 @@ import '../../../../presentation/form_wrapper.dart';
 import '../../../../forms/name_form.dart';
 
 class LiftQuoteFormName extends StatelessWidget {
-  static int step = 4;
+  static int step = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,9 @@ class LiftQuoteFormNameVM extends NameFormVM {
 
   static LiftQuoteFormNameVM fromStore(Store<AppState> store) {
     return LiftQuoteFormNameVM(
-        nextStep: () => store.dispatch(LiftQuoteFormNextStep()),
-        previousStep: () => store.dispatch(LiftQuoteFormNextStep()),
+        nextStep: () => store.dispatch(LiftQuoteFormNextStep(isAuthenticated: store.state.authState.isAuthenticated)),
+        previousStep: () =>
+            store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm liftQuoteForm) => store.dispatch(UpdateLiftQuoteForm(liftQuoteForm)),
         form: store.state.liftQuoteFormState.liftQuoteForm);

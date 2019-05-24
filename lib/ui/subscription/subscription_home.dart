@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
 import '../presentation/pickup_card.dart';
@@ -49,29 +50,23 @@ class SubscriptionHome extends StatelessWidget {
             Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1.5)),
-                child: Text('Prochain passage',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
+                child: Text('Prochain passage', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
             Container(height: Layout.of(context).gridUnit(2)),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(2)),
               child: PickupCard(
                   pickup: pickup,
                   onPushBack: () => pushBackPickupDialog(
-                      context: context,
-                      onPushBackPickup: viewModel.onPushBackPickup,
-                      pickup: pickup),
-                  onDelete: () => deletePickupDialog(
-                      context: context, onDeletePickup: viewModel.onDeletePickup, pickup: pickup),
+                      context: context, onPushBackPickup: viewModel.onPushBackPickup, pickup: pickup),
+                  onDelete: () =>
+                      deletePickupDialog(context: context, onDeletePickup: viewModel.onDeletePickup, pickup: pickup),
                   onAddNote: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => EditPickupNote(pickup: pickup)))),
+                      context, MaterialPageRoute(builder: (BuildContext context) => EditPickupNote(pickup: pickup)))),
             ),
             Container(height: Layout.of(context).gridUnit(4)),
             FlatButton(
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (BuildContext context) => PickupList()));
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PickupList()));
                 },
                 child: Text('Tous les passages'))
           ],
@@ -112,13 +107,11 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
             ),
           ),
         ),
-      Positioned(
-          bottom: Layout.of(context).gridUnit(14),
-          child: Icon(Icons.place, size: 45, color: Color(0xFF23836D))),
+      Positioned(bottom: Layout.of(context).gridUnit(14), child: Icon(Icons.place, size: 45, color: Color(0xFF23836D))),
       Positioned(
           bottom: Layout.of(context).gridUnit(7),
-          child: Text(viewModel.subscription.representation,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600))),
+          child:
+              Text(viewModel.subscription.representation, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600))),
       Positioned(
           bottom: Layout.of(context).gridUnit(5),
           child: Text(
@@ -130,8 +123,7 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
               onPressed: () {
                 print('Hello');
               },
-              child: Text(
-                  'Abonnement ${viewModel.packages[viewModel.consumerSubscription.package].name}',
+              child: Text('Abonnement ${viewModel.packages[viewModel.consumerSubscription.package].name}',
                   style: TextStyle(color: Colors.white))))
     ],
   );

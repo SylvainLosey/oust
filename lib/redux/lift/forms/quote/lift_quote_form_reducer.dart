@@ -37,6 +37,13 @@ LiftQuoteFormState _nextStep(LiftQuoteFormState state, LiftQuoteFormNextStep act
   if (action.liftIsUnavailable) {
     return state.rebuild(
         (b) => b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..currentStep = LiftQuoteFormLead.step)));
+  }
+
+  // If authenticated skip 3 last screens
+  else if (action.isAuthenticated && state.liftQuoteForm.currentStep == LiftQuoteFormFloor.step) {
+    return state.rebuild((b) => b
+      ..liftQuoteForm
+          .replace(state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep + 4)));
   } else {
     return state.rebuild((b) => b
       ..liftQuoteForm
@@ -48,6 +55,10 @@ LiftQuoteFormState _previousStep(LiftQuoteFormState state, LiftQuoteFormPrevious
   if (state.liftQuoteForm.currentStep == LiftQuoteFormLead.step) {
     return state.rebuild((b) =>
         b..liftQuoteForm.replace(state.liftQuoteForm.rebuild((b) => b..currentStep = LiftQuoteFormAddress.step)));
+  } else if (action.isAuthenticated && state.liftQuoteForm.currentStep == LiftQuoteFormAddress.step) {
+    return state.rebuild((b) => b
+      ..liftQuoteForm
+          .replace(state.liftQuoteForm.rebuild((b) => b..currentStep = state.liftQuoteForm.currentStep - 2)));
   } else {
     return state.rebuild((b) => b
       ..liftQuoteForm

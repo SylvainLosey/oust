@@ -93,10 +93,10 @@ class AuthMiddleware {
     final String token = await FirebaseMessaging().getToken();
     store.dispatch(DeleteFCMToken(registrationId: token));
 
+    next(action);
+
     await _deleteAuthData();
     store.dispatch(AppStarted());
-
-    next(action);
   }
 
   void _createUserRequest(Store<AppState> store, CreateUserRequest action, NextDispatcher next) async {
@@ -127,7 +127,7 @@ class AuthMiddleware {
           userId: action.user.id, registrationID: action.registrationId, type: action.type);
       print(data);
     } catch (e) {
-      print('FCM token already stored');
+      print(e.toString());
     }
   }
 

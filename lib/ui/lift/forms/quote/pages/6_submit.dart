@@ -12,7 +12,7 @@ import '../../../../presentation/error_text.dart';
 import '../../../../../redux/auth/auth_actions.dart';
 
 class LiftQuoteFormSubmit extends StatelessWidget {
-  static int step = 7;
+  static int step = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class LiftQuoteFormSubmit extends StatelessWidget {
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Abonnement créé !', style: Theme.of(context).textTheme.title),
+                                Text('Bien recu !', style: Theme.of(context).textTheme.title),
                                 Text('Nous passerons chez toi vider tes caisses de tri bientôt :)')
                               ],
                             ))

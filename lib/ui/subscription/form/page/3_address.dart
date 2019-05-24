@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../../../data/models/postcode.dart';
+import '../../../../data/models/customer.dart';
 import '../../../../data/models/subscription_form.dart';
 import '../../../../redux/app/app_state.dart';
 import '../../../../redux/subscription/form/subscription_form_actions.dart';

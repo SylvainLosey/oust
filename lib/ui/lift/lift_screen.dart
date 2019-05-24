@@ -3,7 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'lift_empty.dart';
+import 'lift_home.dart';
 import '../../redux/app/app_state.dart';
+import '../../data/models/customer.dart';
 
 class LiftScreen extends StatelessWidget {
   @override
@@ -12,27 +14,26 @@ class LiftScreen extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        // if (viewModel.isAuthenticated) {
-        //   return SubscriptionHome();
-        // } else {
-        //   return SubscriptionEmpty();
-        // }
-        return LiftEmpty();
+        if (viewModel.customer != null && viewModel.customer.hasLift) {
+          return LiftHome();
+        } else {
+          return LiftEmpty();
+        }
       },
     );
   }
 }
 
 class _ViewModel {
-  final bool isAuthenticated;
+  final Customer customer;
 
   _ViewModel({
-    @required this.isAuthenticated,
+    @required this.customer,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isAuthenticated: store.state.authState.isAuthenticated,
+      customer: store.state.customerState.customer,
     );
   }
 }

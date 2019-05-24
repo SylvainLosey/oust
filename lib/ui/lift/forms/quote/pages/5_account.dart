@@ -9,7 +9,7 @@ import '../../../../presentation/form_wrapper.dart';
 import '../../../../forms/account_form.dart';
 
 class LiftQuoteFormAccount extends StatelessWidget {
-  static int step = 14;
+  static int step = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,12 @@ class LiftQuoteFormAccountVM extends AccountVM {
   static LiftQuoteFormAccountVM fromStore(Store<AppState> store) {
     return LiftQuoteFormAccountVM(
         form: store.state.liftQuoteFormState.liftQuoteForm,
-        previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
+        previousStep: () =>
+            store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm subscriptionForm) => store.dispatch(UpdateLiftQuoteForm(subscriptionForm)),
         submit: () {
-          store.dispatch(SubmitLiftQuoteFormRequest());
-          store.dispatch(LiftQuoteFormNextStep());
+          store.dispatch(LiftQuoteFormNextStep(isAuthenticated: store.state.authState.isAuthenticated));
         });
   }
 }

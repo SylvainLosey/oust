@@ -69,6 +69,8 @@ class NavMiddleware {
       // If we are at postcodes and previously user has entered an uncovered postcode, push him to 100 track
       if (pushCounter == LiftQuoteFormAddress.step && currentStep >= LiftQuoteFormLead.step) {
         pushCounter = LiftQuoteFormLead.step;
+      } else if (store.state.authState.isAuthenticated && pushCounter == LiftQuoteFormFloor.step) {
+        pushCounter = pushCounter + 2;
       } else {
         pushCounter++;
       }

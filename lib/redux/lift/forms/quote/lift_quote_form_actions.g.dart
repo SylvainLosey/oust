@@ -9,21 +9,26 @@ part of 'lift_quote_form_actions.dart';
 LiftQuoteFormNextStep _$LiftQuoteFormNextStepFromJson(
     Map<String, dynamic> json) {
   return LiftQuoteFormNextStep(
+      isAuthenticated: json['isAuthenticated'] as bool,
       liftIsUnavailable: json['liftIsUnavailable'] as bool);
 }
 
 Map<String, dynamic> _$LiftQuoteFormNextStepToJson(
         LiftQuoteFormNextStep instance) =>
-    <String, dynamic>{'liftIsUnavailable': instance.liftIsUnavailable};
+    <String, dynamic>{
+      'isAuthenticated': instance.isAuthenticated,
+      'liftIsUnavailable': instance.liftIsUnavailable
+    };
 
 LiftQuoteFormPreviousStep _$LiftQuoteFormPreviousStepFromJson(
     Map<String, dynamic> json) {
-  return LiftQuoteFormPreviousStep();
+  return LiftQuoteFormPreviousStep(
+      isAuthenticated: json['isAuthenticated'] as bool);
 }
 
 Map<String, dynamic> _$LiftQuoteFormPreviousStepToJson(
         LiftQuoteFormPreviousStep instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{'isAuthenticated': instance.isAuthenticated};
 
 LiftQuoteFormStart _$LiftQuoteFormStartFromJson(Map<String, dynamic> json) {
   return LiftQuoteFormStart();

@@ -109,6 +109,12 @@ class _$LiftSerializer implements StructuredSerializer<Lift> {
         ..add(serializers.serialize(object.roundsCompatible,
             specifiedType: const FullType(bool)));
     }
+    if (object.created != null) {
+      result
+        ..add('created')
+        ..add(serializers.serialize(object.created,
+            specifiedType: const FullType(DateTime)));
+    }
 
     return result;
   }
@@ -186,6 +192,10 @@ class _$LiftSerializer implements StructuredSerializer<Lift> {
           result.roundsCompatible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'created':
+          result.created = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
       }
     }
 
@@ -224,6 +234,8 @@ class _$Lift extends Lift {
   final bool flexible;
   @override
   final bool roundsCompatible;
+  @override
+  final DateTime created;
 
   factory _$Lift([void Function(LiftBuilder) updates]) =>
       (new LiftBuilder()..update(updates)).build();
@@ -243,7 +255,8 @@ class _$Lift extends Lift {
       this.estimatedDuration,
       this.estimatedPrice,
       this.flexible,
-      this.roundsCompatible})
+      this.roundsCompatible,
+      this.created})
       : super._();
 
   @override
@@ -271,7 +284,8 @@ class _$Lift extends Lift {
         estimatedDuration == other.estimatedDuration &&
         estimatedPrice == other.estimatedPrice &&
         flexible == other.flexible &&
-        roundsCompatible == other.roundsCompatible;
+        roundsCompatible == other.roundsCompatible &&
+        created == other.created;
   }
 
   @override
@@ -289,21 +303,28 @@ class _$Lift extends Lift {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc($jc(0, id.hashCode),
-                                                            customer.hashCode),
-                                                        status.hashCode),
-                                                    address.hashCode),
-                                                postcode.hashCode),
-                                            position.hashCode),
-                                        floor.hashCode),
-                                    elevator.hashCode),
-                                note.hashCode),
-                            customerNote.hashCode),
-                        estimatedEmployees.hashCode),
-                    estimatedDuration.hashCode),
-                estimatedPrice.hashCode),
-            flexible.hashCode),
-        roundsCompatible.hashCode));
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    id
+                                                                        .hashCode),
+                                                                customer
+                                                                    .hashCode),
+                                                            status.hashCode),
+                                                        address.hashCode),
+                                                    postcode.hashCode),
+                                                position.hashCode),
+                                            floor.hashCode),
+                                        elevator.hashCode),
+                                    note.hashCode),
+                                customerNote.hashCode),
+                            estimatedEmployees.hashCode),
+                        estimatedDuration.hashCode),
+                    estimatedPrice.hashCode),
+                flexible.hashCode),
+            roundsCompatible.hashCode),
+        created.hashCode));
   }
 
   @override
@@ -323,7 +344,8 @@ class _$Lift extends Lift {
           ..add('estimatedDuration', estimatedDuration)
           ..add('estimatedPrice', estimatedPrice)
           ..add('flexible', flexible)
-          ..add('roundsCompatible', roundsCompatible))
+          ..add('roundsCompatible', roundsCompatible)
+          ..add('created', created))
         .toString();
   }
 }
@@ -396,6 +418,10 @@ class LiftBuilder implements Builder<Lift, LiftBuilder> {
   set roundsCompatible(bool roundsCompatible) =>
       _$this._roundsCompatible = roundsCompatible;
 
+  DateTime _created;
+  DateTime get created => _$this._created;
+  set created(DateTime created) => _$this._created = created;
+
   LiftBuilder();
 
   LiftBuilder get _$this {
@@ -415,6 +441,7 @@ class LiftBuilder implements Builder<Lift, LiftBuilder> {
       _estimatedPrice = _$v.estimatedPrice;
       _flexible = _$v.flexible;
       _roundsCompatible = _$v.roundsCompatible;
+      _created = _$v.created;
       _$v = null;
     }
     return this;
@@ -453,7 +480,8 @@ class LiftBuilder implements Builder<Lift, LiftBuilder> {
               estimatedDuration: estimatedDuration,
               estimatedPrice: estimatedPrice,
               flexible: flexible,
-              roundsCompatible: roundsCompatible);
+              roundsCompatible: roundsCompatible,
+              created: created);
     } catch (_) {
       String _$failedField;
       try {

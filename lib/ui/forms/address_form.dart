@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../../data/models/postcode.dart';
+import '../../data/models/customer.dart';
 import '../../utils/layout.dart';
 import '../presentation/layout/title_form_button_layout.dart';
 import '../presentation/title_widget.dart';

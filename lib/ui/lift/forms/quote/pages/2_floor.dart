@@ -14,6 +14,8 @@ import '../../../../presentation/form_wrapper.dart';
 import '../../../../../redux/lift/forms/quote/lift_quote_form_actions.dart';
 
 class LiftQuoteFormFloor extends StatelessWidget {
+  static int step = 2;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -162,8 +164,9 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        nextStep: () => store.dispatch(LiftQuoteFormNextStep()),
-        previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
+        nextStep: () => store.dispatch(LiftQuoteFormNextStep(isAuthenticated: store.state.authState.isAuthenticated)),
+        previousStep: () =>
+            store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         onChanged: (LiftQuoteForm liftQuoteform) => store.dispatch(UpdateLiftQuoteForm(liftQuoteform)),
         liftQuoteForm: store.state.liftQuoteFormState.liftQuoteForm,

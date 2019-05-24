@@ -60,6 +60,9 @@ abstract class Lift implements Built<Lift, LiftBuilder> {
   @BuiltValueField(wireName: 'rounds_compatible')
   bool get roundsCompatible;
 
+  @nullable
+  DateTime get created;
+
   Lift._();
 
   factory Lift([void Function(LiftBuilder) updates]) = _$Lift;

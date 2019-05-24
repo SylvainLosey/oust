@@ -9,14 +9,17 @@ part 'lift_quote_form_actions.g.dart';
 
 @JsonSerializable()
 class LiftQuoteFormNextStep {
+  bool isAuthenticated;
   bool liftIsUnavailable;
 
-  LiftQuoteFormNextStep({this.liftIsUnavailable = false});
+  LiftQuoteFormNextStep({@required this.isAuthenticated, this.liftIsUnavailable = false});
   Map<String, dynamic> toJson() => _$LiftQuoteFormNextStepToJson(this);
 }
 
 @JsonSerializable()
 class LiftQuoteFormPreviousStep {
+  bool isAuthenticated;
+  LiftQuoteFormPreviousStep({@required this.isAuthenticated});
   Map<String, dynamic> toJson() => _$LiftQuoteFormPreviousStepToJson(this);
 }
 

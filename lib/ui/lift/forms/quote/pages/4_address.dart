@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../../../../data/models/postcode.dart';
+import '../../../../../data/models/customer.dart';
 import '../../../../../data/models/lift_quote_form.dart';
 import '../../../../../redux/app/app_state.dart';
 import '../../../../../redux/lift/forms/quote/lift_quote_form_actions.dart';
@@ -11,7 +12,7 @@ import '../../../../presentation/form_wrapper.dart';
 import '../../../../forms/address_form.dart';
 
 class LiftQuoteFormAddress extends StatelessWidget {
-  static int step = 5;
+  static int step = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +46,13 @@ class LiftQuoteFormAddressVM extends AddressFormVM {
             selectedPostcode: selectedPostcode);
 
   static LiftQuoteFormAddressVM fromStore(Store<AppState> store) => LiftQuoteFormAddressVM(
-      nextStep: (Postcode selectedPostcode) =>
-          store.dispatch(LiftQuoteFormNextStep(liftIsUnavailable: !selectedPostcode.subscriptionAvailable)),
-      previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
+      nextStep: (Postcode selectedPostcode) {
+        store.dispatch(LiftQuoteFormNextStep(
+            liftIsUnavailable: !selectedPostcode.subscriptionAvailable,
+            isAuthenticated: store.state.authState.isAuthenticated));
+      },
+      previousStep: () =>
+          store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
       exit: () => store.dispatch(LiftQuoteFormExit()),
       onChanged: (LiftQuoteForm liftQuoteForm) => store.dispatch(UpdateLiftQuoteForm(liftQuoteForm)),
       postcodes: store.state.dataState.postcodes,

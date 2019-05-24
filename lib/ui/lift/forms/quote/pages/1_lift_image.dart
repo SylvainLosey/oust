@@ -174,8 +174,9 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        nextStep: () => store.dispatch(LiftQuoteFormNextStep()),
-        previousStep: () => store.dispatch(LiftQuoteFormPreviousStep()),
+        nextStep: () => store.dispatch(LiftQuoteFormNextStep(isAuthenticated: store.state.authState.isAuthenticated)),
+        previousStep: () =>
+            store.dispatch(LiftQuoteFormPreviousStep(isAuthenticated: store.state.authState.isAuthenticated)),
         exit: () => store.dispatch(LiftQuoteFormExit()),
         images: store.state.liftQuoteFormState.liftQuoteForm.images,
         addLiftImage: (Asset image) => store.dispatch(AddLiftImage(image: image, uuid: Uuid().v4())),
