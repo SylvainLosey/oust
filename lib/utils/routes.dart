@@ -4,11 +4,13 @@ import '../ui/app/main_screen.dart';
 import '../ui/subscription/form/info/subscription_form_infos.dart';
 import '../ui/subscription/form/page/subscription_form_pages.dart';
 import '../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
+import '../ui/lift/lift_detail_screen.dart';
 
 // Se store steps inside a static int of the class to be able to reorder steps and not lose conditional navigation
 Map<String, WidgetBuilder> getRoutes(BuildContext context) {
   final routes = <String, WidgetBuilder>{
     '/': (BuildContext context) => MainScreen(),
+    '/lift/detail/': (BuildContext context) => LiftDetailScreen(),
 
     // NEW SUBSCRIPTION FORM
     for (var i = 0; i < subscriptionFormPages.length; i++)

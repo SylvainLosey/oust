@@ -107,3 +107,34 @@ CreateLiftImageFailure _$CreateLiftImageFailureFromJson(
 Map<String, dynamic> _$CreateLiftImageFailureToJson(
         CreateLiftImageFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+ViewLiftDetail _$ViewLiftDetailFromJson(Map<String, dynamic> json) {
+  return ViewLiftDetail(liftId: json['liftId'] as int);
+}
+
+Map<String, dynamic> _$ViewLiftDetailToJson(ViewLiftDetail instance) =>
+    <String, dynamic>{'liftId': instance.liftId};
+
+RefuseLiftRequest _$RefuseLiftRequestFromJson(Map<String, dynamic> json) {
+  return RefuseLiftRequest(
+      lift: json['lift'] == null
+          ? null
+          : Lift.fromJson(json['lift'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$RefuseLiftRequestToJson(RefuseLiftRequest instance) =>
+    <String, dynamic>{'lift': instance.lift};
+
+RefuseLiftSuccess _$RefuseLiftSuccessFromJson(Map<String, dynamic> json) {
+  return RefuseLiftSuccess();
+}
+
+Map<String, dynamic> _$RefuseLiftSuccessToJson(RefuseLiftSuccess instance) =>
+    <String, dynamic>{};
+
+RefuseLiftFailure _$RefuseLiftFailureFromJson(Map<String, dynamic> json) {
+  return RefuseLiftFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$RefuseLiftFailureToJson(RefuseLiftFailure instance) =>
+    <String, dynamic>{'error': instance.error};

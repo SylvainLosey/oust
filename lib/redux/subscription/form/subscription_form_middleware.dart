@@ -34,6 +34,8 @@ class SubscriptionFormMiddleware {
           return 'subscription_standard';
         case 4:
           return 'subscription_basic';
+        default:
+          return '';
       }
     }
 

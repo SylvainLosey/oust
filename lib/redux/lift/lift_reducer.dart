@@ -9,16 +9,30 @@ import 'lift_state.dart';
 import 'lift_actions.dart';
 
 Reducer<LiftState> liftReducer = combineReducers([
-  TypedReducer<LiftState, LoadLiftsRequest>(_loadLiftsRequest),
+  TypedReducer<LiftState, LoadLiftsRequest>(_incrementFetchCount),
   TypedReducer<LiftState, LoadLiftsSuccess>(_loadLiftsSuccess),
   TypedReducer<LiftState, LoadLiftsFailure>(_loadLiftsFailure),
-  TypedReducer<LiftState, LoadLiftImagesRequest>(_loadLiftImagesRequest),
+  TypedReducer<LiftState, LoadLiftImagesRequest>(_incrementFetchCount),
   TypedReducer<LiftState, LoadLiftImagesSuccess>(_loadLiftImagesSuccess),
   TypedReducer<LiftState, LoadLiftImagesFailure>(_loadLiftImagesFailure),
+  TypedReducer<LiftState, ViewLiftDetail>(_viewLiftDetail),
+  TypedReducer<LiftState, RefuseLiftRequest>(_incrementFetchCount),
+  TypedReducer<LiftState, RefuseLiftSuccess>(_decrementFetchCount),
+  TypedReducer<LiftState, RefuseLiftFailure>(_setError),
 ]);
 
-LiftState _loadLiftsRequest(LiftState state, LoadLiftsRequest action) {
+LiftState _incrementFetchCount(LiftState state, dynamic action) {
   return state.rebuild((b) => b..fetchCount = state.fetchCount + 1);
+}
+
+LiftState _decrementFetchCount(LiftState state, dynamic action) {
+  return state.rebuild((b) => b..fetchCount = state.fetchCount - 1);
+}
+
+LiftState _setError(LiftState state, dynamic action) {
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount - 1
+    ..error = action.error);
 }
 
 LiftState _loadLiftsSuccess(LiftState state, LoadLiftsSuccess action) {
@@ -37,10 +51,6 @@ LiftState _loadLiftsFailure(LiftState state, LoadLiftsFailure action) {
     ..error = action.error);
 }
 
-LiftState _loadLiftImagesRequest(LiftState state, LoadLiftImagesRequest action) {
-  return state.rebuild((b) => b..fetchCount = state.fetchCount + 1);
-}
-
 LiftState _loadLiftImagesSuccess(LiftState state, LoadLiftImagesSuccess action) {
   return state.rebuild((b) => b
     ..fetchCount = state.fetchCount - 1
@@ -55,4 +65,8 @@ LiftState _loadLiftImagesFailure(LiftState state, LoadLiftImagesFailure action) 
   return state.rebuild((b) => b
     ..fetchCount = state.fetchCount - 1
     ..error = action.error);
+}
+
+LiftState _viewLiftDetail(LiftState state, ViewLiftDetail action) {
+  return state.rebuild((b) => b..selectedId = action.liftId);
 }

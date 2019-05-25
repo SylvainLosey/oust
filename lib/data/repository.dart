@@ -135,6 +135,10 @@ class Repository {
     return await client.post('/lifts/', body: lift.toJson());
   }
 
+  Future<dynamic> updateLift(Lift lift) async {
+    return await client.patch('/lifts/${lift.id}/', body: lift.toJson());
+  }
+
   Future<List<dynamic>> fetchLiftImages(int customerId) async {
     return await client.get('/liftimages/?customer=$customerId/');
   }

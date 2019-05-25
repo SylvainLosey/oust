@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:oust/redux/lift/lift_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -35,8 +36,16 @@ class LiftHome extends StatelessWidget {
               padding: EdgeInsets.all(Layout.of(context).gridUnit(1)),
               child: Column(
                 children: <Widget>[
-                  RaisedButton(
-                      child: Text('Nouveau', style: TextStyle(color: Colors.white)), onPressed: viewModel.newLift),
+                  Container(height: Layout.of(context).gridUnit(3)),
+                  Row(
+                    children: <Widget>[
+                      Text('Passages uniques',
+                          style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.w600)),
+                      Spacer(),
+                      OutlineButton(child: Text('Nouveau'), onPressed: viewModel.newLift),
+                      Container(width: Layout.of(context).gridUnit(1))
+                    ],
+                  ),
                   Container(height: Layout.of(context).gridUnit(3)),
                   Expanded(
                     child: ListView.builder(
@@ -44,7 +53,10 @@ class LiftHome extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final Lift lift = viewModel.lifts[keys[index]];
 
-                          return LiftCard(lift: lift, image: _getFirstImage(lift: lift, images: viewModel.liftImages));
+                          return LiftCard(
+                              lift: lift,
+                              image: _getFirstImage(lift: lift, images: viewModel.liftImages),
+                              onPressed: () => viewModel.viewLiftDetail(lift.id));
                         }),
                   )
                 ],
@@ -70,14 +82,16 @@ class _ViewModel {
   final BuiltMap<int, Lift> lifts;
   final BuiltMap<int, LiftImage> liftImages;
   final Function newLift;
+  final Function viewLiftDetail;
 
-  _ViewModel({this.liftState, this.lifts, this.liftImages, this.newLift});
+  _ViewModel({this.liftState, this.lifts, this.liftImages, this.newLift, this.viewLiftDetail});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         liftState: store.state.liftState,
         lifts: store.state.liftState.lifts,
         liftImages: store.state.liftState.liftImages,
-        newLift: () => store.dispatch(LiftQuoteFormStart()));
+        newLift: () => store.dispatch(LiftQuoteFormStart()),
+        viewLiftDetail: (int liftId) => store.dispatch(ViewLiftDetail(liftId: liftId)));
   }
 }

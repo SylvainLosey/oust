@@ -19,6 +19,9 @@ abstract class LiftState implements Built<LiftState, LiftStateBuilder> {
   String get error;
 
   @nullable
+  int get selectedId;
+
+  @nullable
   BuiltMap<int, Lift> get lifts;
 
   @nullable

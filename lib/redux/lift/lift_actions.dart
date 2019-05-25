@@ -110,3 +110,33 @@ class CreateLiftImageFailure {
 
   Map<String, dynamic> toJson() => _$CreateLiftImageFailureToJson(this);
 }
+
+@JsonSerializable()
+class ViewLiftDetail {
+  final int liftId;
+  ViewLiftDetail({this.liftId});
+
+  Map<String, dynamic> toJson() => _$ViewLiftDetailToJson(this);
+}
+
+@JsonSerializable()
+class RefuseLiftRequest {
+  @JsonKey(fromJson: Lift.fromJson)
+  final Lift lift;
+
+  RefuseLiftRequest({this.lift});
+  Map<String, dynamic> toJson() => _$RefuseLiftRequestToJson(this);
+}
+
+@JsonSerializable()
+class RefuseLiftSuccess {
+  Map<String, dynamic> toJson() => _$RefuseLiftSuccessToJson(this);
+}
+
+@JsonSerializable()
+class RefuseLiftFailure {
+  final String error;
+
+  RefuseLiftFailure({this.error});
+  Map<String, dynamic> toJson() => _$RefuseLiftFailureToJson(this);
+}

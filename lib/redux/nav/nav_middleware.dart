@@ -6,6 +6,7 @@ import '../lift/forms/quote/lift_quote_form_actions.dart';
 import '../app/app_state.dart';
 import '../../ui/subscription/form/page/subscription_form_pages.dart';
 import '../../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
+import '../lift/lift_actions.dart';
 
 class NavMiddleware {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -22,6 +23,7 @@ class NavMiddleware {
       TypedMiddleware<AppState, LiftQuoteFormNextStep>(_liftQuoteFormNextStep),
       TypedMiddleware<AppState, LiftQuoteFormPreviousStep>(formPreviousStep),
       TypedMiddleware<AppState, LiftQuoteFormExit>(_formExit),
+      TypedMiddleware<AppState, ViewLiftDetail>(_viewLiftDetail),
     ];
   }
 
@@ -104,5 +106,11 @@ class NavMiddleware {
     next(action);
 
     navigatorKey.currentState.popUntil(ModalRoute.withName('/'));
+  }
+
+  void _viewLiftDetail(Store<AppState> store, ViewLiftDetail action, NextDispatcher next) async {
+    next(action);
+
+    navigatorKey.currentState.pushNamed('/lift/detail/');
   }
 }
