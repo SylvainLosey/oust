@@ -17,7 +17,8 @@ class DateSerializer implements PrimitiveSerializer<DateTime> {
 
   @override
   Object serialize(Serializers serializers, DateTime dateTime, {FullType specifiedType = FullType.unspecified}) {
-    return dateTime.toString().substring(0,10);
+    // return dateTime.toString().substring(0,10);
+    return dateTime.toString();
   }
 }
 

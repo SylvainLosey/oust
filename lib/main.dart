@@ -39,7 +39,7 @@ void main() async {
     ...InvoiceMiddleware(repository).createInvoiceMiddleware(),
     ...LiftMiddleware(repository).createLiftMiddleware(),
     ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
-    ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
+    ...LiftBookFormMiddleware(repository).createLiftBookFormMiddleware(),
     remoteDevtools
   ]);
 

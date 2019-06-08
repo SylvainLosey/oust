@@ -34,3 +34,24 @@ class UpdateLiftBookForm {
   UpdateLiftBookForm(this.liftBookForm);
   Map<String, dynamic> toJson() => _$UpdateLiftBookFormToJson(this);
 }
+
+@JsonSerializable()
+class LoadLiftSlotsRequest {
+  Map<String, dynamic> toJson() => _$LoadLiftSlotsRequestToJson(this);
+}
+
+@JsonSerializable()
+class LoadLiftSlotsSuccess {
+  final List<DateTime> liftSlots;
+
+  LoadLiftSlotsSuccess({this.liftSlots});
+  Map<String, dynamic> toJson() => _$LoadLiftSlotsSuccessToJson(this);
+}
+
+@JsonSerializable()
+class LoadLiftSlotsFailure {
+  final String error;
+
+  LoadLiftSlotsFailure({this.error});
+  Map<String, dynamic> toJson() => _$LoadLiftSlotsFailureToJson(this);
+}

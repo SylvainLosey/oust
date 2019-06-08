@@ -193,4 +193,8 @@ class Repository {
 
     return await client.post('/subscriptions/available_start_dates/', body: body, auth: false);
   }
+
+  Future<dynamic> fetchLiftSlots(int liftId) async {
+    return await client.get('/lifts/$liftId/available_lift_slots/');
+  }
 }

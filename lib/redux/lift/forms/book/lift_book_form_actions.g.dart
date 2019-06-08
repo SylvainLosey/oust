@@ -45,3 +45,33 @@ UpdateLiftBookForm _$UpdateLiftBookFormFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UpdateLiftBookFormToJson(UpdateLiftBookForm instance) =>
     <String, dynamic>{'liftBookForm': instance.liftBookForm};
+
+LoadLiftSlotsRequest _$LoadLiftSlotsRequestFromJson(Map<String, dynamic> json) {
+  return LoadLiftSlotsRequest();
+}
+
+Map<String, dynamic> _$LoadLiftSlotsRequestToJson(
+        LoadLiftSlotsRequest instance) =>
+    <String, dynamic>{};
+
+LoadLiftSlotsSuccess _$LoadLiftSlotsSuccessFromJson(Map<String, dynamic> json) {
+  return LoadLiftSlotsSuccess(
+      liftSlots: (json['liftSlots'] as List)
+          ?.map((e) => e == null ? null : DateTime.parse(e as String))
+          ?.toList());
+}
+
+Map<String, dynamic> _$LoadLiftSlotsSuccessToJson(
+        LoadLiftSlotsSuccess instance) =>
+    <String, dynamic>{
+      'liftSlots':
+          instance.liftSlots?.map((e) => e?.toIso8601String())?.toList()
+    };
+
+LoadLiftSlotsFailure _$LoadLiftSlotsFailureFromJson(Map<String, dynamic> json) {
+  return LoadLiftSlotsFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$LoadLiftSlotsFailureToJson(
+        LoadLiftSlotsFailure instance) =>
+    <String, dynamic>{'error': instance.error};

@@ -9,6 +9,8 @@ Reducer<LiftBookFormState> liftBookFormReducer = combineReducers([
   TypedReducer<LiftBookFormState, LiftBookFormNextStep>(_nextStep),
   TypedReducer<LiftBookFormState, LiftBookFormPreviousStep>(_previousStep),
   TypedReducer<LiftBookFormState, UpdateLiftBookForm>(_update),
+  TypedReducer<LiftBookFormState, LoadLiftSlotsSuccess>(_loadLiftSlotsSuccess),
+  TypedReducer<LiftBookFormState, LoadLiftSlotsFailure>(_loadLiftSlotsFailure),
 ]);
 
 LiftBookFormState _start(LiftBookFormState state, LiftBookFormStart action) {
@@ -31,4 +33,18 @@ LiftBookFormState _previousStep(LiftBookFormState state, LiftBookFormPreviousSte
 
 LiftBookFormState _update(LiftBookFormState state, UpdateLiftBookForm action) {
   return state.rebuild((LiftBookFormStateBuilder b) => b..liftBookForm.replace(action.liftBookForm));
+}
+
+LiftBookFormState _loadLiftSlotsSuccess(LiftBookFormState state, LoadLiftSlotsSuccess action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..liftBookForm.replace(state.liftBookForm.rebuild((b) => b
+      ..liftSlots.replace(action.liftSlots)
+      ..selectedLiftSlot = null)));
+}
+
+LiftBookFormState _loadLiftSlotsFailure(LiftBookFormState state, LoadLiftSlotsFailure action) {
+  return state.rebuild((b) => b
+    ..isLoading = false
+    ..error = action.error);
 }
