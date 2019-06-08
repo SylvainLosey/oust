@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 
 import '../subscription/form/subscription_form_actions.dart';
 import '../lift/forms/quote/lift_quote_form_actions.dart';
+import '../lift/forms/book/lift_book_form_actions.dart';
 import '../app/app_state.dart';
 import '../../ui/subscription/form/page/subscription_form_pages.dart';
 import '../../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
@@ -24,6 +25,10 @@ class NavMiddleware {
       TypedMiddleware<AppState, LiftQuoteFormPreviousStep>(formPreviousStep),
       TypedMiddleware<AppState, LiftQuoteFormExit>(_formExit),
       TypedMiddleware<AppState, ViewLiftDetail>(_viewLiftDetail),
+      TypedMiddleware<AppState, LiftBookFormStart>(_liftBookFormStart),
+      TypedMiddleware<AppState, LiftBookFormNextStep>(_liftBookFormNextStep),
+      TypedMiddleware<AppState, LiftBookFormPreviousStep>(formPreviousStep),
+      TypedMiddleware<AppState, LiftBookFormExit>(_formExit),
     ];
   }
 
@@ -79,6 +84,20 @@ class NavMiddleware {
     }
   }
 
+  void _liftBookFormStart(Store<AppState> store, LiftBookFormStart action, NextDispatcher next) async {
+    next(action);
+
+    final int currentStep = store.state.liftBookFormState.liftBookForm.currentStep;
+    int pushCounter = 1;
+
+    while (pushCounter <= currentStep) {
+      final String route = '/lift/form/book/$pushCounter';
+      navigatorKey.currentState.pushNamed(route);
+
+      pushCounter++;
+    }
+  }
+
   // NEXT STEP
   void _subscriptionFormNextStep(Store<AppState> store, SubscriptionFormNextStep action, NextDispatcher next) async {
     next(action);
@@ -91,6 +110,13 @@ class NavMiddleware {
     next(action);
 
     final String route = '/lift/form/quote/${store.state.liftQuoteFormState.liftQuoteForm.currentStep}';
+    navigatorKey.currentState.pushNamed(route);
+  }
+
+  void _liftBookFormNextStep(Store<AppState> store, LiftBookFormNextStep action, NextDispatcher next) async {
+    next(action);
+
+    final String route = 'lift/form/book/${store.state.liftBookFormState.liftBookForm.currentStep}';
     navigatorKey.currentState.pushNamed(route);
   }
 

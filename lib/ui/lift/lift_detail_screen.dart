@@ -14,6 +14,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../redux/app/app_state.dart';
+import '../../redux/lift/forms/book/lift_book_form_actions.dart';
 import '../../data/models/lift.dart';
 import '../../data/models/lift_image.dart';
 import '../presentation/lift_status.dart';
@@ -101,27 +102,35 @@ class LiftDetailScreen extends StatelessWidget {
                         RaisedButton(
                             child: Container(
                                 width: 100,
-                                child: Center(
-                                    child: viewModel.fetchCount > 0
-                                        ? SpinKitThreeBounce(color: Colors.white)
-                                        : Text(
-                                            'Refuser',
-                                            style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
-                                          ))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons.clear, color: Colors.red),
+                                    Container(width: Layout.of(context).gridUnit(1)),
+                                    Text(
+                                      'Refuser',
+                                      style: Theme.of(context).textTheme.body1,
+                                    ),
+                                  ],
+                                )),
                             onPressed: viewModel.onRefuse,
-                            color: Colors.red[400]),
+                            color: Colors.white),
                         RaisedButton(
-                          color: Colors.lightGreen[600],
+                          color: Colors.white,
                           child: Container(
-                            width: 100,
-                            child: Center(
-                              child: Text(
-                                'Accepter',
-                                style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {},
+                              width: 100,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.check, color: Colors.green),
+                                  Container(width: Layout.of(context).gridUnit(1)),
+                                  Text(
+                                    'Accepter',
+                                    style: Theme.of(context).textTheme.body1,
+                                  ),
+                                ],
+                              )),
+                          onPressed: viewModel.onAccept,
                         )
                       ],
                     )
@@ -179,9 +188,10 @@ class _ViewModel {
   final Lift lift;
   final List<LiftImage> images;
   final Function onRefuse;
+  final Function onAccept;
   final int fetchCount;
 
-  _ViewModel({this.lift, this.images, this.onRefuse, this.fetchCount});
+  _ViewModel({this.lift, this.images, this.onRefuse, this.onAccept, this.fetchCount});
 
   static _ViewModel fromStore(Store<AppState> store) {
     List<LiftImage> _getLiftImages(Lift lift, BuiltMap<int, LiftImage> liftImages) {
@@ -194,8 +204,17 @@ class _ViewModel {
         lift: store.state.liftState.lifts[store.state.liftState.selectedId],
         images: _getLiftImages(
             store.state.liftState.lifts[store.state.liftState.selectedId], store.state.liftState.liftImages),
-        onRefuse: () =>
-            store.dispatch(RefuseLiftRequest(lift: store.state.liftState.lifts[store.state.liftState.selectedId])),
+        onRefuse: () {
+          final Lift lift =
+              store.state.liftState.lifts[store.state.liftState.selectedId].rebuild((b) => b..status = 'REFUSED');
+          store.dispatch(UpdateLiftRequest(lift: lift));
+        },
+        onAccept: () {
+          final Lift lift =
+              store.state.liftState.lifts[store.state.liftState.selectedId].rebuild((b) => b..status = 'ACCEPTED');
+          store.dispatch(UpdateLiftRequest(lift: lift));
+          store.dispatch(LiftBookFormStart());
+        },
         fetchCount: store.state.liftState.fetchCount);
   }
 }

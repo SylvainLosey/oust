@@ -32,12 +32,6 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(String), const FullType(LiftImage)])));
     }
-    if (object.noCustomerRequired != null) {
-      result
-        ..add('noCustomerRequired')
-        ..add(serializers.serialize(object.noCustomerRequired,
-            specifiedType: const FullType(bool)));
-    }
     if (object.firstName != null) {
       result
         ..add('firstName')
@@ -118,10 +112,6 @@ class _$LiftQuoteFormSerializer implements StructuredSerializer<LiftQuoteForm> {
                 const FullType(LiftImage)
               ])) as BuiltMap);
           break;
-        case 'noCustomerRequired':
-          result.noCustomerRequired = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'firstName':
           result.firstName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -171,8 +161,6 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   @override
   final BuiltMap<String, LiftImage> images;
   @override
-  final bool noCustomerRequired;
-  @override
   final String firstName;
   @override
   final String lastName;
@@ -197,7 +185,6 @@ class _$LiftQuoteForm extends LiftQuoteForm {
   _$LiftQuoteForm._(
       {this.currentStep,
       this.images,
-      this.noCustomerRequired,
       this.firstName,
       this.lastName,
       this.address,
@@ -222,7 +209,6 @@ class _$LiftQuoteForm extends LiftQuoteForm {
     return other is LiftQuoteForm &&
         currentStep == other.currentStep &&
         images == other.images &&
-        noCustomerRequired == other.noCustomerRequired &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         address == other.address &&
@@ -245,10 +231,8 @@ class _$LiftQuoteForm extends LiftQuoteForm {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc($jc(0, currentStep.hashCode),
-                                                images.hashCode),
-                                            noCustomerRequired.hashCode),
+                                        $jc($jc(0, currentStep.hashCode),
+                                            images.hashCode),
                                         firstName.hashCode),
                                     lastName.hashCode),
                                 address.hashCode),
@@ -265,7 +249,6 @@ class _$LiftQuoteForm extends LiftQuoteForm {
     return (newBuiltValueToStringHelper('LiftQuoteForm')
           ..add('currentStep', currentStep)
           ..add('images', images)
-          ..add('noCustomerRequired', noCustomerRequired)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('address', address)
@@ -291,11 +274,6 @@ class LiftQuoteFormBuilder
   MapBuilder<String, LiftImage> get images =>
       _$this._images ??= new MapBuilder<String, LiftImage>();
   set images(MapBuilder<String, LiftImage> images) => _$this._images = images;
-
-  bool _noCustomerRequired;
-  bool get noCustomerRequired => _$this._noCustomerRequired;
-  set noCustomerRequired(bool noCustomerRequired) =>
-      _$this._noCustomerRequired = noCustomerRequired;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -339,7 +317,6 @@ class LiftQuoteFormBuilder
     if (_$v != null) {
       _currentStep = _$v.currentStep;
       _images = _$v.images?.toBuilder();
-      _noCustomerRequired = _$v.noCustomerRequired;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _address = _$v.address;
@@ -375,7 +352,6 @@ class LiftQuoteFormBuilder
           new _$LiftQuoteForm._(
               currentStep: currentStep,
               images: _images?.build(),
-              noCustomerRequired: noCustomerRequired,
               firstName: firstName,
               lastName: lastName,
               address: address,

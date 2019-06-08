@@ -115,26 +115,29 @@ ViewLiftDetail _$ViewLiftDetailFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ViewLiftDetailToJson(ViewLiftDetail instance) =>
     <String, dynamic>{'liftId': instance.liftId};
 
-RefuseLiftRequest _$RefuseLiftRequestFromJson(Map<String, dynamic> json) {
-  return RefuseLiftRequest(
+UpdateLiftRequest _$UpdateLiftRequestFromJson(Map<String, dynamic> json) {
+  return UpdateLiftRequest(
       lift: json['lift'] == null
           ? null
           : Lift.fromJson(json['lift'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$RefuseLiftRequestToJson(RefuseLiftRequest instance) =>
+Map<String, dynamic> _$UpdateLiftRequestToJson(UpdateLiftRequest instance) =>
     <String, dynamic>{'lift': instance.lift};
 
-RefuseLiftSuccess _$RefuseLiftSuccessFromJson(Map<String, dynamic> json) {
-  return RefuseLiftSuccess();
+UpdateLiftSuccess _$UpdateLiftSuccessFromJson(Map<String, dynamic> json) {
+  return UpdateLiftSuccess(
+      lift: json['lift'] == null
+          ? null
+          : Lift.fromJson(json['lift'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$RefuseLiftSuccessToJson(RefuseLiftSuccess instance) =>
-    <String, dynamic>{};
+Map<String, dynamic> _$UpdateLiftSuccessToJson(UpdateLiftSuccess instance) =>
+    <String, dynamic>{'lift': instance.lift};
 
-RefuseLiftFailure _$RefuseLiftFailureFromJson(Map<String, dynamic> json) {
-  return RefuseLiftFailure(error: json['error'] as String);
+UpdateLiftFailure _$UpdateLiftFailureFromJson(Map<String, dynamic> json) {
+  return UpdateLiftFailure(error: json['error'] as String);
 }
 
-Map<String, dynamic> _$RefuseLiftFailureToJson(RefuseLiftFailure instance) =>
+Map<String, dynamic> _$UpdateLiftFailureToJson(UpdateLiftFailure instance) =>
     <String, dynamic>{'error': instance.error};

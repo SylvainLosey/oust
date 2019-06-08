@@ -14,6 +14,7 @@ import '../subscription/subscription_state.dart';
 import '../invoice/invoice_state.dart';
 import '../lift/lift_state.dart';
 import '../lift/forms/quote/lift_quote_form_state.dart';
+import '../lift/forms/book/lift_book_form_state.dart';
 
 part 'app_state.g.dart';
 
@@ -32,6 +33,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       invoiceState: InvoiceState(),
       liftState: LiftState(),
       liftQuoteFormState: LiftQuoteFormState(),
+      liftBookFormState: LiftBookFormState(),
     );
   }
 
@@ -47,6 +49,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   SubscriptionState get subscriptionState;
   LiftState get liftState;
   LiftQuoteFormState get liftQuoteFormState;
+  LiftBookFormState get liftBookFormState;
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(AppState.serializer, this);

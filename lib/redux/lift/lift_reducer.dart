@@ -2,9 +2,7 @@ import 'package:redux/redux.dart';
 
 import '../../data/models/lift.dart';
 import '../../data/models/lift_image.dart';
-import '../../data/models/lift_quote_form.dart';
 
-import 'forms/quote/lift_quote_form_reducer.dart';
 import 'lift_state.dart';
 import 'lift_actions.dart';
 
@@ -16,17 +14,13 @@ Reducer<LiftState> liftReducer = combineReducers([
   TypedReducer<LiftState, LoadLiftImagesSuccess>(_loadLiftImagesSuccess),
   TypedReducer<LiftState, LoadLiftImagesFailure>(_loadLiftImagesFailure),
   TypedReducer<LiftState, ViewLiftDetail>(_viewLiftDetail),
-  TypedReducer<LiftState, RefuseLiftRequest>(_incrementFetchCount),
-  TypedReducer<LiftState, RefuseLiftSuccess>(_decrementFetchCount),
-  TypedReducer<LiftState, RefuseLiftFailure>(_setError),
+  TypedReducer<LiftState, UpdateLiftRequest>(_incrementFetchCount),
+  TypedReducer<LiftState, UpdateLiftSuccess>(_updateLiftSuccess),
+  TypedReducer<LiftState, UpdateLiftFailure>(_setError),
 ]);
 
 LiftState _incrementFetchCount(LiftState state, dynamic action) {
   return state.rebuild((b) => b..fetchCount = state.fetchCount + 1);
-}
-
-LiftState _decrementFetchCount(LiftState state, dynamic action) {
-  return state.rebuild((b) => b..fetchCount = state.fetchCount - 1);
 }
 
 LiftState _setError(LiftState state, dynamic action) {
@@ -69,4 +63,10 @@ LiftState _loadLiftImagesFailure(LiftState state, LoadLiftImagesFailure action) 
 
 LiftState _viewLiftDetail(LiftState state, ViewLiftDetail action) {
   return state.rebuild((b) => b..selectedId = action.liftId);
+}
+
+LiftState _updateLiftSuccess(LiftState state, UpdateLiftSuccess action) {
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount - 1
+    ..lifts[action.lift.id] = action.lift);
 }

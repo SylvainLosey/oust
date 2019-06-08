@@ -12,6 +12,7 @@ import 'package:oust/redux/subscription/subscription_state.dart';
 import 'package:oust/redux/invoice/invoice_state.dart';
 import 'package:oust/redux/lift/lift_state.dart';
 import 'package:oust/redux/lift/forms/quote/lift_quote_form_state.dart';
+import 'package:oust/redux/lift/forms/book/lift_book_form_state.dart';
 
 import 'consumer_subscription.dart';
 import 'customer.dart';
@@ -29,6 +30,7 @@ import 'invoice_item.dart';
 import 'lift.dart';
 import 'lift_image.dart';
 import 'lift_quote_form.dart';
+import 'lift_book_form.dart';
 
 part 'serializers.g.dart';
 
@@ -48,6 +50,7 @@ part 'serializers.g.dart';
   Lift,
   LiftImage,
   LiftQuoteForm,
+  LiftBookForm,
   AuthState,
   CustomerState,
   SubscriptionState,
@@ -58,6 +61,7 @@ part 'serializers.g.dart';
   AppState,
   LiftState,
   LiftQuoteFormState,
+  LiftBookFormState,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DateSerializer())

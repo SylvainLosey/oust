@@ -12,7 +12,8 @@ class LiftStatus extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(0.5), vertical: 2),
         decoration: BoxDecoration(color: _getStatusColor(status), borderRadius: BorderRadius.all(Radius.circular(4))),
-        child: Text(_getStatusText(status), style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white)));
+        child: Text(_getStatusText(status),
+            style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white, fontSize: 12)));
   }
 
   String _getStatusText(String status) {
@@ -43,13 +44,13 @@ class LiftStatus extends StatelessWidget {
       case 'PRICED':
         return Colors.orange[300];
       case 'ACCEPTED':
-        return Colors.yellow[300];
+        return Colors.lightGreen;
       case 'SCHEDULED':
         return Colors.lightGreenAccent;
       case 'COMPLETED':
         return Colors.green[300];
       case 'REFUSED':
-        return Colors.grey[400];
+        return Colors.red[400];
       case 'CANCELED':
         return Colors.grey[400];
       default:

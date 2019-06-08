@@ -18,6 +18,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(InvoiceItem.serializer)
       ..add(InvoiceState.serializer)
       ..add(Lift.serializer)
+      ..add(LiftBookForm.serializer)
+      ..add(LiftBookFormState.serializer)
       ..add(LiftImage.serializer)
       ..add(LiftQuoteForm.serializer)
       ..add(LiftQuoteFormState.serializer)
@@ -33,6 +35,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(SubscriptionFormState.serializer)
       ..add(SubscriptionState.serializer)
       ..add(User.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DateTime)]),
+          () => new ListBuilder<DateTime>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DateTime)]),
           () => new ListBuilder<DateTime>())

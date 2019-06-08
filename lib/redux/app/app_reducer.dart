@@ -10,6 +10,7 @@ import '../data/data_reducer.dart';
 import '../invoice/invoice_reducer.dart';
 import '../lift/lift_reducer.dart';
 import '../lift/forms/quote/lift_quote_form_reducer.dart';
+import '../lift/forms/book/lift_book_form_reducer.dart';
 
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
@@ -26,5 +27,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..dataState.replace(dataReducer(state.dataState, action))
     ..invoiceState.replace(invoiceReducer(state.invoiceState, action))
     ..liftState.replace(liftReducer(state.liftState, action))
-    ..liftQuoteFormState.replace(liftQuoteFormReducer(state.liftQuoteFormState, action)));
+    ..liftQuoteFormState.replace(liftQuoteFormReducer(state.liftQuoteFormState, action))
+    ..liftBookFormState.replace(liftBookFormReducer(state.liftBookFormState, action)));
 }

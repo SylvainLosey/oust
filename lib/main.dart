@@ -17,6 +17,7 @@ import 'redux/data/data_middleware.dart';
 import 'redux/invoice/invoice_middleware.dart';
 import 'redux/lift/lift_middleware.dart';
 import 'redux/lift/forms/quote/lift_quote_form_middleware.dart';
+import 'redux/lift/forms/book/lift_book_form_middleware.dart';
 import 'data/repository.dart';
 
 void main() async {
@@ -37,6 +38,7 @@ void main() async {
     ...DataMiddleware(repository).createDataMiddleware(),
     ...InvoiceMiddleware(repository).createInvoiceMiddleware(),
     ...LiftMiddleware(repository).createLiftMiddleware(),
+    ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
     ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
     remoteDevtools
   ]);

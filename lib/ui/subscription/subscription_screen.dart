@@ -15,7 +15,7 @@ class SubscriptionScreen extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        if (viewModel.customer.hasSubscription) {
+        if (viewModel.customer != null && viewModel.customer.hasSubscription) {
           return SubscriptionHome();
         } else {
           return SubscriptionEmpty();

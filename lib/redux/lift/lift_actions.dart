@@ -120,23 +120,27 @@ class ViewLiftDetail {
 }
 
 @JsonSerializable()
-class RefuseLiftRequest {
+class UpdateLiftRequest {
   @JsonKey(fromJson: Lift.fromJson)
   final Lift lift;
 
-  RefuseLiftRequest({this.lift});
-  Map<String, dynamic> toJson() => _$RefuseLiftRequestToJson(this);
+  UpdateLiftRequest({this.lift});
+  Map<String, dynamic> toJson() => _$UpdateLiftRequestToJson(this);
 }
 
 @JsonSerializable()
-class RefuseLiftSuccess {
-  Map<String, dynamic> toJson() => _$RefuseLiftSuccessToJson(this);
+class UpdateLiftSuccess {
+  @JsonKey(fromJson: Lift.fromJson)
+  final Lift lift;
+
+  UpdateLiftSuccess({this.lift});
+  Map<String, dynamic> toJson() => _$UpdateLiftSuccessToJson(this);
 }
 
 @JsonSerializable()
-class RefuseLiftFailure {
+class UpdateLiftFailure {
   final String error;
 
-  RefuseLiftFailure({this.error});
-  Map<String, dynamic> toJson() => _$RefuseLiftFailureToJson(this);
+  UpdateLiftFailure({this.error});
+  Map<String, dynamic> toJson() => _$UpdateLiftFailureToJson(this);
 }

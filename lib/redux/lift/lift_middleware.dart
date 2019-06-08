@@ -16,7 +16,7 @@ class LiftMiddleware {
       TypedMiddleware<AppState, LoadLiftImagesRequest>(_loadLiftImagesRequest),
       TypedMiddleware<AppState, CreateLiftRequest>(_createLiftRequest),
       TypedMiddleware<AppState, CreateLiftImageRequest>(_createLiftImageRequest),
-      TypedMiddleware<AppState, RefuseLiftRequest>(_refuseLiftRequest),
+      TypedMiddleware<AppState, UpdateLiftRequest>(_updateLiftRequest),
     ];
   }
 
@@ -80,15 +80,14 @@ class LiftMiddleware {
     }
   }
 
-  void _refuseLiftRequest(Store<AppState> store, RefuseLiftRequest action, NextDispatcher next) async {
+  void _updateLiftRequest(Store<AppState> store, UpdateLiftRequest action, NextDispatcher next) async {
     next(action);
 
     try {
-      final dynamic data = await repository.updateLift(action.lift.rebuild((b) => b..status = 'REFUSED'));
-      print(data);
-      store.dispatch(RefuseLiftSuccess());
+      await repository.updateLift(action.lift);
+      store.dispatch(UpdateLiftSuccess(lift: action.lift));
     } catch (e) {
-      store.dispatch(RefuseLiftFailure(error: e.toString()));
+      store.dispatch(UpdateLiftFailure(error: e.toString()));
     }
   }
 }

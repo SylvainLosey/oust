@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:oust/redux/lift/forms/book/lift_book_form_actions.dart';
 
 import '../ui/app/main_screen.dart';
 import '../ui/subscription/form/info/subscription_form_infos.dart';
 import '../ui/subscription/form/page/subscription_form_pages.dart';
 import '../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
 import '../ui/lift/lift_detail_screen.dart';
+import '../ui/lift/forms/book/pages/lift_book_form_pages.dart';
 
 // Se store steps inside a static int of the class to be able to reorder steps and not lose conditional navigation
 Map<String, WidgetBuilder> getRoutes(BuildContext context) {
@@ -30,6 +32,9 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     // Unavailable in this postcode
     for (var i = 0; i < liftFormUnavailable.length; i++)
       '/lift/form/quote/${i + 100}': (context) => liftFormUnavailable[i],
+
+    // LIFT BOOK FORM
+    for (var i = 0; i < liftBookFormPages.length; i++) '/lift/form/book/${i + 1}': (context) => liftBookFormPages[i],
   };
 
   return routes;
@@ -78,4 +83,10 @@ List liftQuoteFormPages = [
 List liftFormUnavailable = [
   LiftQuoteFormLead(),
   LiftQuoteFormLeadSuccess(),
+];
+
+// LIFT - BOOK
+
+List liftBookFormPages = [
+  LiftBookFormAccess(),
 ];

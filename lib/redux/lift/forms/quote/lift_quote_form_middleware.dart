@@ -1,18 +1,15 @@
 import 'dart:async';
 
 import 'package:oust/redux/lift/lift_actions.dart';
-import 'package:oust/redux/subscription/form/subscription_form_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'lift_quote_form_actions.dart';
 import '../../../auth/auth_actions.dart';
 import '../../../customer/customer_actions.dart';
 import '../../../app/app_state.dart';
 import '../../../../data/models/lift_quote_form.dart';
-import '../../../../data/models/lift.dart';
 import '../../../../data/models/lift_image.dart';
 import '../../../../ui/lift/forms/quote/pages/lift_quote_form_pages.dart';
 

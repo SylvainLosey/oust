@@ -22,9 +22,6 @@ abstract class LiftQuoteForm implements Built<LiftQuoteForm, LiftQuoteFormBuilde
   BuiltMap<String, LiftImage> get images;
 
   @nullable
-  bool get noCustomerRequired;
-
-  @nullable
   String get firstName;
 
   @nullable
