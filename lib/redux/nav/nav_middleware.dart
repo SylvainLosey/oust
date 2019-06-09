@@ -116,7 +116,7 @@ class NavMiddleware {
   void _liftBookFormNextStep(Store<AppState> store, LiftBookFormNextStep action, NextDispatcher next) async {
     next(action);
 
-    final String route = 'lift/form/book/${store.state.liftBookFormState.liftBookForm.currentStep}';
+    final String route = '/lift/form/book/${store.state.liftBookFormState.liftBookForm.currentStep}';
     navigatorKey.currentState.pushNamed(route);
   }
 

@@ -18,9 +18,7 @@ class GradientButton extends StatelessWidget {
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               colors: <Color>[Color(0xFF23836D), Color(0xFF00B78E)]),
-          boxShadow: <BoxShadow>[
-            BoxShadow(spreadRadius: 3, blurRadius: 10, color: Colors.grey.withOpacity(0.4))
-          ]),
+          boxShadow: <BoxShadow>[BoxShadow(spreadRadius: 3, blurRadius: 10, color: Colors.grey.withOpacity(0.4))]),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -45,13 +43,10 @@ class OutlinedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Ink(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: primaryColor, width: 0.8)),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: primaryColor, width: 0.8)),
       child: InkWell(
-          onTap: onPressed,
-          child:
-              Container(padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8), child: child)),
+          onTap: onPressed, child: Container(padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8), child: child)),
     );
   }
 }

@@ -35,6 +35,14 @@ int yearsDelta(DateTime firstDateTime, DateTime secondDateTime) {
   return firstDateTime.year - secondDateTime.year;
 }
 
+String minToString(int minutes) {
+  if (minutes < 60) {
+    return '$minutes min';
+  } else {
+    return '${minutes ~/ 60}h${minutes % 60}';
+  }
+}
+
 String capitalize(String input) {
   if (input == null) {
     throw ArgumentError('string: $input');
@@ -45,10 +53,8 @@ String capitalize(String input) {
   return input[0].toUpperCase() + input.substring(1);
 }
 
-String minToString(int minutes) {
-  if (minutes < 60) {
-    return '$minutes min';
-  } else {
-    return '${minutes ~/ 60}h${minutes % 60}';
-  }
+List<DateTime> toUniqueDates(List<DateTime> datetimes) {
+  // Convert all Datetimes to a Date then return the unique ones
+  final dates = List<DateTime>.generate(datetimes.length, (int index) => dateTimeToDate(datetimes[index]));
+  return dates.toSet().toList();
 }
