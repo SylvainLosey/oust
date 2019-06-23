@@ -8,8 +8,12 @@ String weekdayAndDate(BuildContext context, DateTime date) {
   return '$weekday $formatedDate';
 }
 
-DateTime dateTimeToDate(DateTime date) {
-  return DateTime(date.year, date.month, date.day);
+DateTime dateTimeToDate(DateTime date, {bool utc = false}) {
+  if (utc) {
+    return DateTime.utc(date.year, date.month, date.day);
+  } else {
+    return DateTime(date.year, date.month, date.day);
+  }
 }
 
 int weekNumber(DateTime date) {

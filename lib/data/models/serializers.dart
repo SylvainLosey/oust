@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:oust/redux/app/app_state.dart';
 import 'package:oust/redux/auth/auth_state.dart';
 import 'package:oust/redux/customer/customer_state.dart';
@@ -64,7 +65,8 @@ part 'serializers.g.dart';
   LiftBookFormState,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
-      ..add(DateSerializer())
+      // ..add(DateSerializer())
       ..add(DecimalSerializer())
+      ..add(Iso8601DateTimeSerializer())
       ..addPlugin(StandardJsonPlugin()))
     .build();

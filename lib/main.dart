@@ -24,6 +24,7 @@ void main() async {
   // debugPaintSizeEnabled=true;
 
   final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.106:8000');
+  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.37:8000');
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   const Repository repository = Repository();
 

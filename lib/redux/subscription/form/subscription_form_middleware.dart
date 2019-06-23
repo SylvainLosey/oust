@@ -10,6 +10,7 @@ import '../../subscription/subscription_actions.dart';
 import '../../invoice/invoice_actions.dart';
 import '../../../data/models/subscription_form.dart';
 import '../../../data/repository.dart';
+import '../../../utils/datetime.dart';
 
 class SubscriptionFormMiddleware {
   final Repository repository;
@@ -66,8 +67,13 @@ class SubscriptionFormMiddleware {
     try {
       final dynamic data = await repository.fetchStartDates(
           address: action.address, postcode: action.postcode, frequency: action.frequency);
+
+      // Ok so the thing is, built_value wants dates to be stored in UTC. The API returns dates in format '2019-01-31'.
+      // Dart does not support Dates only DateTime. So if we just parse the result its gonna create a date in the local Time zone.
+      // Casting it to UTC will then CHANGE THE DATE in some cases which is not what we want. It is not possible to override parse to UTC.
+      // Solution is parsing to local time, then using custom a method to construct a UTC DateTime with only year, month and day.
       final List<DateTime> startDates =
-          List<DateTime>.from(data['dates'].map<dynamic>((dynamic x) => DateTime.parse(x)));
+          List<DateTime>.from(data['dates'].map<dynamic>((dynamic x) => dateTimeToDate(DateTime.parse(x), utc: true)));
       store.dispatch(LoadStartDatesSuccess(startDates: startDates));
     } catch (e) {
       store.dispatch(LoadStartDatesFailure(error: e.toString()));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:intl/intl.dart';
@@ -8,11 +9,11 @@ import '../../../../../redux/app/app_state.dart';
 import '../../../../../data/models/lift_book_form.dart';
 import '../../../../../utils/layout.dart';
 import '../../../../../utils/datetime.dart';
+import '../../../../../utils/colors.dart';
 import '../../../../presentation/layout/title_form_button_layout.dart';
 import '../../../../presentation/title_widget.dart';
 import '../../../../presentation/selectable.dart';
 import '../../../../presentation/main_app_bar.dart';
-import '../../../../presentation/form_wrapper.dart';
 import '../../../../../redux/lift/forms/book/lift_book_form_actions.dart';
 
 class LiftBookFormSlotPicker extends StatelessWidget {
@@ -34,15 +35,32 @@ class LiftBookFormSlotPicker extends StatelessWidget {
   }
 }
 
-class SlotPickerForm extends StatefulWidget {
+class SlotPickerForm extends StatelessWidget {
   final _ViewModel viewModel;
   SlotPickerForm(this.viewModel);
 
   @override
-  _SlotPickerFormState createState() => _SlotPickerFormState();
+  Widget build(BuildContext context) {
+    return TitleFormButton(
+        title: TitleWidget(
+            title: 'Date de passage', subtitle: 'Choisis quand est-ce que tu souhaite que l\'on passe chez toi.'),
+        form: viewModel.liftSlots == null ? SpinKitThreeBounce(color: primaryColor, size: 24) : SlotPicker(viewModel),
+        button: RaisedButton(
+          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+          onPressed: () {},
+        ));
+  }
 }
 
-class _SlotPickerFormState extends State<SlotPickerForm> {
+class SlotPicker extends StatefulWidget {
+  final _ViewModel viewModel;
+  SlotPicker(this.viewModel);
+
+  @override
+  _SlotPickerState createState() => _SlotPickerState();
+}
+
+class _SlotPickerState extends State<SlotPicker> {
   List<DateTime> dates;
   int currentDate = 0;
 
@@ -50,67 +68,60 @@ class _SlotPickerFormState extends State<SlotPickerForm> {
   Widget build(BuildContext context) {
     final currentLiftSlots = getSlotsFromDate(widget.viewModel.liftSlots.toList(), dates[currentDate]);
 
-    return TitleFormButton(
-        title: TitleWidget(
-            title: 'Date de passage', subtitle: 'Choisis quand est-ce que tu souhaite que l\'on passe chez toi.'),
-        form: Column(
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: _previousDate,
-                ),
-                Container(width: Layout.of(context).gridUnit(1)),
-                RaisedButton(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1)),
-                      child: Row(
-                        children: <Widget>[
-                          Text(weekdayAndDate(context, dates[currentDate]), style: Theme.of(context).textTheme.subhead),
-                          Container(width: Layout.of(context).gridUnit(2)),
-                          Icon(Icons.calendar_today, size: 16),
-                        ],
-                      ),
-                    ),
-                    onPressed: () => _selectDate(context),
-                    color: Colors.white),
-                Container(width: Layout.of(context).gridUnit(1)),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward),
-                  onPressed: _nextDate,
-                ),
-              ],
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: _previousDate,
             ),
-            Container(height: Layout.of(context).gridUnit(3)),
-            GridView.count(
-                shrinkWrap: true,
-                childAspectRatio: 1.65,
-                mainAxisSpacing: 4,
-                crossAxisCount: 4,
-                children: List.generate(currentLiftSlots.length, (int index) {
-                  final String time = DateFormat('kk:mm').format(currentLiftSlots[index]);
-                  final bool selected = widget.viewModel.selectedLiftSlot == currentLiftSlots[index];
-                  return SelectableItem(
-                      child: Center(
-                          child: Text(
-                        time,
-                        style: TextStyle(color: selected ? Colors.white : Colors.black),
-                      )),
-                      selected: selected,
-                      onTap: () => _onTap(selectedLiftSlot: currentLiftSlots[index]));
-                })),
+            Container(width: Layout.of(context).gridUnit(0.5)),
+            RaisedButton(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1)),
+                  child: Row(
+                    children: <Widget>[
+                      Text(weekdayAndDate(context, dates[currentDate]), style: Theme.of(context).textTheme.subhead),
+                      Container(width: Layout.of(context).gridUnit(2)),
+                      Icon(Icons.calendar_today, size: 16),
+                    ],
+                  ),
+                ),
+                onPressed: () => _selectDate(context),
+                color: Colors.white),
+            Container(width: Layout.of(context).gridUnit(0.5)),
+            IconButton(
+              icon: Icon(Icons.arrow_forward),
+              onPressed: _nextDate,
+            ),
           ],
         ),
-        button: RaisedButton(
-          child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-          onPressed: () {},
-        ));
+        Container(height: Layout.of(context).gridUnit(3)),
+        GridView.count(
+            shrinkWrap: true,
+            childAspectRatio: 1.5,
+            mainAxisSpacing: 4,
+            crossAxisCount: 4,
+            children: List.generate(currentLiftSlots.length, (int index) {
+              final String time = DateFormat('kk:mm').format(currentLiftSlots[index].toLocal());
+              final bool selected = widget.viewModel.selectedLiftSlot == currentLiftSlots[index];
+              return SelectableItem(
+                  child: Center(
+                      child: Text(
+                    time,
+                    style: TextStyle(color: selected ? Colors.white : Colors.black),
+                  )),
+                  selected: selected,
+                  onTap: () => _onTap(selectedLiftSlot: currentLiftSlots[index]));
+            })),
+      ],
+    );
   }
 
   void _nextDate() {
-    if (currentDate <= dates.length) {
+    if (currentDate < dates.length - 1) {
       setState(() {
         currentDate++;
       });
@@ -118,7 +129,7 @@ class _SlotPickerFormState extends State<SlotPickerForm> {
   }
 
   void _previousDate() {
-    if (currentDate >= 0) {
+    if (currentDate > 0) {
       setState(() {
         currentDate--;
       });
