@@ -23,15 +23,16 @@ class EditPickupNote extends StatelessWidget {
       distinct: true,
       converter: (Store<AppState> store) {
         return (String note) {
-          store.dispatch(UpdatePickupRequest(
-            pickup: pickup.rebuild((PickupBuilder b) => b..customerNote = note)
-          ));
+          store.dispatch(UpdatePickupRequest(pickup: pickup.rebuild((PickupBuilder b) => b..customerNote = note)));
           store.dispatch(LoadPickupsRequest(subscription: store.state.subscriptionState.subscription));
           Navigator.of(context).pop();
         };
       },
       builder: (BuildContext context, OnSaveCallback onSave) {
-        return EditPickupNoteForm(pickup, onSave,);
+        return EditPickupNoteForm(
+          pickup,
+          onSave,
+        );
       },
     );
   }
@@ -55,30 +56,27 @@ class EditPickupNoteFormState extends State<EditPickupNoteForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(),
-      body: TitleFormButton(
-        title: TitleWidget(
-          title: 'Passage du ${weekdayAndDate(context, widget.pickup.pickupDate)}',
-          subtitle: 'Si quelque chose sera un peu spécial pour ce passage, fais le nous savoir ici.'
-        ),
-        form: Form(
-          key: _formKey,
-          child : TextFormField(
-            initialValue: widget.pickup.customerNote,
-            onSaved: (String value) => _note = value,
-            decoration: InputDecoration(
-              labelText: 'Remarque',
+        appBar: MainAppBar(),
+        body: TitleFormButton(
+          title: TitleWidget(
+              title: 'Passage du ${weekdayAndDate(context, widget.pickup.pickupDate.toLocal())}',
+              subtitle: 'Si quelque chose sera un peu spécial pour ce passage, fais le nous savoir ici.'),
+          form: Form(
+            key: _formKey,
+            child: TextFormField(
+              initialValue: widget.pickup.customerNote,
+              onSaved: (String value) => _note = value,
+              decoration: InputDecoration(
+                labelText: 'Remarque',
+              ),
             ),
           ),
-        ),
-        button: RaisedButton(
-          child: Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-          onPressed: () {
-            _formKey.currentState.save();
-            widget.onSave(_note);
-          } 
-        ),
-      )
-    );
+          button: RaisedButton(
+              child: Text('Enregistrer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+              onPressed: () {
+                _formKey.currentState.save();
+                widget.onSave(_note);
+              }),
+        ));
   }
 }

@@ -78,8 +78,8 @@ class Repository {
     return await client.get('/subscriptions/?customer=$id/');
   }
 
-  Future<Map<String, dynamic>> createSubscription(Subscription subscription) async {
-    return await client.post('/subscriptions/', body: subscription.toJson());
+  Future<Map<String, dynamic>> createSubscription(Map<String, String> subscription) async {
+    return await client.post('/subscriptions/', body: subscription);
   }
 
   // CONSUMERSUBSCRIPTION

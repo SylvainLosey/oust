@@ -14,7 +14,7 @@ abstract class Subscription implements Built<Subscription, SubscriptionBuilder> 
   factory Subscription([updates(SubscriptionBuilder b)]) = _$Subscription;
 
   Subscription._();
-  
+
   @nullable
   String get address;
 

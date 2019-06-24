@@ -47,7 +47,7 @@ class SlotPickerForm extends StatelessWidget {
         form: viewModel.liftSlots == null ? SpinKitThreeBounce(color: primaryColor, size: 24) : SlotPicker(viewModel),
         button: RaisedButton(
           child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-          onPressed: () {},
+          onPressed: viewModel.selectedLiftSlot == null ? null : () {},
         ));
   }
 }
@@ -72,18 +72,22 @@ class _SlotPickerState extends State<SlotPicker> {
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: _previousDate,
-            ),
+            DateNavigationButton(
+                direction: 'previous',
+                active: currentDate - 1 >= 0,
+                onPressed: _previousDate,
+                dates: dates,
+                currentDate: currentDate),
             Container(width: Layout.of(context).gridUnit(0.5)),
             RaisedButton(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1)),
                   child: Row(
                     children: <Widget>[
-                      Text(weekdayAndDate(context, dates[currentDate]), style: Theme.of(context).textTheme.subhead),
+                      Text(capitalize(DateFormat.MMMMEEEEd().format(dates[currentDate])),
+                          style: Theme.of(context).textTheme.subhead),
                       Container(width: Layout.of(context).gridUnit(2)),
                       Icon(Icons.calendar_today, size: 16),
                     ],
@@ -92,10 +96,12 @@ class _SlotPickerState extends State<SlotPicker> {
                 onPressed: () => _selectDate(context),
                 color: Colors.white),
             Container(width: Layout.of(context).gridUnit(0.5)),
-            IconButton(
-              icon: Icon(Icons.arrow_forward),
-              onPressed: _nextDate,
-            ),
+            DateNavigationButton(
+                direction: 'next',
+                active: currentDate + 1 < dates.length,
+                onPressed: _nextDate,
+                dates: dates,
+                currentDate: currentDate),
           ],
         ),
         Container(height: Layout.of(context).gridUnit(3)),
@@ -167,6 +173,33 @@ class _SlotPickerState extends State<SlotPicker> {
   void initState() {
     dates = toUniqueDates(widget.viewModel.liftSlots.toList());
     super.initState();
+  }
+}
+
+class DateNavigationButton extends StatelessWidget {
+  final bool active;
+  final Function onPressed;
+  final String direction;
+  final List<DateTime> dates;
+  final int currentDate;
+
+  DateNavigationButton({this.active, this.onPressed, this.direction, this.dates, this.currentDate});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Column(
+      children: <Widget>[
+        IconButton(
+          icon: Icon(direction == 'previous' ? Icons.arrow_back : Icons.arrow_forward,
+              color: active ? Colors.grey[800] : Colors.grey[300]),
+          onPressed: active ? onPressed : null,
+        ),
+        if (active)
+          Text(DateFormat.MMMd().format(direction == 'previous' ? dates[currentDate - 1] : dates[currentDate + 1]),
+              style: TextStyle(color: Colors.grey[800], fontSize: 12))
+      ],
+    );
   }
 }
 

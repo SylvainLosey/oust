@@ -15,8 +15,7 @@ class PickupCard extends StatefulWidget {
   final Function onAddNote;
   final bool isExpandable;
 
-  PickupCard(
-      {this.pickup, this.onPushBack, this.onDelete, this.onAddNote, this.isExpandable = false});
+  PickupCard({this.pickup, this.onPushBack, this.onDelete, this.onAddNote, this.isExpandable = false});
 
   @override
   PickupCardState createState() => PickupCardState();
@@ -44,18 +43,16 @@ class PickupCardState extends State<PickupCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(_getWeekday(context, widget.pickup.pickupDate, widget.isExpandable),
+                  Text(_getWeekday(context, widget.pickup.pickupDate.toLocal(), widget.isExpandable),
                       style: Theme.of(context).textTheme.body2),
                   Spacer(flex: 20),
                   Text(
                       DateFormat.yMMMd(Localizations.localeOf(context).toString())
-                          .format(widget.pickup.pickupDate),
+                          .format(widget.pickup.pickupDate.toLocal()),
                       style: Theme.of(context).textTheme.body1),
                   Spacer(flex: 1),
-                  if (!isExpanded && widget.isExpandable)
-                    Icon(Icons.expand_more, size: 14, color: Colors.grey[400]),
-                  if (isExpanded && widget.isExpandable)
-                    Icon(Icons.expand_less, size: 14, color: Colors.grey[400]),
+                  if (!isExpanded && widget.isExpandable) Icon(Icons.expand_more, size: 14, color: Colors.grey[400]),
+                  if (isExpanded && widget.isExpandable) Icon(Icons.expand_less, size: 14, color: Colors.grey[400]),
                 ],
               ),
 
@@ -126,8 +123,7 @@ String _getWeekday(BuildContext context, DateTime date, bool isExpandable) {
   final int deltaDays = daysDelta(date, DateTime.now());
   final int deltaWeeks = weeksDelta(date, DateTime.now());
 
-  final String weekday =
-      capitalize(DateFormat.EEEE(Localizations.localeOf(context).toString()).format(date));
+  final String weekday = capitalize(DateFormat.EEEE(Localizations.localeOf(context).toString()).format(date));
 
   if (deltaDays < 0 || isExpandable) {
     return weekday;

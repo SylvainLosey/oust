@@ -14,7 +14,7 @@ class WebClient {
   // iOS Emulator
   static String baseUrl = 'http://localhost:5000/api';
   // iOS Device
-  // static String baseUrl = 'http://192.168.1.37:5000/api';
+  // static String baseUrl = 'http://10.55.60.19:5000/api';
 
   const WebClient();
 
