@@ -7,6 +7,7 @@ import 'package:built_value/serializer.dart';
 import '../../data/models/serializers.dart';
 import '../../data/models/lift.dart';
 import '../../data/models/lift_image.dart';
+import '../../data/models/lift_event.dart';
 import 'forms/quote/lift_quote_form_state.dart';
 
 part 'lift_state.g.dart';
@@ -26,6 +27,9 @@ abstract class LiftState implements Built<LiftState, LiftStateBuilder> {
 
   @nullable
   BuiltMap<int, LiftImage> get liftImages;
+
+  @nullable
+  BuiltMap<int, LiftEvent> get liftEvents;
 
   LiftState._();
 

@@ -55,3 +55,22 @@ class LoadLiftSlotsFailure {
   LoadLiftSlotsFailure({this.error});
   Map<String, dynamic> toJson() => _$LoadLiftSlotsFailureToJson(this);
 }
+
+// SUBMIT FORM
+@JsonSerializable()
+class SubmitLiftBookFormRequest {
+  Map<String, dynamic> toJson() => _$SubmitLiftBookFormRequestToJson(this);
+}
+
+@JsonSerializable()
+class SubmitLiftBookFormSuccess {
+  Map<String, dynamic> toJson() => _$SubmitLiftBookFormSuccessToJson(this);
+}
+
+@JsonSerializable()
+class SubmitLiftBookFormFailure {
+  final String error;
+
+  SubmitLiftBookFormFailure({this.error});
+  Map<String, dynamic> toJson() => _$SubmitLiftBookFormFailureToJson(this);
+}

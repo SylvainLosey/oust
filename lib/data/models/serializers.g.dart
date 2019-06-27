@@ -20,6 +20,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Lift.serializer)
       ..add(LiftBookForm.serializer)
       ..add(LiftBookFormState.serializer)
+      ..add(LiftEvent.serializer)
       ..add(LiftImage.serializer)
       ..add(LiftQuoteForm.serializer)
       ..add(LiftQuoteFormState.serializer)
@@ -70,6 +71,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(LiftImage)]),
           () => new MapBuilder<int, LiftImage>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(int), const FullType(LiftEvent)]),
+          () => new MapBuilder<int, LiftEvent>())
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(Package)]),

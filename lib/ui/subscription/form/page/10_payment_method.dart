@@ -5,11 +5,7 @@ import 'package:redux/redux.dart';
 import '../../../../redux/app/app_state.dart';
 import '../../../../data/models/subscription_form.dart';
 import '../../../../redux/subscription/form/subscription_form_actions.dart';
-import '../../../../utils/layout.dart';
-import '../../../presentation/layout/title_form_button_layout.dart';
-import '../../../presentation/main_app_bar.dart';
-import '../../../presentation/title_widget.dart';
-import '../../../presentation/selectable.dart';
+import '../../../forms/payment_method_form.dart';
 import '../../../presentation/form_wrapper.dart';
 
 class SubscriptionFormPaymentMethod extends StatelessWidget {
@@ -17,70 +13,37 @@ class SubscriptionFormPaymentMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
+    return StoreConnector<AppState, SubscriptionFormPaymentMethodVM>(
       distinct: true,
-      converter: (Store<AppState> store) => _ViewModel.fromStore(store),
-      builder: (BuildContext context, _ViewModel viewModel) {
+      converter: (Store<AppState> store) => SubscriptionFormPaymentMethodVM.fromStore(store),
+      builder: (BuildContext context, SubscriptionFormPaymentMethodVM viewModel) {
+        final List<Map<String, String>> paymentMethods = [
+          {'paymentMethod': 'emailInvoice', 'title': 'Facture email', 'text': 'Sans frais et pratique'},
+          {'paymentMethod': 'paperInvoice', 'title': 'Facture papier', 'text': '2.00 CHF par facture'},
+        ];
         return FormWrapper(
-            child: PaymentMethodForm(viewModel), onExit: viewModel.exit, onPreviousStep: viewModel.previousStep);
+            child: PaymentMethodForm(viewModel, paymentMethods),
+            onExit: viewModel.exit,
+            onPreviousStep: viewModel.previousStep);
       },
     );
   }
 }
 
-class PaymentMethodForm extends StatelessWidget {
-  final _ViewModel viewModel;
+class SubscriptionFormPaymentMethodVM extends PaymentMethodVM {
+  SubscriptionFormPaymentMethodVM(
+      {dynamic form, String paymentMethod, Function nextStep, Function previousStep, Function exit, Function onChanged})
+      : super(
+            form: form,
+            paymentMethod: paymentMethod,
+            nextStep: nextStep,
+            previousStep: previousStep,
+            exit: exit,
+            onChanged: onChanged);
 
-  PaymentMethodForm(this.viewModel);
-
-  @override
-  Widget build(BuildContext context) {
-    return TitleFormButton(
-        title: TitleWidget(title: 'Méthode de paiement', subtitle: 'Comment souhaites-tu payer ton abonnement?'),
-        form: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SelectableItem(
-                onTap: () => _onTap(paymentMethod: 'emailInvoice'),
-                title: 'Facture email',
-                text: 'Sans frais et pratique',
-                selected: viewModel.paymentMethod == 'emailInvoice'),
-            Container(height: Layout.of(context).gridUnit(1)),
-            SelectableItem(
-                onTap: () => _onTap(paymentMethod: 'paperInvoice'),
-                title: 'Facture papier',
-                text: '2.00 CHF par facture',
-                selected: viewModel.paymentMethod == 'paperInvoice'),
-          ],
-        ),
-        button: RaisedButton(
-            child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-            onPressed: viewModel.paymentMethod != null ? () => viewModel.nextStep() : null));
-  }
-
-  void _onTap({String paymentMethod}) {
-    if (paymentMethod != viewModel.paymentMethod) {
-      viewModel.onChanged(
-          viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = paymentMethod));
-    } else {
-      viewModel.onChanged(viewModel.subscriptionForm.rebuild((SubscriptionFormBuilder b) => b..paymentMethod = null));
-    }
-  }
-}
-
-class _ViewModel {
-  final SubscriptionForm subscriptionForm;
-  final String paymentMethod;
-  final Function nextStep;
-  final Function previousStep;
-  final Function exit;
-  final Function onChanged;
-
-  _ViewModel({this.subscriptionForm, this.paymentMethod, this.nextStep, this.previousStep, this.exit, this.onChanged});
-
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-        subscriptionForm: store.state.subscriptionFormState.subscriptionForm,
+  static SubscriptionFormPaymentMethodVM fromStore(Store<AppState> store) {
+    return SubscriptionFormPaymentMethodVM(
+        form: store.state.subscriptionFormState.subscriptionForm,
         paymentMethod: store.state.subscriptionFormState.subscriptionForm.paymentMethod,
         nextStep: () => store.dispatch(SubscriptionFormNextStep()),
         previousStep: () => store.dispatch(SubscriptionFormPreviousStep()),

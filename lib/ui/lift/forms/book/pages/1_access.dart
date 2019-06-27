@@ -44,29 +44,29 @@ class AccessForm extends StatelessWidget {
           SelectableItem(
             title: 'Il faut que je sois là',
             text: 'Les objets à débarasser sont à l’intérieur ou fermés à clés pas exemple',
-            onTap: () => _onTap(noCustomerRequired: false),
-            selected: viewModel.noCustomerRequired == false,
+            onTap: () => _onTap(flexible: false),
+            selected: viewModel.flexible == false,
           ),
           Container(height: Layout.of(context).gridUnit(1)),
           SelectableItem(
             title: 'Je n’ai pas besoin d’être là',
             text: 'Les objets à débarasser sont devant votre porte par exemple ',
-            onTap: () => _onTap(noCustomerRequired: true),
-            selected: viewModel.noCustomerRequired == true,
+            onTap: () => _onTap(flexible: true),
+            selected: viewModel.flexible == true,
           ),
         ],
       ),
       button: RaisedButton(
           child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-          onPressed: viewModel.noCustomerRequired != null ? viewModel.nextStep : null),
+          onPressed: viewModel.flexible != null ? viewModel.nextStep : null),
     );
   }
 
-  void _onTap({bool noCustomerRequired}) {
-    if (noCustomerRequired != viewModel.noCustomerRequired) {
-      viewModel.onChanged(viewModel.liftBookForm.rebuild((b) => b..noCustomerRequired = noCustomerRequired));
+  void _onTap({bool flexible}) {
+    if (flexible != viewModel.flexible) {
+      viewModel.onChanged(viewModel.liftBookForm.rebuild((b) => b..flexible = flexible));
     } else {
-      viewModel.onChanged(viewModel.liftBookForm.rebuild((b) => b..noCustomerRequired = null));
+      viewModel.onChanged(viewModel.liftBookForm.rebuild((b) => b..flexible = null));
     }
   }
 }
@@ -77,9 +77,9 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
   final LiftBookForm liftBookForm;
-  final bool noCustomerRequired;
+  final bool flexible;
 
-  _ViewModel({this.nextStep, this.previousStep, this.exit, this.onChanged, this.liftBookForm, this.noCustomerRequired});
+  _ViewModel({this.nextStep, this.previousStep, this.exit, this.onChanged, this.liftBookForm, this.flexible});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
@@ -88,6 +88,6 @@ class _ViewModel {
         exit: () => store.dispatch(LiftBookFormExit()),
         onChanged: (LiftBookForm liftBookform) => store.dispatch(UpdateLiftBookForm(liftBookform)),
         liftBookForm: store.state.liftBookFormState.liftBookForm,
-        noCustomerRequired: store.state.liftBookFormState.liftBookForm.noCustomerRequired);
+        flexible: store.state.liftBookFormState.liftBookForm.flexible);
   }
 }

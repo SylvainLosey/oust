@@ -30,6 +30,7 @@ import 'invoice.dart';
 import 'invoice_item.dart';
 import 'lift.dart';
 import 'lift_image.dart';
+import 'lift_event.dart';
 import 'lift_quote_form.dart';
 import 'lift_book_form.dart';
 
@@ -50,6 +51,7 @@ part 'serializers.g.dart';
   InvoiceItem,
   Lift,
   LiftImage,
+  LiftEvent,
   LiftQuoteForm,
   LiftBookForm,
   AuthState,

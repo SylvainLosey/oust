@@ -75,3 +75,30 @@ LoadLiftSlotsFailure _$LoadLiftSlotsFailureFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$LoadLiftSlotsFailureToJson(
         LoadLiftSlotsFailure instance) =>
     <String, dynamic>{'error': instance.error};
+
+SubmitLiftBookFormRequest _$SubmitLiftBookFormRequestFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftBookFormRequest();
+}
+
+Map<String, dynamic> _$SubmitLiftBookFormRequestToJson(
+        SubmitLiftBookFormRequest instance) =>
+    <String, dynamic>{};
+
+SubmitLiftBookFormSuccess _$SubmitLiftBookFormSuccessFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftBookFormSuccess();
+}
+
+Map<String, dynamic> _$SubmitLiftBookFormSuccessToJson(
+        SubmitLiftBookFormSuccess instance) =>
+    <String, dynamic>{};
+
+SubmitLiftBookFormFailure _$SubmitLiftBookFormFailureFromJson(
+    Map<String, dynamic> json) {
+  return SubmitLiftBookFormFailure(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$SubmitLiftBookFormFailureToJson(
+        SubmitLiftBookFormFailure instance) =>
+    <String, dynamic>{'error': instance.error};

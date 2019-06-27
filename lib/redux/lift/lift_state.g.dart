@@ -50,6 +50,13 @@ class _$LiftStateSerializer implements StructuredSerializer<LiftState> {
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(int), const FullType(LiftImage)])));
     }
+    if (object.liftEvents != null) {
+      result
+        ..add('liftEvents')
+        ..add(serializers.serialize(object.liftEvents,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(int), const FullType(LiftEvent)])));
+    }
 
     return result;
   }
@@ -91,6 +98,13 @@ class _$LiftStateSerializer implements StructuredSerializer<LiftState> {
                 const FullType(LiftImage)
               ])) as BuiltMap);
           break;
+        case 'liftEvents':
+          result.liftEvents.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(LiftEvent)
+              ])) as BuiltMap);
+          break;
       }
     }
 
@@ -109,6 +123,8 @@ class _$LiftState extends LiftState {
   final BuiltMap<int, Lift> lifts;
   @override
   final BuiltMap<int, LiftImage> liftImages;
+  @override
+  final BuiltMap<int, LiftEvent> liftEvents;
 
   factory _$LiftState([void Function(LiftStateBuilder) updates]) =>
       (new LiftStateBuilder()..update(updates)).build();
@@ -118,7 +134,8 @@ class _$LiftState extends LiftState {
       this.error,
       this.selectedId,
       this.lifts,
-      this.liftImages})
+      this.liftImages,
+      this.liftEvents})
       : super._();
 
   @override
@@ -136,17 +153,20 @@ class _$LiftState extends LiftState {
         error == other.error &&
         selectedId == other.selectedId &&
         lifts == other.lifts &&
-        liftImages == other.liftImages;
+        liftImages == other.liftImages &&
+        liftEvents == other.liftEvents;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, fetchCount.hashCode), error.hashCode),
-                selectedId.hashCode),
-            lifts.hashCode),
-        liftImages.hashCode));
+            $jc(
+                $jc($jc($jc(0, fetchCount.hashCode), error.hashCode),
+                    selectedId.hashCode),
+                lifts.hashCode),
+            liftImages.hashCode),
+        liftEvents.hashCode));
   }
 
   @override
@@ -156,7 +176,8 @@ class _$LiftState extends LiftState {
           ..add('error', error)
           ..add('selectedId', selectedId)
           ..add('lifts', lifts)
-          ..add('liftImages', liftImages))
+          ..add('liftImages', liftImages)
+          ..add('liftEvents', liftEvents))
         .toString();
   }
 }
@@ -187,6 +208,12 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
   set liftImages(MapBuilder<int, LiftImage> liftImages) =>
       _$this._liftImages = liftImages;
 
+  MapBuilder<int, LiftEvent> _liftEvents;
+  MapBuilder<int, LiftEvent> get liftEvents =>
+      _$this._liftEvents ??= new MapBuilder<int, LiftEvent>();
+  set liftEvents(MapBuilder<int, LiftEvent> liftEvents) =>
+      _$this._liftEvents = liftEvents;
+
   LiftStateBuilder();
 
   LiftStateBuilder get _$this {
@@ -196,6 +223,7 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
       _selectedId = _$v.selectedId;
       _lifts = _$v.lifts?.toBuilder();
       _liftImages = _$v.liftImages?.toBuilder();
+      _liftEvents = _$v.liftEvents?.toBuilder();
       _$v = null;
     }
     return this;
@@ -224,7 +252,8 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
               error: error,
               selectedId: selectedId,
               lifts: _lifts?.build(),
-              liftImages: _liftImages?.build());
+              liftImages: _liftImages?.build(),
+              liftEvents: _liftEvents?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -232,6 +261,8 @@ class LiftStateBuilder implements Builder<LiftState, LiftStateBuilder> {
         _lifts?.build();
         _$failedField = 'liftImages';
         _liftImages?.build();
+        _$failedField = 'liftEvents';
+        _liftEvents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'LiftState', _$failedField, e.toString());

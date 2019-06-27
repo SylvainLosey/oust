@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import '../../data/models/lift.dart';
 import '../../data/models/lift_image.dart';
+import '../../data/models/lift_event.dart';
 
 import 'lift_state.dart';
 import 'lift_actions.dart';
@@ -13,10 +14,16 @@ Reducer<LiftState> liftReducer = combineReducers([
   TypedReducer<LiftState, LoadLiftImagesRequest>(_incrementFetchCount),
   TypedReducer<LiftState, LoadLiftImagesSuccess>(_loadLiftImagesSuccess),
   TypedReducer<LiftState, LoadLiftImagesFailure>(_loadLiftImagesFailure),
+  TypedReducer<LiftState, LoadLiftEventsRequest>(_incrementFetchCount),
+  TypedReducer<LiftState, LoadLiftEventsSuccess>(_loadLiftEventsSuccess),
+  TypedReducer<LiftState, LoadLiftEventsFailure>(_loadLiftEventsFailure),
   TypedReducer<LiftState, ViewLiftDetail>(_viewLiftDetail),
   TypedReducer<LiftState, UpdateLiftRequest>(_incrementFetchCount),
   TypedReducer<LiftState, UpdateLiftSuccess>(_updateLiftSuccess),
   TypedReducer<LiftState, UpdateLiftFailure>(_setError),
+  TypedReducer<LiftState, CreateLiftEventRequest>(_createLiftEventRequest),
+  TypedReducer<LiftState, CreateLiftEventSuccess>(_createLiftEventSuccess),
+  TypedReducer<LiftState, CreateLiftEventFailure>(_setError),
 ]);
 
 LiftState _incrementFetchCount(LiftState state, dynamic action) {
@@ -27,6 +34,14 @@ LiftState _setError(LiftState state, dynamic action) {
   return state.rebuild((b) => b
     ..fetchCount = state.fetchCount - 1
     ..error = action.error);
+}
+
+LiftState _createLiftEventRequest(LiftState state, dynamic action) {
+  return state.rebuild((b) => b..fetchCount = state.fetchCount + 1);
+}
+
+LiftState _createLiftEventSuccess(LiftState state, dynamic action) {
+  return state.rebuild((b) => b..fetchCount = state.fetchCount - 1);
 }
 
 LiftState _loadLiftsSuccess(LiftState state, LoadLiftsSuccess action) {
@@ -56,6 +71,22 @@ LiftState _loadLiftImagesSuccess(LiftState state, LoadLiftImagesSuccess action) 
 }
 
 LiftState _loadLiftImagesFailure(LiftState state, LoadLiftImagesFailure action) {
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount - 1
+    ..error = action.error);
+}
+
+LiftState _loadLiftEventsSuccess(LiftState state, LoadLiftEventsSuccess action) {
+  return state.rebuild((b) => b
+    ..fetchCount = state.fetchCount - 1
+    ..liftEvents.replace(Map<int, LiftEvent>.fromIterable(
+      action.liftEvents,
+      key: (dynamic liftEvent) => liftEvent.id,
+      value: (dynamic liftEvent) => liftEvent,
+    )));
+}
+
+LiftState _loadLiftEventsFailure(LiftState state, LoadLiftEventsFailure action) {
   return state.rebuild((b) => b
     ..fetchCount = state.fetchCount - 1
     ..error = action.error);

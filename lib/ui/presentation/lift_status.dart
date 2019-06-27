@@ -46,7 +46,7 @@ class LiftStatus extends StatelessWidget {
       case 'ACCEPTED':
         return Colors.lightGreen;
       case 'SCHEDULED':
-        return Colors.lightGreenAccent;
+        return Colors.lightGreen;
       case 'COMPLETED':
         return Colors.green[300];
       case 'REFUSED':

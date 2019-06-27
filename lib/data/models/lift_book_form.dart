@@ -15,13 +15,16 @@ abstract class LiftBookForm implements Built<LiftBookForm, LiftBookFormBuilder> 
   int get currentStep;
 
   @nullable
-  bool get noCustomerRequired;
+  bool get flexible;
 
   @nullable
   BuiltList<DateTime> get liftSlots;
 
   @nullable
   DateTime get selectedLiftSlot;
+
+  @nullable
+  String get paymentMethod;
 
   LiftBookForm._();
 

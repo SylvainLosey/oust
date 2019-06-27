@@ -47,7 +47,7 @@ class SlotPickerForm extends StatelessWidget {
         form: viewModel.liftSlots == null ? SpinKitThreeBounce(color: primaryColor, size: 24) : SlotPicker(viewModel),
         button: RaisedButton(
           child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-          onPressed: viewModel.selectedLiftSlot == null ? null : () {},
+          onPressed: viewModel.selectedLiftSlot == null ? null : viewModel.nextStep,
         ));
   }
 }
@@ -209,7 +209,7 @@ class _ViewModel {
   final Function exit;
   final Function onChanged;
   final LiftBookForm liftBookForm;
-  final bool noCustomerRequired;
+  final bool flexible;
   final BuiltList<DateTime> liftSlots;
   final DateTime selectedLiftSlot;
 
@@ -219,7 +219,7 @@ class _ViewModel {
       this.exit,
       this.onChanged,
       this.liftBookForm,
-      this.noCustomerRequired,
+      this.flexible,
       this.liftSlots,
       this.selectedLiftSlot});
 
@@ -230,7 +230,7 @@ class _ViewModel {
         exit: () => store.dispatch(LiftBookFormExit()),
         onChanged: (LiftBookForm liftBookform) => store.dispatch(UpdateLiftBookForm(liftBookform)),
         liftBookForm: store.state.liftBookFormState.liftBookForm,
-        noCustomerRequired: store.state.liftBookFormState.liftBookForm.noCustomerRequired,
+        flexible: store.state.liftBookFormState.liftBookForm.flexible,
         liftSlots: store.state.liftBookFormState.liftBookForm.liftSlots,
         selectedLiftSlot: store.state.liftBookFormState.liftBookForm.selectedLiftSlot);
   }

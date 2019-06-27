@@ -25,10 +25,10 @@ class _$LiftBookFormSerializer implements StructuredSerializer<LiftBookForm> {
         ..add(serializers.serialize(object.currentStep,
             specifiedType: const FullType(int)));
     }
-    if (object.noCustomerRequired != null) {
+    if (object.flexible != null) {
       result
-        ..add('noCustomerRequired')
-        ..add(serializers.serialize(object.noCustomerRequired,
+        ..add('flexible')
+        ..add(serializers.serialize(object.flexible,
             specifiedType: const FullType(bool)));
     }
     if (object.liftSlots != null) {
@@ -43,6 +43,12 @@ class _$LiftBookFormSerializer implements StructuredSerializer<LiftBookForm> {
         ..add('selectedLiftSlot')
         ..add(serializers.serialize(object.selectedLiftSlot,
             specifiedType: const FullType(DateTime)));
+    }
+    if (object.paymentMethod != null) {
+      result
+        ..add('paymentMethod')
+        ..add(serializers.serialize(object.paymentMethod,
+            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -63,8 +69,8 @@ class _$LiftBookFormSerializer implements StructuredSerializer<LiftBookForm> {
           result.currentStep = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'noCustomerRequired':
-          result.noCustomerRequired = serializers.deserialize(value,
+        case 'flexible':
+          result.flexible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'liftSlots':
@@ -75,6 +81,10 @@ class _$LiftBookFormSerializer implements StructuredSerializer<LiftBookForm> {
         case 'selectedLiftSlot':
           result.selectedLiftSlot = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'paymentMethod':
+          result.paymentMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -87,20 +97,23 @@ class _$LiftBookForm extends LiftBookForm {
   @override
   final int currentStep;
   @override
-  final bool noCustomerRequired;
+  final bool flexible;
   @override
   final BuiltList<DateTime> liftSlots;
   @override
   final DateTime selectedLiftSlot;
+  @override
+  final String paymentMethod;
 
   factory _$LiftBookForm([void Function(LiftBookFormBuilder) updates]) =>
       (new LiftBookFormBuilder()..update(updates)).build();
 
   _$LiftBookForm._(
       {this.currentStep,
-      this.noCustomerRequired,
+      this.flexible,
       this.liftSlots,
-      this.selectedLiftSlot})
+      this.selectedLiftSlot,
+      this.paymentMethod})
       : super._();
 
   @override
@@ -115,26 +128,30 @@ class _$LiftBookForm extends LiftBookForm {
     if (identical(other, this)) return true;
     return other is LiftBookForm &&
         currentStep == other.currentStep &&
-        noCustomerRequired == other.noCustomerRequired &&
+        flexible == other.flexible &&
         liftSlots == other.liftSlots &&
-        selectedLiftSlot == other.selectedLiftSlot;
+        selectedLiftSlot == other.selectedLiftSlot &&
+        paymentMethod == other.paymentMethod;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, currentStep.hashCode), noCustomerRequired.hashCode),
-            liftSlots.hashCode),
-        selectedLiftSlot.hashCode));
+        $jc(
+            $jc($jc($jc(0, currentStep.hashCode), flexible.hashCode),
+                liftSlots.hashCode),
+            selectedLiftSlot.hashCode),
+        paymentMethod.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LiftBookForm')
           ..add('currentStep', currentStep)
-          ..add('noCustomerRequired', noCustomerRequired)
+          ..add('flexible', flexible)
           ..add('liftSlots', liftSlots)
-          ..add('selectedLiftSlot', selectedLiftSlot))
+          ..add('selectedLiftSlot', selectedLiftSlot)
+          ..add('paymentMethod', paymentMethod))
         .toString();
   }
 }
@@ -147,10 +164,9 @@ class LiftBookFormBuilder
   int get currentStep => _$this._currentStep;
   set currentStep(int currentStep) => _$this._currentStep = currentStep;
 
-  bool _noCustomerRequired;
-  bool get noCustomerRequired => _$this._noCustomerRequired;
-  set noCustomerRequired(bool noCustomerRequired) =>
-      _$this._noCustomerRequired = noCustomerRequired;
+  bool _flexible;
+  bool get flexible => _$this._flexible;
+  set flexible(bool flexible) => _$this._flexible = flexible;
 
   ListBuilder<DateTime> _liftSlots;
   ListBuilder<DateTime> get liftSlots =>
@@ -163,14 +179,20 @@ class LiftBookFormBuilder
   set selectedLiftSlot(DateTime selectedLiftSlot) =>
       _$this._selectedLiftSlot = selectedLiftSlot;
 
+  String _paymentMethod;
+  String get paymentMethod => _$this._paymentMethod;
+  set paymentMethod(String paymentMethod) =>
+      _$this._paymentMethod = paymentMethod;
+
   LiftBookFormBuilder();
 
   LiftBookFormBuilder get _$this {
     if (_$v != null) {
       _currentStep = _$v.currentStep;
-      _noCustomerRequired = _$v.noCustomerRequired;
+      _flexible = _$v.flexible;
       _liftSlots = _$v.liftSlots?.toBuilder();
       _selectedLiftSlot = _$v.selectedLiftSlot;
+      _paymentMethod = _$v.paymentMethod;
       _$v = null;
     }
     return this;
@@ -196,9 +218,10 @@ class LiftBookFormBuilder
       _$result = _$v ??
           new _$LiftBookForm._(
               currentStep: currentStep,
-              noCustomerRequired: noCustomerRequired,
+              flexible: flexible,
               liftSlots: _liftSlots?.build(),
-              selectedLiftSlot: selectedLiftSlot);
+              selectedLiftSlot: selectedLiftSlot,
+              paymentMethod: paymentMethod);
     } catch (_) {
       String _$failedField;
       try {

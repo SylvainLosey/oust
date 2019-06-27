@@ -49,6 +49,7 @@ class CustomerMiddleware {
       if (customer.hasLift) {
         store.dispatch(LoadLiftsRequest(customer: customer));
         store.dispatch(LoadLiftImagesRequest(customer: customer));
+        store.dispatch(LoadLiftEventsRequest(customer: customer));
       }
     } catch (e) {
       store.dispatch(LoadCustomerFailure(error: e.toString()));

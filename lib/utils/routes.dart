@@ -89,4 +89,6 @@ List liftFormUnavailable = [
 List liftBookFormPages = [
   LiftBookFormAccess(),
   LiftBookFormSlotPicker(),
+  LiftBookFormPaymentMethod(),
+  LiftBookFormSubmit(),
 ];

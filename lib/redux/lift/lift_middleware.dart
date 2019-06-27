@@ -4,6 +4,7 @@ import '../app/app_state.dart';
 import '../lift/lift_actions.dart';
 import '../../data/models/lift.dart';
 import '../../data/models/lift_image.dart';
+import '../../data/models/lift_event.dart';
 import '../../data/repository.dart';
 
 class LiftMiddleware {
@@ -14,9 +15,11 @@ class LiftMiddleware {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, LoadLiftsRequest>(_loadLiftsRequest),
       TypedMiddleware<AppState, LoadLiftImagesRequest>(_loadLiftImagesRequest),
+      TypedMiddleware<AppState, LoadLiftEventsRequest>(_loadLiftEventsRequest),
       TypedMiddleware<AppState, CreateLiftRequest>(_createLiftRequest),
       TypedMiddleware<AppState, CreateLiftImageRequest>(_createLiftImageRequest),
       TypedMiddleware<AppState, UpdateLiftRequest>(_updateLiftRequest),
+      TypedMiddleware<AppState, CreateLiftEventRequest>(_createLiftEventRequest)
     ];
   }
 
@@ -39,6 +42,17 @@ class LiftMiddleware {
       store.dispatch(LoadLiftImagesSuccess(liftImages: List<LiftImage>.from(data.map((x) => LiftImage.fromJson(x)))));
     } catch (e) {
       store.dispatch(LoadLiftImagesFailure(error: e.toString()));
+    }
+  }
+
+  void _loadLiftEventsRequest(Store<AppState> store, LoadLiftEventsRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      final List<dynamic> data = await repository.fetchLiftEvents(action.customer.id);
+      store.dispatch(LoadLiftEventsSuccess(liftEvents: List<LiftEvent>.from(data.map((x) => LiftEvent.fromJson(x)))));
+    } catch (e) {
+      store.dispatch(LoadLiftEventsFailure(error: e.toString()));
     }
   }
 
@@ -86,8 +100,34 @@ class LiftMiddleware {
     try {
       await repository.updateLift(action.lift);
       store.dispatch(UpdateLiftSuccess(lift: action.lift));
+      if (action.completer != null) {
+        action.completer.complete();
+      }
     } catch (e) {
       store.dispatch(UpdateLiftFailure(error: e.toString()));
+      if (action.completer != null) {
+        action.completer.completeError(e.toString());
+      }
+    }
+  }
+
+  void _createLiftEventRequest(Store<AppState> store, CreateLiftEventRequest action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      if (action.flexible) {
+        await repository.createFlexibleLiftEvent(liftId: action.lift.id, date: action.selectedLiftSlot);
+      } else {
+        await repository.createFixedLiftEvent(
+            liftId: action.lift.id,
+            start: action.selectedLiftSlot.toLocal(),
+            end: action.selectedLiftSlot.toLocal().add(Duration(minutes: action.lift.estimatedDuration)));
+      }
+      store.dispatch(CreateLiftEventSuccess());
+      action.completer.complete();
+    } catch (e) {
+      store.dispatch(CreateLiftEventFailure());
+      action.completer.completeError(e.toString());
     }
   }
 }

@@ -3,7 +3,6 @@ import 'dart:core';
 
 import 'web_client.dart';
 import 'models/customer.dart';
-import 'models/subscription.dart';
 import 'models/pickup.dart';
 import 'models/consumer_subscription.dart';
 import 'models/phone_number.dart';
@@ -143,8 +142,29 @@ class Repository {
     return await client.get('/liftimages/?customer=$customerId/');
   }
 
+  Future<List<dynamic>> fetchLiftEvents(int customerId) async {
+    return await client.get('/liftevents/?customer=$customerId/');
+  }
+
   Future<Map<String, dynamic>> createLiftImage(LiftImage liftImage) async {
     return await client.post('/liftimages/', body: liftImage.toJson());
+  }
+
+  Future<Map<String, dynamic>> createFixedLiftEvent({int liftId, DateTime start, DateTime end}) async {
+    return await client.post('/liftevents/', body: {
+      'flexible': false,
+      'lift': liftId,
+      'start': start.toIso8601String(),
+      'end': end.toIso8601String(),
+    });
+  }
+
+  Future<Map<String, dynamic>> createFlexibleLiftEvent({int liftId, DateTime date}) async {
+    return await client.post('/liftevents/', body: {
+      'flexbile': true,
+      'lift': liftId,
+      'date': date.toIso8601String(),
+    });
   }
 
   // POSTCODES

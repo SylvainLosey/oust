@@ -96,6 +96,8 @@ class LiftDetailScreen extends StatelessWidget {
                         duration: viewModel.lift.estimatedDuration,
                         price: viewModel.lift.estimatedPrice),
                     Container(height: Layout.of(context).gridUnit(3)),
+                  ],
+                  if (viewModel.lift.status == 'PRICED')
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -134,7 +136,6 @@ class LiftDetailScreen extends StatelessWidget {
                         )
                       ],
                     )
-                  ]
                 ],
               ),
             )
