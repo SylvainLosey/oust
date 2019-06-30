@@ -34,19 +34,19 @@ class _$LiftEventSerializer implements StructuredSerializer<LiftEvent> {
       result
         ..add('date')
         ..add(serializers.serialize(object.date,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(DateTime)));
     }
     if (object.start != null) {
       result
         ..add('start')
         ..add(serializers.serialize(object.start,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(DateTime)));
     }
     if (object.end != null) {
       result
         ..add('end')
         ..add(serializers.serialize(object.end,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(DateTime)));
     }
     if (object.eventId != null) {
       result
@@ -85,15 +85,15 @@ class _$LiftEventSerializer implements StructuredSerializer<LiftEvent> {
           break;
         case 'date':
           result.date = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
         case 'start':
           result.start = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
         case 'end':
           result.end = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
         case 'event_id':
           result.eventId = serializers.deserialize(value,
@@ -116,11 +116,11 @@ class _$LiftEvent extends LiftEvent {
   @override
   final bool flexible;
   @override
-  final String date;
+  final DateTime date;
   @override
-  final String start;
+  final DateTime start;
   @override
-  final String end;
+  final DateTime end;
   @override
   final String eventId;
   @override
@@ -198,17 +198,17 @@ class LiftEventBuilder implements Builder<LiftEvent, LiftEventBuilder> {
   bool get flexible => _$this._flexible;
   set flexible(bool flexible) => _$this._flexible = flexible;
 
-  String _date;
-  String get date => _$this._date;
-  set date(String date) => _$this._date = date;
+  DateTime _date;
+  DateTime get date => _$this._date;
+  set date(DateTime date) => _$this._date = date;
 
-  String _start;
-  String get start => _$this._start;
-  set start(String start) => _$this._start = start;
+  DateTime _start;
+  DateTime get start => _$this._start;
+  set start(DateTime start) => _$this._start = start;
 
-  String _end;
-  String get end => _$this._end;
-  set end(String end) => _$this._end = end;
+  DateTime _end;
+  DateTime get end => _$this._end;
+  set end(DateTime end) => _$this._end = end;
 
   String _eventId;
   String get eventId => _$this._eventId;

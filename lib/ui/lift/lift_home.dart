@@ -29,7 +29,7 @@ class LiftHome extends StatelessWidget {
           return ErrorText(error: viewModel.liftState.error);
         }
 
-        final List keys = viewModel.lifts.keys.toList();
+        final List keys = viewModel.lifts.keys.toList().reversed.toList();
 
         return SafeArea(
           child: Padding(
@@ -49,6 +49,7 @@ class LiftHome extends StatelessWidget {
                   Container(height: Layout.of(context).gridUnit(3)),
                   Expanded(
                     child: ListView.builder(
+                        // reverse: true,
                         itemCount: viewModel.lifts.length,
                         itemBuilder: (BuildContext context, int index) {
                           final Lift lift = viewModel.lifts[keys[index]];

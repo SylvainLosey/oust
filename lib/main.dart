@@ -19,12 +19,15 @@ import 'redux/lift/lift_middleware.dart';
 import 'redux/lift/forms/quote/lift_quote_form_middleware.dart';
 import 'redux/lift/forms/book/lift_book_form_middleware.dart';
 import 'data/repository.dart';
+import 'utils/globals.dart';
 
 void main() async {
-  // debugPaintSizeEnabled=true;
+  // Emulator
+  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('localhost:8000');
 
-  final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('localhost:8000');
-  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('192.168.1.37:8000');
+  // Physical device
+  final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('$ipAddress:8000');
+
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   const Repository repository = Repository();
 

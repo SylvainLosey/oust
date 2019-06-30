@@ -40,7 +40,7 @@ int yearsDelta(DateTime firstDateTime, DateTime secondDateTime) {
 }
 
 String minToString(int minutes) {
-  if (minutes < 60) {
+  if (minutes <= 60) {
     return '$minutes min';
   } else {
     return '${minutes ~/ 60}h${minutes % 60}';

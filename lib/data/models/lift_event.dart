@@ -18,15 +18,15 @@ abstract class LiftEvent implements Built<LiftEvent, LiftEventBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'date')
-  String get date;
+  DateTime get date;
 
   @nullable
   @BuiltValueField(wireName: 'start')
-  String get start;
+  DateTime get start;
 
   @nullable
   @BuiltValueField(wireName: 'end')
-  String get end;
+  DateTime get end;
 
   @nullable
   @BuiltValueField(wireName: 'event_id')

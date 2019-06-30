@@ -42,34 +42,36 @@ class SubscriptionHome extends StatelessWidget {
 
         final Pickup pickup = Pickup.getNextPickup(viewModel.pickups);
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _buildStack(context, viewModel),
-            Container(height: Layout.of(context).gridUnit(14)),
-            Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1.5)),
-                child: Text('Prochain passage', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
-            Container(height: Layout.of(context).gridUnit(2)),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(2)),
-              child: PickupCard(
-                  pickup: pickup,
-                  onPushBack: () => pushBackPickupDialog(
-                      context: context, onPushBackPickup: viewModel.onPushBackPickup, pickup: pickup),
-                  onDelete: () =>
-                      deletePickupDialog(context: context, onDeletePickup: viewModel.onDeletePickup, pickup: pickup),
-                  onAddNote: () => Navigator.push(
-                      context, MaterialPageRoute(builder: (BuildContext context) => EditPickupNote(pickup: pickup)))),
-            ),
-            Container(height: Layout.of(context).gridUnit(4)),
-            FlatButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PickupList()));
-                },
-                child: Text('Tous les passages'))
-          ],
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _buildStack(context, viewModel),
+              Container(height: Layout.of(context).gridUnit(14)),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(1.5)),
+                  child: Text('Prochain passage', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
+              Container(height: Layout.of(context).gridUnit(2)),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: Layout.of(context).gridUnit(2)),
+                child: PickupCard(
+                    pickup: pickup,
+                    onPushBack: () => pushBackPickupDialog(
+                        context: context, onPushBackPickup: viewModel.onPushBackPickup, pickup: pickup),
+                    onDelete: () =>
+                        deletePickupDialog(context: context, onDeletePickup: viewModel.onDeletePickup, pickup: pickup),
+                    onAddNote: () => Navigator.push(
+                        context, MaterialPageRoute(builder: (BuildContext context) => EditPickupNote(pickup: pickup)))),
+              ),
+              Container(height: Layout.of(context).gridUnit(4)),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PickupList()));
+                  },
+                  child: Text('Tous les passages'))
+            ],
+          ),
         );
       },
     );

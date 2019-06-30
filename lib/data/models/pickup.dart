@@ -1,10 +1,14 @@
 library pickup;
 
+import 'dart:convert';
+import 'package:intl/intl.dart';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import 'serializers.dart';
+import '../../utils/datetime.dart';
 
 part 'pickup.g.dart';
 
@@ -60,7 +64,10 @@ abstract class Pickup implements Built<Pickup, PickupBuilder> {
   bool get isInvoiced;
 
   Map<String, dynamic> toJson() {
-    return serializers.serializeWith(Pickup.serializer, this);
+    final Map<String, dynamic> serialized = serializers.serializeWith(Pickup.serializer, this);
+    // Serialize to date and not dateTime
+    serialized['pickup_date'] = DateFormat('yyyy-MM-dd').format(this.pickupDate.toLocal());
+    return serialized;
   }
 
   static Pickup fromJson(Map<String, dynamic> jsonString) {
@@ -89,9 +96,7 @@ abstract class Pickup implements Built<Pickup, PickupBuilder> {
     Pickup closestPickup;
     pickupsFromToday.forEach((int index, Pickup currentPickup) {
       closestPickup ??= currentPickup;
-      closestPickup = currentPickup.pickupDate.isAfter(closestPickup.pickupDate)
-          ? closestPickup
-          : currentPickup;
+      closestPickup = currentPickup.pickupDate.isAfter(closestPickup.pickupDate) ? closestPickup : currentPickup;
     });
 
     return closestPickup;
