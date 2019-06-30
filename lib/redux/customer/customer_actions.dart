@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +9,6 @@ import '../../data/models/email.dart';
 import '../../data/models/user.dart';
 
 part 'customer_actions.g.dart';
-
 
 // CUSTOMER
 
@@ -32,7 +30,6 @@ class LoadCustomerSuccess {
   LoadCustomerSuccess({@required this.customer});
 
   Map<String, dynamic> toJson() => _$LoadCustomerSuccessToJson(this);
-
 }
 
 @JsonSerializable()
@@ -57,13 +54,20 @@ class CreateCustomerRequest {
   @JsonKey(ignore: true)
   final Completer completer;
 
-  CreateCustomerRequest({this.firstName, this.lastName, this.address, this.preferedCommunication, this.postcode, this.userId, this.completer});
+  CreateCustomerRequest(
+      {this.firstName,
+      this.lastName,
+      this.address,
+      this.preferedCommunication,
+      this.postcode,
+      this.userId,
+      this.completer});
   Map<String, dynamic> toJson() => _$CreateCustomerRequestToJson(this);
 }
 
 @JsonSerializable()
 class CreateCustomerSuccess {
-    Map<String, dynamic> toJson() => _$CreateCustomerSuccessToJson(this);
+  Map<String, dynamic> toJson() => _$CreateCustomerSuccessToJson(this);
 }
 
 @JsonSerializable()
@@ -74,20 +78,17 @@ class CreateCustomerFailure {
   Map<String, dynamic> toJson() => _$CreateCustomerFailureToJson(this);
 }
 
-
-
-
 // PHONE NUMBER
 @JsonSerializable()
-class LoadPhoneNumbersRequest{
-  @JsonKey(fromJson: Customer.fromJson) 
+class LoadPhoneNumbersRequest {
+  @JsonKey(fromJson: Customer.fromJson)
   final Customer customer;
 
   LoadPhoneNumbersRequest({this.customer});
   Map<String, dynamic> toJson() => _$LoadPhoneNumbersRequestToJson(this);
 }
 
-class LoadPhoneNumbersSuccess{
+class LoadPhoneNumbersSuccess {
   final List<PhoneNumber> phoneNumbers;
 
   LoadPhoneNumbersSuccess({this.phoneNumbers});
@@ -95,13 +96,12 @@ class LoadPhoneNumbersSuccess{
 }
 
 @JsonSerializable()
-class LoadPhoneNumbersFailure{
+class LoadPhoneNumbersFailure {
   final String error;
 
   LoadPhoneNumbersFailure({this.error});
   Map<String, dynamic> toJson() => _$LoadPhoneNumbersFailureToJson(this);
 }
-
 
 @JsonSerializable()
 class CreatePhoneNumberRequest {
@@ -116,7 +116,7 @@ class CreatePhoneNumberRequest {
 
 @JsonSerializable()
 class CreatePhoneNumberSuccess {
-    Map<String, dynamic> toJson() => _$CreatePhoneNumberSuccessToJson(this);
+  Map<String, dynamic> toJson() => _$CreatePhoneNumberSuccessToJson(this);
 }
 
 @JsonSerializable()
@@ -127,18 +127,17 @@ class CreatePhoneNumberFailure {
   Map<String, dynamic> toJson() => _$CreatePhoneNumberFailureToJson(this);
 }
 
-
 // EMAIL
 @JsonSerializable()
-class LoadEmailsRequest{
-  @JsonKey(fromJson: Customer.fromJson) 
+class LoadEmailsRequest {
+  @JsonKey(fromJson: Customer.fromJson)
   final Customer customer;
 
   LoadEmailsRequest({this.customer});
   Map<String, dynamic> toJson() => _$LoadEmailsRequestToJson(this);
 }
 
-class LoadEmailsSuccess{
+class LoadEmailsSuccess {
   final List<Email> emails;
 
   LoadEmailsSuccess({this.emails});
@@ -146,13 +145,12 @@ class LoadEmailsSuccess{
 }
 
 @JsonSerializable()
-class LoadEmailsFailure{
+class LoadEmailsFailure {
   final String error;
 
   LoadEmailsFailure({this.error});
   Map<String, dynamic> toJson() => _$LoadEmailsFailureToJson(this);
 }
-
 
 @JsonSerializable()
 class CreateEmailRequest {
@@ -166,7 +164,7 @@ class CreateEmailRequest {
 
 @JsonSerializable()
 class CreateEmailSuccess {
-    Map<String, dynamic> toJson() => _$CreateEmailSuccessToJson(this);
+  Map<String, dynamic> toJson() => _$CreateEmailSuccessToJson(this);
 }
 
 @JsonSerializable()

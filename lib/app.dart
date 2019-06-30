@@ -34,7 +34,8 @@ class App extends StatelessWidget {
           localizationsDelegates: [
             AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
           ],
           navigatorKey: navigatorKey,
           navigatorObservers: [

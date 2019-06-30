@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'auth_actions.dart';
 import '../customer/customer_actions.dart';
-import '../subscription/subscription_actions.dart';
 import '../data/data_actions.dart';
 import '../app/app_state.dart';
 import '../../data/models/user.dart';
@@ -134,8 +133,10 @@ class AuthMiddleware {
   void _deleteFCMToken(Store<AppState> store, DeleteFCMToken action, NextDispatcher next) async {
     next(action);
 
-    final dynamic data = await repository.deleteFCMToken(registrationID: action.registrationId);
-    print(data);
+    try {
+      await repository.deleteFCMToken(registrationID: action.registrationId);
+      //TODO : Handle exceptions correctly
+    } catch (e) {}
   }
 
   /// HELPER FUNCTIONS

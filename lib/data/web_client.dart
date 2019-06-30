@@ -8,15 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/globals.dart';
 
 class WebClient {
-  // ANDROID
-  // static String baseUrl = 'http://10.0.2.2:5000/api';
-
-  // iOS Emulator
-  // static String baseUrl = 'http://localhost:5000/api';
-
-  // iOS Device
+  // Local Server
   // Use IP Adress of Wifi Network
   static String baseUrl = 'http://$ipAddress:5000/api';
+
+  // Live server
+  // static String baseUrl = 'https://admin.oust.ch/api';
 
   const WebClient();
 

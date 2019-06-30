@@ -22,10 +22,6 @@ import 'data/repository.dart';
 import 'utils/globals.dart';
 
 void main() async {
-  // Emulator
-  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('localhost:8000');
-
-  // Physical device
   final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('$ipAddress:8000');
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

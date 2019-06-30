@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:oust/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -39,30 +40,29 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
     _firebaseMessaging
         .requestNotificationPermissions(const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.getToken().then((token) {});
+    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {});
 
-    _firebaseMessaging.getToken().then((token) {
-      print(token);
-    });
-    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
-      print('Settings registered: $settings');
-    });
+    final store = StoreProvider.of<AppState>(context);
 
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) {
-        print(message);
+      onMessage: (Map<String, dynamic> message) async {
+        // TODO: Use a notification inside the app which reloads when clicked
+        store.dispatch(AppStarted());
       },
-      onResume: (Map<String, dynamic> message) {
-        print(message);
+      onResume: (Map<String, dynamic> message) async {
+        store.dispatch(AppStarted());
+        // TODO: Navigate to corresponding lift details
       },
-      onLaunch: (Map<String, dynamic> message) {
-        print(message);
+      onLaunch: (Map<String, dynamic> message) async {
+        store.dispatch(AppStarted());
+        // TODO: Navigate to corresponding lift details
       },
     );
+    super.didChangeDependencies();
   }
 }
 
