@@ -85,7 +85,8 @@ class LiftQuoteFormMiddleware {
     next(action);
 
     // When nextStep is called and results in a page after the Account one, trigger submit form
-    if (store.state.liftQuoteFormState.liftQuoteForm.currentStep > LiftQuoteFormAccount.step) {
+    if (store.state.liftQuoteFormState.liftQuoteForm.currentStep > LiftQuoteFormAccount.step &&
+        store.state.liftQuoteFormState.liftQuoteForm.currentStep < LiftQuoteFormLead.step) {
       store.dispatch(SubmitLiftQuoteFormRequest());
     }
   }

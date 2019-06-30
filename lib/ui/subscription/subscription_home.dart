@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../presentation/error_text.dart';
 import '../presentation/loading.dart';
@@ -89,26 +89,25 @@ Widget _buildStack(BuildContext context, _ViewModel viewModel) {
             BoxShadow(spreadRadius: 10, blurRadius: 10, color: Colors.grey.withOpacity(0.2))
           ])),
       if (viewModel.subscription.position != null)
-        // Container(
-        //     height: Layout.of(context).gridUnit(40),
-        //     child: GoogleMap(
-        //       initialCameraPosition: CameraPosition(
-        //         target:
-        //             LatLng(viewModel.subscription.position[0], viewModel.subscription.position[1]),
-        //         zoom: 14.0,
-        //       ),
-        //     )),
         Container(
-          height: Layout.of(context).gridUnit(40),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[Colors.white.withOpacity(0), Colors.white],
-              stops: <double>[0.2, 0.9],
-            ),
+            height: Layout.of(context).gridUnit(40),
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(viewModel.subscription.position[0], viewModel.subscription.position[1]),
+                zoom: 14.0,
+              ),
+            )),
+      Container(
+        height: Layout.of(context).gridUnit(40),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[Colors.white.withOpacity(0), Colors.white],
+            stops: <double>[0.2, 0.9],
           ),
         ),
+      ),
       Positioned(bottom: Layout.of(context).gridUnit(14), child: Icon(Icons.place, size: 45, color: Color(0xFF23836D))),
       Positioned(
           bottom: Layout.of(context).gridUnit(7),
