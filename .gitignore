@@ -28,7 +28,7 @@
 .pub/
 build/
 # android/
-ios/Runner/Base.Iproj
+ios/Runner/
 
 # Android related
 **/android/**/gradle-wrapper.jar
