@@ -22,7 +22,7 @@ import 'data/repository.dart';
 import 'utils/globals.dart';
 
 void main() async {
-  final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('$ipAddress:8000');
+  // final RemoteDevToolsMiddleware remoteDevtools = RemoteDevToolsMiddleware('$ipAddress:8000');
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   const Repository repository = Repository();
@@ -40,11 +40,11 @@ void main() async {
     ...LiftMiddleware(repository).createLiftMiddleware(),
     ...LiftQuoteFormMiddleware(repository).createLiftQuoteFormMiddleware(),
     ...LiftBookFormMiddleware(repository).createLiftBookFormMiddleware(),
-    remoteDevtools
+    // remoteDevtools
   ]);
 
-  remoteDevtools.store = store;
-  await remoteDevtools.connect();
+  // remoteDevtools.store = store;
+  // await remoteDevtools.connect();
 
   runApp(App(store, navigatorKey));
   store.dispatch(AppStarted());

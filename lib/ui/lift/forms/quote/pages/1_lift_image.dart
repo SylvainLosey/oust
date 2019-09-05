@@ -51,8 +51,7 @@ class LiftImageForm extends StatelessWidget {
     return TitleFormButton(
       title: TitleWidget(
           title: 'Que veux-tu débarasser ?',
-          subtitle:
-              'Ajoute une photo de tout ce que tu souhaites que l\'on prenne afin qu\'on puisse te donner le prix.'),
+          subtitle: 'Ajoute une photo de tout ce que tu souhaites que l\'on passe prendre chez toi.'),
       form: BaseCard(
         child: Row(
           children: <Widget>[

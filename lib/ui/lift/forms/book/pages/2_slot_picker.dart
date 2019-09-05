@@ -42,8 +42,7 @@ class SlotPickerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TitleFormButton(
-        title: TitleWidget(
-            title: 'Date de passage', subtitle: 'Choisis quand est-ce que tu souhaite que l\'on passe chez toi.'),
+        title: TitleWidget(title: 'Date de passage', subtitle: 'Choisis la date et l\'heure qui te convient le mieux.'),
         form: viewModel.liftSlots == null ? SpinKitThreeBounce(color: primaryColor, size: 24) : SlotPicker(viewModel),
         button: RaisedButton(
           child: Text('Continuer', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
@@ -66,7 +65,7 @@ class _SlotPickerState extends State<SlotPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final currentLiftSlots = getSlotsFromDate(widget.viewModel.liftSlots.toList(), dates[currentDate]);
+    final currentLiftSlots = getSlotsFromDate(timeSlots: widget.viewModel.liftSlots.toList(), date: dates[currentDate]);
 
     return Column(
       children: <Widget>[
@@ -75,8 +74,8 @@ class _SlotPickerState extends State<SlotPicker> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             DateNavigationButton(
-                direction: 'previous',
-                active: currentDate - 1 >= 0,
+                direction: Direction.previous,
+                active: currentDate > 0,
                 onPressed: _previousDate,
                 dates: dates,
                 currentDate: currentDate),
@@ -97,8 +96,8 @@ class _SlotPickerState extends State<SlotPicker> {
                 color: Colors.white),
             Container(width: Layout.of(context).gridUnit(0.5)),
             DateNavigationButton(
-                direction: 'next',
-                active: currentDate + 1 < dates.length,
+                direction: Direction.next,
+                active: currentDate < dates.length - 1,
                 onPressed: _nextDate,
                 dates: dates,
                 currentDate: currentDate),
@@ -127,19 +126,15 @@ class _SlotPickerState extends State<SlotPicker> {
   }
 
   void _nextDate() {
-    if (currentDate < dates.length - 1) {
-      setState(() {
-        currentDate++;
-      });
-    }
+    setState(() {
+      currentDate++;
+    });
   }
 
   void _previousDate() {
-    if (currentDate > 0) {
-      setState(() {
-        currentDate--;
-      });
-    }
+    setState(() {
+      currentDate--;
+    });
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -157,7 +152,7 @@ class _SlotPickerState extends State<SlotPicker> {
     }
   }
 
-  List<DateTime> getSlotsFromDate(List<DateTime> timeSlots, DateTime date) {
+  List<DateTime> getSlotsFromDate({List<DateTime> timeSlots, DateTime date}) {
     return timeSlots.where((DateTime timeSlot) => dateTimeToDate(timeSlot).isAtSameMomentAs(date)).toList();
   }
 
@@ -176,10 +171,12 @@ class _SlotPickerState extends State<SlotPicker> {
   }
 }
 
+enum Direction { previous, next }
+
 class DateNavigationButton extends StatelessWidget {
   final bool active;
   final Function onPressed;
-  final String direction;
+  final Direction direction;
   final List<DateTime> dates;
   final int currentDate;
 
@@ -191,12 +188,14 @@ class DateNavigationButton extends StatelessWidget {
     return Column(
       children: <Widget>[
         IconButton(
-          icon: Icon(direction == 'previous' ? Icons.arrow_back : Icons.arrow_forward,
+          icon: Icon(direction == Direction.previous ? Icons.arrow_back : Icons.arrow_forward,
               color: active ? Colors.grey[800] : Colors.grey[300]),
           onPressed: active ? onPressed : null,
         ),
         if (active)
-          Text(DateFormat.MMMd().format(direction == 'previous' ? dates[currentDate - 1] : dates[currentDate + 1]),
+          Text(
+              DateFormat.MMMd()
+                  .format(direction == Direction.previous ? dates[currentDate - 1] : dates[currentDate + 1]),
               style: TextStyle(color: Colors.grey[800], fontSize: 12))
       ],
     );

@@ -9,6 +9,7 @@ Reducer<LiftBookFormState> liftBookFormReducer = combineReducers([
   TypedReducer<LiftBookFormState, LiftBookFormNextStep>(_nextStep),
   TypedReducer<LiftBookFormState, LiftBookFormPreviousStep>(_previousStep),
   TypedReducer<LiftBookFormState, UpdateLiftBookForm>(_update),
+  TypedReducer<LiftBookFormState, LoadLiftSlotsRequest>(_loadLiftSlotsRequest),
   TypedReducer<LiftBookFormState, LoadLiftSlotsSuccess>(_loadLiftSlotsSuccess),
   TypedReducer<LiftBookFormState, LoadLiftSlotsFailure>(_loadLiftSlotsFailure),
   TypedReducer<LiftBookFormState, SubmitLiftBookFormRequest>(_submitFormRequest),
@@ -36,6 +37,10 @@ LiftBookFormState _previousStep(LiftBookFormState state, LiftBookFormPreviousSte
 
 LiftBookFormState _update(LiftBookFormState state, UpdateLiftBookForm action) {
   return state.rebuild((LiftBookFormStateBuilder b) => b..liftBookForm.replace(action.liftBookForm));
+}
+
+LiftBookFormState _loadLiftSlotsRequest(LiftBookFormState state, LoadLiftSlotsRequest action) {
+  return state.rebuild((b) => b..isLoading = true);
 }
 
 LiftBookFormState _loadLiftSlotsSuccess(LiftBookFormState state, LoadLiftSlotsSuccess action) {

@@ -16,7 +16,7 @@ class DatePickerForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TitleFormButton(
         title: TitleWidget(
-            title: 'Premier passage', subtitle: 'Quand souhaites-tu que l\'on passe pour le première fois ?'),
+            title: 'Premier passage', subtitle: 'Quand souhaites-tu que l\'on passe pour la première fois ?'),
         form: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
